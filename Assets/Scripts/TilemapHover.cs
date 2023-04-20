@@ -52,7 +52,7 @@ public class TilemapHover : NetworkBehaviour
         
     }
 
-    [Command]
+    [ClientRpc]
     public void gebauedeSetzen(Vector3Int vec) {
         tilemap.SetTile(vec, tile);
     }

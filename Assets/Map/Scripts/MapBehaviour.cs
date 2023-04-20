@@ -7,11 +7,15 @@ using UnityEngine.Tilemaps;
 
 public class MapBehaviour : NetworkBehaviour
 {
-    [SerializeField] public Biom[] biome;
+    [SerializeField] private Biom[] biome;
+    [SerializeField] private Ressource[] ressource;
 
-    public readonly SyncList<Vector3Int> vectorsave = new SyncList<Vector3Int>();
-    public readonly SyncList<int> biomindex = new SyncList<int>();
-    public readonly SyncList<int> blockindex = new SyncList<int>();
+    private readonly SyncList<Vector3Int> vectorsave = new SyncList<Vector3Int>();
+    private readonly SyncList<int> biomindex = new SyncList<int>();
+    private readonly SyncList<int> blockindex = new SyncList<int>();
+
+    private readonly SyncList<Vector3Int> ressourcevec = new SyncList<Vector3Int>();
+    private readonly SyncList<int> ressindex = new SyncList<int>();
 
     HashSet<Vector3Int> vectors = new HashSet<Vector3Int>();
     private Dictionary<Vector3Int, Biom> alleBiome = new Dictionary<Vector3Int, Biom>();
@@ -43,6 +47,12 @@ public class MapBehaviour : NetworkBehaviour
     }
 
     void createTerrain() {
+        for(int x=-1; x<=1; x++) {
+            for(int y=-1; y<=1; y++) {
+                tilemap.SetTile(new Vector3Int(x, y, 0), null);
+            }
+        }
+
         for(int x=0; x<=width; x++) {
             for(int y=0; y<=height; y++) {
                 vectors.Add(new Vector3Int(x, y, 0));
@@ -75,7 +85,26 @@ public class MapBehaviour : NetworkBehaviour
             }
         }
 
-        
+        for(int x=0; x<=width; x++) {
+            for(int y=0; y<=height; y++) {
+                vectors.Add(new Vector3Int(x, y, 0));
+            }
+        }
+
+        foreach(Vector3Int vec in vectors) {
+            int x = rand.Next(ressource.Length);
+            Ressource ress = ressource[x];
+
+            Biom curBiom = alleBiome[vec];
+
+            int max = 10000;
+            
+            if(rand.Next(0, max) <= (ress.getProb(curBiom)*max)) {
+                tilemap.SetTile(vec, ress.getRessourceTile());
+                ressourcevec.Add(vec);
+                ressindex.Add(x);
+            }
+        }
 
         createRand();
     }
@@ -136,6 +165,17 @@ public class MapBehaviour : NetworkBehaviour
         
         int indexbiom = rand.Next(biome.Length);
         Biom b = biome[indexbiom];
+        if(getMostNeighbors(vec) != null) {
+            b = getMostNeighbors(vec);
+            int i=0;
+            foreach(Biom bi in biome) {
+                if(bi == b) {
+                    break;
+                }
+                i++;
+            }
+            indexbiom = i;
+        }
 
         int indexblock = rand.Next(b.countBlocks());
         Block rndm = b.getBlockByIndex(indexblock);
@@ -193,9 +233,16 @@ public class MapBehaviour : NetworkBehaviour
     }
 
     void buildTerrain() {
-        for(int i=0; i<vectorsave.Count; i++) {
-            tilemap.SetTile(vectorsave[i], getTile(i));
+        for(int x=0; x<vectorsave.Count; x++) {
+            tilemap.SetTile(vectorsave[x], getTile(x));
         }
+
+        int i = 0;
+        foreach(Vector3Int vec in ressourcevec) {
+            tilemap.SetTile(vec, ressource[ressindex[i]].getRessourceTile());
+            i++;
+        }
+
         createRand();
     }
 

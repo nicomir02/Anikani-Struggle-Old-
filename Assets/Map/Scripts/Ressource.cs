@@ -11,7 +11,7 @@ public class Ressource : NetworkBehaviour
     public float generalProb;
 
     public List<Biom> biome;
-    public List<int> probabilities;
+    public List<float> probabilities;
 
 
     public float getProb(Biom b) {
