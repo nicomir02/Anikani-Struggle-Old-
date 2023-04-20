@@ -6,6 +6,7 @@ using Mirror;
 public class NetworkManagerAnikani : NetworkManager
 {
     [SerializeField] private MapBehaviour map;
+    [SerializeField] private Transform start;
 
     public override void OnStartServer()
     {
@@ -15,7 +16,24 @@ public class NetworkManagerAnikani : NetworkManager
 
     public override void OnStartClient()
     {
+        base.OnStartServer();
         Debug.Log("Client connected to the Server!");
-        map.createTerrain();
+        //map.buildTerrain();
     }
+    /*
+    public override void OnServerAddPlayer(NetworkConnectionToClient conn)
+    {
+        GameObject player = Instantiate(playerPrefab, start.position, start.rotation);
+        NetworkServer.AddPlayerForConnection(conn, player);
+
+        Debug.Log(numPlayers);
+        if(numPlayers == 1) {
+            //Debug.Log("create");
+            map.createTerrain();
+        }else {
+            //Debug.Log("build");
+            //map.buildTerrain();
+        }
+    }
+    */
 }

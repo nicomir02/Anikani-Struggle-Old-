@@ -6,46 +6,42 @@ using Mirror;
 
 public class MapBehaviour : NetworkBehaviour
 {
-    //Mapdaten
+    [SerializeField] private SaveManager saveManager;
+
     [SerializeField] private int width = 25;
     [SerializeField] private int height = 25;
+
+    [SerializeField] private Block[] tile;
     [SerializeField] private Tilemap tilemap;
 
-    //Blöcke
-    [SerializeField] private Block[] bloecke;
-
-    //Zufallsvariable
     private System.Random rand = new System.Random();
 
-    private readonly SyncDictionary<Vector3Int, Block> vecBloecke = new SyncDictionary<Vector3Int, Block>();
-
-    void Start() {
-        createTerrain();
-    }
-
     public void createTerrain() {
-        Vector3Int vec = new Vector3Int(0, 0, 0);
-        if(vecBloecke.ContainsKey(vec)) {
-            for(int x=0; x<=width; x++) {
-                for(int y=0; y<=height; y++) {
-                    vec = new Vector3Int(x, y, 0);
-                    tilemap.SetTile(vec, vecBloecke[vec].getTile());
-                }
-            }
-        }else {
-            for(int x=0; x<=width; x++) {
-                for(int y=0; y<=height; y++) {
-                    vec = new Vector3Int(x, y, 0);
-                    Block b = bloecke[rand.Next(bloecke.Length)];
-                    tilemap.SetTile(vec, b.getTile());
-                    vecBloecke.Add(vec, b);
-                    
-                }
+        Dictionary<Vector3Int, Block> vecBloecke = new Dictionary<Vector3Int, Block>();
+        List<Vector3Int> vecs = new List<Vector3Int>();
+        List<Block> bloecke = new List<Block>();
+        int i=0;
+        for(int x=0; x<=width; x++) {
+            for(int y=0;y<=height; y++) {
+                Vector3Int vec = new Vector3Int(x, y, 0);
+                Block b = tile[rand.Next(tile.Length)]; 
+                tilemap.SetTile(vec, b.getTile());
+                saveManager.vecBloecke.Add(vec, b);
+                //addVec(vec, b);
+                i++;
             }
         }
     }
 
-    public Tilemap getTilemap() {
-        return this.tilemap;
+    [Command]
+    public void addVec(Vector3Int vec, Block b) {
+        saveManager.vecBloecke.Add(vec, b);
+    }
+
+    public void buildTerrain() {
+        Dictionary<Vector3Int, Block> vecBloecke = saveManager.getBloecke();
+        foreach(KeyValuePair<Vector3Int, Block> pair in vecBloecke) {
+            tilemap.SetTile(pair.Key, pair.Value.getTile());
+        }
     }
 }
