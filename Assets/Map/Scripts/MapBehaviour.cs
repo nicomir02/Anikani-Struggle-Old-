@@ -75,6 +75,8 @@ public class MapBehaviour : NetworkBehaviour
             }
         }
 
+        
+
         createRand();
     }
 
