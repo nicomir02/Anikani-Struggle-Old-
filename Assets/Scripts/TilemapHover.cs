@@ -43,21 +43,13 @@ public class TilemapHover : NetworkBehaviour
                 tilemap.SetColor(oldVec, select);
             }
             
-            if(Input.GetMouseButtonDown(0)) {
-                gebauedeSetzen(cellPosition);
-            }
-            
         }
 
         
     }
 
-    [ClientRpc]
-    public void gebauedeSetzen(Vector3Int vec) {
-        tilemap.SetTile(vec, tile);
-    }
 
-    bool insideField(Vector3Int vec) {
+    public bool insideField(Vector3Int vec) {
         int width = mapSettings.mapWidth();
         int height = mapSettings.mapHeight();
         if(vec.x >= 0 && vec.x <= width && vec.y >= 0 && vec.y <= height) {
