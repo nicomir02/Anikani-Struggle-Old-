@@ -6,6 +6,7 @@ using Mirror;
 
 public class BuildingManager : NetworkBehaviour
 {
+    /*
     [SerializeField] private List<Building> buildings = new List<Building>();
     [SerializeField] private Tilemap tilemap;
 
@@ -42,17 +43,20 @@ public class BuildingManager : NetworkBehaviour
             Vector3Int cellPosition = tilemap.WorldToCell(mouseWorldPos);
             if(tilemapInfos.insideField(cellPosition)) {
                 first = true;
-                addBuilding(firstBuilding, cellPosition);
+                if(isLocalPlayer) {
+                    Debug.Log("test");
+                    addBuilding(getBuildingIndex(firstBuilding), cellPosition);
+                }
+                
             }
         }
     }
 
-    public void addBuilding(Building building, Vector3Int vector){
-        if(buildings.Contains(building)) {
-            vec.Add(vector);
-            buildingIndex.Add(getBuildingIndex(building));
-            building.setTile(tilemap, vector);
-        }
+    [Command]
+    public void addBuilding(int indexbuilding, Vector3Int vector) {
+        vec.Add(vector);
+        buildingIndex.Add(indexbuilding);
+        buildings[indexbuilding].setTile(tilemap, vector);
     }
 
     int getBuildingIndex(Building b) {
@@ -67,5 +71,5 @@ public class BuildingManager : NetworkBehaviour
         return i;
     }
 
-    
+    */
 }

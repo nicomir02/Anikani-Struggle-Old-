@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 using Mirror;
 
-public class TilemapHover : NetworkBehaviour
+public class TilemapHover : MonoBehaviour
 {
     public Tilemap tilemap;
     
@@ -29,7 +29,7 @@ public class TilemapHover : NetworkBehaviour
         
         mouseWorldPos = new Vector2(mouseWorldPos.x, mouseWorldPos.y);
         Vector3Int cellPosition = tilemap.WorldToCell(mouseWorldPos);
-
+        
         if(insideField(cellPosition) && oldVec != cellPosition) {
             
             if(oldVec != null) {
@@ -44,8 +44,6 @@ public class TilemapHover : NetworkBehaviour
             }
             
         }
-
-        
     }
 
 

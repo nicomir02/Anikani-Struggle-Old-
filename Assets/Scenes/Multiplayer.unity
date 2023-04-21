@@ -286,11 +286,6 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 1
   syncInterval: 0
-  buildings:
-  - {fileID: 8654665576734765553, guid: dafcc1223ffa1d145af0318729678b7c, type: 3}
-  tilemap: {fileID: 1221054987}
-  firstBuilding: {fileID: 8654665576734765553, guid: dafcc1223ffa1d145af0318729678b7c, type: 3}
-  tilemapInfos: {fileID: 2013624333}
 --- !u!114 &964662511
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -387,7 +382,7 @@ TilemapRenderer:
   m_MaxChunkCount: 16
   m_MaxFrameAge: 16
   m_SortOrder: 3
-  m_Mode: 0
+  m_Mode: 1
   m_DetectChunkCullingBounds: 0
   m_MaskInteraction: 0
 --- !u!1839735485 &1221054987
@@ -1665,7 +1660,7 @@ Tilemap:
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Origin: {x: -26, y: -25, z: -2}
   m_Size: {x: 53, y: 50, z: 5}
-  m_TileAnchor: {x: 0.5, y: 0.5, z: 0}
+  m_TileAnchor: {x: -0.5, y: -0.5, z: 0}
   m_TileOrientation: 0
   m_TileOrientationMatrix:
     e00: 1
@@ -2019,8 +2014,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f37a66c29b7feb4a951bcb38082f210, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  syncDirection: 0
-  syncMode: 0
-  syncInterval: 0
   tilemap: {fileID: 1221054987}
   tile: {fileID: 0}
