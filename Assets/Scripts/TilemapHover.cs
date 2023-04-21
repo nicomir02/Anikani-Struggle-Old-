@@ -12,8 +12,6 @@ public class TilemapHover : MonoBehaviour
     private Color oldColor;
     private Color select = Color.grey;
 
-    [SerializeField] private TileBase tile;
-
     MapBehaviour mapSettings;
 
     // Start is called before the first frame update
@@ -25,10 +23,7 @@ public class TilemapHover : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Vector2 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        
-        mouseWorldPos = new Vector2(mouseWorldPos.x, mouseWorldPos.y);
-        Vector3Int cellPosition = tilemap.WorldToCell(mouseWorldPos);
+        Vector3Int cellPosition = getVectorFromMouse();
         
         if(insideField(cellPosition) && oldVec != cellPosition) {
             
@@ -44,6 +39,13 @@ public class TilemapHover : MonoBehaviour
             }
             
         }
+    }
+
+    public Vector3Int getVectorFromMouse() {
+        Vector2 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        
+        mouseWorldPos = new Vector2(mouseWorldPos.x, mouseWorldPos.y);
+        return tilemap.WorldToCell(mouseWorldPos);
     }
 
 

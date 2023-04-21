@@ -6,70 +6,49 @@ using Mirror;
 
 public class BuildingManager : NetworkBehaviour
 {
-    /*
-    [SerializeField] private List<Building> buildings = new List<Building>();
+    [SerializeField] private TilemapHover hover;
+
+    [SerializeField] private TileBase tile;
     [SerializeField] private Tilemap tilemap;
 
-    private readonly SyncList<Vector3Int> vec = new SyncList<Vector3Int>();
-    private readonly SyncList<int> buildingIndex = new SyncList<int>();
-    private List<bool> build = new List<bool>();
+    private readonly SyncList<Vector3Int> save = new SyncList<Vector3Int>();
+    private List<int> list = new List<int>();
 
-    [SerializeField] private Building firstBuilding;
-    private bool first = false;
-    [SerializeField] private TilemapHover tilemapInfos;
-
+    bool firstBuilding = false;
 
     void Start() {
-        if(isLocalPlayer) {
-            for(int i=0; i<vec.Count; i++) {
-                buildings[buildingIndex[i]].setTile(tilemap, vec[i]);
-            }
-        }
+        tilemap = GameObject.Find("Tilemap").GetComponent<Tilemap>();
+        hover = GameObject.Find("GameManager").GetComponent<TilemapHover>();
     }
 
     void Update() {
-        if(buildingIndex.Count > build.Count) {
-            for(int i=build.Count; i<buildingIndex.Count; i++) {
-                buildings[buildingIndex[i]].setTile(tilemap, vec[i]);
-                //
-                build.Add(true);
+        if(Input.GetMouseButtonDown(0)) {
+            Vector3Int vec = hover.getVectorFromMouse();
+            if(hover.insideField(vec) && base.isOwned && !firstBuilding) {
+                localAddTile(vec);
+                firstBuilding = true;
             }
         }
-        
-        if(Input.GetMouseButtonDown(0) && !first) {
-            Vector2 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        
-            mouseWorldPos = new Vector2(mouseWorldPos.x, mouseWorldPos.y);
-            Vector3Int cellPosition = tilemap.WorldToCell(mouseWorldPos);
-            if(tilemapInfos.insideField(cellPosition)) {
-                first = true;
-                if(isLocalPlayer) {
-                    Debug.Log("test");
-                    addBuilding(getBuildingIndex(firstBuilding), cellPosition);
-                }
-                
+        if(save.Count > list.Count) {
+            for(int i=list.Count; i<save.Count; i++) {
+                tilemap.SetTile(save[i], tile);
             }
         }
     }
 
     [Command]
-    public void addBuilding(int indexbuilding, Vector3Int vector) {
-        vec.Add(vector);
-        buildingIndex.Add(indexbuilding);
-        buildings[indexbuilding].setTile(tilemap, vector);
+    public void localAddTile(Vector3Int vec) {
+        vec = new Vector3Int(vec.x, vec.y, vec.z-1);
+        tilemap.SetTile(vec, tile);
+        save.Add(vec);
+        list.Add(1);
     }
+    
 
-    int getBuildingIndex(Building b) {
-        int i=0;
-        foreach (Building building in buildings)
-        {
-            if(b == building) {
-                return i;
-            }
-            i++;
-        }
-        return i;
+    public void hostAddTile(Vector3Int vec) {
+        vec = new Vector3Int(vec.x, vec.y, vec.z-1);
+        tilemap.SetTile(vec, tile);
+        save.Add(vec);
+        list.Add(1);
     }
-
-    */
 }

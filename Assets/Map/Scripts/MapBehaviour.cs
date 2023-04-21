@@ -70,7 +70,7 @@ public class MapBehaviour : NetworkBehaviour
             createTerrain();
         }else {
             buildTerrain();
-            Debug.Log(getBlockDetails(new Vector3Int(0,0,0)));
+            //Debug.Log(getBlockDetails(new Vector3Int(0,0,0)));
         }
     }
 
