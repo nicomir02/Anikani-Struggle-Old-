@@ -11,8 +11,10 @@ public class MapBehaviour : NetworkBehaviour
     [SerializeField] private Ressource[] ressource;
 
     private readonly SyncList<Vector3Int> vectorsave = new SyncList<Vector3Int>();
+    
     private readonly SyncList<int> biomindex = new SyncList<int>();
     private readonly SyncList<int> blockindex = new SyncList<int>();
+    //^^oberhalb Cantorsche Paarungsfunktion einrichten?^^
 
     private readonly SyncList<Vector3Int> ressourcevec = new SyncList<Vector3Int>();
     private readonly SyncList<int> ressindex = new SyncList<int>();
@@ -30,6 +32,31 @@ public class MapBehaviour : NetworkBehaviour
 
     [SerializeField] private TileBase randTile;
 
+    public (Biom, Block, Ressource) getBlockDetails(Vector3Int vec) {
+        Biom biom = null;
+        Block block = null;
+        Ressource ress = null;
+
+        biom = getBiomByVec(vec);
+        if(ressourcevec.Contains(vec)) {
+            for(int i=0; i<ressourcevec.Count; i++) {
+                if(ressourcevec[i] == vec) {
+                    ress = ressource[ressindex[i]];
+                    //block = ress.getBlock();
+                    break;
+                }
+            }
+        }else {
+            for(int i=0; i<vectorsave.Count; i++) {
+                if(vectorsave[i] == vec) {
+                    block = biom.getBlockByIndex(blockindex[i]);
+                }
+            }
+        }
+        
+        return (biom, block, ress);
+    }
+
     public int mapWidth() {
         return width;
     }
@@ -43,6 +70,7 @@ public class MapBehaviour : NetworkBehaviour
             createTerrain();
         }else {
             buildTerrain();
+            Debug.Log(getBlockDetails(new Vector3Int(0,0,0)));
         }
     }
 
