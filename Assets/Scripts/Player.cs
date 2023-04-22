@@ -40,7 +40,6 @@ public class Player : NetworkBehaviour
         if(buildingManager.getFirstBuilding()) {
             Tilemap tilemap = buildingManager.getTilemap();
             if(gefaerbt) {
-                Debug.Log(gefaerbt);
                 Dictionary<Vector3Int, int> liste = gameManager.getList(id);
                 foreach(KeyValuePair<Vector3Int, int> pair in liste) {
                     tilemap.SetTileFlags(pair.Key, TileFlags.None);
@@ -48,7 +47,6 @@ public class Player : NetworkBehaviour
                 }
                 gefaerbt = false;
             }else {
-                Debug.Log(gefaerbt);
                 Dictionary<Vector3Int, int> liste = gameManager.getList(id);
 
                 foreach(KeyValuePair<Vector3Int, int> pair in liste) {

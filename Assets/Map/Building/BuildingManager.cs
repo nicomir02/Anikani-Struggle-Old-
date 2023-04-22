@@ -16,8 +16,6 @@ public class BuildingManager : NetworkBehaviour
 
     private GameManager gameManager;
 
-    int id;
-
     private bool firstBuilding = false;
 
     public bool getFirstBuilding() {
@@ -32,14 +30,13 @@ public class BuildingManager : NetworkBehaviour
         tilemap = GameObject.Find("Tilemap").GetComponent<Tilemap>();
         hover = GameObject.Find("GameManager").GetComponent<TilemapHover>();
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
-        id = GetComponent<Player>().getID();
     }
 
     void Update() {
         if(Input.GetMouseButtonDown(0)) {
             Vector3Int vec = hover.getVectorFromMouse();
             if(hover.insideField(vec) && base.isOwned && !firstBuilding) {
-                localAddTile(vec);
+                localAddTile(vec, GetComponent<Player>().getID());
                 firstBuilding = true;
             }
         }
@@ -72,13 +69,12 @@ public class BuildingManager : NetworkBehaviour
     }
 
     [Command]
-    public void localAddTile(Vector3Int vec) {
+    public void localAddTile(Vector3Int vec, int id) {
         vec = new Vector3Int(vec.x, vec.y, vec.z-1);
         tilemap.SetTile(vec, tile);
         save.Add(vec);
         list.Add(id);
 
-        Debug.Log(id);
         List<Vector3Int> veclist = makeAreaBigger(vec, 4);
 
         foreach(Vector3Int vect in veclist) {
