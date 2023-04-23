@@ -66,7 +66,7 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0
   ressourceName: Stone
-  ressource: {fileID: 11400000, guid: 73be078e1ca31164586ae39523da39d2, type: 2}
+  ressource: {fileID: 4844201588082161927, guid: 6860564ac86c31242b8073febee885dd, type: 3}
   generalProb: 0
   biome:
   - {fileID: 3957834330145634571, guid: a18661d36538ec24790220990421655d, type: 3}

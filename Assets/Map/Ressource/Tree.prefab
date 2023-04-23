@@ -66,7 +66,7 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0
   ressourceName: Tree
-  ressource: {fileID: 11400000, guid: 3fccad33dcd86444095744119203cdf2, type: 2}
+  ressource: {fileID: 4844201588082161927, guid: 4a4e4813771d41143972bf7160d09b55, type: 3}
   generalProb: 0
   biome:
   - {fileID: 3957834330145634571, guid: a18661d36538ec24790220990421655d, type: 3}

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4844201588082161927}
   - component: {fileID: 481303840535809074}
   m_Layer: 0
-  m_Name: Stone
+  m_Name: Tree
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -48,8 +48,8 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0
-  tile: {fileID: 11400000, guid: 73be078e1ca31164586ae39523da39d2, type: 2}
-  block: Stone
+  tile: {fileID: 11400000, guid: 3fccad33dcd86444095744119203cdf2, type: 2}
+  block: Tree
   isBuildable: 1
 --- !u!114 &481303840535809074
 MonoBehaviour:
@@ -64,7 +64,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sceneId: 0
-  _assetId: 2058548915
+  _assetId: 796826967
   serverOnly: 0
   visible: 0
   hasSpawned: 0

@@ -7,7 +7,7 @@ using Mirror;
 public class Ressource : NetworkBehaviour
 {
     public string ressourceName;
-    public TileBase ressource;
+    public Block ressource;
     public float generalProb;
 
     public List<Biom> biome;
@@ -22,6 +22,10 @@ public class Ressource : NetworkBehaviour
     }
 
     public TileBase getRessourceTile() {
+        return ressource.getTile();
+    }
+
+    public Block getBlock() {
         return ressource;
     }
 }

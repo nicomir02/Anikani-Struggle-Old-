@@ -42,7 +42,7 @@ public class MapBehaviour : NetworkBehaviour
             for(int i=0; i<ressourcevec.Count; i++) {
                 if(ressourcevec[i] == vec) {
                     ress = ressource[ressindex[i]];
-                    //block = ress.getBlock();
+                    block = ress.getBlock();
                     break;
                 }
             }

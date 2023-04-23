@@ -7,9 +7,12 @@ using Mirror;
 public class BuildingManager : NetworkBehaviour
 {
     [SerializeField] private TilemapHover hover;
+    private MapBehaviour map;
 
     [SerializeField] private TileBase tile;
     [SerializeField] private Tilemap tilemap;
+
+    [SerializeField] private Unit startUnit;
 
     private readonly SyncList<Vector3Int> save = new SyncList<Vector3Int>();
     private List<int> list = new List<int>();
@@ -30,14 +33,31 @@ public class BuildingManager : NetworkBehaviour
         tilemap = GameObject.Find("Tilemap").GetComponent<Tilemap>();
         hover = GameObject.Find("GameManager").GetComponent<TilemapHover>();
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        map = GameObject.Find("GameManager").GetComponent<MapBehaviour>();
     }
 
     void Update() {
         if(Input.GetMouseButtonDown(0)) {
             Vector3Int vec = hover.getVectorFromMouse();
             if(hover.insideField(vec) && base.isOwned && !firstBuilding) {
-                localAddTile(vec, GetComponent<Player>().getID());
-                firstBuilding = true;
+                List<Vector3Int> veclist = makeAreaBigger(vec, 1);
+                bool canBuild = true;
+                //Debug.Log(map.getBlockDetails(vec).Item2.getBuildable());
+
+                foreach(Vector3Int v in veclist) {
+                    if(!map.getBlockDetails(v).Item2.getBuildable()) {
+                        canBuild = false;
+                    }else if(!hover.insideField(v)) {
+                        canBuild = false;
+                    }
+                }
+                if(canBuild) {
+                    localAddTile(vec, GetComponent<Player>().getID());
+                    firstBuilding = true;
+                }else {
+                    //Debug.Log("Not possible");
+                }
+                
             }
         }
         if(save.Count > list.Count) {

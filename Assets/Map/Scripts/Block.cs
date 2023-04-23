@@ -8,6 +8,7 @@ public class Block : NetworkBehaviour
 {
     [SerializeField] private TileBase tile;
     [SerializeField] private string block;
+    [SerializeField] private bool isBuildable = true;
 
     public TileBase getTile() {
         return tile;
@@ -15,6 +16,10 @@ public class Block : NetworkBehaviour
 
     public string getName() {
         return this.block;
+    }
+
+    public bool getBuildable() {
+        return isBuildable;
     }
 
     public Block(string name) {
