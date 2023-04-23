@@ -1087,10 +1087,10 @@ GameObject:
   m_Component:
   - component: {fileID: 2013624329}
   - component: {fileID: 2013624331}
-  - component: {fileID: 2013624335}
   - component: {fileID: 2013624333}
   - component: {fileID: 2013624332}
   - component: {fileID: 2013624334}
+  - component: {fileID: 2013624336}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -1194,7 +1194,7 @@ MonoBehaviour:
   farben:
   - {r: 0, g: 0.1917324, b: 1, a: 1}
   - {r: 1, g: 0.02934316, b: 0, a: 1}
---- !u!114 &2013624335
+--- !u!114 &2013624336
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1203,7 +1203,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2013624328}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f3d4bdf091bc740479f5631f1107979f, type: 3}
+  m_Script: {fileID: 11500000, guid: 9d1ae89134ad971438a7924095319801, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   syncDirection: 0
@@ -1212,7 +1212,7 @@ MonoBehaviour:
   biome:
   - {fileID: 3957834330145634571, guid: a18661d36538ec24790220990421655d, type: 3}
   - {fileID: 7443563048357673809, guid: e234e612a636ded4ca8818553beb80e4, type: 3}
-  ressource:
+  ressourcen:
   - {fileID: 5049357260567026900, guid: 799d32e7afa86c04b87c4c664898c266, type: 3}
   - {fileID: 2565081253949881104, guid: 004f2aad221df8a46a9e0fbe94cbc8ab, type: 3}
   width: 50

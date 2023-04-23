@@ -68,4 +68,4 @@ MonoBehaviour:
   blocks:
   - {fileID: 4844201588082161927, guid: 68726c97b75bfed4c963fc0dea6dc0ff, type: 3}
   biom: Water
-  biommultiplier: 0.1
+  biommultiplier: 0.2
