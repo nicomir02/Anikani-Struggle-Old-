@@ -62,7 +62,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf8c644477199f043b961fe412e2a208, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  syncDirection: 0
+  syncDirection: 1
   syncMode: 0
   syncInterval: 0
+  BesetzterBlock: {fileID: 0}
   truppenTile: {fileID: 11400000, guid: 0aa677d9eb3af40409dd53e49eefc39f, type: 2}

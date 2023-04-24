@@ -15,6 +15,7 @@ public class Player : NetworkBehaviour
 
     private bool gefaerbt = false;
     BuildingManager buildingManager;
+    UnitManager unitManager;
     
 
     public int getID() {
@@ -29,6 +30,7 @@ public class Player : NetworkBehaviour
         button = GameObject.Find("ButtonGebiet").GetComponent<Button>();
         button.onClick.AddListener(OnButtonClick);
         buildingManager = GetComponent<BuildingManager>();
+        unitManager = GetComponent<UnitManager>();
     }
 
     [Command]
@@ -37,7 +39,7 @@ public class Player : NetworkBehaviour
     }
 
     public void OnButtonClick() {
-        if(buildingManager.getFirstBuilding()) {
+        if(buildingManager.getFirstBuilding()) {  
             Tilemap tilemap = buildingManager.getTilemap();
             if(gefaerbt) {
                 Dictionary<Vector3Int, int> liste = gameManager.getList(id);
@@ -51,7 +53,7 @@ public class Player : NetworkBehaviour
                 }
                 gefaerbt = false;
             }else {
-                Dictionary<Vector3Int, int> liste = gameManager.getList(id);
+                Dictionary<Vector3Int, int> liste = gameManager.getList(id); //kann rein theoretisch einmal for dem if-else stehen statt in beiden. anderer gleicher code auch ausgelagert in methode oder nur einmal
 
                 foreach(KeyValuePair<Vector3Int, int> pair in liste) {
                     Vector3Int vec = pair.Key;

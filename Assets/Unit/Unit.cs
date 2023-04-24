@@ -6,14 +6,14 @@ using UnityEngine.Tilemaps;
 
 public class Unit : NetworkBehaviour
 {
-    /*
-    [SyncVar] private int leben = 100;
+    [SyncVar] public Block BesetzterBlock;
+    /* [SyncVar] private int leben = 100;
     [SyncVar] private int verteidigung = 0;
     [SyncVar] private int nahkampf = 10;
     [SyncVar] private int fernkampf = 5;
     [SyncVar] private int fernkampfweite = 2; 
 
-    [SyncVar] private int BloeckeProRunde;
+    [SyncVar] private int BloeckeProRunde; */
 
     [SerializeField] private TileBase truppenTile;
 
@@ -27,6 +27,9 @@ public class Unit : NetworkBehaviour
 
         //tilemap.SetTile(vec, truppenTile);
     }
+    public TileBase getTile() {
+        return truppenTile;
+    }
 
-    */
+    
 }

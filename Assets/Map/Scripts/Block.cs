@@ -9,6 +9,7 @@ public class Block : NetworkBehaviour
     [SerializeField] private TileBase[] tile;
     [SerializeField] private string block;
     [SerializeField] private bool isBuildable = true;
+    [SyncVar] public Unit BesetzteUnit;
 
     public TileBase getTile() {
         return tile[0];
@@ -28,4 +29,9 @@ public class Block : NetworkBehaviour
     public bool getBuildable() {
         return isBuildable;
     }
+
+
+    
+
+
 }

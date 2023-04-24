@@ -13,7 +13,7 @@ public class GameManager : NetworkBehaviour
     public readonly SyncDictionary<Vector3Int, int> teamVecs = new SyncDictionary<Vector3Int, int>();
 
     public int getCurTurnID() {
-        return currentTurn;
+        return currentTurn; //mit %allPlayers vielleicht machen damit es nicht tausende turns zählt?
     }
 
     public void addID() {

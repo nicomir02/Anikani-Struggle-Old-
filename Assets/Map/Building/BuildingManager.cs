@@ -26,7 +26,7 @@ public class BuildingManager : NetworkBehaviour
     
 
     public bool getFirstBuilding() {
-        return firstBuilding;
+        return firstBuilding; 
     }
 
     public Tilemap getTilemap() {
