@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 86948393def65d842b942366768a29c5
+guid: 6a466e175f8f291418c83979d44ae2dc
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -117,127 +117,43 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Map_tiles_0
+      name: Castle 1_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 480
-        width: 160
-        height: 120
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: ddb3d5054c020444b9f5b03a11e328e3
-      internalID: -1090530997
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Map_tiles_1
-      rect:
-        serializedVersion: 2
-        x: 240
-        y: 480
-        width: 160
-        height: 120
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: f4240f6aad999d94aa526227385fedc1
-      internalID: -374990624
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Map_tiles_2
-      rect:
-        serializedVersion: 2
-        x: 480
-        y: 480
-        width: 160
-        height: 120
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 2a3ad7212053a744e9744028c5fd024f
-      internalID: 1271825874
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Map_tiles_3
-      rect:
-        serializedVersion: 2
-        x: 35
-        y: 305
-        width: 90
-        height: 165
+        x: 30
+        y: 60
+        width: 420
+        height: 410
       alignment: 9
-      pivot: {x: 0.5, y: -0.1430303}
+      pivot: {x: 0.5, y: -0.03032794}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e0b873e1e8b024142af787edd8f42e86
-      internalID: 331121855
+      spriteID: f0e080bbaea876c439e99bcfa620be6f
+      internalID: 413794468
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Map_tiles_4
+      name: Castle 1_1
       rect:
         serializedVersion: 2
-        x: 265
-        y: 295
-        width: 115
-        height: 130
+        x: 670
+        y: 80
+        width: 420
+        height: 410
       alignment: 9
-      pivot: {x: 0.5, y: -0.12207692}
+      pivot: {x: 0.5, y: -0.03032794}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6631bc6fbee8b8f4c8b1c83d3c6efdd9
-      internalID: 336676330
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Map_tiles_5
-      rect:
-        serializedVersion: 2
-        x: 515
-        y: 380
-        width: 85
-        height: 55
-      alignment: 9
-      pivot: {x: 0.5, y: -0.36909088}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: bec0c7355e20aaf428ab87b964d362c1
-      internalID: 1487371718
+      spriteID: ce16e68ee08346543819d3615d5b87be
+      internalID: 533963360
       vertices: []
       indices: 
       edges: []
@@ -253,12 +169,8 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Map_tiles_0: -1090530997
-      Map_tiles_1: -374990624
-      Map_tiles_2: 1271825874
-      Map_tiles_3: 331121855
-      Map_tiles_4: 336676330
-      Map_tiles_5: 1487371718
+      Castle 1_0: 413794468
+      Castle 1_1: 533963360
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

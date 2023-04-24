@@ -45,7 +45,7 @@ public class MapBehaviour : NetworkBehaviour
 
     //Karteneinstellungen
     [SerializeField] private Tilemap tilemap;
-    [SerializeField] private TileBase randTile;
+    [SerializeField] private Block randTile;
 
     private HashSet<Vector3Int> vectors = new HashSet<Vector3Int>();
 
@@ -53,9 +53,20 @@ public class MapBehaviour : NetworkBehaviour
         if(isServer) {
             createTerrain();
         }else {
-            //buildTerrain();
+            buildTerrain();
             //Debug.Log(getBlockDetails(new Vector3Int(0,0,0)));
         }
+    }
+
+    void buildTerrain() {
+        foreach(KeyValuePair<Vector3Int, BlockDetails> kvp in blockDetails) {
+            if(kvp.Value.Ressourcenbool) {
+                ressourcen[kvp.Value.ressindex].getBlock().setTile(kvp.Key, tilemap);
+            }else {
+                biome[kvp.Value.Biomindex].getBlockByIndex(kvp.Value.Blockindex).setTile(kvp.Key, tilemap);
+            }
+        }
+        createRand();
     }
 
     void createTerrain() {
@@ -87,6 +98,29 @@ public class MapBehaviour : NetworkBehaviour
 
                 blockDetails.Add(vect, new BlockDetails(indexbiom, indexblock));
             }
+        }
+        
+        Dictionary<Vector3Int, BlockDetails> vecBlock = new Dictionary<Vector3Int, BlockDetails>();
+
+        foreach(KeyValuePair<Vector3Int, BlockDetails> kvp in blockDetails) {
+            Vector3Int vec = kvp.Key;
+            Biom b = getBiomByVec(vec);
+            int rindex = rand.Next(ressourcen.Length);
+            Ressource r = ressourcen[rindex];
+            float pro = r.getProb(biome[kvp.Value.Biomindex]);
+            int x = 10000;
+            if(rand.Next(x) <= pro*x) {
+                r.getBlock().setTile(vec, tilemap);
+                BlockDetails bdetails = blockDetails[vec];
+                bdetails.Ressourcenbool = true;
+                bdetails.ressindex = rindex;
+                vecBlock.Add(vec, bdetails);
+            }
+        }
+
+        foreach(KeyValuePair<Vector3Int, BlockDetails> kvp in vecBlock) {
+            blockDetails.Remove(kvp.Key);
+            blockDetails[kvp.Key] = kvp.Value;
         }
 
         createRand();
@@ -152,17 +186,17 @@ public class MapBehaviour : NetworkBehaviour
 
         for(int i=-1; i<=a; i++) {
             Vector3Int vec = new Vector3Int(i, a, 0);
-            tilemap.SetTile(vec, randTile);
+            randTile.setTile(vec, tilemap);
             vec = new Vector3Int(i, -1, 0);
-            tilemap.SetTile(vec, randTile);
+            randTile.setTile(vec, tilemap);
         }
 
         a = width+1;
         for(int i=-1; i<=a; i++) {
             Vector3Int vec = new Vector3Int(a, i, 0);
-            tilemap.SetTile(vec, randTile);
+            randTile.setTile(vec, tilemap);
             vec = new Vector3Int(-1, i, 0);
-            tilemap.SetTile(vec, randTile);
+            randTile.setTile(vec, tilemap);
         }
     }
 

@@ -6,10 +6,12 @@ using UnityEngine.Tilemaps;
 
 public class Unit : NetworkBehaviour
 {
-    /*[SyncVar] private int leben = 100;
+    /*
+    [SyncVar] private int leben = 100;
+    [SyncVar] private int verteidigung = 0;
     [SyncVar] private int nahkampf = 10;
     [SyncVar] private int fernkampf = 5;
-    [SyncVar] private int fernkampfweite = 2;
+    [SyncVar] private int fernkampfweite = 2; 
 
     [SyncVar] private int BloeckeProRunde;
 

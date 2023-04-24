@@ -9,17 +9,21 @@ public class BuildingManager : NetworkBehaviour
     [SerializeField] private TilemapHover hover;
     private MapBehaviour map;
 
+    [SerializeField] private Building[] building;
     [SerializeField] private TileBase tile;
     [SerializeField] private Tilemap tilemap;
 
     [SerializeField] private Unit startUnit;
 
-    private readonly SyncList<Vector3Int> save = new SyncList<Vector3Int>();
+    //SyncDictionary Value int für building id aus array
+    private readonly SyncDictionary<Vector3Int, int> save = new SyncDictionary<Vector3Int, int>();
     private List<int> list = new List<int>();
 
     private GameManager gameManager;
 
     private bool firstBuilding = false;
+
+    
 
     public bool getFirstBuilding() {
         return firstBuilding;
@@ -41,13 +45,11 @@ public class BuildingManager : NetworkBehaviour
             Vector3Int vec = hover.getVectorFromMouse();
             if(hover.insideField(vec) && base.isOwned && !firstBuilding) {
                 List<Vector3Int> veclist = makeAreaBigger(vec, 1);
+                vec.x = vec.x-1;
+                vec.y = vec.y-1;
                 bool canBuild = true;
-                //Debug.Log(map.getBlockDetails(vec).Item2.getBuildable());
-
                 foreach(Vector3Int v in veclist) {
-                    if(!map.getBlockDetails(v).Item2.getBuildable()) {
-                        canBuild = false;
-                    }else if(!hover.insideField(v)) {
+                    if(!hover.insideField(v) || !map.getBlockDetails(v).Item2.getBuildable()) {
                         canBuild = false;
                     }
                 }
@@ -58,13 +60,31 @@ public class BuildingManager : NetworkBehaviour
                     //Debug.Log("Not possible");
                 }
                 
+            }else if(firstBuilding) {
+                
             }
         }
         if(save.Count > list.Count) {
-            for(int i=list.Count; i<save.Count; i++) {
-                tilemap.SetTile(save[i], tile);
+            foreach(KeyValuePair<Vector3Int, int> kvp in save) {
+                tilemap.SetTile(kvp.Key, building[kvp.Value].getTile());
+                list.Add(1);
             }
         }
+    }
+
+    public bool isBuildingVec(Vector3Int vec) {
+        vec.z = 1;
+        vec.x = vec.x-1;
+        vec.y = vec.y-1;
+        List<Vector3Int> liste = makeAreaBigger(vec, 1);
+        bool a = false;
+        foreach(Vector3Int v in liste) {
+            if(save.ContainsKey(v)) {
+                a = true;
+                break;
+            }
+        }
+        return a;
     }
 
 
@@ -74,14 +94,7 @@ public class BuildingManager : NetworkBehaviour
         for(int x=-groesse; x<=groesse; x++) {
             for(int y=-groesse; y<=groesse; y++) {
                 Vector3Int vector = new Vector3Int(x, y, 0) + vec;
-                
-                if(!gameManager.containsVec(vector) && hover.insideField(vector)) {
-                    neighbors.Add(vector);
-                }
-                vector.z = 0;
-                if(!gameManager.containsVec(vector) && hover.insideField(vector)) {
-                    neighbors.Add(vector);
-                }
+                neighbors.Add(vector);
             }
         }
         return neighbors;
@@ -90,25 +103,20 @@ public class BuildingManager : NetworkBehaviour
 
     [Command]
     public void localAddTile(Vector3Int vec, int id) {
-        vec = new Vector3Int(vec.x, vec.y, vec.z-1);
-        tilemap.SetTile(vec, tile);
-        save.Add(vec);
+        vec = new Vector3Int(vec.x, vec.y, vec.z+1);
+        tilemap.SetTile(vec, building[id].getTile());
+        save.Add(vec, id);
         list.Add(id);
 
+        vec.x = vec.x+1;
+        vec.y = vec.y+1;
         List<Vector3Int> veclist = makeAreaBigger(vec, 4);
 
         foreach(Vector3Int vect in veclist) {
-            gameManager.addVec(vect, id);
+            if(hover.insideField(vect) && !gameManager.teamVecs.ContainsKey(vect)) {
+                gameManager.addVec(vect, id);
+            }
+            
         }
-
-
-    }
-    
-
-    public void hostAddTile(Vector3Int vec) {
-        vec = new Vector3Int(vec.x, vec.y, vec.z-1);
-        tilemap.SetTile(vec, tile);
-        save.Add(vec);
-        list.Add(1);
     }
 }

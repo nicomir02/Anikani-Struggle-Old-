@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 13312, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: Map_tiles_4
+  m_Name: Castle 1_0
   m_EditorClassIdentifier: 
-  m_Sprite: {fileID: 336676330, guid: 86948393def65d842b942366768a29c5, type: 3}
+  m_Sprite: {fileID: 413794468, guid: 6a466e175f8f291418c83979d44ae2dc, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Transform:
     e00: 1

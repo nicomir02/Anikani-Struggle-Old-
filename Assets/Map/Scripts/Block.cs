@@ -6,12 +6,19 @@ using Mirror;
 
 public class Block : NetworkBehaviour
 {
-    [SerializeField] private TileBase tile;
+    [SerializeField] private TileBase[] tile;
     [SerializeField] private string block;
     [SerializeField] private bool isBuildable = true;
 
     public TileBase getTile() {
-        return tile;
+        return tile[0];
+    }
+
+    public void setTile(Vector3Int vec, Tilemap tilemap) {
+        for(int i=0; i<tile.Length; i++) {
+            vec.z = i;
+            tilemap.SetTile(vec, tile[i]);
+        }
     }
 
     public string getName() {
@@ -20,14 +27,5 @@ public class Block : NetworkBehaviour
 
     public bool getBuildable() {
         return isBuildable;
-    }
-
-    public Block(string name) {
-
-    }
-
-    public Block(string name, TileBase tb) {
-        this.block = name;
-        this.tile = tb;
     }
 }

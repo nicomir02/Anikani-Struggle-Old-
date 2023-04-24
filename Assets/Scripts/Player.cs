@@ -42,16 +42,24 @@ public class Player : NetworkBehaviour
             if(gefaerbt) {
                 Dictionary<Vector3Int, int> liste = gameManager.getList(id);
                 foreach(KeyValuePair<Vector3Int, int> pair in liste) {
-                    tilemap.SetTileFlags(pair.Key, TileFlags.None);
-                    tilemap.SetColor(pair.Key, Color.white);
+                    Vector3Int vec = pair.Key;
+                    tilemap.SetTileFlags(vec, TileFlags.None);
+                    tilemap.SetColor(vec, Color.white);
+                    vec.z = 0;
+                    tilemap.SetTileFlags(vec, TileFlags.None);
+                    tilemap.SetColor(vec, Color.white);
                 }
                 gefaerbt = false;
             }else {
                 Dictionary<Vector3Int, int> liste = gameManager.getList(id);
 
                 foreach(KeyValuePair<Vector3Int, int> pair in liste) {
-                    tilemap.SetTileFlags(pair.Key, TileFlags.None);
-                    tilemap.SetColor(pair.Key, gameManager.getColor(pair.Value));
+                    Vector3Int vec = pair.Key;
+                    tilemap.SetTileFlags(vec, TileFlags.None);
+                    tilemap.SetColor(vec, gameManager.getColor(pair.Value));
+                    vec.z = 0;
+                    tilemap.SetTileFlags(vec, TileFlags.None);
+                    tilemap.SetColor(vec, gameManager.getColor(pair.Value));
                 }
                 gefaerbt = true;
             }

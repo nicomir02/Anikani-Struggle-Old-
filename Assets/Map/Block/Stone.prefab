@@ -48,7 +48,9 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0
-  tile: {fileID: 11400000, guid: 73be078e1ca31164586ae39523da39d2, type: 2}
+  tile:
+  - {fileID: 11400000, guid: 73be078e1ca31164586ae39523da39d2, type: 2}
+  - {fileID: 11400000, guid: fb97fb4f388787d46a692020ae7e9b47, type: 2}
   block: Stone
   isBuildable: 1
 --- !u!114 &481303840535809074

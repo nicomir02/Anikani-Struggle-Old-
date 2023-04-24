@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2669944528398631385}
   - component: {fileID: 8654665576734765553}
   m_Layer: 0
-  m_Name: FirstBuilding
+  m_Name: HomeRed
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -44,4 +44,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ae60a6587140c8408526b1896406975, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buildingTiles: {fileID: 11400000, guid: 9e589b9ddf3d7ec46a3cefb32ba3f16a, type: 2}
+  buildingTiles: {fileID: 11400000, guid: cf339fcaf7c856c4296102433673078e, type: 2}

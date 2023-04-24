@@ -360,32 +360,32 @@ Tilemap:
   m_TileMatrixArray:
   - m_RefCount: 0
     m_Data:
-      e00: 2.1519104e-19
+      e00: -2.311652e-32
       e01: 0
-      e02: 1.1020282e-38
-      e03: 1.1020282e-38
-      e10: 6.9e-43
+      e02: -1.6643015e+10
+      e03: -1.6643015e+10
+      e10: 6.5e-43
       e11: 0
-      e12: 6.9e-43
-      e13: 6.9e-43
-      e20: 7655680
+      e12: 6.5e-43
+      e13: 6.5e-43
+      e20: -5.499785e-17
       e21: 1e-45
-      e22: -5.034027e-29
-      e23: -1.6357824e+29
+      e22: 7.5663095e-29
+      e23: 3.751442e+19
       e30: 4.5905e-41
       e31: 0
-      e32: 6.9e-43
-      e33: 6.92e-43
+      e32: 6.52e-43
+      e33: 6.54e-43
   m_TileColorArray:
   - m_RefCount: 0
     m_Data: {r: NaN, g: NaN, b: NaN, a: NaN}
   - m_RefCount: 0
-    m_Data: {r: 3.7367e-41, g: 3.7367e-41, b: 3.7367e-41, a: 3.7367e-41}
+    m_Data: {r: 3.779e-41, g: 3.779e-41, b: 3.779e-41, a: 3.779e-41}
   m_TileObjectToInstantiateArray: []
   m_AnimationFrameRate: 1
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Origin: {x: -26, y: -25, z: -2}
-  m_Size: {x: 53, y: 50, z: 5}
+  m_Size: {x: 57, y: 78, z: 6}
   m_TileAnchor: {x: -0.5, y: -0.5, z: 0}
   m_TileOrientation: 0
   m_TileOrientationMatrix:
@@ -1087,10 +1087,10 @@ GameObject:
   m_Component:
   - component: {fileID: 2013624329}
   - component: {fileID: 2013624331}
-  - component: {fileID: 2013624333}
   - component: {fileID: 2013624332}
   - component: {fileID: 2013624334}
   - component: {fileID: 2013624336}
+  - component: {fileID: 2013624337}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -1162,19 +1162,6 @@ MonoBehaviour:
   rotationSensitivity: 0.01
   scaleSensitivity: 0.01
   timelineOffset: 0
---- !u!114 &2013624333
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2013624328}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7f37a66c29b7feb4a951bcb38082f210, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  tilemap: {fileID: 1221054987}
 --- !u!114 &2013624334
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1219,4 +1206,16 @@ MonoBehaviour:
   height: 50
   biomgroesse: 250
   tilemap: {fileID: 1221054987}
-  randTile: {fileID: 11400000, guid: 9e589b9ddf3d7ec46a3cefb32ba3f16a, type: 2}
+  randTile: {fileID: 4844201588082161927, guid: f0f84a696b61e524c914b8c21cd114e5, type: 3}
+--- !u!114 &2013624337
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2013624328}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f37a66c29b7feb4a951bcb38082f210, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

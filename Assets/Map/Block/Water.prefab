@@ -48,7 +48,8 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0
-  tile: {fileID: 11400000, guid: 56e067ed6a85e294fbe17012a52535d0, type: 2}
+  tile:
+  - {fileID: 11400000, guid: 56e067ed6a85e294fbe17012a52535d0, type: 2}
   block: Water
   isBuildable: 0
 --- !u!114 &481303840535809074

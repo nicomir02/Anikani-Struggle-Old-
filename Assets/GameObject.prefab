@@ -82,6 +82,9 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0
   hover: {fileID: 0}
+  building:
+  - {fileID: 8654665576734765553, guid: dafcc1223ffa1d145af0318729678b7c, type: 3}
+  - {fileID: 8654665576734765553, guid: ee0163053ddf140439d851c2908bde81, type: 3}
   tile: {fileID: 11400000, guid: 0d83043f36bcc1247878df44ca14ae43, type: 2}
   tilemap: {fileID: 0}
   startUnit: {fileID: -4510146823345106924, guid: 3d8c9e35a52997e46ae92a06878c9c18, type: 3}

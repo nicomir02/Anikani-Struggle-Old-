@@ -6,18 +6,21 @@ using Mirror;
 
 public class TilemapHover : MonoBehaviour
 {
-    public Tilemap tilemap;
+    private Tilemap tilemap;
     
     private Vector3Int oldVec;
     private Color oldColor;
     private Color select = Color.grey;
 
-    MapBehaviour mapSettings;
+    private MapBehaviour mapSettings;
+    //private BuildingManager buildingManager;
 
     // Start is called before the first frame update
     void Start()
     {
         mapSettings = GameObject.Find("GameManager").GetComponent<MapBehaviour>();
+        tilemap = GameObject.Find("Tilemap").GetComponent<Tilemap>();
+        //buildingManager = NetworkClient.localPlayer.gameObject;
     }
 
     // Update is called once per frame
@@ -36,9 +39,12 @@ public class TilemapHover : MonoBehaviour
                 tilemap.SetTileFlags(oldVec, TileFlags.None);
                 oldColor = tilemap.GetColor(oldVec);
                 tilemap.SetColor(oldVec, select);
+                //if(buildingManager.isBuildingVec(cellPosition))
             }
-            
         }
+        /*if(Input.GetMouseButtonDown(0)) {
+            Debug.Log(mapSettings.getBlockDetails(cellPosition));
+        }*/
     }
 
     public Vector3Int getVectorFromMouse() {

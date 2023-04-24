@@ -48,7 +48,9 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0
-  tile: {fileID: 11400000, guid: 3fccad33dcd86444095744119203cdf2, type: 2}
+  tile:
+  - {fileID: 11400000, guid: a84fd66d71ad48347a3e5d2e9c64109f, type: 2}
+  - {fileID: 11400000, guid: 3fccad33dcd86444095744119203cdf2, type: 2}
   block: Tree
   isBuildable: 1
 --- !u!114 &481303840535809074
