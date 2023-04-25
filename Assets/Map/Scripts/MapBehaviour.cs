@@ -49,16 +49,7 @@ public class MapBehaviour : NetworkBehaviour
 
     private HashSet<Vector3Int> vectors = new HashSet<Vector3Int>();
 
-    void Start() {
-        if(isServer) {
-            createTerrain();
-        }else {
-            buildTerrain();
-            //Debug.Log(getBlockDetails(new Vector3Int(0,0,0)));
-        }
-    }
-
-    void buildTerrain() {
+    public void buildTerrain() {
         foreach(KeyValuePair<Vector3Int, BlockDetails> kvp in blockDetails) {
             if(kvp.Value.Ressourcenbool) {
                 ressourcen[kvp.Value.ressindex].getBlock().setTile(kvp.Key, tilemap);
@@ -69,7 +60,7 @@ public class MapBehaviour : NetworkBehaviour
         createRand();
     }
 
-    void createTerrain() {
+    public void createTerrain() {
         resetAll();
 
         int i=0;
