@@ -5,6 +5,7 @@ using Mirror;
 
 public class GameManager : NetworkBehaviour
 {
+    /*
     [SyncVar] public int allPlayers = 0;
     private int currentTurn = 0;
 

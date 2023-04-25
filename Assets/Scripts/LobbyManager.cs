@@ -12,11 +12,13 @@ public class LobbyManager : NetworkBehaviour
     [SerializeField] private Button readyButton;
     [SerializeField] private TextMeshProUGUI readyButtonText;
 
+    [SerializeField] private GameObject ingameObjects;
+
     [SerializeField] private MapBehaviour mapBehaviour;
 
     private bool ready = false;
 
-    [SyncVar] public int AllPlayerready = 0;
+    [SyncVar] private int AllPlayerready = 0;
 
     private int minPlayers = 1;
 
@@ -29,7 +31,11 @@ public class LobbyManager : NetworkBehaviour
     public void OnReadyClick() {
         if(ready) {
             ready = false;
-        }else  ready = true;
+            readyButtonText.text = "Ready";
+        }else {
+            readyButtonText.text = "Not ready";
+            ready = true;
+        } 
         readyPlayer(ready);
     }
 
@@ -49,6 +55,7 @@ public class LobbyManager : NetworkBehaviour
     [ClientRpc]
     public void onStartGame() {
         lobbyObjects.SetActive(false);
+        ingameObjects.SetActive(true);
         mapBehaviour.buildTerrain();
     }
 

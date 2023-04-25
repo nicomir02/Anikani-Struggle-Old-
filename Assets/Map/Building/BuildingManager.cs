@@ -6,6 +6,7 @@ using Mirror;
 
 public class BuildingManager : NetworkBehaviour
 {
+    /*
     [SerializeField] private TilemapHover hover;
     private MapBehaviour map;
 
@@ -119,4 +120,5 @@ public class BuildingManager : NetworkBehaviour
             
         }
     }
+    */
 }

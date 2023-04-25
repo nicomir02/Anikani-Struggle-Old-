@@ -2,13 +2,39 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
+using TMPro;
 using UnityEngine.UI;
 using UnityEngine.Tilemaps;
 
 public class Player : NetworkBehaviour
 {
+    public int id;
+    [SyncVar] private int currentTurn = 1;
+    private Button roundButton;
+    private TextMeshProUGUI roundButtonText;
+    bool isYourTurn = false;
+
+
+    private NetworkManagerAnikani network;
+
+    bool isLobby = true;
+
+    private GameObject lobbyObjects;
+
+    void Start() {
+        lobbyObjects = GameObject.Find("Lobby");
+        network = GameObject.Find("NetworkManager").GetComponent<NetworkManagerAnikani>();
+
+        if(isLocalPlayer) {
+            id = network.numPlayers;
+        }
+    }
+
+    
+
+    /*
     private GameManager gameManager;
-    private int id;
+    public int id;
     private static int allids = 0;
 
     private Button button;
@@ -27,8 +53,8 @@ public class Player : NetworkBehaviour
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         id = allids++;
         if(base.isOwned) addPlayer();
-        button = GameObject.Find("ButtonGebiet").GetComponent<Button>();
-        button.onClick.AddListener(OnButtonClick);
+        //button = GameObject.Find("ButtonGebiet").GetComponent<Button>();
+        //button.onClick.AddListener(OnButtonClick);
         buildingManager = GetComponent<BuildingManager>();
         unitManager = GetComponent<UnitManager>();
     }
@@ -67,6 +93,6 @@ public class Player : NetworkBehaviour
             }
         }
     }
-
+*/
 
 }
