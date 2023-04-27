@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.Tilemaps;
 using Mirror;
 
@@ -11,16 +12,38 @@ public class BuildingManager : NetworkBehaviour
     private TilemapHover hover;
     private Tilemap tilemap;
     private TilemapManager tilemapManager;
+    private VolkManager volkManager;
+    private MapBehaviour mapBehaviour;
+
+    private GameManager gameManager;
+
+    private Button showArea;
+
+    private bool showAreaBool = false;
+    private bool isLobby = true;
 
     //private int maxBuildingPerRound = 1;
     private int buildInRound = 0;
 
+
+    Color getColorByID(int id) {
+        if(id==1) {
+            return Color.blue;
+        }else if(id==2) {
+            return Color.red;
+        }
+        return Color.white;
+    }
+
     void Start() {
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         hover = GameObject.Find("GameManager").GetComponent<TilemapHover>();
         tilemap = GameObject.Find("Tilemap").GetComponent<Tilemap>();
         player = GetComponent<Player>();
         volk = player.eigenesVolk;
         tilemapManager = GameObject.Find("GameManager").GetComponent<TilemapManager>();
+        volkManager = GameObject.Find("GameManager").GetComponent<VolkManager>();
+        mapBehaviour = GameObject.Find("GameManager").GetComponent<MapBehaviour>();
     }
 
     void Update() {
@@ -28,104 +51,65 @@ public class BuildingManager : NetworkBehaviour
             Vector3Int vec = hover.getVectorFromMouse();
             if(hover.insideField(vec)) {
                 if(player.round == 0 && base.isOwned && buildInRound == 0) {
-                    vec.z = 1;
-                    vec.x = vec.x-1;
-                    vec.y = vec.y-1;
-                    volk.setBuilding(0, player.id-1, tilemap, vec);
-                    buildInRound++;
-                    tilemapManager.CmdUpdateTilemap(vec, (Tile)tilemap.GetTile(vec));
+                    bool canBuild = true;
+                    List<Vector3Int> newArea = makeAreaBigger(vec, 1);
+                    foreach(Vector3Int v in newArea) {
+                        if(!hover.insideField(v) || !mapBehaviour.getBlockDetails(v).Item2.getBuildable()) canBuild = false;
+                    }
+                    if(canBuild) {
+                        newArea = makeAreaBigger(vec, 4);
+
+                        add(newArea, player.id);
+                        
+                        vec.z = 1;
+                        vec.x = vec.x-1;
+                        vec.y = vec.y-1;
+                        volk.setBuilding(0, player.id-1, tilemap, vec);
+                        buildInRound++;
+
+                        tilemapManager.CmdUpdateTilemap(vec, volkManager.getVolkID(volk).Item2, 0, player.id-1);
+                    }
                 }
             }
+        }
+
+        if(GameObject.Find("InGame/Canvas") != null && isLobby) {
+            showArea = GameObject.Find("InGame/Canvas/ShowArea").GetComponent<Button>();
+            showArea.onClick.AddListener(OnShowAreaClick);
+            isLobby = false;
+        }
+    }
+
+    public void OnShowAreaClick() {
+        Dictionary<Vector3Int, int> teamVectors = gameManager.getDictionary();
+        if(!showAreaBool) {
+            foreach(KeyValuePair<Vector3Int, int> kvp in teamVectors) {
+                tilemap.SetTileFlags(kvp.Key, TileFlags.None);
+                tilemap.SetColor(kvp.Key, getColorByID(kvp.Value));
+            }
+            showAreaBool = true;
+        }else {
+            foreach(KeyValuePair<Vector3Int, int> kvp in teamVectors) {
+                tilemap.SetTileFlags(kvp.Key, TileFlags.None);
+                tilemap.SetColor(kvp.Key, Color.white);
+            }
+            showAreaBool = false;
         }
     }
 
     public void auffuellen() {
         buildInRound = 0;
     }
+
+    [Command]
+    public void add(List<Vector3Int> vecs, int id) {
+        foreach(Vector3Int vec in vecs) {
+            if(!gameManager.hasVec(vec)) {
+                gameManager.addVec(vec, id);
+            }
+        }
+    }
     
-    /*
-    [SerializeField] private TilemapHover hover;
-    private MapBehaviour map;
-
-    [SerializeField] private Building[] building;
-    [SerializeField] private TileBase tile;
-    [SerializeField] private Tilemap tilemap;
-
-    [SerializeField] private Unit startUnit;
-
-    //SyncDictionary Value int für building id aus array
-    private readonly SyncDictionary<Vector3Int, int> save = new SyncDictionary<Vector3Int, int>();
-    private List<int> list = new List<int>();
-
-    private GameManager gameManager;
-
-    private bool firstBuilding = false;
-
-    
-
-    public bool getFirstBuilding() {
-        return firstBuilding; 
-    }
-
-    public Tilemap getTilemap() {
-        return tilemap;
-    }
-
-    void Start() {
-        tilemap = GameObject.Find("Tilemap").GetComponent<Tilemap>();
-        hover = GameObject.Find("GameManager").GetComponent<TilemapHover>();
-        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
-        map = GameObject.Find("GameManager").GetComponent<MapBehaviour>();
-    }
-
-    void Update() {
-        if(Input.GetMouseButtonDown(0)) {
-            Vector3Int vec = hover.getVectorFromMouse();
-            if(hover.insideField(vec) && base.isOwned && !firstBuilding) {
-                List<Vector3Int> veclist = makeAreaBigger(vec, 1);
-                vec.x = vec.x-1;
-                vec.y = vec.y-1;
-                bool canBuild = true;
-                foreach(Vector3Int v in veclist) {
-                    if(!hover.insideField(v) || !map.getBlockDetails(v).Item2.getBuildable()) {
-                        canBuild = false;
-                    }
-                }
-                if(canBuild) {
-                    localAddTile(vec, GetComponent<Player>().getID());
-                    firstBuilding = true;
-                }else {
-                    //Debug.Log("Not possible");
-                }
-                
-            }else if(firstBuilding) {
-                
-            }
-        }
-        if(save.Count > list.Count) {
-            foreach(KeyValuePair<Vector3Int, int> kvp in save) {
-                tilemap.SetTile(kvp.Key, building[kvp.Value].getTile());
-                list.Add(1);
-            }
-        }
-    }
-
-    public bool isBuildingVec(Vector3Int vec) {
-        vec.z = 1;
-        vec.x = vec.x-1;
-        vec.y = vec.y-1;
-        List<Vector3Int> liste = makeAreaBigger(vec, 1);
-        bool a = false;
-        foreach(Vector3Int v in liste) {
-            if(save.ContainsKey(v)) {
-                a = true;
-                break;
-            }
-        }
-        return a;
-    }
-
-
     public List<Vector3Int> makeAreaBigger(Vector3Int vec, int groesse) {
         List<Vector3Int> neighbors = new List<Vector3Int>();
 
@@ -136,26 +120,5 @@ public class BuildingManager : NetworkBehaviour
             }
         }
         return neighbors;
-
     }
-
-    [Command]
-    public void localAddTile(Vector3Int vec, int id) {
-        vec = new Vector3Int(vec.x, vec.y, vec.z+1);
-        tilemap.SetTile(vec, building[id].getTile());
-        save.Add(vec, id);
-        list.Add(id);
-
-        vec.x = vec.x+1;
-        vec.y = vec.y+1;
-        List<Vector3Int> veclist = makeAreaBigger(vec, 4);
-
-        foreach(Vector3Int vect in veclist) {
-            if(hover.insideField(vect) && !gameManager.teamVecs.ContainsKey(vect)) {
-                gameManager.addVec(vect, id);
-            }
-            
-        }
-    }
-    */
 }
