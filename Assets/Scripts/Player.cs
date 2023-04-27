@@ -10,26 +10,89 @@ public class Player : NetworkBehaviour
 {
     public int id;
     [SyncVar] private int currentTurn = 1;
+    [SyncVar] public int allids = 0;
+    [SyncVar] public int round = 0;
     private Button roundButton;
     private TextMeshProUGUI roundButtonText;
-    bool isYourTurn = false;
+    private TextMeshProUGUI roundText;
+    public bool isYourTurn = false;
+
+    [SerializeField] public Volk eigenesVolk;
 
 
     private NetworkManagerAnikani network;
 
-    bool isLobby = true;
+    public bool isLobby = true;
 
     private GameObject lobbyObjects;
 
     void Start() {
         lobbyObjects = GameObject.Find("Lobby");
         network = GameObject.Find("NetworkManager").GetComponent<NetworkManagerAnikani>();
+        id = allids+1;
+        addID();
+    }
 
-        if(isLocalPlayer) {
-            id = network.numPlayers;
+    [Command(requiresAuthority = false)]
+    public void addID() {
+        allids = allids+1;
+        setAllIds(allids);
+
+    }
+
+    [ClientRpc]
+    public void setAllIds(int aid) {
+        allids = aid;
+    }
+
+    void Update() {
+        if(GameObject.Find("InGame/Canvas/Runde") != null && isLobby) {
+            roundButton = GameObject.Find("InGame/Canvas/Runde").GetComponent<Button>();
+            roundButtonText = GameObject.Find("InGame/Canvas/Runde/RundeText").GetComponent<TextMeshProUGUI>();
+            roundText = GameObject.Find("InGame/Canvas/RundenText").GetComponent<TextMeshProUGUI>();
+            isLobby = false;
+            roundButton.onClick.AddListener(OnClick);
+            if(id == 1) {
+                isYourTurn = true;
+                roundButtonText.text = "Nächste Runde";
+            }else {
+                roundButtonText.text = "Warten";
+            }
         }
     }
 
+    public void OnClick() {
+        if(isYourTurn) {
+            isYourTurn = false;
+            roundButtonText.text = "Warten";
+            onRoundChange();
+        }
+    }
+
+    [Command(requiresAuthority = false)]
+    public void onRoundChange() {
+        currentTurn++;
+        if(currentTurn > network.numPlayers) {
+            currentTurn = 1;
+            round += 1;
+        }
+        RpconRoundChange(currentTurn);
+
+    }
+
+    [ClientRpc]
+    public void RpconRoundChange(int a) {
+        if(a == id) {
+            isYourTurn = true;
+            roundButtonText.text = "Nächste Runde";
+            auffuellen();
+        }
+        roundText.text = "Runde " + round;
+    }
+
+    void auffuellen() {
+        GetComponent<BuildingManager>().auffuellen();
+    }
     
 
     /*

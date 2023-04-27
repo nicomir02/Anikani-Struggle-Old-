@@ -6,6 +6,43 @@ using Mirror;
 
 public class BuildingManager : NetworkBehaviour
 {
+    private Volk volk;
+    private Player player;
+    private TilemapHover hover;
+    private Tilemap tilemap;
+    private TilemapManager tilemapManager;
+
+    //private int maxBuildingPerRound = 1;
+    private int buildInRound = 0;
+
+    void Start() {
+        hover = GameObject.Find("GameManager").GetComponent<TilemapHover>();
+        tilemap = GameObject.Find("Tilemap").GetComponent<Tilemap>();
+        player = GetComponent<Player>();
+        volk = player.eigenesVolk;
+        tilemapManager = GameObject.Find("GameManager").GetComponent<TilemapManager>();
+    }
+
+    void Update() {
+        if(Input.GetMouseButtonDown(0) && player.isYourTurn && !player.isLobby) {
+            Vector3Int vec = hover.getVectorFromMouse();
+            if(hover.insideField(vec)) {
+                if(player.round == 0 && base.isOwned && buildInRound == 0) {
+                    vec.z = 1;
+                    vec.x = vec.x-1;
+                    vec.y = vec.y-1;
+                    volk.setBuilding(0, player.id-1, tilemap, vec);
+                    buildInRound++;
+                    tilemapManager.CmdUpdateTilemap(vec, (Tile)tilemap.GetTile(vec));
+                }
+            }
+        }
+    }
+
+    public void auffuellen() {
+        buildInRound = 0;
+    }
+    
     /*
     [SerializeField] private TilemapHover hover;
     private MapBehaviour map;

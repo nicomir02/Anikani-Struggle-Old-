@@ -12,6 +12,8 @@ public class LobbyManager : NetworkBehaviour
     [SerializeField] private Button readyButton;
     [SerializeField] private TextMeshProUGUI readyButtonText;
 
+    [SerializeField] private Volk volk;
+
     [SerializeField] private GameObject ingameObjects;
 
     [SerializeField] private MapBehaviour mapBehaviour;
