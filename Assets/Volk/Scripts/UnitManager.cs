@@ -17,14 +17,16 @@ public class UnitManager : NetworkBehaviour
     private GameManager gameManager;
 
     //private int buildInRound = 0;
+    //bewegungsreichweite fehlt/angriffsbegrenzung fehlt/begrenzte blöcke fehlen
    
    
-   
-   
+    Dictionary<Vector3Int, Unit> spawnedUnits = new Dictionary<Vector3Int, Unit>();
+    readonly SyncDictionary<Vector3Int, int> healthUnits = new SyncDictionary<Vector3Int, int>();
    
    
 
-    public static Unit SelectedUnit;
+    public Unit selectedUnit;
+    public Vector3Int selectedVector;
     
     void Start() {
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
@@ -37,8 +39,101 @@ public class UnitManager : NetworkBehaviour
         mapBehaviour = GameObject.Find("GameManager").GetComponent<MapBehaviour>();
     }
 
-    // Update is called once per frame
-    /* void Update()
+    
+    private void Update()
+    {
+        if(Input.GetMouseButtonDown(0)) {
+            Vector3Int vec = hover.getVectorFromMouse();
+            vec.z = 2;
+            if(hover.insideField(vec)){
+                if (selectedUnit == null){
+                selectUnit(vec);}
+                else{
+                    moveUnit(selectedUnit, vec);
+                    deselectUnit();
+                }
+
+            }
+        }
+    }
+
+    public void deselectUnit(){
+        Vector3Int vec = new Vector3Int(mapBehaviour.mapWidth()+2,mapBehaviour.mapHeight()+2,-1);
+        selectedUnit = null;
+        selectedVector = vec;
+    }
+    public void selectUnit(Vector3Int vec){
+        if(spawnedUnits.ContainsKey(vec)){ 
+            selectedUnit = spawnedUnits[vec];
+            selectedVector = vec;
+        }
+    }
+
+    public void moveUnit(Unit unit, Vector3Int vec){
+        if(tilemap.GetTile(vec) != null){
+            angriff(unit, vec);
+            if(tilemap.GetTile(vec) != null) return;    //schaut ob gegner besiegt wurde in dieser runde
+        }
+        tilemap.SetTile(selectedVector, null);
+        unit.setTile(tilemap,vec,player.id -1);
+        tilemapManager.CmdUpdateTilemapUnit(vec,volkManager.getVolkID(volk).Item2,volk.getUnitID(unit),player.id -1);
+        spawnedUnits.Remove(selectedVector);    //diese beiden Zeilen damit die Dictionary sich mit der neuen position updated
+        spawnedUnits.Add(vec, unit);
+        int currentLeben = healthUnits[selectedVector];
+        healthUnits.Remove(selectedVector);
+        healthUnits.Add(vec, currentLeben);
+        syncMovedUnits(selectedVector);
+    }
+
+
+    public void spawnUnit(Unit unit, Vector3Int vec, int colorID){
+        unit.setTile(tilemap,vec,colorID);
+        tilemapManager.CmdUpdateTilemapUnit(vec,volkManager.getVolkID(volk).Item2,volk.getUnitID(unit),colorID);
+        spawnedUnits.Add(vec, unit);
+        healthUnits.Add(vec, unit.getLeben());
+    }
+
+    public void angriff(Unit unit, Vector3Int vec){
+        syncAngriff(unit.getAngriffswert(), vec);
+    }
+
+    [Command]
+    public void syncAngriff(int angriffswert, Vector3Int vec){  //funktioniert noch nicht. wahrschienlich einen Unitmanager aufbauen außerhalb der spieler für die SyncDictionary
+        
+        if(healthUnits.ContainsKey(vec)){
+            healthUnits[vec] -= angriffswert;
+            if(healthUnits[vec] <= 0){
+                healthUnits.Remove(vec);
+                syncMovedUnits(vec);
+            }
+        }
+        
+        syncAngriffClient(angriffswert, vec);
+    }
+
+    [ClientRpc]
+    public void syncAngriffClient(int angriffswert, Vector3Int vec){
+        foreach(KeyValuePair<Vector3Int, Unit> kvp in spawnedUnits){ Debug.Log(kvp.Key); };
+        if(spawnedUnits.ContainsKey(vec) && !healthUnits.ContainsKey(vec)){
+            Debug.Log("Test"); //Testzwecke
+            spawnedUnits.Remove(vec);
+        }
+    }
+
+    [Command]
+    public void syncMovedUnits(Vector3Int vec){
+        syncMovedUnitsClient(vec);
+    }
+
+    [ClientRpc]
+    public void syncMovedUnitsClient(Vector3Int vec){
+        tilemap.SetTile(vec, null);
+    }
+
+//old code:
+
+
+/*void Update()
     {
         if(Input.GetMouseButtonDown(0)) {
             Vector3Int vec = hover.getVectorFromMouse();
@@ -53,16 +148,6 @@ public class UnitManager : NetworkBehaviour
             }
         }   
     } */
-
-
-
-
-    public void spawnUnit(Unit unit, Vector3Int vec, int colorID){
-        unit.setTile(tilemap,vec,colorID);
-        tilemapManager.CmdUpdateTilemapUnit(vec,volkManager.getVolkID(volk).Item2,volk.getUnitID(unit),colorID);
-    }
-
-//old code:
     /* [Command]
     public void localAddTile(Vector3Int vec, int id) {
         vec = new Vector3Int(vec.x, vec.y, vec.z+1);

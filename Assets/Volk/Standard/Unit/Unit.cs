@@ -7,7 +7,9 @@ using UnityEngine.Tilemaps;
 public class Unit : NetworkBehaviour
 {
     [SyncVar] public Block BesetzterBlock;
-    /* [SyncVar] private int leben = 100;
+    [SerializeField] private int leben = 100;
+    [SerializeField] private int angriffswert = 30;
+    /* 
     [SyncVar] private int verteidigung = 0;
     [SyncVar] private int nahkampf = 10;
     [SyncVar] private int fernkampf = 5;
@@ -24,6 +26,12 @@ public class Unit : NetworkBehaviour
     public TileBase getTile(int colorFromID) {
         return colourUnit[colorFromID];
     }
+    public int getLeben(){
+        return leben;
+    }
 
+    public int getAngriffswert(){
+        return angriffswert;
+    }
     
 }
