@@ -16,4 +16,23 @@ public class Volk : NetworkBehaviour
       public Building getBuilding(int buildingid) {
          return buildings[buildingid];
       } 
+
+      //für Units
+
+      public void setUnit(int unitID, int idColor, Tilemap tilemap, Vector3Int vec) {
+         units[unitID].setTile(tilemap, vec, idColor);
+      }
+
+      public Unit getUnit(int unitID) {
+         return units[unitID];
+      } 
+
+      public int getUnitID(Unit unit){
+         for(int i = 0; i < units.Count; i++){
+            if(unit == units[i]){
+               return i;
+            }
+         }
+         return -1;
+      }
 }

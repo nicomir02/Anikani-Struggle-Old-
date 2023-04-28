@@ -16,6 +16,7 @@ public class BuildingManager : NetworkBehaviour
     private MapBehaviour mapBehaviour;
 
     private GameManager gameManager;
+    private UnitManager unitManager;    //für testzwecke der ersten einheit
 
     private Button showArea;
 
@@ -26,15 +27,6 @@ public class BuildingManager : NetworkBehaviour
     private int buildInRound = 0;
 
 
-    Color getColorByID(int id) {
-        if(id==1) {
-            return Color.blue;
-        }else if(id==2) {
-            return Color.red;
-        }
-        return Color.white;
-    }
-
     void Start() {
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         hover = GameObject.Find("GameManager").GetComponent<TilemapHover>();
@@ -44,6 +36,7 @@ public class BuildingManager : NetworkBehaviour
         tilemapManager = GameObject.Find("GameManager").GetComponent<TilemapManager>();
         volkManager = GameObject.Find("GameManager").GetComponent<VolkManager>();
         mapBehaviour = GameObject.Find("GameManager").GetComponent<MapBehaviour>();
+        unitManager = GetComponent<UnitManager>();//für testzwecke der ersten einheit
     }
 
     void Update() {
@@ -68,6 +61,11 @@ public class BuildingManager : NetworkBehaviour
                         buildInRound++;
 
                         tilemapManager.CmdUpdateTilemap(vec, volkManager.getVolkID(volk).Item2, 0, player.id-1);
+                        //testen für erste einheit direkt mit hauptgebäude
+                        vec.y = vec.y + 1;
+                        vec.z = 2;
+                        unitManager.spawnUnit(volk.getUnit(0),vec,player.id - 1);
+                        
                     }
                 }
             }
@@ -85,7 +83,7 @@ public class BuildingManager : NetworkBehaviour
         if(!showAreaBool) {
             foreach(KeyValuePair<Vector3Int, int> kvp in teamVectors) {
                 tilemap.SetTileFlags(kvp.Key, TileFlags.None);
-                tilemap.SetColor(kvp.Key, getColorByID(kvp.Value));
+                tilemap.SetColor(kvp.Key, gameManager.getColorByID(kvp.Value));
             }
             showAreaBool = true;
         }else {

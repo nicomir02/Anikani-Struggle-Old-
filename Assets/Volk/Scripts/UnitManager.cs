@@ -6,29 +6,35 @@ using UnityEngine.Tilemaps;
 
 public class UnitManager : NetworkBehaviour
 {
-    [SerializeField] private TilemapHover hover;
-    private MapBehaviour map;
-
-    [SerializeField] private Unit[] unit;
-    [SerializeField] private TileBase tile;
-    [SerializeField] private Tilemap tilemap;
-
-    private readonly SyncDictionary<Vector3Int, int> save = new SyncDictionary<Vector3Int, int>();
-    private List<int> list = new List<int>();
+    private Volk volk;
+    private Player player;
+    private TilemapHover hover;
+    private Tilemap tilemap;
+    private TilemapManager tilemapManager;
+    private VolkManager volkManager;
+    private MapBehaviour mapBehaviour;
 
     private GameManager gameManager;
-    
-    //fürs unit setzen noch ausprobieren als Kondition
-    //private int MaxUnitCounter = 5;
-    //private int CurrentUnitCounter = 0;
-    //private bool canPlace = false; 
+
+    //private int buildInRound = 0;
+   
+   
+   
+   
+   
+   
+
     public static Unit SelectedUnit;
     
     void Start() {
-        tilemap = GameObject.Find("Tilemap").GetComponent<Tilemap>();
-        hover = GameObject.Find("GameManager").GetComponent<TilemapHover>();
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
-        map = GameObject.Find("GameManager").GetComponent<MapBehaviour>();
+        hover = GameObject.Find("GameManager").GetComponent<TilemapHover>();
+        tilemap = GameObject.Find("Tilemap").GetComponent<Tilemap>();
+        player = GetComponent<Player>();
+        volk = player.eigenesVolk;
+        tilemapManager = GameObject.Find("GameManager").GetComponent<TilemapManager>();
+        volkManager = GameObject.Find("GameManager").GetComponent<VolkManager>();
+        mapBehaviour = GameObject.Find("GameManager").GetComponent<MapBehaviour>();
     }
 
     // Update is called once per frame
@@ -48,7 +54,16 @@ public class UnitManager : NetworkBehaviour
         }   
     } */
 
-    [Command]
+
+
+
+    public void spawnUnit(Unit unit, Vector3Int vec, int colorID){
+        unit.setTile(tilemap,vec,colorID);
+        tilemapManager.CmdUpdateTilemapUnit(vec,volkManager.getVolkID(volk).Item2,volk.getUnitID(unit),colorID);
+    }
+
+//old code:
+    /* [Command]
     public void localAddTile(Vector3Int vec, int id) {
         vec = new Vector3Int(vec.x, vec.y, vec.z+1);
         if (unit[id].BesetzterBlock != null){
@@ -92,6 +107,6 @@ public class UnitManager : NetworkBehaviour
         unit.transform.position = vec;
         block.BesetzteUnit = unit;
         unit.BesetzterBlock = block;
-    }
+    } */
 
 }

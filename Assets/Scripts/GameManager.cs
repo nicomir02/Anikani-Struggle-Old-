@@ -28,4 +28,13 @@ public class GameManager : NetworkBehaviour
         }
         return vecs;
     }
+
+    public Color getColorByID(int id) {
+        if(id==1) {
+            return Color.blue;
+        }else if(id==2) {
+            return Color.red;
+        }
+        return Color.white;
+    }
 }

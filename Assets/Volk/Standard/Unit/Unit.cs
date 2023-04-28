@@ -15,20 +15,14 @@ public class Unit : NetworkBehaviour
 
     [SyncVar] private int BloeckeProRunde; */
 
-    [SerializeField] private TileBase truppenTile;
+    [SerializeField] List<TileBase> colourUnit = new List<TileBase>();
 
-    private Tilemap tilemap;
-
-    void Start() {
-        tilemap = GameObject.Find("Tilemap").GetComponent<Tilemap>();
+    public void setTile(Tilemap tilemap, Vector3Int vec, int colorFromID) {
+        tilemap.SetTile(vec, colourUnit[colorFromID]);
     }
-    void truppeSetzen(Vector3Int vec) {
-        vec.z = 1;
 
-        //tilemap.SetTile(vec, truppenTile);
-    }
-    public TileBase getTile() {
-        return truppenTile;
+    public TileBase getTile(int colorFromID) {
+        return colourUnit[colorFromID];
     }
 
     

@@ -20,4 +20,18 @@ public class TilemapManager : NetworkBehaviour
     {
         RpcUpdateTilemap(vec, volkID, buildID, colorID);
     }
+    
+    //für Unit
+    [ClientRpc]
+    private void RpcUpdateTilemapUnit(Vector3Int vec, int volkID, int unitID, int colorID) {
+        Volk v = volkManager.getVolk(volkID);
+        v.setUnit(unitID, colorID, tilemap, vec);
+    }
+
+    [Command(requiresAuthority = false)]
+    public void CmdUpdateTilemapUnit(Vector3Int vec, int volkID, int unitID, int colorID)
+    {
+        RpcUpdateTilemapUnit(vec, volkID, unitID, colorID);
+    }
+
 }
