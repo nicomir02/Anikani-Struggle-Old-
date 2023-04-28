@@ -92,6 +92,7 @@ public class Player : NetworkBehaviour
 
     void auffuellen() {
         GetComponent<BuildingManager>().auffuellen();
+        GetComponent<UnitManager>().auffuellen();
     }
     
 

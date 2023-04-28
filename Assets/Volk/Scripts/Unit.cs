@@ -9,6 +9,7 @@ public class Unit : NetworkBehaviour
     [SyncVar] public Block BesetzterBlock;
     [SerializeField] private int leben = 100;
     [SerializeField] private int angriffswert = 30;
+    [SerializeField] private int maxBloeckeProRunde = 4;
     /* 
     [SyncVar] private int verteidigung = 0;
     [SyncVar] private int nahkampf = 10;
@@ -32,6 +33,10 @@ public class Unit : NetworkBehaviour
 
     public int getAngriffswert(){
         return angriffswert;
+    }
+
+    public int getMaxBloeckeProRunde() {
+        return maxBloeckeProRunde;
     }
     
 }
