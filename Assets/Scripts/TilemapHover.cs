@@ -29,9 +29,11 @@ public class TilemapHover : MonoBehaviour
         Vector3Int cellPosition = getVectorFromMouse();
         
         if(insideField(cellPosition) && oldVec != cellPosition) {
+            cellPosition.z = 0;
             
             if(oldVec != null) {
                 tilemap.SetColor(oldVec, oldColor);
+                
             }
 
             if(insideField(cellPosition)) {
@@ -39,6 +41,7 @@ public class TilemapHover : MonoBehaviour
                 tilemap.SetTileFlags(oldVec, TileFlags.None);
                 oldColor = tilemap.GetColor(oldVec);
                 tilemap.SetColor(oldVec, select);
+
                 //if(buildingManager.isBuildingVec(cellPosition))
             }
         }

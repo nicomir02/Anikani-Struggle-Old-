@@ -26,6 +26,7 @@ public class Player : NetworkBehaviour
 
     private GameObject lobbyObjects;
     public GameObject infobox;
+    public GameObject infoboxBuilding;
 
     void Start() {
         lobbyObjects = GameObject.Find("Lobby");
@@ -49,9 +50,11 @@ public class Player : NetworkBehaviour
     void Update() {
         if(GameObject.Find("InGame/Canvas/Runde") != null && isLobby) {
             infobox = GameObject.Find("InGame/Canvas/Infobox");
+            infoboxBuilding = GameObject.Find("InGame/Canvas/InfoboxBuilding");
+
             roundButton = GameObject.Find("InGame/Canvas/Runde").GetComponent<Button>();
             roundButtonText = GameObject.Find("InGame/Canvas/Runde/RundeText").GetComponent<TextMeshProUGUI>();
-            roundText = GameObject.Find("InGame/Canvas/RundenText").GetComponent<TextMeshProUGUI>();
+            roundText = GameObject.Find("InGame/Canvas/Leiste/RundenText").GetComponent<TextMeshProUGUI>();
             isLobby = false;
             roundButton.onClick.AddListener(OnClick);
             if(id == 1) {

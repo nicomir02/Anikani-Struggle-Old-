@@ -12,7 +12,7 @@ public class TilemapManager : NetworkBehaviour
     [ClientRpc]
     private void RpcUpdateTilemap(Vector3Int vec, int volkID, int buildID, int colorID) {
         Volk v = volkManager.getVolk(volkID);
-        v.setBuilding(buildID, colorID, tilemap, vec);
+        v.setHomeBuilding(buildID, colorID, tilemap, vec);
     }
 
     [Command(requiresAuthority = false)]

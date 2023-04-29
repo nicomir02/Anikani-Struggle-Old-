@@ -6,7 +6,7 @@ using UnityEngine.Tilemaps;
 
 public class Unit : NetworkBehaviour
 {
-    [SyncVar] public Block BesetzterBlock;
+    [SerializeField] private string unitname = "";
     [SerializeField] private int leben = 100;
     [SerializeField] private int angriffswert = 30;
     [SerializeField] private int maxBloeckeProRunde = 4;
@@ -22,6 +22,10 @@ public class Unit : NetworkBehaviour
 
     public void setTile(Tilemap tilemap, Vector3Int vec, int colorFromID) {
         tilemap.SetTile(vec, colourUnit[colorFromID]);
+    }
+
+    public string getName() {
+        return unitname;
     }
 
     public TileBase getTile(int colorFromID) {

@@ -29,8 +29,8 @@ public class UnitManager : NetworkBehaviour
 
     private GameObject infobox;
 
-    public Unit selectedUnit;
-    public Vector3Int selectedVector;
+    private Unit selectedUnit;
+    private Vector3Int selectedVector;
 
     
     
@@ -96,7 +96,7 @@ public class UnitManager : NetworkBehaviour
 
     public void activatePanel(Vector3Int vec) {
         player.infobox.SetActive(true);
-        GameObject.Find("InGame/Canvas/Infobox/Infotext").GetComponent<TextMeshProUGUI>().text = "<b><u>Infobox</u></b> \n\n Leben: "+ healthManager.getLeben(vec) +" \n Angriffswert: "+ spawnedUnits[vec].getAngriffswert() +" \n verfügbare Bewegung: " +reichweite[vec];
+        GameObject.Find("InGame/Canvas/Infobox/Infotext").GetComponent<TextMeshProUGUI>().text = "<b><u>Infobox</u></b> \n Name: "+spawnedUnits[vec].getName()+"\n Leben: "+ healthManager.getLeben(vec) +" \n Angriffswert: "+ spawnedUnits[vec].getAngriffswert() +" \n verfügbare Bewegung: " +reichweite[vec];
     }
 
     public int distance(Vector3Int vec1, Vector3Int vec2) {
@@ -105,9 +105,9 @@ public class UnitManager : NetworkBehaviour
 
     public void moveUnit(Unit unit, Vector3Int vec){
         if(distance(selectedVector, vec) <= reichweite[selectedVector] && mapBehaviour.getBlockDetails(new Vector3Int(vec.x, vec.y, 0)).Item2.getWalkable()) {
-            if(tilemap.GetTile(vec) != null){
+            if(healthManager.isHealth(vec)){
                 angriff(unit, vec);
-                if(tilemap.GetTile(vec) != null) return;    //schaut ob gegner besiegt wurde in dieser runde
+                if(healthManager.isHealth(vec)) return;    //schaut ob gegner besiegt wurde in dieser runde
             }
             tilemap.SetTile(selectedVector, null);
             unit.setTile(tilemap,vec,player.id -1);
@@ -134,10 +134,15 @@ public class UnitManager : NetworkBehaviour
     }
 
     public void angriff(Unit unit, Vector3Int vec){
-        if(spawnedUnits.ContainsKey(vec)) return;
-        healthManager.angriff(vec, unit.getAngriffswert());
-        syncStillExists(vec);
-        reichweite[selectedVector] -= 1;
+        if(healthManager.isUnit(vec)) {
+            if(spawnedUnits.ContainsKey(vec)) return;
+            healthManager.angriff(vec, unit.getAngriffswert());
+            syncStillExists(vec);
+            reichweite[selectedVector] = 0;
+        }else {
+            healthManager.angriffBuilding(vec, unit.getAngriffswert());
+            reichweite[selectedVector] = 0;
+        }
     }
 
     public void auffuellen() {

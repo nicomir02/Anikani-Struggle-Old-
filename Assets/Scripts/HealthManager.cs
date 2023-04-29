@@ -5,7 +5,10 @@ using Mirror;
 
 public class HealthManager : NetworkBehaviour
 {
-    readonly SyncDictionary<Vector3Int, int> healthUnits = new SyncDictionary<Vector3Int, int>();
+    private readonly SyncDictionary<Vector3Int, int> healthUnits = new SyncDictionary<Vector3Int, int>();
+
+    private readonly SyncDictionary<Vector3Int, Vector3Int> building = new SyncDictionary<Vector3Int, Vector3Int>();
+
 
     [SyncVar] public Vector3Int angegriffenVec;
 
@@ -13,6 +16,44 @@ public class HealthManager : NetworkBehaviour
 
     void Start() {
         mapBehaviour = GameObject.Find("GameManager").GetComponent<MapBehaviour>();
+    }
+
+    [Command(requiresAuthority = false)]
+    public void addBuilding(List<Vector3Int> listVec, int health, Vector3Int vec) {
+        if(listVec.Count > 0) {
+            healthUnits.Add(vec, health);
+            foreach(Vector3Int v in listVec) {
+                building.Add(new Vector3Int(v.x, v.y, 1), vec);
+            }
+        }
+    }
+
+    public bool isHealth(Vector3Int vec) {
+        bool b = false;
+        if(healthUnits.ContainsKey(vec)) b = true;
+        vec.z = 1;
+        if(healthUnits.ContainsKey(vec)) b = true;
+        if(building.ContainsKey(vec)) b = true;
+        return b;
+    }
+
+    public bool isUnit(Vector3Int vec) {
+        return healthUnits.ContainsKey(vec);
+    }
+
+    public bool isBuilding(Vector3Int vec) {
+        return building.ContainsKey(vec);
+    }
+
+    public int getBuildingLeben(Vector3Int vec) {
+        if(building.ContainsKey(vec) && healthUnits.ContainsKey(building[vec])) return healthUnits[building[vec]];
+        return 0;
+    }
+
+    [Command(requiresAuthority = false)]
+    public void angriffBuilding(Vector3Int vec, int angriffswert) {
+        vec.z = 1;
+        healthUnits[building[vec]] -= angriffswert;
     }
     
     [Command(requiresAuthority = false)]
