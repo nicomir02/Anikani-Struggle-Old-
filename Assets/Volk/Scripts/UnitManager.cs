@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
+using TMPro;
+using UnityEngine.UI;
 using UnityEngine.Tilemaps;
 
 public class UnitManager : NetworkBehaviour
@@ -25,13 +27,14 @@ public class UnitManager : NetworkBehaviour
     //Bewegungsreichweite
     Dictionary<Vector3Int, int> reichweite = new Dictionary<Vector3Int, int>();
 
+    private GameObject infobox;
+
     public Unit selectedUnit;
     public Vector3Int selectedVector;
+
+    
     
     void Start() {
-        Vector3Int vec1 = new Vector3Int(2, 3, 0);
-        Vector3Int vec2 = new Vector3Int(6, 5, 0);
-
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         hover = GameObject.Find("GameManager").GetComponent<TilemapHover>();
         tilemap = GameObject.Find("Tilemap").GetComponent<Tilemap>();
@@ -48,9 +51,11 @@ public class UnitManager : NetworkBehaviour
             Vector3Int vec = hover.getVectorFromMouse();
             vec.z = 2;
             if(hover.insideField(vec)){
+                
+
                 if (selectedUnit == null){
-                selectUnit(vec);}
-                else{
+                    selectUnit(vec);
+                }else{
                     if(reichweite[selectedVector] > 0) {
                         moveUnit(selectedUnit, vec); 
                     }
@@ -59,6 +64,15 @@ public class UnitManager : NetworkBehaviour
 
             }
         }
+
+        if(spawnedUnits.ContainsKey(healthManager.angegriffenVec)) {
+            if(healthManager.getLeben(healthManager.angegriffenVec) <= 0) {
+                if(selectedVector == healthManager.angegriffenVec) deselectUnit();
+                spawnedUnits.Remove(healthManager.angegriffenVec);
+                reichweite.Remove(healthManager.angegriffenVec);
+            } else if(selectedVector == healthManager.angegriffenVec) activatePanel(selectedVector);
+        }
+        
     }
 
     public void deselectUnit(){
@@ -67,7 +81,8 @@ public class UnitManager : NetworkBehaviour
 
         tilemap.SetColor(selectedVector, Color.white);
         selectedVector = vec;
-        
+
+        player.infobox.SetActive(false);
     }
     public void selectUnit(Vector3Int vec){
         if(spawnedUnits.ContainsKey(vec)){ 
@@ -75,7 +90,13 @@ public class UnitManager : NetworkBehaviour
             selectedVector = vec;
             tilemap.SetTileFlags(selectedVector, TileFlags.None);
             tilemap.SetColor(vec, Color.grey);
+            activatePanel(vec);
         }
+    }
+
+    public void activatePanel(Vector3Int vec) {
+        player.infobox.SetActive(true);
+        GameObject.Find("InGame/Canvas/Infobox/Infotext").GetComponent<TextMeshProUGUI>().text = "<b><u>Infobox</u></b> \n\n Leben: "+ healthManager.getLeben(vec) +" \n Angriffswert: "+ spawnedUnits[vec].getAngriffswert() +" \n verfügbare Bewegung: " +reichweite[vec];
     }
 
     public int distance(Vector3Int vec1, Vector3Int vec2) {
@@ -127,7 +148,7 @@ public class UnitManager : NetworkBehaviour
         reichweite = temp;
     }
 
-    [Command]
+    [Command(requiresAuthority = false)]
     public void syncStillExists(Vector3Int vec) {
         if(healthManager.getLeben(vec) <= 0) {
             healthManager.removeUnit(vec);

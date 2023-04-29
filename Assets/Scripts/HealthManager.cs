@@ -6,6 +6,14 @@ using Mirror;
 public class HealthManager : NetworkBehaviour
 {
     readonly SyncDictionary<Vector3Int, int> healthUnits = new SyncDictionary<Vector3Int, int>();
+
+    [SyncVar] public Vector3Int angegriffenVec;
+
+    private MapBehaviour mapBehaviour;
+
+    void Start() {
+        mapBehaviour = GameObject.Find("GameManager").GetComponent<MapBehaviour>();
+    }
     
     [Command(requiresAuthority = false)]
     public void addUnit(Vector3Int vec, int health) {
@@ -24,6 +32,12 @@ public class HealthManager : NetworkBehaviour
     [Command(requiresAuthority = false)]
     public void angriff(Vector3Int vec, int angriff) {
         healthUnits[vec] -= angriff;
+        angegriffenVec = vec;
+    }
+
+    [Command(requiresAuthority = false)]
+    public void noAngriff() {
+        angegriffenVec = new Vector3Int(mapBehaviour.mapWidth()+2,mapBehaviour.mapHeight()+2,-1);
     }
 
     [Command(requiresAuthority = false)]
@@ -35,5 +49,5 @@ public class HealthManager : NetworkBehaviour
         if(healthUnits.ContainsKey(vec)) return healthUnits[vec];
         return -1;
     }
-
+    
 }

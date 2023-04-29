@@ -25,6 +25,7 @@ public class Player : NetworkBehaviour
     public bool isLobby = true;
 
     private GameObject lobbyObjects;
+    public GameObject infobox;
 
     void Start() {
         lobbyObjects = GameObject.Find("Lobby");
@@ -47,6 +48,7 @@ public class Player : NetworkBehaviour
 
     void Update() {
         if(GameObject.Find("InGame/Canvas/Runde") != null && isLobby) {
+            infobox = GameObject.Find("InGame/Canvas/Infobox");
             roundButton = GameObject.Find("InGame/Canvas/Runde").GetComponent<Button>();
             roundButtonText = GameObject.Find("InGame/Canvas/Runde/RundeText").GetComponent<TextMeshProUGUI>();
             roundText = GameObject.Find("InGame/Canvas/RundenText").GetComponent<TextMeshProUGUI>();
