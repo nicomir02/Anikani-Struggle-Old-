@@ -7,6 +7,7 @@ using Mirror;
 public class Ressource : NetworkBehaviour
 {
     public string ressourceName;
+    public string ressName;
     public Block ressource;
     public float generalProb;
 

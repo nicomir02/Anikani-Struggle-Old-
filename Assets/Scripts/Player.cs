@@ -59,9 +59,9 @@ public class Player : NetworkBehaviour
             roundButton.onClick.AddListener(OnClick);
             if(id == 1) {
                 isYourTurn = true;
-                roundButtonText.text = "Nächste Runde";
+                roundButtonText.text = "Next Round";
             }else {
-                roundButtonText.text = "Warten";
+                roundButtonText.text = "Wait";
             }
         }
     }
@@ -69,7 +69,7 @@ public class Player : NetworkBehaviour
     public void OnClick() {
         if(isYourTurn) {
             isYourTurn = false;
-            roundButtonText.text = "Warten";
+            roundButtonText.text = "Wait";
             onRoundChange();
         }
     }
@@ -89,10 +89,10 @@ public class Player : NetworkBehaviour
     public void RpconRoundChange(int a) {
         if(a == id) {
             isYourTurn = true;
-            roundButtonText.text = "Nächste Runde";
+            roundButtonText.text = "Next Round";
             auffuellen();
         }
-        roundText.text = "Runde " + round;
+        roundText.text = "Turn " + round;
     }
 
     void auffuellen() {

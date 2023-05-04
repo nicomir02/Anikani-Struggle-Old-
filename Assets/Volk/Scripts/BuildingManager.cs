@@ -31,6 +31,9 @@ public class BuildingManager : NetworkBehaviour
     private Dictionary<Vector3Int, Building> buildingsVec = new Dictionary<Vector3Int, Building>();
     private Dictionary<Vector3Int, Vector3Int> buildingvectors = new Dictionary<Vector3Int, Vector3Int>();
 
+    private Dictionary<Ressource, int> ressourcenProRundeZaehler = new Dictionary<Ressource, int>();
+    private Dictionary<Ressource, int> ressourcenZaehler = new Dictionary<Ressource, int>();
+
     Button ressourcenButton;
     Vector3Int ressourcenVec;
 
@@ -95,7 +98,7 @@ public class BuildingManager : NetworkBehaviour
             }
         }
 
-        if(Input.GetMouseButtonDown(0) && !player.isLobby) {
+        if(Input.GetMouseButtonDown(0) && !player.isLobby && showAreaBool) {
             Vector3Int vec = hover.getVectorFromMouse();
             vec.z = 1;
             if(selectedBuilding == null && hover.insideField(vec)) {
@@ -107,12 +110,8 @@ public class BuildingManager : NetworkBehaviour
                 if(mapBehaviour.getBlockDetails(vec).Item3 != null && buildInRound < maxBuildingPerRound && player.isYourTurn) {
                     Dictionary<Vector3Int, int> teamVectors = gameManager.getDictionary();
                     if(teamVectors.ContainsKey(vec) && teamVectors[vec] == player.id) {
-                        if(mapBehaviour.getBlockDetails(vec).Item3.ressourceName == "Tree") {
-                            //GameObject ress = GameObject.Find("InGame/Canvas/RessourceAbbauen");
-                            //ress.SetActive(true);
-                            //ressourcenButton = ress.GetComponent<Button>();
-                            //ressourcenButton.onClick.AddListener(OnBuildClick);
-                            ressourcenVec = vec;
+                        if(mapBehaviour.getBlockDetails(vec).Item3.ressourceName == "Tree") { //später nicht spezifisch Tree sondern direkt über Ressource rausfiltern
+                            OnBuildClick(mapBehaviour.getBlockDetails(vec).Item3, vec);
                         }
                     }
                 }
@@ -122,9 +121,56 @@ public class BuildingManager : NetworkBehaviour
         }
     }
 
-    public void OnBuildClick() {
-        //string ressname = mapBehaviour.getBlockDetails(ressourcenVec).Item3.ressourceName;
-        //Debug.Log(ressname);
+    public void OnBuildClick(Ressource r, Vector3Int vec) {
+        if(r.ressourceName == "Tree") { 
+            List<Vector3Int> nachbarcheck = makeAreaBigger(vec, 1); //wenn building groesser dann andere zahl
+            bool temp = false;
+            foreach(Vector3Int v in nachbarcheck) {
+                if(buildingvectors.ContainsKey(v) || (hover.insideField(v) && !mapBehaviour.getBlockDetails(v).Item2.getBuildable()) || 
+                buildingvectors.ContainsKey(new Vector3Int(v.x, v.y, 1)) || !hover.insideField(v)) temp = true;
+            }
+            if(!temp) {
+                int zaehler = deleteFelder(vec, 3, r);//wenn building groesser dann andere zahl
+
+                if(ressourcenProRundeZaehler.ContainsKey(r)) {
+                    ressourcenProRundeZaehler[r] += zaehler;
+                }else {
+                    ressourcenProRundeZaehler.Add(r, zaehler);
+                }
+                Debug.Log(vec);
+                vec.x -= 1;
+                vec.y -= 1;
+                addFelderToTeam(vec, 4);//1 groesser als buildinggroesse
+                
+                vec.z = 1;
+                volk.getTreeBuilding(0).setTile(tilemap, vec, player.id-1);
+
+                reloadShowArea();
+            }
+        }
+    }
+
+    public void addFelderToTeam(Vector3Int vec, int groesse) {//für 3x3. groesse = 3
+        List<Vector3Int> allefelder = makeAreaBigger(vec, groesse-2);
+        Debug.Log("test1");
+        add(allefelder, player.id);
+        /*foreach(Vector3Int v in allefelder) {
+            if(!gameManager.hasVec(v)) {
+                gameManager.addVec(v, player.id-1);
+                Debug.Log("test2");
+            }
+        }*/
+    }
+
+    public int deleteFelder(Vector3Int vec, int groesse, Ressource r) { //für 3x3. groesse = 3
+        vec.z = 1;
+        int zaehler = 0;
+        List<Vector3Int> allefelder = makeAreaBigger(vec, groesse-2);
+        foreach(Vector3Int v in allefelder) {
+            tilemap.SetTile(v, null);
+            if(mapBehaviour.getBlockDetails(new Vector3Int(v.x, v.y, 0)).Item3 == r) zaehler++;
+        }
+        return zaehler;
     }
 
     private void selectBuilding(Vector3Int vec) {
@@ -140,8 +186,8 @@ public class BuildingManager : NetworkBehaviour
     }
 
     public void activatePanel(Vector3Int vec) {
-        player.infoboxBuilding.SetActive(true);
-        GameObject.Find("InGame/Canvas/InfoboxBuilding/Infotext").GetComponent<TextMeshProUGUI>().text = "<b><u>Infobox</u></b> \n Name: "+buildingsVec[vec].getName()+"\n Leben: " +healthManager.getBuildingLeben(vec);
+        //player.infoboxBuilding.SetActive(true);
+        //GameObject.Find("InGame/Canvas/InfoboxBuilding/Infotext").GetComponent<TextMeshProUGUI>().text = "<b><u>Infobox</u></b> \n Name: "+buildingsVec[vec].getName()+"\n Leben: " +healthManager.getBuildingLeben(vec);
     }
 
     private void deselectBuilding() {
@@ -190,14 +236,36 @@ public class BuildingManager : NetworkBehaviour
         }
     }
 
+    void reloadShowArea() {
+        Dictionary<Vector3Int, int> teamVectors = gameManager.getDictionary();
+        foreach(KeyValuePair<Vector3Int, int> kvp in teamVectors) {
+            tilemap.SetTileFlags(kvp.Key, TileFlags.None);
+            tilemap.SetColor(kvp.Key, gameManager.getColorByID(kvp.Value));
+
+            Vector3Int vec = kvp.Key;
+            vec.z = 1;
+
+            tilemap.SetTileFlags(vec, TileFlags.None);
+            tilemap.SetColor(vec, gameManager.getColorByID(kvp.Value));
+        }
+    }
+
     public void auffuellen() {
         buildInRound = 0;
+        foreach(KeyValuePair<Ressource, int> kvp in ressourcenProRundeZaehler) {
+            if(ressourcenZaehler.ContainsKey(kvp.Key)) {
+                ressourcenZaehler[kvp.Key] += kvp.Value;
+            }else {
+                ressourcenZaehler.Add(kvp.Key, kvp.Value);
+            }
+            GameObject.Find("InGame/Canvas/Leiste/"+kvp.Key.ressourceName).GetComponent<TextMeshProUGUI>().text = ressourcenZaehler[kvp.Key] + " " + kvp.Key.ressName;
+        }
     }
 
     [Command]
     public void add(List<Vector3Int> vecs, int id) {
         foreach(Vector3Int vec in vecs) {
-            if(!gameManager.hasVec(vec)) {
+            if(!gameManager.hasVec(vec) || hover.insideField(vec)) {
                 gameManager.addVec(vec, id);
             }
         }

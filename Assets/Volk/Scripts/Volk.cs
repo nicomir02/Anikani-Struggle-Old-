@@ -17,7 +17,11 @@ public class Volk : NetworkBehaviour
 
       public Building getHomeBuilding(int buildingid) {
          return homeBuildings[buildingid];
-      } 
+      }
+
+      public Building getTreeBuilding(int buildingid) {
+         return treeBuildings[buildingid];
+      }
 
       //für Units
 
