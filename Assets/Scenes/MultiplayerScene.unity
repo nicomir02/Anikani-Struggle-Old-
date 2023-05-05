@@ -198,7 +198,7 @@ TilemapRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_ChunkSize: {x: 32, y: 32, z: 32}
-  m_ChunkCullingBounds: {x: 1.075, y: 2, z: 0}
+  m_ChunkCullingBounds: {x: 1.6796346, y: 1.8273747, z: 0}
   m_MaxChunkCount: 16
   m_MaxFrameAge: 16
   m_SortOrder: 3
@@ -2343,6 +2343,9 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0
+  spielFarben:
+  - {r: 0.06691784, g: 0.1663073, b: 0.9528302, a: 1}
+  - {r: 0.764151, g: 0.13296548, b: 0.13296548, a: 1}
 --- !u!114 &1223650275
 MonoBehaviour:
   m_ObjectHideFlags: 0
