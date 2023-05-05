@@ -10,7 +10,7 @@ public class GameManager : NetworkBehaviour
 
     [Command(requiresAuthority = false)]
     public void addVec(Vector3Int vec, int id) {
-        teamVecs.Add(vec, id);
+        if(!hasVec(vec)) teamVecs.Add(vec, id);
     }
 
     public bool hasVec(Vector3Int vec) {

@@ -11,6 +11,7 @@ public class HealthManager : NetworkBehaviour
 
 
     [SyncVar] public Vector3Int angegriffenVec;
+    
 
     private MapBehaviour mapBehaviour;
 

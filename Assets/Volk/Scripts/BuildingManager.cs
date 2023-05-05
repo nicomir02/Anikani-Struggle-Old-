@@ -70,6 +70,7 @@ public class BuildingManager : NetworkBehaviour
                         if(!hover.insideField(v) || !mapBehaviour.getBlockDetails(new Vector3Int(v.x, v.y, 0)).Item2.getBuildable() || gameManager.getDictionary().ContainsKey(v)) canBuild = false;
                     }
                     if(canBuild) {
+                        deleteFelder(vec, 3, null);
                         vec.x = vec.x-1;
                         vec.y = vec.y-1;
                         vec.z = 1;
@@ -98,16 +99,15 @@ public class BuildingManager : NetworkBehaviour
             }
         }
 
-        if(Input.GetMouseButtonDown(0) && !player.isLobby && showAreaBool) {
+        if(Input.GetMouseButtonDown(0) && !player.isLobby) {
             Vector3Int vec = hover.getVectorFromMouse();
             vec.z = 1;
             if(selectedBuilding == null && hover.insideField(vec)) {
                 selectBuilding(vec);
 
-
                 vec.z = 0;
                 
-                if(mapBehaviour.getBlockDetails(vec).Item3 != null && buildInRound < maxBuildingPerRound && player.isYourTurn) {
+                if(mapBehaviour.getBlockDetails(vec).Item3 != null && buildInRound < maxBuildingPerRound && player.isYourTurn && showAreaBool) {
                     Dictionary<Vector3Int, int> teamVectors = gameManager.getDictionary();
                     if(teamVectors.ContainsKey(vec) && teamVectors[vec] == player.id) {
                         if(mapBehaviour.getBlockDetails(vec).Item3.ressourceName == "Tree") { //später nicht spezifisch Tree sondern direkt über Ressource rausfiltern
@@ -150,16 +150,14 @@ public class BuildingManager : NetworkBehaviour
         }
     }
 
+    [Command]
     public void addFelderToTeam(Vector3Int vec, int groesse) {//für 3x3. groesse = 3
         List<Vector3Int> allefelder = makeAreaBigger(vec, groesse-2);
-        Debug.Log("test1");
-        add(allefelder, player.id);
-        /*foreach(Vector3Int v in allefelder) {
-            if(!gameManager.hasVec(v)) {
-                gameManager.addVec(v, player.id-1);
-                Debug.Log("test2");
+        foreach(Vector3Int v in allefelder) {
+            if(!gameManager.hasVec(new Vector3Int(v.x, v.y, 0)) || hover.insideField(new Vector3Int(v.x, v.y, 0))) {
+                gameManager.addVec(new Vector3Int(v.x, v.y, 0), player.id);
             }
-        }*/
+        }
     }
 
     public int deleteFelder(Vector3Int vec, int groesse, Ressource r) { //für 3x3. groesse = 3
@@ -186,8 +184,8 @@ public class BuildingManager : NetworkBehaviour
     }
 
     public void activatePanel(Vector3Int vec) {
-        //player.infoboxBuilding.SetActive(true);
-        //GameObject.Find("InGame/Canvas/InfoboxBuilding/Infotext").GetComponent<TextMeshProUGUI>().text = "<b><u>Infobox</u></b> \n Name: "+buildingsVec[vec].getName()+"\n Leben: " +healthManager.getBuildingLeben(vec);
+        player.infoboxBuilding.SetActive(true);
+        GameObject.Find("InGame/Canvas/InfoboxBuilding/Infotext").GetComponent<TextMeshProUGUI>().text = "<b><u>Infobox</u></b> \n Name: "+buildingsVec[vec].getName()+"\n Leben: " +healthManager.getBuildingLeben(vec);
     }
 
     private void deselectBuilding() {
@@ -265,7 +263,7 @@ public class BuildingManager : NetworkBehaviour
     [Command]
     public void add(List<Vector3Int> vecs, int id) {
         foreach(Vector3Int vec in vecs) {
-            if(!gameManager.hasVec(vec) || hover.insideField(vec)) {
+            if(!gameManager.hasVec(vec) || hover.insideField(new Vector3Int(vec.x, vec.y, 0))) {
                 gameManager.addVec(vec, id);
             }
         }
