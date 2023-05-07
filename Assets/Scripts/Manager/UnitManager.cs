@@ -140,6 +140,7 @@ public class UnitManager : NetworkBehaviour
             syncStillExists(vec);
             reichweite[selectedVector] = 0;
         }else {
+            if(GetComponent<BuildingManager>().isOwnBuilding(vec)) return;
             healthManager.angriffBuilding(vec, unit.getAngriffswert());
             reichweite[selectedVector] = 0;
         }

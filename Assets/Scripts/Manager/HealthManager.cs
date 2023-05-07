@@ -26,10 +26,11 @@ public class HealthManager : NetworkBehaviour
     //neues Building wird gesetzt, also add für health
     [Command(requiresAuthority = false)]
     public void addBuilding(List<Vector3Int> listVec, int leben, Vector3Int vec) {
+        if(health.ContainsKey(vec)) return;
         if(listVec.Count > 0) {
             health.Add(vec, leben);
             foreach(Vector3Int v in listVec) {
-                building.Add(new Vector3Int(v.x, v.y, 1), vec);
+                if(building.ContainsKey(v)) building.Add(new Vector3Int(v.x, v.y, 1), vec);
             }
         }
     }

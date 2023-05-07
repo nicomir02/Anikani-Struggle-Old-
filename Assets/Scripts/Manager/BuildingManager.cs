@@ -33,7 +33,7 @@ public class BuildingManager : NetworkBehaviour
 
     //was für ein Building an diesem Vektor sich befindet(jedes bUilding einmal in dem Dictionary)
     private Dictionary<Vector3Int, Building> buildingsVec = new Dictionary<Vector3Int, Building>();
-    //da manche Buildings größer als 1 Feld sind muss man alle besetzten Felder 
+    //da manche Buildings größer als 1 Feld sind muss man alle besetzten Felder
     //hier auflisten um mit buildingsvex zu korrespondieren
     private Dictionary<Vector3Int, Vector3Int> buildingvectors = new Dictionary<Vector3Int, Vector3Int>();
     //zeigt wie viel mehr Ressourcen pro Runde dazu kommen
@@ -49,6 +49,10 @@ public class BuildingManager : NetworkBehaviour
     //ausgewähltes/angeklicktes Gebäude
     Building selectedBuilding;
 
+    //Getter Methode für ZaehlerBuildingsBuiltInRound
+    public int getZahlBuildInRound() {
+        return ZaehlerBuildingsBuiltInRound;
+    }
 
     void Start() {
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
@@ -130,6 +134,10 @@ public class BuildingManager : NetworkBehaviour
         }
     }
 
+    public bool isOwnBuilding(Vector3Int vec) {
+        return buildingsVec.ContainsKey(vec);
+    }
+
 //Setzen von Ressourcengebäuden
     public void OnBuildClick(Ressource r, Vector3Int vec) {
         if(r.ressourceName == "Tree") { //ändern später damit generisch und nicht spezifisch für Tree
@@ -138,7 +146,7 @@ public class BuildingManager : NetworkBehaviour
             //schaut nach ob auf den Nachbarfeldern sich andere Gebäude befinden
             foreach(Vector3Int v in nachbarcheck) {
                 if(buildingvectors.ContainsKey(v) || (hover.insideField(v) && !mapBehaviour.getBlockDetails(v).Item2.getBuildable()) || 
-                buildingvectors.ContainsKey(new Vector3Int(v.x, v.y, 1)) || !hover.insideField(v)) gebaeudeSetzbar = false;
+                buildingvectors.ContainsKey(new Vector3Int(v.x, v.y, 1)) || !hover.insideField(v) || gameManager.isEnemyArea(v, player.id)) gebaeudeSetzbar = false;
             }
             if(gebaeudeSetzbar) {
                 int zaehler = deleteFelder(vec, 3, r);//wenn building groesser dann andere zahl
@@ -151,12 +159,21 @@ public class BuildingManager : NetworkBehaviour
                 //Zaehler geht hoch
                 ZaehlerBuildingsBuiltInRound++; 
                 
+                
+                addFelderToTeam(vec, 4, player.id);//1 groesser als buildinggroesse
+
+
                 vec.x -= 1;
                 vec.y -= 1;
-                addFelderToTeam(vec, 4, player.id);//1 groesser als buildinggroesse
-                
+                //standard Dictionary hinzufügen
+                Building treeBuilding = volk.getTreeBuilding(0);
+                addBuilding(nachbarcheck, treeBuilding, vec);
+
                 vec.z = 1;
-                volk.getTreeBuilding(0).setTile(tilemap, vec, player.id-1); //später ändern auf generisch, durch Methode vielleicht
+                //Vector3Int vec, int b, int playerID, int volkID, int lvl
+                tilemapManager.CmdUpdateTilemapBuilding(vec, 2, player.id, volkManager.getVolkID(volk).Item2, 0);
+
+                treeBuilding.setTile(tilemap, vec, player.id-1); //später ändern auf generisch, durch Methode vielleicht
                 //synchronisieren für alle Spieler
                 reloadShowArea();
             }
@@ -218,11 +235,17 @@ public class BuildingManager : NetworkBehaviour
 //einfügen in das Dictionary für gebaute Gebäude, einfügen in den HealthManager, alle Vektoren des Gebäudes gespeichert(da oft größer als 1 Tile)
     public void addBuilding(List<Vector3Int> vecs, Building b, Vector3Int vec) {
         vec.z = 1;
+        
         buildingsVec.Add(vec, b);
         healthManager.addBuilding(vecs, b.getHealth(), vec);
         foreach(Vector3Int v in vecs) {
             buildingvectors.Add(new Vector3Int(v.x, v.y, 1), vec);
         }
+
+        int buildingid = volkManager.getBuildingID(volk, b);
+        Debug.Log(buildingid);
+        //HomeBuilding wird so synchronisiert
+        if(volk.isHomeBuilding(b)) return;
     }
 
 //Anzeigen der Spielerfelder

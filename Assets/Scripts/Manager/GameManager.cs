@@ -17,7 +17,7 @@ public class GameManager : NetworkBehaviour
     //Vector zu einem Team hinzufügen
     [Command(requiresAuthority = false)]
     public void addVec(Vector3Int vec, int id) {
-        if(!hasVec(vec)) teamVecs.Add(vec, id);
+        if(!teamVecs.ContainsKey(vec)) teamVecs.Add(vec, id);
     }
 
     //Gehört der Vektor schon zu einem Team Prüfung
@@ -37,6 +37,12 @@ public class GameManager : NetworkBehaviour
             vecs.Add(kvp.Key, kvp.Value);
         }
         return vecs;
+    }
+    
+    //Methode um herauszufinden ob der Vektor einem gegnerischen Team gehört
+    public bool isEnemyArea(Vector3Int vec, int ownTeamID) {
+        if(teamVecs.ContainsKey(vec)) if(teamVecs[vec] != ownTeamID) return true;
+        return false;
     }
 
     //Gibt dir die Farbe vom Team:

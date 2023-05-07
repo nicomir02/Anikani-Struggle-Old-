@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using Mirror;
 
-public class Building : MonoBehaviour
+public class Building : NetworkBehaviour //Networkbehaviour zum speichern?
 {
     //Farbe 1: Blau
     //Farbe 2: Rot

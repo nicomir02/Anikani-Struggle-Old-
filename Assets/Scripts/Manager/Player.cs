@@ -25,13 +25,14 @@ public class Player : NetworkBehaviour
     private TextMeshProUGUI roundButtonText;    //Knopf zeigt an ob man gerade dran ist oder man warten muss
     private TextMeshProUGUI roundText;  //Text oben in der Leiste, welcher die Rundenanzahl angibt
     public bool isYourTurn = false;     //sagt ob dieser Spieler gerade am Turn ist
-    public string name = "";    //Spielername; später bei der Lobby einstellbar für das Spiel(Cheats damit verbunden?)
+    //public string name = "Player";    //Spielername; später bei der Lobby einstellbar für das Spiel(Cheats damit verbunden?)
     public bool isLobby = true;
 
     
 
     //Initialisieren beim Start und hinzufügen von ID
     void Start() {
+        name = "Player";
         lobbyObjects = GameObject.Find("Lobby");
         network = GameObject.Find("NetworkManager").GetComponent<NetworkManagerAnikani>();
         id = allids+1;
@@ -78,6 +79,7 @@ public class Player : NetworkBehaviour
     //Runden button Click methode
     public void OnClick() {
         if(isYourTurn) { // nur wenn du dran bist
+            //if(round == 0 && GetComponent<BuildingManager>().getZahlBuildInRound() == 0) return;
             isYourTurn = false;
             roundButtonText.text = "Wait";
             onRoundChange();

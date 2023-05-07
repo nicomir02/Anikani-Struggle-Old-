@@ -39,5 +39,16 @@ public class TilemapManager : NetworkBehaviour //Synchronisieren der Tilemap zwi
     }
 
     //Tilemap Change für Ressourcengebäude(generisch für alle gebäude?)
+    [Command(requiresAuthority = false)]
+    public void CmdUpdateTilemapBuilding(Vector3Int vec, int b, int playerID, int volkID, int lvl) {
+        RpcUpdateTilemapBuilding(vec, b, playerID, volkID, lvl);
+    }
 
+
+    //Tilemap Change für Ressourcengebäude(generisch für alle gebäude?) auf Client
+    [ClientRpc]
+    private void RpcUpdateTilemapBuilding(Vector3Int vec, int b, int playerID, int volkID, int lvl) {
+        Building building = volkManager.getBuildingByID(volkManager.getVolk(volkID), b, lvl);
+        building.setTile(tilemap, vec, playerID-1);
+    }
 }

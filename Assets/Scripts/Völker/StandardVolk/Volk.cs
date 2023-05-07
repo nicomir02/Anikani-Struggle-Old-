@@ -23,6 +23,14 @@ public class Volk : NetworkBehaviour
          return treeBuildings[buildingid];
       }
 
+      public bool isHomeBuilding(Building b) {
+         return homeBuildings.Contains(b);
+      }
+
+      public bool isTreeBuilding(Building b) {
+         return treeBuildings.Contains(b);
+      }
+
       //für Units
 
       public void setUnit(int unitID, int idColor, Tilemap tilemap, Vector3Int vec) {
