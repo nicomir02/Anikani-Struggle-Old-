@@ -21,6 +21,8 @@ public class BuildingManager : NetworkBehaviour
     private GameManager gameManager;
     private UnitManager unitManager;    //für testzwecke der ersten einheit
 
+    private PauseMenu pauseMenu;
+
     private Button showArea;
 
     private bool showAreaBool = false;
@@ -64,11 +66,12 @@ public class BuildingManager : NetworkBehaviour
         volkManager = GameObject.Find("GameManager").GetComponent<VolkManager>();
         mapBehaviour = GameObject.Find("GameManager").GetComponent<MapBehaviour>();
         healthManager = GameObject.Find("GameManager").GetComponent<HealthManager>();
+        pauseMenu = GameObject.Find("GameManager").GetComponent<PauseMenu>();
         unitManager = GetComponent<UnitManager>();//für testzwecke der ersten einheit
     }
 
     void Update() {
-        
+        if(pauseMenu.getPause()) return;
         //Initialisieren des ShowArea GameObjects nach Spielstart(nur einmal!)
         if(GameObject.Find("InGame/Canvas/ShowArea") != null && isLobby) {
             GameObject.Find("InGame/Canvas/ShowArea").GetComponent<Button>().onClick.AddListener(OnShowAreaClick);
@@ -135,7 +138,7 @@ public class BuildingManager : NetworkBehaviour
     }
 
     public bool isOwnBuilding(Vector3Int vec) {
-        return buildingsVec.ContainsKey(vec);
+        return buildingvectors.ContainsKey(vec);
     }
 
 //Setzen von Ressourcengebäuden
@@ -226,10 +229,15 @@ public class BuildingManager : NetworkBehaviour
 //Rückgängig machen von selectBuilding Methode/ Rücksetzen der verschiedenen Sachen
     private void deselectBuilding() {
         selectedVector.z = 1;
-        tilemap.SetColor(selectedVector, Color.white);
+        if(showAreaBool) {
+            tilemap.SetColor(selectedVector, gameManager.getColorByID(player.id));
+        }else {
+            tilemap.SetColor(selectedVector, Color.white);
+        }
         selectedVector = new Vector3Int(mapBehaviour.mapWidth()+2,mapBehaviour.mapHeight()+2,-1); //selected Vektor außerhalb der Map gesetzt, da nicht auf null setzbar
         selectedBuilding = null;
         player.infoboxBuilding.SetActive(false);
+        
     }
 
 //einfügen in das Dictionary für gebaute Gebäude, einfügen in den HealthManager, alle Vektoren des Gebäudes gespeichert(da oft größer als 1 Tile)
@@ -250,6 +258,7 @@ public class BuildingManager : NetworkBehaviour
 
 //Anzeigen der Spielerfelder
     public void OnShowAreaClick() {
+        if(GameObject.Find("GameManager").GetComponent<PauseMenu>().getPause()) return;
         Dictionary<Vector3Int, int> teamVectors = gameManager.getDictionary();
         if(!showAreaBool) {//falls vor Knopfdruck Gebiet nicht angezeigt wurde, soll jetzt angezeigt werden und Farben sich ändern
             reloadShowArea();

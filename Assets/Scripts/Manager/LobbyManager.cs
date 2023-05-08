@@ -32,6 +32,7 @@ public class LobbyManager : NetworkBehaviour
 
 //Nach Lobby erschient der ReadyButton mit Listener
     public override void OnStartClient() {
+        
         lobbyObjects.SetActive(true);
 
         readyButton.onClick.AddListener(OnReadyClick);
@@ -39,6 +40,7 @@ public class LobbyManager : NetworkBehaviour
 
 //Klicken auf Ready Button setzt ready Variable auf true
     public void OnReadyClick() {
+        if(GameObject.Find("GameManager").GetComponent<PauseMenu>().getPause()) return;
         if(ready) {
             ready = false;
             readyButtonText.text = "Ready";

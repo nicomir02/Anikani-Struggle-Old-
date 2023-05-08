@@ -78,6 +78,7 @@ public class Player : NetworkBehaviour
 
     //Runden button Click methode
     public void OnClick() {
+        if(GameObject.Find("GameManager").GetComponent<PauseMenu>().getPause()) return;
         if(isYourTurn) { // nur wenn du dran bist
             //if(round == 0 && GetComponent<BuildingManager>().getZahlBuildInRound() == 0) return;
             isYourTurn = false;

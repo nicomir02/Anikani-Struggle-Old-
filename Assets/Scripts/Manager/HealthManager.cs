@@ -30,7 +30,7 @@ public class HealthManager : NetworkBehaviour
         if(listVec.Count > 0) {
             health.Add(vec, leben);
             foreach(Vector3Int v in listVec) {
-                if(building.ContainsKey(v)) building.Add(new Vector3Int(v.x, v.y, 1), vec);
+                if(!building.ContainsKey(v)) building.Add(new Vector3Int(v.x, v.y, 1), vec);
             }
         }
     }
@@ -47,7 +47,7 @@ public class HealthManager : NetworkBehaviour
     
     //vorherige Methode noch unter verwendung, neue isHealth()
     public bool isUnit(Vector3Int vec) {
-        return health.ContainsKey(vec);
+        return !building.ContainsKey(new Vector3Int(vec.x, vec.y, 2));
     }
 
     //vorherige Methode noch unter verwendung, neue isHealth()
@@ -65,7 +65,7 @@ public class HealthManager : NetworkBehaviour
     [Command(requiresAuthority = false)]
     public void angriffBuilding(Vector3Int vec, int angriffswert) {
         vec.z = 1;
-        health[building[vec]] -= angriffswert;
+        if(building.ContainsKey(vec)) health[building[vec]] -= angriffswert;
     }
     
     //Hinzufügen von Einheit
@@ -87,7 +87,7 @@ public class HealthManager : NetworkBehaviour
     //Normale Angriffsmethode
     [Command(requiresAuthority = false)]
     public void angriff(Vector3Int vec, int angriff) {
-        health[vec] -= angriff;
+        if(health.ContainsKey(vec)) health[vec] -= angriff;
         angegriffenVec = vec;
     }
 

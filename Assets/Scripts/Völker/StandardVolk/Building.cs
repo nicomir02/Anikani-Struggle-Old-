@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 using Mirror;
 
-public class Building : NetworkBehaviour //Networkbehaviour zum speichern?
+public class Building : NetworkBehaviour
 {
     //Farbe 1: Blau
     //Farbe 2: Rot

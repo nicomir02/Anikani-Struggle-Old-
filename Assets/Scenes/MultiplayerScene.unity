@@ -236,30 +236,30 @@ Tilemap:
   m_TileMatrixArray:
   - m_RefCount: 0
     m_Data:
-      e00: -1.9762276e+11
+      e00: 0
       e01: 0
-      e02: -2.1006438e-19
-      e03: -2.1006438e-19
-      e10: 5.32e-43
+      e02: 3.8750038
+      e03: 3.8750038
+      e10: 0
       e11: 0
-      e12: 5.32e-43
-      e13: 5.32e-43
-      e20: 2.2075002e-18
+      e12: 8.76e-43
+      e13: 8.76e-43
+      e20: -2.6323683e+15
       e21: 1e-45
-      e22: 3.3138779e-19
-      e23: -2.5419338e-29
-      e30: 4.5905e-41
+      e22: -2.2417608e-19
+      e23: 1.1024911e-19
+      e30: 4.5904e-41
       e31: 0
-      e32: 5.34e-43
-      e33: 5.37e-43
+      e32: 8.76e-43
+      e33: 8.8e-43
   m_TileColorArray:
   - m_RefCount: 0
-    m_Data: {r: 3.4693e-41, g: 3.4693e-41, b: 3.4693e-41, a: 3.4693e-41}
+    m_Data: {r: 3.4688e-41, g: 3.4688e-41, b: 3.4688e-41, a: 3.4688e-41}
   m_TileObjectToInstantiateArray: []
   m_AnimationFrameRate: 1
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Origin: {x: -15, y: -26, z: 0}
-  m_Size: {x: 36, y: 46, z: 3}
+  m_Size: {x: 40, y: 55, z: 3}
   m_TileAnchor: {x: -1, y: -1, z: 0}
   m_TileOrientation: 0
   m_TileOrientationMatrix:
@@ -954,7 +954,7 @@ Transform:
   m_Children:
   - {fileID: 179760045}
   m_Father: {fileID: 1878701602}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &520737201
 GameObject:
@@ -1051,7 +1051,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &635904839
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1126,8 +1126,8 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1172216299}
-  m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_Father: {fileID: 1878701602}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -1691,7 +1691,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1172216299
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1825,8 +1825,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.9584968}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 4.75, y: 0.49697876}
-  m_SizeDelta: {x: 15.5, y: -0.1930008}
+  m_AnchoredPosition: {x: 4.75, y: -2.9438}
+  m_SizeDelta: {x: 15.5, y: 6.6887}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1176317238
 MonoBehaviour:
@@ -2065,7 +2065,7 @@ Transform:
   m_Children:
   - {fileID: 181114446}
   m_Father: {fileID: 1878701602}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1276982299
 GameObject:
@@ -2232,7 +2232,7 @@ Transform:
   m_Children:
   - {fileID: 1334700289}
   m_Father: {fileID: 1878701602}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1334700288
 GameObject:
@@ -2707,7 +2707,7 @@ Transform:
   m_Children:
   - {fileID: 106385657}
   m_Father: {fileID: 1878701602}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1756216879
 GameObject:
@@ -3184,7 +3184,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1878701602}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1792141992
 MonoBehaviour:
@@ -3307,6 +3307,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 635904842}
   - {fileID: 1792141991}
   - {fileID: 1229184724}
   - {fileID: 1334142989}

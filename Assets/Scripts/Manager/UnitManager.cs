@@ -47,6 +47,7 @@ public class UnitManager : NetworkBehaviour
     }
     
     private void Update(){
+        if(GameObject.Find("GameManager").GetComponent<PauseMenu>().getPause()) return;
         if(Input.GetMouseButtonDown(0)) {
             Vector3Int vec = hover.getVectorFromMouse();
             vec.z = 2;
@@ -134,15 +135,13 @@ public class UnitManager : NetworkBehaviour
     }
 
     public void angriff(Unit unit, Vector3Int vec){
-        if(healthManager.isUnit(vec)) {
-            if(spawnedUnits.ContainsKey(vec)) return;
-            healthManager.angriff(vec, unit.getAngriffswert());
-            syncStillExists(vec);
-            reichweite[selectedVector] = 0;
-        }else {
-            if(GetComponent<BuildingManager>().isOwnBuilding(vec)) return;
-            healthManager.angriffBuilding(vec, unit.getAngriffswert());
-            reichweite[selectedVector] = 0;
+        if(GetComponent<BuildingManager>().isOwnBuilding(new Vector3Int(vec.x, vec.y, 1)) && spawnedUnits.ContainsKey(new Vector3Int(vec.x, vec.y, 2))) return;
+
+        if(healthManager.isUnit(new Vector3Int(vec.x, vec.y, 2))) {
+            healthManager.angriff(new Vector3Int(vec.x, vec.y, 2), unit.getAngriffswert());
+        }
+        else if(healthManager.isBuilding(new Vector3Int(vec.x, vec.y, 1))) {
+            healthManager.angriffBuilding(new Vector3Int(vec.x, vec.y, 1), unit.getAngriffswert());
         }
     }
 

@@ -26,6 +26,7 @@ public class TilemapHover : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(GameObject.Find("GameManager").GetComponent<PauseMenu>().getPause()) return;
         Vector3Int cellPosition = getVectorFromMouse();
         
         if(insideField(cellPosition) && oldVec != cellPosition) {
