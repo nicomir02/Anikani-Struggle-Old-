@@ -34,6 +34,13 @@ public class PauseMenu : MonoBehaviour
         }
     }
 
+    public void togglePauseOn() {
+        isPaused = true;
+    }
+
+    public void togglePauseOff() {
+        isPaused = false;
+    }
 
     public void PauseGame()
     {  

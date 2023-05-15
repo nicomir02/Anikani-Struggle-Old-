@@ -56,9 +56,6 @@ public class BuildingManager : NetworkBehaviour
     //gibts einen selected Vektor für Feld Erweiterung
     bool selection = false;
 
-    //test wegen mehrfacher ausführung des knopfs
-    int zaehlerFuerButton = 0;
-
     //Getter Methode für ZaehlerBuildingsBuiltInRound
     public int getZahlBuildInRound() {
         return ZaehlerBuildingsBuiltInRound;
@@ -142,16 +139,14 @@ public class BuildingManager : NetworkBehaviour
             }
         }
 
-        if(zaehlerFuerButton == 2) zaehlerFuerButton = 0;
-        if(zaehlerFuerButton == 1) zaehlerFuerButton++;
+
     }
 
     //Vector Selection
     public void selectVector(Vector3Int vec) {
 
         deselectBuilding();
-        if(isMyArea(vec)) {
-            //Debug.Log(vec);
+        if(isMyArea(vec) && ZaehlerBuildingsBuiltInRound < maxBuildingPerRound) {
             oldSelectedColor = hover.getOldColor();
             selection = true;
             selectedVector = vec;
@@ -171,51 +166,26 @@ public class BuildingManager : NetworkBehaviour
 
         Vector3Int vec = selectedVector;
         vec.z = 0;
-        if(hover.insideField(vec) && zaehlerFuerButton == 0) {
-            /*Debug.Log(mapBehaviour.getBlockDetails(vec).Item3 != null && ZaehlerBuildingsBuiltInRound < maxBuildingPerRound && 
-                player.isYourTurn && showAreaBool && selectedBuilding == null);
-            
-            Debug.Log(mapBehaviour.getBlockDetails(vec).Item3 != null);
-            Debug.Log(ZaehlerBuildingsBuiltInRound < maxBuildingPerRound);
-            Debug.Log(player.isYourTurn);
-            Debug.Log(showAreaBool);
-            Debug.Log(selectedBuilding == null);*/
+        if(hover.insideField(vec)) {
 
-            if(mapBehaviour.getBlockDetails(vec).Item3 != null && ZaehlerBuildingsBuiltInRound < maxBuildingPerRound && 
-                player.isYourTurn && selectedBuilding == null) {
-                Dictionary<Vector3Int, int> teamVectors = gameManager.getDictionary();
-                if(teamVectors.ContainsKey(vec) && teamVectors[vec] == player.id) {
-                    if(mapBehaviour.getBlockDetails(vec).Item3.ressourceName == "Tree") { //später nicht spezifisch Tree sondern direkt über Ressource rausfiltern
-                        OnBuildClick(mapBehaviour.getBlockDetails(vec).Item3, vec);
-                    }
+            List<Vector3Int> liste = makeAreaBigger(vec, 1);
+            List<Ressource> ressourcen = new List<Ressource>();
+            Dictionary<Vector3Int, int> teamVectors = gameManager.getDictionary();
+
+            if(ZaehlerBuildingsBuiltInRound >= maxBuildingPerRound || !player.isYourTurn || !teamVectors.ContainsKey(vec) || teamVectors[vec] != player.id) return;
+            foreach(Vector3Int v in liste) {
+                if(buildingvectors.ContainsKey(new Vector3Int(v.x, v.y, 1))) return;
+                if(mapBehaviour.getBlockDetails(v).Item3 != null) {
+                    ressourcen.Add(mapBehaviour.getBlockDetails(v).Item3);
                 }
             }
-            zaehlerFuerButton++;
+
+            GetComponent<BuildGUIPanel>().generateGUI(ressourcen, vec);
+
         }
 
         deselectBuilding();
         reloadShowArea();
-    }
-
-    //Buy Field Button Click
-    public void onClickBuyField() {
-        if(zaehlerFuerButton > 0) return;
-        int price = 1;
-        Ressource r = null;
-        foreach(KeyValuePair<Ressource, int> kvp in ressourcenZaehler) {
-            if(kvp.Key.ressName == "Wood") r = kvp.Key;
-        }
-        if(r != null) {
-            if(ressourcenZaehler[r] >= price) {
-                ressourcenZaehler[r] -= 1;
-                reloadLeiste();
-                addFelderToTeam(selectedVector, 0, player.id);
-                deselectBuilding();
-                reloadShowArea();
-            }else {
-                Debug.Log("Not enough Money");
-            }
-        }
     }
 
     //Gehört Feld zum eigenen Feld?
@@ -228,6 +198,7 @@ public class BuildingManager : NetworkBehaviour
 
     //Ist auf Vektor Building vom eigenen Spieler
     public bool isOwnBuilding(Vector3Int vec) {
+        //Debug.Log(buildingvectors.ContainsKey(vec));
         return buildingvectors.ContainsKey(vec);
     }
 
