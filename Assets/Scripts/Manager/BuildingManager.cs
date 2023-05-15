@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using TMPro;
 using UnityEngine.Tilemaps;
 using Mirror;
+using UnityEngine.EventSystems;
 
 public class BuildingManager : NetworkBehaviour
 {
@@ -50,6 +51,13 @@ public class BuildingManager : NetworkBehaviour
     Vector3Int selectedVector;
     //ausgewähltes/angeklicktes Gebäude
     Building selectedBuilding;
+    //Farbe
+    Color oldSelectedColor;
+    //gibts einen selected Vektor für Feld Erweiterung
+    bool selection = false;
+
+    //test wegen mehrfacher ausführung des knopfs
+    int zaehlerFuerButton = 0;
 
     //Getter Methode für ZaehlerBuildingsBuiltInRound
     public int getZahlBuildInRound() {
@@ -71,7 +79,11 @@ public class BuildingManager : NetworkBehaviour
     }
 
     void Update() {
+        //Pause deaktivieren
         if(pauseMenu.getPause()) return;
+
+        if (Input.GetMouseButtonDown(0) && EventSystem.current.currentSelectedGameObject != null) return;
+
         //Initialisieren des ShowArea GameObjects nach Spielstart(nur einmal!)
         if(GameObject.Find("InGame/Canvas/ShowArea") != null && isLobby) {
             GameObject.Find("InGame/Canvas/ShowArea").GetComponent<Button>().onClick.AddListener(OnShowAreaClick);
@@ -117,26 +129,104 @@ public class BuildingManager : NetworkBehaviour
         if(Input.GetMouseButtonDown(0) && !player.isLobby) {
             Vector3Int vec = hover.getVectorFromMouse();
             vec.z=0;
-            if(selectedBuilding == null && hover.insideField(vec)) {
-                vec.z = 1;
-                selectBuilding(vec); //Infobox fürs Building
-                vec.z = 0;
-                
-                //Ressourcengebäude bauen falls möglich
-                if(mapBehaviour.getBlockDetails(vec).Item3 != null && ZaehlerBuildingsBuiltInRound < maxBuildingPerRound && player.isYourTurn && showAreaBool) {
-                    Dictionary<Vector3Int, int> teamVectors = gameManager.getDictionary();
-                    if(teamVectors.ContainsKey(vec) && teamVectors[vec] == player.id) {
-                        if(mapBehaviour.getBlockDetails(vec).Item3.ressourceName == "Tree") { //später nicht spezifisch Tree sondern direkt über Ressource rausfiltern
-                            OnBuildClick(mapBehaviour.getBlockDetails(vec).Item3, vec);
-                        }
-                    }
+            if(hover.insideField(vec)) {
+
+                //Select Vector
+                if(isMyArea(vec)) {                    
+                    selectVector(vec);
+                }else {
+                    deselectBuilding();
                 }
             }else {
                 deselectBuilding(); //Infobox weggeblendet
             }
         }
+
+        if(zaehlerFuerButton == 2) zaehlerFuerButton = 0;
+        if(zaehlerFuerButton == 1) zaehlerFuerButton++;
     }
 
+    //Vector Selection
+    public void selectVector(Vector3Int vec) {
+
+        deselectBuilding();
+        if(isMyArea(vec)) {
+            //Debug.Log(vec);
+            oldSelectedColor = hover.getOldColor();
+            selection = true;
+            selectedVector = vec;
+            tilemap.SetColor(vec, hover.getSelectColor());
+            hover.reload();
+            selectBuilding(vec);
+            GameObject.Find("InGame/Canvas/BuildOrBuy").SetActive(true);
+            if(gameManager.hasVec(vec)) {
+                GameObject.Find("InGame/Canvas/BuildOrBuy/Text").GetComponent<TextMeshProUGUI>().text = "Build Building";
+                GameObject.Find("InGame/Canvas/BuildOrBuy").GetComponent<Button>().onClick.AddListener(onClickBuildField);
+            }
+        }
+    }
+
+    //BuildField Button Click
+    public void onClickBuildField() {
+
+        Vector3Int vec = selectedVector;
+        vec.z = 0;
+        if(hover.insideField(vec) && zaehlerFuerButton == 0) {
+            /*Debug.Log(mapBehaviour.getBlockDetails(vec).Item3 != null && ZaehlerBuildingsBuiltInRound < maxBuildingPerRound && 
+                player.isYourTurn && showAreaBool && selectedBuilding == null);
+            
+            Debug.Log(mapBehaviour.getBlockDetails(vec).Item3 != null);
+            Debug.Log(ZaehlerBuildingsBuiltInRound < maxBuildingPerRound);
+            Debug.Log(player.isYourTurn);
+            Debug.Log(showAreaBool);
+            Debug.Log(selectedBuilding == null);*/
+
+            if(mapBehaviour.getBlockDetails(vec).Item3 != null && ZaehlerBuildingsBuiltInRound < maxBuildingPerRound && 
+                player.isYourTurn && selectedBuilding == null) {
+                Dictionary<Vector3Int, int> teamVectors = gameManager.getDictionary();
+                if(teamVectors.ContainsKey(vec) && teamVectors[vec] == player.id) {
+                    if(mapBehaviour.getBlockDetails(vec).Item3.ressourceName == "Tree") { //später nicht spezifisch Tree sondern direkt über Ressource rausfiltern
+                        OnBuildClick(mapBehaviour.getBlockDetails(vec).Item3, vec);
+                    }
+                }
+            }
+            zaehlerFuerButton++;
+        }
+
+        deselectBuilding();
+        reloadShowArea();
+    }
+
+    //Buy Field Button Click
+    public void onClickBuyField() {
+        if(zaehlerFuerButton > 0) return;
+        int price = 1;
+        Ressource r = null;
+        foreach(KeyValuePair<Ressource, int> kvp in ressourcenZaehler) {
+            if(kvp.Key.ressName == "Wood") r = kvp.Key;
+        }
+        if(r != null) {
+            if(ressourcenZaehler[r] >= price) {
+                ressourcenZaehler[r] -= 1;
+                reloadLeiste();
+                addFelderToTeam(selectedVector, 0, player.id);
+                deselectBuilding();
+                reloadShowArea();
+            }else {
+                Debug.Log("Not enough Money");
+            }
+        }
+    }
+
+    //Gehört Feld zum eigenen Feld?
+    //Wenn Feld zu Gegner gehört returned false
+    bool isMyArea(Vector3Int vec) {
+        Dictionary<Vector3Int, int> teamVectors = gameManager.getDictionary();
+
+        return teamVectors.ContainsKey(vec) && teamVectors[vec] == player.id;
+    }
+
+    //Ist auf Vektor Building vom eigenen Spieler
     public bool isOwnBuilding(Vector3Int vec) {
         return buildingvectors.ContainsKey(vec);
     }
@@ -209,12 +299,13 @@ public class BuildingManager : NetworkBehaviour
 
 //setzt Variable selected Building + selected Vector und aktiviert Infobox
     private void selectBuilding(Vector3Int vec) {
+        vec.z = 1;
         if(buildingvectors.ContainsKey(vec)) {
             selectedVector = buildingvectors[vec];
             selectedBuilding = buildingsVec[selectedVector];
             selectedVector.z = 1;
             tilemap.SetTileFlags(selectedVector, TileFlags.None);
-            tilemap.SetColor(selectedVector, Color.grey);
+            tilemap.SetColor(selectedVector, hover.getSelectColor());
             
             activatePanel(selectedVector);
         }
@@ -228,6 +319,13 @@ public class BuildingManager : NetworkBehaviour
 
 //Rückgängig machen von selectBuilding Methode/ Rücksetzen der verschiedenen Sachen
     private void deselectBuilding() {
+        //Vektor Selektierung
+        if(selection) tilemap.SetColor(selectedVector, Color.white);
+        selection = false;
+        reloadShowArea();
+        hover.reload();
+        GameObject.Find("InGame/Canvas/BuildOrBuy").SetActive(false);
+
         selectedVector.z = 1;
         if(showAreaBool) {
             tilemap.SetColor(selectedVector, gameManager.getColorByID(player.id));
@@ -251,7 +349,6 @@ public class BuildingManager : NetworkBehaviour
         }
 
         int buildingid = volkManager.getBuildingID(volk, b);
-        Debug.Log(buildingid);
         //HomeBuilding wird so synchronisiert
         if(volk.isHomeBuilding(b)) return;
     }
@@ -280,6 +377,16 @@ public class BuildingManager : NetworkBehaviour
 
 //Passt Spielerfelder an nach Gebäudebau und synchronisiert für alle Spieler
     void reloadShowArea() {
+        for(int x=0; x<mapBehaviour.mapWidth(); x++) {
+            for(int y=0; y<mapBehaviour.mapHeight(); y++) {
+                tilemap.SetTileFlags(new Vector3Int(x, y, 0), TileFlags.None);
+                tilemap.SetColor(new Vector3Int(x, y, 0), Color.white);
+                tilemap.SetTileFlags(new Vector3Int(x, y, 1), TileFlags.None);
+                tilemap.SetColor(new Vector3Int(x, y, 1), Color.white);
+            }
+        }
+
+        showAreaBool = true;
         Dictionary<Vector3Int, int> teamVectors = gameManager.getDictionary();
         foreach(KeyValuePair<Vector3Int, int> kvp in teamVectors) {
             Vector3Int vec = kvp.Key;
@@ -306,6 +413,14 @@ public class BuildingManager : NetworkBehaviour
             }else {
                 ressourcenZaehler.Add(kvp.Key, kvp.Value);
             }
+            //GameObject.Find("InGame/Canvas/Leiste/"+kvp.Key.ressourceName).GetComponent<TextMeshProUGUI>().text = ressourcenZaehler[kvp.Key] + " " + kvp.Key.ressName;
+        }
+        reloadLeiste();
+    }
+
+    //Obere Leiste reload methode
+    public void reloadLeiste() {
+        foreach(KeyValuePair<Ressource, int> kvp in ressourcenZaehler) {
             GameObject.Find("InGame/Canvas/Leiste/"+kvp.Key.ressourceName).GetComponent<TextMeshProUGUI>().text = ressourcenZaehler[kvp.Key] + " " + kvp.Key.ressName;
         }
     }

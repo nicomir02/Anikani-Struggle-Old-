@@ -17,6 +17,7 @@ public class GameManager : NetworkBehaviour
     //Vector zu einem Team hinzufügen
     [Command(requiresAuthority = false)]
     public void addVec(Vector3Int vec, int id) {
+        Debug.Log(vec);
         if(!teamVecs.ContainsKey(vec)) teamVecs.Add(vec, id);
     }
 

@@ -23,6 +23,11 @@ public class TilemapHover : MonoBehaviour
         //buildingManager = NetworkClient.localPlayer.gameObject;
     }
 
+    //Get ausgewählte Selection Farbe
+    public Color getSelectColor() {
+        return select;
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -49,6 +54,15 @@ public class TilemapHover : MonoBehaviour
         /*if(Input.GetMouseButtonDown(0)) {
             Debug.Log(mapSettings.getBlockDetails(cellPosition));
         }*/
+    }
+
+    public Color getOldColor() {
+        return oldColor;
+    }
+
+    public void reload() {
+        oldVec.x += 1;
+        oldColor = tilemap.GetColor(oldVec);
     }
 
     public Vector3Int getVectorFromMouse() {
