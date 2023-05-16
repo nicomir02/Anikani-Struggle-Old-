@@ -10,9 +10,27 @@ public class Volk : NetworkBehaviour
       [SerializeField] List<Building> homeBuildings = new List<Building>();
 
       [SerializeField] List<Building> treeBuildings = new List<Building>();
-    
+
+      [SerializeField] List<Building> barrackBuildings = new List<Building>();
+
+
+      public Building getBarrackBuilding(int buildingid) {
+         return barrackBuildings[buildingid];
+      }
+
       public void setHomeBuilding(int buildingid, int idColor, Tilemap tilemap, Vector3Int vec) {
          homeBuildings[buildingid].setTile(tilemap, vec, idColor);
+      }
+
+      public int getBuildings(int a) {
+         if(a == 0) {
+            return homeBuildings.Count;
+         }else if(a == 1) {
+            return treeBuildings.Count;
+         }else if(a == 2) {
+            return barrackBuildings.Count;
+         }
+         return 0;
       }
 
       public Building getHomeBuilding(int buildingid) {
@@ -29,6 +47,10 @@ public class Volk : NetworkBehaviour
 
       public bool isTreeBuilding(Building b) {
          return treeBuildings.Contains(b);
+      }
+
+      public bool isBarrackBuilding(Building b) {
+         return barrackBuildings.Contains(b);
       }
 
       //für Units

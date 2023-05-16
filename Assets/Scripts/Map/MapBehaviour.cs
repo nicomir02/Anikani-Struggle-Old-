@@ -29,8 +29,8 @@ public class MapBehaviour : NetworkBehaviour
         }
     }
 
-    [SerializeField] private Biom[] biome;
-    [SerializeField] private Ressource[] ressourcen;
+    [SerializeField] private List<Biom> biome = new List<Biom>();
+    [SerializeField] private List<Ressource> ressourcen = new List<Ressource>();
 
     //SyncDictionary<Vector3Int, (Biomindex, Blockindex, Ressourcenbool, ressindex)> eindeutiger als vorher
     public readonly SyncDictionary<Vector3Int, BlockDetails> blockDetails = new SyncDictionary<Vector3Int, BlockDetails>();
@@ -48,6 +48,10 @@ public class MapBehaviour : NetworkBehaviour
     [SerializeField] private Block randTile;
 
     private HashSet<Vector3Int> vectors = new HashSet<Vector3Int>();
+
+    public List<Ressource> getAllRessourcen() {
+        return ressourcen;
+    }
 
     public void buildTerrain() {
         foreach(KeyValuePair<Vector3Int, BlockDetails> kvp in blockDetails) {
@@ -80,7 +84,7 @@ public class MapBehaviour : NetworkBehaviour
                 tilemap.SetTile(vect, biom.getBlockByIndex(indexblock).getTile());
                 int indexbiom = 0;
 
-                for(i=0; i<biome.Length; i++) {
+                for(i=0; i<biome.Count; i++) {
                     if(biome[i] == biom) {
                         indexbiom=0;
                         break;
@@ -96,7 +100,7 @@ public class MapBehaviour : NetworkBehaviour
         foreach(KeyValuePair<Vector3Int, BlockDetails> kvp in blockDetails) {
             Vector3Int vec = kvp.Key;
             Biom b = getBiomByVec(vec);
-            int rindex = rand.Next(ressourcen.Length);
+            int rindex = rand.Next(ressourcen.Count);
             Ressource r = ressourcen[rindex];
             float pro = r.getProb(biome[kvp.Value.Biomindex]);
             int x = 10000;
@@ -125,7 +129,7 @@ public class MapBehaviour : NetworkBehaviour
         List<Vector3Int> neighbors = new List<Vector3Int>(); //Verfügbare Nachbarn Speicher
         Vector3Int vec = rndmValidVec(); //Anfangsvektor
 
-        int indexbiom = rand.Next(biome.Length);
+        int indexbiom = rand.Next(biome.Count);
         Biom b = biome[indexbiom];
 
         if(getMostNeighbors(vec) != null) {

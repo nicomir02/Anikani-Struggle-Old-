@@ -142,6 +142,27 @@ public class BuildingManager : NetworkBehaviour
 
     }
 
+    //minus Ressourcen fürs kaufen
+    public bool ressourcenZaehlerRechner(Ressource r, int zaehler) {
+        if(ressourcenZaehler.ContainsKey(r) && zaehler <= ressourcenZaehler[r]) {
+            ressourcenZaehler[r] -= zaehler;
+            reloadLeiste();
+            return true;
+        }else if(!ressourcenZaehler.ContainsKey(r) && zaehler == 0) return true;
+        return false;
+    }
+
+    //Wie viele buildings von der Art hat man
+    public int howManyBuildings(Building b) {
+        if(buildingsVec.ContainsValue(b)) {
+            int zaehler = 0;
+            foreach(KeyValuePair<Vector3Int, Building> kvp in buildingsVec) {
+                if(kvp.Value == b) zaehler++;
+            }
+            return zaehler;
+        }else return 0;
+    }
+
     //Vector Selection
     public void selectVector(Vector3Int vec) {
 
@@ -175,7 +196,7 @@ public class BuildingManager : NetworkBehaviour
             if(ZaehlerBuildingsBuiltInRound >= maxBuildingPerRound || !player.isYourTurn || !teamVectors.ContainsKey(vec) || teamVectors[vec] != player.id) return;
             foreach(Vector3Int v in liste) {
                 if(buildingvectors.ContainsKey(new Vector3Int(v.x, v.y, 1))) return;
-                if(mapBehaviour.getBlockDetails(v).Item3 != null) {
+                if(mapBehaviour.getBlockDetails(v).Item3 != null && teamVectors.ContainsKey(v) && teamVectors[v] == player.id) {
                     ressourcen.Add(mapBehaviour.getBlockDetails(v).Item3);
                 }
             }
@@ -239,7 +260,7 @@ public class BuildingManager : NetworkBehaviour
 
                 treeBuilding.setTile(tilemap, vec, player.id-1); //später ändern auf generisch, durch Methode vielleicht
                 //synchronisieren für alle Spieler
-                reloadShowArea();
+                if(showAreaBool) reloadShowArea();
             }
         }
     }
@@ -293,16 +314,14 @@ public class BuildingManager : NetworkBehaviour
         //Vektor Selektierung
         if(selection) tilemap.SetColor(selectedVector, Color.white);
         selection = false;
-        reloadShowArea();
+        
         hover.reload();
         GameObject.Find("InGame/Canvas/BuildOrBuy").SetActive(false);
 
         selectedVector.z = 1;
-        if(showAreaBool) {
-            tilemap.SetColor(selectedVector, gameManager.getColorByID(player.id));
-        }else {
-            tilemap.SetColor(selectedVector, Color.white);
-        }
+        
+        reloadShowArea();
+
         selectedVector = new Vector3Int(mapBehaviour.mapWidth()+2,mapBehaviour.mapHeight()+2,-1); //selected Vektor außerhalb der Map gesetzt, da nicht auf null setzbar
         selectedBuilding = null;
         player.infoboxBuilding.SetActive(false);

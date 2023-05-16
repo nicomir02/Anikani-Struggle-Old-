@@ -25,6 +25,7 @@ public class VolkManager : MonoBehaviour
     public int getBuildingID(Volk v, Building b) {
         if(v.isHomeBuilding(b)) return 1;
         if(v.isTreeBuilding(b)) return 2;
+        if(v.isBarrackBuilding(b)) return 3;
         return -1;
     }
 
@@ -34,6 +35,8 @@ public class VolkManager : MonoBehaviour
             return v.getHomeBuilding(lvl);
         }else if(buildingID == 2) {
             return v.getTreeBuilding(lvl);
+        }else if(buildingID == 3) {
+            return v.getBarrackBuilding(lvl);
         }
         return null;
     }

@@ -71,3 +71,5 @@ MonoBehaviour:
   - {fileID: 8654665576734765553, guid: dafcc1223ffa1d145af0318729678b7c, type: 3}
   treeBuildings:
   - {fileID: -8147225817556961232, guid: 3fc5f98b93f57024a916627e3f084bbc, type: 3}
+  barrackBuildings:
+  - {fileID: -8147225817556961232, guid: 3e5d22dadd071be4299c2bf2aeb79c4f, type: 3}
