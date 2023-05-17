@@ -61,6 +61,7 @@ public class BuildingManager : NetworkBehaviour
         return ZaehlerBuildingsBuiltInRound;
     }
 
+//Build Inkrement wenn gebaut wird
     public void buildInRoundZaehlerInkrement() {
         ZaehlerBuildingsBuiltInRound++;
     }
@@ -178,7 +179,10 @@ public class BuildingManager : NetworkBehaviour
         List<Vector3Int> vectors = makeAreaBigger(vec, 1);
 
         foreach(Vector3Int v in vectors) {
-            if(GameObject.Find("GameManager").GetComponent<MapBehaviour>().getBlockDetails(v).Item2.getBuildable() == false) canbuild = true;;
+            if(GameObject.Find("GameManager").GetComponent<MapBehaviour>().getBlockDetails(v).Item2.getBuildable() == false || buildingvectors.ContainsKey(new Vector3Int(v.x, v.y, 1))) {
+                canbuild = true;
+                break;
+            }
         }
 
         if(isMyArea(new Vector3Int(vec.x, vec.y, 0)) && ZaehlerBuildingsBuiltInRound < maxBuildingPerRound && !buildingvectors.ContainsKey(new Vector3Int(vec.x, vec.y, 1)) && !canbuild) {

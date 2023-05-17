@@ -383,8 +383,8 @@ TextureImporter:
         serializedVersion: 2
         x: 590
         y: 1683
-        width: 420
-        height: 412
+        width: 423
+        height: 413
       alignment: 9
       pivot: {x: 0.5, y: -0.03032794}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -402,13 +402,13 @@ TextureImporter:
       name: Everything_holy_14
       rect:
         serializedVersion: 2
-        x: 1069
+        x: 1070
         y: 1683
         width: 423
-        height: 414
+        height: 413
       alignment: 9
       pivot: {x: 0.5, y: -0.03032794}
-      border: {x: 0, y: 0, z: 2, w: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
@@ -423,13 +423,13 @@ TextureImporter:
       name: Everything_holy_15
       rect:
         serializedVersion: 2
-        x: 1549
+        x: 1548
         y: 1683
         width: 423
         height: 413
       alignment: 9
       pivot: {x: 0.5, y: -0.03032794}
-      border: {x: 0, y: 0, z: 2, w: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
@@ -444,13 +444,13 @@ TextureImporter:
       name: Everything_holy_16
       rect:
         serializedVersion: 2
-        x: 2029
-        y: 1683
+        x: 2030
+        y: 1685
         width: 423
         height: 413
       alignment: 9
       pivot: {x: 0.5, y: -0.03032794}
-      border: {x: 0, y: 0, z: 2, w: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
@@ -466,9 +466,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 2510
-        y: 1682
-        width: 420
-        height: 414
+        y: 1683
+        width: 423
+        height: 413
       alignment: 9
       pivot: {x: 0.5, y: -0.03032794}
       border: {x: 0, y: 0, z: 0, w: 0}

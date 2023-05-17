@@ -45,6 +45,14 @@ public class UnitManager : NetworkBehaviour
         mapBehaviour = GameObject.Find("GameManager").GetComponent<MapBehaviour>();
         healthManager = GameObject.Find("GameManager").GetComponent<HealthManager>();
     }
+
+    public bool hasUnitOnVec(Vector3Int vec) {
+        vec.z = 2;
+        if(spawnedUnits.ContainsKey(vec)) {
+            return true;
+        }
+        return false;
+    }
     
     private void Update(){
         if(GameObject.Find("GameManager").GetComponent<PauseMenu>().getPause()) return;
@@ -105,11 +113,13 @@ public class UnitManager : NetworkBehaviour
     }
 
     public void moveUnit(Unit unit, Vector3Int vec){
+        vec.z = 2;
         if(distance(selectedVector, vec) <= reichweite[selectedVector] && mapBehaviour.getBlockDetails(new Vector3Int(vec.x, vec.y, 0)).Item2.getWalkable()) {
             if(healthManager.isHealth(vec) && !GetComponent<BuildingManager>().isOwnBuilding(new Vector3Int(vec.x, vec.y, 1))){
                 angriff(unit, vec);
                 if(healthManager.isHealth(vec)) return;    //schaut ob gegner besiegt wurde in dieser runde
             }
+            if(spawnedUnits.ContainsKey(vec)) return;
             tilemap.SetTile(selectedVector, null);
             unit.setTile(tilemap,vec,player.id -1);
             tilemapManager.CmdUpdateTilemapUnit(vec,volkManager.getVolkID(volk).Item2,volk.getUnitID(unit),player.id -1);

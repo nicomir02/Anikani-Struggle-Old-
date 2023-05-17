@@ -37,7 +37,7 @@ public class UnitGUIPanel : MonoBehaviour
         GameObject.Find("InGame/Canvas/UnitPanel/MeleeUnit/Background/Image").GetComponent<Image>().sprite = sprite;
 
         //Welche Truppe wird gerade hier trainiert?
-        if(howLong.ContainsKey(vec) && howLong[vec] > 0 && trainedUnits.ContainsKey(vec) && trainedUnits[vec] != null) {
+        if(howLong.ContainsKey(vec) && trainedUnits.ContainsKey(vec) && trainedUnits[vec] != null) {
             tile = trainedUnits[vec].getTile(GetComponent<Player>().id-1);
             sprite = null;
             if (tile != null && tile is Tile tileComponent)
@@ -47,7 +47,12 @@ public class UnitGUIPanel : MonoBehaviour
             GameObject.Find("InGame/Canvas/UnitPanel/CurTrainedUnit/Background/Image").GetComponent<Image>().sprite = sprite;
             GameObject.Find("InGame/Canvas/UnitPanel/CurTrainedUnit").SetActive(true);
             GameObject.Find("InGame/Canvas/UnitPanel/CurTrainedUnit/Text").GetComponent<TextMeshProUGUI>().text = "Currently training:\n" + trainedUnits[vec].getName();
-            GameObject.Find("InGame/Canvas/UnitPanel/CurTrainedUnit/BG/Text").GetComponent<TextMeshProUGUI>().text = howLong[vec] + " Round";
+            if(howLong[vec] > 0) {
+                GameObject.Find("InGame/Canvas/UnitPanel/CurTrainedUnit/BG/Text").GetComponent<TextMeshProUGUI>().text = howLong[vec] + " Round";
+            }else {
+                GameObject.Find("InGame/Canvas/UnitPanel/CurTrainedUnit/BG/Text").GetComponent<TextMeshProUGUI>().text = "Cannot spawn";
+            }
+            
 
             if(howLong[vec] > 0) {
                 GameObject.Find("InGame/Canvas/UnitPanel/CurTrainedUnit/BG/Text").GetComponent<TextMeshProUGUI>().text += "s";
@@ -68,8 +73,8 @@ public class UnitGUIPanel : MonoBehaviour
 
         foreach(KeyValuePair<Vector3Int, Unit> kvp in trainedUnits) {
             howLong[kvp.Key] -= 1;
-            if(howLong[kvp.Key] <= 0) {
-                Vector3Int vec = new Vector3Int(kvp.Key.x, kvp.Key.y, 2);
+            Vector3Int vec = new Vector3Int(kvp.Key.x, kvp.Key.y, 2);
+            if(howLong[kvp.Key] <= 0 && !unitManager.hasUnitOnVec(vec)) {
                 unitManager.spawnUnit(kvp.Value, vec, player.id-1);
                 removeTemp.Add(kvp.Key);
             }
