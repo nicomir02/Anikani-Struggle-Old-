@@ -10,6 +10,10 @@ public class Unit : NetworkBehaviour
     [SerializeField] private int leben = 100;
     [SerializeField] private int angriffswert = 30;
     [SerializeField] private int maxBloeckeProRunde = 4;
+
+    [SerializeField] private int trainRounds = 2;
+
+    [SerializeField] private int price = 3;
     /* 
     [SyncVar] private int verteidigung = 0;
     [SyncVar] private int nahkampf = 10;
@@ -41,6 +45,14 @@ public class Unit : NetworkBehaviour
 
     public int getMaxBloeckeProRunde() {
         return maxBloeckeProRunde;
+    }
+
+    public int getHowManyTrainRounds() {
+        return trainRounds;
+    }
+
+    public int getPrice() {
+        return price;
     }
     
 }

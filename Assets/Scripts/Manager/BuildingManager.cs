@@ -61,6 +61,10 @@ public class BuildingManager : NetworkBehaviour
         return ZaehlerBuildingsBuiltInRound;
     }
 
+    public void buildInRoundZaehlerInkrement() {
+        ZaehlerBuildingsBuiltInRound++;
+    }
+
     void Start() {
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         hover = GameObject.Find("GameManager").GetComponent<TilemapHover>();
@@ -167,13 +171,22 @@ public class BuildingManager : NetworkBehaviour
     public void selectVector(Vector3Int vec) {
 
         deselectBuilding();
-        if(isMyArea(vec) && ZaehlerBuildingsBuiltInRound < maxBuildingPerRound) {
+        selectBuilding(vec);
+
+        bool canbuild = false;
+
+        List<Vector3Int> vectors = makeAreaBigger(vec, 1);
+
+        foreach(Vector3Int v in vectors) {
+            if(GameObject.Find("GameManager").GetComponent<MapBehaviour>().getBlockDetails(v).Item2.getBuildable() == false) canbuild = true;;
+        }
+
+        if(isMyArea(new Vector3Int(vec.x, vec.y, 0)) && ZaehlerBuildingsBuiltInRound < maxBuildingPerRound && !buildingvectors.ContainsKey(new Vector3Int(vec.x, vec.y, 1)) && !canbuild) {
             oldSelectedColor = hover.getOldColor();
             selection = true;
             selectedVector = vec;
             tilemap.SetColor(vec, hover.getSelectColor());
             hover.reload();
-            selectBuilding(vec);
             GameObject.Find("InGame/Canvas/BuildOrBuy").SetActive(true);
             if(gameManager.hasVec(vec)) {
                 GameObject.Find("InGame/Canvas/BuildOrBuy/Text").GetComponent<TextMeshProUGUI>().text = "Build Building";
@@ -298,9 +311,19 @@ public class BuildingManager : NetworkBehaviour
             selectedVector.z = 1;
             tilemap.SetTileFlags(selectedVector, TileFlags.None);
             tilemap.SetColor(selectedVector, hover.getSelectColor());
+
+            if(selectedBuilding.getName() == "Barracks") { //Setzt Troops Button
+                GameObject.Find("InGame/Canvas/TroopsButton").SetActive(true);
+                GameObject.Find("InGame/Canvas/TroopsButton").GetComponent<Button>().onClick.AddListener(openUnitPanel);
+            }
             
             activatePanel(selectedVector);
         }
+    }
+
+    //Activate Unit Panel Click Event
+    public void openUnitPanel() {
+        GetComponent<UnitGUIPanel>().generateGUI(buildingvectors[selectedVector]);
     }
 
 //Infoxbox Gameobjekt aktiviert
@@ -314,6 +337,8 @@ public class BuildingManager : NetworkBehaviour
         //Vektor Selektierung
         if(selection) tilemap.SetColor(selectedVector, Color.white);
         selection = false;
+
+        GameObject.Find("InGame/Canvas/TroopsButton").SetActive(false);
         
         hover.reload();
         GameObject.Find("InGame/Canvas/BuildOrBuy").SetActive(false);
@@ -331,11 +356,20 @@ public class BuildingManager : NetworkBehaviour
 //einfügen in das Dictionary für gebaute Gebäude, einfügen in den HealthManager, alle Vektoren des Gebäudes gespeichert(da oft größer als 1 Tile)
     public void addBuilding(List<Vector3Int> vecs, Building b, Vector3Int vec) {
         vec.z = 1;
+        if(buildingsVec.ContainsKey(vec)) {
+            Debug.Log(buildingsVec[vec]);
+            buildingsVec[vec] = b;
+        }else {
+            buildingsVec.Add(vec, b);
+        }
         
-        buildingsVec.Add(vec, b);
         healthManager.addBuilding(vecs, b.getHealth(), vec);
         foreach(Vector3Int v in vecs) {
-            buildingvectors.Add(new Vector3Int(v.x, v.y, 1), vec);
+            if(buildingvectors.ContainsKey(new Vector3Int(v.x, v.y, 1))) {
+                buildingvectors[new Vector3Int(v.x, v.y, 1)] = vec;
+            }else {
+                buildingvectors.Add(new Vector3Int(v.x, v.y, 1), vec);
+            }
         }
 
         int buildingid = volkManager.getBuildingID(volk, b);
@@ -366,7 +400,7 @@ public class BuildingManager : NetworkBehaviour
     }
 
 //Passt Spielerfelder an nach Gebäudebau und synchronisiert für alle Spieler
-    void reloadShowArea() {
+    public void reloadShowArea() {
         for(int x=0; x<mapBehaviour.mapWidth(); x++) {
             for(int y=0; y<mapBehaviour.mapHeight(); y++) {
                 tilemap.SetTileFlags(new Vector3Int(x, y, 0), TileFlags.None);

@@ -49,6 +49,7 @@ public class MapBehaviour : NetworkBehaviour
 
     private HashSet<Vector3Int> vectors = new HashSet<Vector3Int>();
 
+    //Alle Ressourcen, die verbaut werden ausgeben
     public List<Ressource> getAllRessourcen() {
         return ressourcen;
     }

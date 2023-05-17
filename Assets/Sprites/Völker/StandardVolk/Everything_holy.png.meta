@@ -1,0 +1,651 @@
+fileFormatVersion: 2
+guid: 2d5b6c3e083e8ee44a4491ab3f9286d1
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 12
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMasterTextureLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Server
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Everything_holy_0
+      rect:
+        serializedVersion: 2
+        x: 83
+        y: 2644
+        width: 74
+        height: 133
+      alignment: 9
+      pivot: {x: 0.5, y: -0.03032794}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1c659b9db0e7bdd46918f1f31374662a
+      internalID: -2058623991
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Everything_holy_1
+      rect:
+        serializedVersion: 2
+        x: 238
+        y: 2644
+        width: 84
+        height: 128
+      alignment: 9
+      pivot: {x: 0.5, y: -0.03032794}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 239466449de210e449f940167c964d50
+      internalID: -1923509120
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Everything_holy_2
+      rect:
+        serializedVersion: 2
+        x: 398
+        y: 2644
+        width: 78
+        height: 133
+      alignment: 9
+      pivot: {x: 0.5, y: -0.03032794}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c79824f6793c42748abf42336439afff
+      internalID: -777198579
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Everything_holy_3
+      rect:
+        serializedVersion: 2
+        x: 598
+        y: 2483
+        width: 364
+        height: 253
+      alignment: 9
+      pivot: {x: 0.5, y: -0.03032794}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 65e6bcc2d0fdbaa43860ded7e349292b
+      internalID: 222531226
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Everything_holy_4
+      rect:
+        serializedVersion: 2
+        x: 998
+        y: 2483
+        width: 364
+        height: 253
+      alignment: 9
+      pivot: {x: 0.5, y: -0.03032794}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fbc834cf10d331b41bc7e67382fb30ce
+      internalID: 736636503
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Everything_holy_5
+      rect:
+        serializedVersion: 2
+        x: 1398
+        y: 2483
+        width: 363
+        height: 253
+      alignment: 9
+      pivot: {x: 0.5, y: -0.03032794}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 182479c5979266d4ea5f8974d6efcbbe
+      internalID: -563985489
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Everything_holy_6
+      rect:
+        serializedVersion: 2
+        x: 1799
+        y: 2483
+        width: 362
+        height: 253
+      alignment: 9
+      pivot: {x: 0.5, y: -0.03032794}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7a5b0d0caebd34d4da3a25a5c84577c8
+      internalID: 1212061116
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Everything_holy_7
+      rect:
+        serializedVersion: 2
+        x: 2198
+        y: 2483
+        width: 364
+        height: 253
+      alignment: 9
+      pivot: {x: 0.5, y: -0.03032794}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c4a309e85b0dcd94a8b3ac5e8eb9e843
+      internalID: 1687907003
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Everything_holy_8
+      rect:
+        serializedVersion: 2
+        x: 598
+        y: 2163
+        width: 364
+        height: 254
+      alignment: 9
+      pivot: {x: 0.5, y: -0.03032794}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 436d6498f25bdef459e7b09e8604b03a
+      internalID: -256798662
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Everything_holy_9
+      rect:
+        serializedVersion: 2
+        x: 998
+        y: 2163
+        width: 364
+        height: 254
+      alignment: 9
+      pivot: {x: 0.5, y: -0.03032794}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f014536456f566444b2dc5e74f38b1eb
+      internalID: 643201382
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Everything_holy_10
+      rect:
+        serializedVersion: 2
+        x: 1398
+        y: 2163
+        width: 363
+        height: 254
+      alignment: 9
+      pivot: {x: 0.5, y: -0.03032794}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1f2d96f2c6f21bd489bc9b8ebddcf4e6
+      internalID: -624882534
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Everything_holy_11
+      rect:
+        serializedVersion: 2
+        x: 1799
+        y: 2163
+        width: 362
+        height: 254
+      alignment: 9
+      pivot: {x: 0.5, y: -0.03032794}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b8d77c5d793de1b41abd4ce3ced8104a
+      internalID: 690812329
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Everything_holy_12
+      rect:
+        serializedVersion: 2
+        x: 2198
+        y: 2163
+        width: 364
+        height: 254
+      alignment: 9
+      pivot: {x: 0.5, y: -0.03032794}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 98ce30d1eb95a2041b8ea5518470ac33
+      internalID: -170731218
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Everything_holy_13
+      rect:
+        serializedVersion: 2
+        x: 590
+        y: 1683
+        width: 420
+        height: 412
+      alignment: 9
+      pivot: {x: 0.5, y: -0.03032794}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0abae2a3fe3a19d41b77fc3a98e6b8b3
+      internalID: -1639923581
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Everything_holy_14
+      rect:
+        serializedVersion: 2
+        x: 1069
+        y: 1683
+        width: 423
+        height: 414
+      alignment: 9
+      pivot: {x: 0.5, y: -0.03032794}
+      border: {x: 0, y: 0, z: 2, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b578d84dd0b62204783109506756f968
+      internalID: -903208065
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Everything_holy_15
+      rect:
+        serializedVersion: 2
+        x: 1549
+        y: 1683
+        width: 423
+        height: 413
+      alignment: 9
+      pivot: {x: 0.5, y: -0.03032794}
+      border: {x: 0, y: 0, z: 2, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8edce1cce78c9194aba1f0c961439e17
+      internalID: -1861697374
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Everything_holy_16
+      rect:
+        serializedVersion: 2
+        x: 2029
+        y: 1683
+        width: 423
+        height: 413
+      alignment: 9
+      pivot: {x: 0.5, y: -0.03032794}
+      border: {x: 0, y: 0, z: 2, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9046adea229f6ef48aa414d9e9fae50e
+      internalID: 1090576121
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Everything_holy_17
+      rect:
+        serializedVersion: 2
+        x: 2510
+        y: 1682
+        width: 420
+        height: 414
+      alignment: 9
+      pivot: {x: 0.5, y: -0.03032794}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: afaa1342deee6ec4e923f24db84acfda
+      internalID: 962455906
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Everything_holy_18
+      rect:
+        serializedVersion: 2
+        x: 588
+        y: 1203
+        width: 424
+        height: 413
+      alignment: 9
+      pivot: {x: 0.5, y: -0.03032794}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7d86e3f118eba3e419ed7aa214a5871f
+      internalID: -1011738858
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Everything_holy_19
+      rect:
+        serializedVersion: 2
+        x: 1069
+        y: 1203
+        width: 423
+        height: 413
+      alignment: 9
+      pivot: {x: 0.5, y: -0.03032794}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 03ada30da57f38742b3a23dfb155c2f5
+      internalID: -624278709
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Everything_holy_20
+      rect:
+        serializedVersion: 2
+        x: 1549
+        y: 1203
+        width: 423
+        height: 413
+      alignment: 9
+      pivot: {x: 0.5, y: -0.03032794}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2466dbd4f0b46684daf31b7a357e5bd1
+      internalID: -1979420129
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Everything_holy_21
+      rect:
+        serializedVersion: 2
+        x: 2029
+        y: 1210
+        width: 423
+        height: 413
+      alignment: 9
+      pivot: {x: 0.5, y: -0.03032794}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ac628b871cd4cd24d899bc3835279379
+      internalID: 2145343985
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Everything_holy_22
+      rect:
+        serializedVersion: 2
+        x: 2508
+        y: 1203
+        width: 424
+        height: 413
+      alignment: 9
+      pivot: {x: 0.5, y: -0.03032794}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9bbddfa77f333f144b7b78ac47088aef
+      internalID: -1905344590
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Everything_holy_23
+      rect:
+        serializedVersion: 2
+        x: 1069
+        y: 1683
+        width: 423
+        height: 414
+      alignment: 9
+      pivot: {x: 0.5, y: -0.03032794}
+      border: {x: 0, y: 0, z: 2, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 007fc9cbdbd86414ca2515a5d7bcbf1a
+      internalID: 1423511244
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      Everything_holy_0: -2058623991
+      Everything_holy_1: -1923509120
+      Everything_holy_10: -624882534
+      Everything_holy_11: 690812329
+      Everything_holy_12: -170731218
+      Everything_holy_13: -1639923581
+      Everything_holy_14: -903208065
+      Everything_holy_15: -1861697374
+      Everything_holy_16: 1090576121
+      Everything_holy_17: 962455906
+      Everything_holy_18: -1011738858
+      Everything_holy_19: -624278709
+      Everything_holy_2: -777198579
+      Everything_holy_20: -1979420129
+      Everything_holy_21: 2145343985
+      Everything_holy_22: -1905344590
+      Everything_holy_23: 1423511244
+      Everything_holy_3: 222531226
+      Everything_holy_4: 736636503
+      Everything_holy_5: -563985489
+      Everything_holy_6: 1212061116
+      Everything_holy_7: 1687907003
+      Everything_holy_8: -256798662
+      Everything_holy_9: 643201382
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

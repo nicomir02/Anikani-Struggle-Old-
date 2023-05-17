@@ -8,6 +8,8 @@ public class PauseMenu : MonoBehaviour
     [SerializeField] private GameObject Pause;
     bool isPaused = false;
 
+    bool canPause = false;
+
     public bool getPause() {
         return isPaused;
     }
@@ -18,10 +20,16 @@ public class PauseMenu : MonoBehaviour
         Pause.SetActive(false);
     }
 
+    public void setCanPause(bool can) {
+        canPause = can;
+    }
+
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Escape)) 
+
+
+        if(Input.GetKeyDown(KeyCode.Escape) && canPause) 
         {
             if(isPaused)
             {

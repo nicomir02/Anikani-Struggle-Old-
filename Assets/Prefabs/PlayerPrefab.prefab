@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: -8107069390763935139}
   - component: {fileID: 7573024525503976991}
   - component: {fileID: 4205685374953623912}
+  - component: {fileID: -8915295743232394923}
   m_Layer: 0
   m_Name: PlayerPrefab
   m_TagString: Untagged
@@ -118,9 +119,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0e1cdb7eb858a144aa0ec5dffa949f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  woodCutter:
-  - {fileID: -1878948800, guid: a61d68b32e344ff46b1334a7d78e7a20, type: 3}
-  - {fileID: -1926931837, guid: a61d68b32e344ff46b1334a7d78e7a20, type: 3}
-  barracks:
-  - {fileID: -939013988, guid: eb5cc62e0eac25343b1ad1dbc8ae4581, type: 3}
-  - {fileID: 1795327316, guid: eb5cc62e0eac25343b1ad1dbc8ae4581, type: 3}
+--- !u!114 &-8915295743232394923
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5312579299012824871}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8bef9f97a26c33641bf8b4713df019f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
