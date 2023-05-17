@@ -32,6 +32,7 @@ public class UnitManager : NetworkBehaviour
     private Unit selectedUnit;
     private Vector3Int selectedVector;
 
+
     
     
     void Start() {
@@ -117,7 +118,8 @@ public class UnitManager : NetworkBehaviour
         if(distance(selectedVector, vec) <= reichweite[selectedVector] && mapBehaviour.getBlockDetails(new Vector3Int(vec.x, vec.y, 0)).Item2.getWalkable()) {
             if(healthManager.isHealth(vec) && !GetComponent<BuildingManager>().isOwnBuilding(new Vector3Int(vec.x, vec.y, 1))){
                 angriff(unit, vec);
-                if(healthManager.isHealth(vec)) return;    //schaut ob gegner besiegt wurde in dieser runde
+                return;
+                //if(healthManager.isHealth(vec)) return;    //schaut ob gegner besiegt wurde in dieser runde || Auskommentiert, sonst kann gegner Einheit bewegen
             }
             if(spawnedUnits.ContainsKey(vec)) return;
             tilemap.SetTile(selectedVector, null);
@@ -145,13 +147,23 @@ public class UnitManager : NetworkBehaviour
     }
 
     public void angriff(Unit unit, Vector3Int vec){
-        if(GetComponent<BuildingManager>().isOwnBuilding(new Vector3Int(vec.x, vec.y, 1)) && spawnedUnits.ContainsKey(new Vector3Int(vec.x, vec.y, 2))) return;
+        if(spawnedUnits.ContainsKey(new Vector3Int(vec.x, vec.y, 2)) || distance(selectedVector, vec) > unit.getKampfweite()) return;
+
+        reichweite[selectedVector] = 0;
 
         if(healthManager.isUnit(new Vector3Int(vec.x, vec.y, 2))) {
             healthManager.angriff(new Vector3Int(vec.x, vec.y, 2), unit.getAngriffswert());
-        }
-        else if(healthManager.isBuilding(new Vector3Int(vec.x, vec.y, 1))) {
+            syncStillExists(new Vector3Int(vec.x, vec.y, 2));
+        }else if(healthManager.isBuilding(new Vector3Int(vec.x, vec.y, 1))) {
             healthManager.angriffBuilding(new Vector3Int(vec.x, vec.y, 1), unit.getAngriffswert());
+            syncStillExistsBuilding(new Vector3Int(vec.x, vec.y, 1));
+        }
+    }
+
+    [Command(requiresAuthority = false)]
+    public void syncStillExistsBuilding(Vector3Int vec) {
+        if(healthManager.getBuildingLeben(vec) <= 0) {
+            GetComponent<BuildingManager>().angriffsCheckBuilding(vec);
         }
     }
 
@@ -171,7 +183,7 @@ public class UnitManager : NetworkBehaviour
         }
     }
 
-    [Command]
+    [Command(requiresAuthority = false)]
     public void syncMovedUnits(Vector3Int vec){
         syncMovedUnitsClient(vec);
     }
@@ -179,5 +191,10 @@ public class UnitManager : NetworkBehaviour
     [ClientRpc]
     public void syncMovedUnitsClient(Vector3Int vec){
         tilemap.SetTile(vec, null);
+
+        if(spawnedUnits.ContainsKey(vec)) {
+            spawnedUnits.Remove(vec);
+            reichweite.Remove(vec);
+        }
     }
 }

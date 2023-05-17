@@ -56,6 +56,45 @@ public class BuildingManager : NetworkBehaviour
     //gibts einen selected Vektor für Feld Erweiterung
     bool selection = false;
 
+    //methode angriffgebäude schaut ob das angegriffene Gebäude einem Spieler selber gehört
+    [ClientRpc]
+    public void angriffsCheckBuilding(Vector3Int vec) {
+        vec.z = 1;
+        Debug.Log("wqdqw" + vec);
+        
+        foreach(KeyValuePair<Vector3Int, Vector3Int> kvp in buildingvectors) {
+            Debug.Log(kvp.Key + " with " + vec);
+            Debug.Log((kvp.Key == vec));
+        }
+        if(buildingvectors.ContainsKey(vec) && healthManager.getBuildingLeben(vec) <= 0) {
+            vec = buildingvectors[vec];
+            Debug.Log("1");
+            Vector3Int temp = buildingvectors[vec];
+            if(buildingsVec[vec] == volk.getHomeBuilding(0)) {
+                Debug.Log("Game Over"); //Später mit einem Canvas auf dem Bildschirm des Spielers 
+                player.spielerDisqualifizieren(player.id);                Vector3Int tmp = new Vector3Int(vec.x, vec.y, 1);
+                tilemapManager.removeBuilding(temp, 3);
+            }else {
+                tilemapManager.removeBuilding(temp, 2);
+            }
+            healthManager.removeBuilding(vec);
+
+            //Remove Building von Listen
+            
+            buildingsVec.Remove(temp);
+            List<Vector3Int> removeList = new List<Vector3Int>();
+            foreach(KeyValuePair<Vector3Int, Vector3Int> kvp in buildingvectors) {
+                if(kvp.Value == temp) removeList.Add(kvp.Key);
+            }
+
+            foreach(Vector3Int v in removeList) {
+                buildingvectors.Remove(v);
+            }
+
+            
+        }
+    }
+
     //Getter Methode für ZaehlerBuildingsBuiltInRound
     public int getZahlBuildInRound() {
         return ZaehlerBuildingsBuiltInRound;
@@ -283,7 +322,7 @@ public class BuildingManager : NetworkBehaviour
     }
 
 //Synchronisieren der Felder der einzelnen Spieler
-    [Command]
+    [Command(requiresAuthority = false)]
     public void addFelderToTeam(Vector3Int vec, int groesse, int id) {//für 3x3. groesse = 3
         List<Vector3Int> allefelder = makeAreaBigger(vec, groesse-2);
         foreach(Vector3Int v in allefelder) {
@@ -372,6 +411,7 @@ public class BuildingManager : NetworkBehaviour
             if(buildingvectors.ContainsKey(new Vector3Int(v.x, v.y, 1))) {
                 buildingvectors[new Vector3Int(v.x, v.y, 1)] = vec;
             }else {
+                //Debug.Log("BuildingManagerSave: " + new Vector3Int(v.x, v.y, 1) + " with: "+vec);
                 buildingvectors.Add(new Vector3Int(v.x, v.y, 1), vec);
             }
         }

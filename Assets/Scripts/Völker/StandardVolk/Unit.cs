@@ -6,14 +6,17 @@ using UnityEngine.Tilemaps;
 
 public class Unit : NetworkBehaviour
 {
-    [SerializeField] private string unitname = "";
-    [SerializeField] private int leben = 100;
-    [SerializeField] private int angriffswert = 30;
-    [SerializeField] private int maxBloeckeProRunde = 4;
+    [SerializeField] private string unitname = "";  //Name der Einheit
+    [SerializeField] private int leben = 100;   //Lebenspunkte
+    [SerializeField] private int angriffswert = 30; //Angriffsstärke
+    [SerializeField] private int maxBloeckeProRunde = 4;    //Bewegungsreichweite
 
-    [SerializeField] private int trainRounds = 2;
+    [SerializeField] private int trainRounds = 2; //anzahl der Runden zum Rekrutieren/Trainieren der Einheit
 
-    [SerializeField] private int price = 3;
+    [SerializeField] private int price = 3; //Kosten der einheit zum rekrutieren(momentan nur Holz)
+
+
+    [SerializeField] private int kampfweite = 1; //angriffsreichweite
     /* 
     [SyncVar] private int verteidigung = 0;
     [SyncVar] private int nahkampf = 10;
@@ -22,10 +25,16 @@ public class Unit : NetworkBehaviour
 
     [SyncVar] private int BloeckeProRunde; */
 
-    [SerializeField] List<TileBase> colourUnit = new List<TileBase>();
+    [SerializeField] List<TileBase> colourUnit = new List<TileBase>(); //Farben für die Spieler/Einheiten- und Gebäudeunterschiede
 
+    //Setter Methoden:
     public void setTile(Tilemap tilemap, Vector3Int vec, int colorFromID) {
         tilemap.SetTile(vec, colourUnit[colorFromID]);
+    }
+
+    //Getter Methoden:
+    public int getKampfweite() {
+        return kampfweite;
     }
 
     public string getName() {

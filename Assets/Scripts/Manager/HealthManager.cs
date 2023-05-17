@@ -26,6 +26,7 @@ public class HealthManager : NetworkBehaviour
     //neues Building wird gesetzt, also add für health
     [Command(requiresAuthority = false)]
     public void addBuilding(List<Vector3Int> listVec, int leben, Vector3Int vec) {
+        vec.z = 1;
         if(health.ContainsKey(vec)) return;
         if(listVec.Count > 0) {
             health.Add(vec, leben);
@@ -33,6 +34,7 @@ public class HealthManager : NetworkBehaviour
                 if(!building.ContainsKey(v)) building.Add(new Vector3Int(v.x, v.y, 1), vec);
             }
         }
+
     }
 
     //schaut ob an diesem Vektor leben gespeichert gewerden
@@ -44,10 +46,29 @@ public class HealthManager : NetworkBehaviour
         if(building.ContainsKey(vec)) b = true;
         return b;
     }
+
+    [Command(requiresAuthority = false)]
+    public void removeBuilding(Vector3Int vec) {
+        vec.z = 1;
+        if(building.ContainsKey(vec)) {
+            Vector3Int temp = building[vec];
+            health.Remove(temp);
+            
+            List<Vector3Int> removeList = new List<Vector3Int>();
+            foreach(KeyValuePair<Vector3Int, Vector3Int> kvp in building) {
+                if(kvp.Value == temp) removeList.Add(kvp.Key);
+            }
+
+            foreach(Vector3Int v in removeList) {
+                building.Remove(v);
+            }
+            
+        }
+    }
     
     //vorherige Methode noch unter verwendung, neue isHealth()
     public bool isUnit(Vector3Int vec) {
-        return !building.ContainsKey(new Vector3Int(vec.x, vec.y, 2));
+        return health.ContainsKey(new Vector3Int(vec.x, vec.y, 2));
     }
 
     //vorherige Methode noch unter verwendung, neue isHealth()
@@ -71,7 +92,11 @@ public class HealthManager : NetworkBehaviour
     //Hinzufügen von Einheit
     [Command(requiresAuthority = false)]
     public void addUnit(Vector3Int vec, int leben) {
-        health.Add(vec, leben);
+        if(!health.ContainsKey(vec)) {
+            health.Add(vec, leben);
+        }else {
+            health[vec] = leben;
+        }
     }
 
     //Bewegung von Einheit

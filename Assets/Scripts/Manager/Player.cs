@@ -28,7 +28,14 @@ public class Player : NetworkBehaviour
     //public string name = "Player";    //Spielername; später bei der Lobby einstellbar für das Spiel(Cheats damit verbunden?)
     public bool isLobby = true;
 
+    //Liste mit disqualifizierten Spieler IDs
+    [SyncVar] List<int> disqualifiedPlayers = new List<int>();
     
+    //Spieler wird rausgeschmissen 
+    [Command]
+    public void spielerDisqualifizieren(int id) {
+        disqualifiedPlayers.Add(id);
+    }
 
     //Initialisieren beim Start und hinzufügen von ID
     void Start() {
@@ -91,6 +98,10 @@ public class Player : NetworkBehaviour
     [Command(requiresAuthority = false)]
     public void onRoundChange() {
         currentTurn++;
+        while(disqualifiedPlayers.Contains(currentTurn)) { //damit rausgeschmissene Spieler nicht den Spielfluss beeinflussen, da deren ID sonst eventuell aufgerufen wird
+            currentTurn++;
+        }
+
         if(currentTurn > network.numPlayers) { //Sollte es größer sein, ist erster Spieler wieder dran
             currentTurn = 1;
             round += 1;

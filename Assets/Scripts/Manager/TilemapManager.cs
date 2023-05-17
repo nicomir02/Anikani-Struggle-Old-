@@ -51,4 +51,32 @@ public class TilemapManager : NetworkBehaviour //Synchronisieren der Tilemap zwi
         Building building = volkManager.getBuildingByID(volkManager.getVolk(volkID), b, lvl);
         building.setTile(tilemap, vec, playerID-1);
     }
+
+    //Tilemap Change für Gebäude löschen aufruf
+    [Command(requiresAuthority = false)]
+    public void removeBuilding(Vector3Int vec, int groesse) {
+        rpcRemoveBuilding(vec, groesse);
+    }
+
+    //Tilemap Change für Gebäude löschen auf Client
+    [ClientRpc]
+    public void rpcRemoveBuilding(Vector3Int vec, int groesse) {
+        vec.z = 1;
+        foreach(Vector3Int v in makeAreaBigger(vec, groesse-2)){
+            tilemap.SetTile(v, null);
+        }
+        
+    }
+
+    public List<Vector3Int> makeAreaBigger(Vector3Int vec, int groesse) {
+        List<Vector3Int> neighbors = new List<Vector3Int>();
+        //Schleifen für alle Nachbarsfelder in bestimmtem Radius
+        for(int x=-groesse; x<=groesse; x++) {
+            for(int y=-groesse; y<=groesse; y++) {
+                Vector3Int vector = new Vector3Int(x, y, 0) + vec;
+                neighbors.Add(vector);
+            }
+        }
+        return neighbors;
+    }
 }
