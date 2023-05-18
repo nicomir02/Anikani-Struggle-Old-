@@ -107,6 +107,7 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0
+  spritePrefab: {fileID: 5187922512917486920, guid: 962210013b629d246b2a57b7429c18ab, type: 3}
 --- !u!114 &4205685374953623912
 MonoBehaviour:
   m_ObjectHideFlags: 0
