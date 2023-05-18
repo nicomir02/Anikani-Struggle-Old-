@@ -12,21 +12,22 @@ public class WinLooseScreen : MonoBehaviour
     [SerializeField] TextMeshProUGUI winLooseCanvasText;
     [SerializeField] Button mainMenu;
 
+
     public void setLooseScreen() {
         winLooseCanvas.SetActive(true);
         winLooseCanvasBackground.color = Color.red;
         winLooseCanvasText.text = "You loose";
-        //mainMenu.onClick.AddListener(goMainMenu);
+        mainMenu.onClick.AddListener(goMainMenu);
     }
 
     public void setWinScreen() {
         winLooseCanvas.SetActive(true);
         winLooseCanvasBackground.color = Color.green;
         winLooseCanvasText.text = "You win";
-        //mainMenu.onClick.AddListener(goMainMenu);
+        mainMenu.onClick.AddListener(goMainMenu);
     }
 
     public void goMainMenu() {
-        SceneManager.LoadScene(0);
+        GetComponent<PauseMenu>().buttonBackToMainMenu();
     }
 }

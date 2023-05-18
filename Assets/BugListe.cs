@@ -2,8 +2,7 @@
 
 //Hohe Priorität
 
-    //Game Over Anzeige
-    //Gewonnen Anzeige
+    //dritte farbe für weiteres team zum testen von paar sachen
 
 //Mittlere Priorität
 
@@ -11,13 +10,15 @@
     //Speicherung wie viele Ressourcen in Gebäude am Vektor
     //Entfernung von Ressourcen bei Gebäudesetzung auch auf andere Spieler übertragen
     //Code kommentieren
+    //Game Over / Win Screen Button Hauptmenü fix
+    //probleme wenn spieler sich versucht in laufendes spiel einzuloggen
+    //NetworkClient leave funkt. nicht richtig 
 
 //Niedrige Priorität
 
     //showarea nicht immer geupdated(hauptgebäude setzen, spieler ausgeschieden)
     //Wackelnde Animationen
     //Probleme bei disconnect lösen
-    //Textfelder auf buttons (evt. auch woanders) autosize
     //Sounds
     //nicht durch gebäude gehen
     //nicht über wasser laufen 
@@ -28,6 +29,9 @@
     //Gebäude nach dem ersten Gebäude kosten Ressourcen zum Bauen oder zumindest Start-Ressourcen
     //Menü mit existierenden Spielern
     //Network-Mirror Menü anpassen
+    //disqualifyPlayer methode noch im Building Manager Skript(ändern)
+    //Methoden in Hilfsskripte und so umlagern und allgemein Skripte säubern
+    //Force Stop bei Back To Main Menü im Pause(gameObject can only be called in main thread)
 
 
 

@@ -27,14 +27,14 @@ public class Player : NetworkBehaviour
     public bool isYourTurn = false;     //sagt ob dieser Spieler gerade am Turn ist
     //public string name = "Player";    //Spielername; später bei der Lobby einstellbar für das Spiel(Cheats damit verbunden?)
     public bool isLobby = true;
+    
 
-    //Liste mit disqualifizierten Spieler IDs
-    
-    
     //Spieler wird rausgeschmissen 
     //Methode aufruf wenn ein hauptgebäude zerstört wird, checked ob mehr als 1 noch drin sind 
     [Command(requiresAuthority = false)]
     public void spielerDisqualifizieren(int id) {
+        if(currentTurn == id) onRoundChange();
+        
         GameManager gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         gameManager.spielerDisqualifizieren(id);
         int temp = 0;
@@ -44,7 +44,11 @@ public class Player : NetworkBehaviour
         if(temp+1 >= allids) {
             lastPlayerWinScreen();
         }
+        
     }
+
+
+
 
     //Methode um letzten Spieler zu ermitteln
     [ClientRpc]
@@ -100,6 +104,8 @@ public class Player : NetworkBehaviour
                 roundButtonText.text = "Wait";
             }
         }
+
+        
     }
 
     //Runden button Click methode
@@ -112,13 +118,6 @@ public class Player : NetworkBehaviour
             roundButtonText.text = "Wait";
             onRoundChange();
         }
-    }
-
-
-    
-    [Command(requiresAuthority = false)]
-    public void howManyAlive(int last) {
-
     }
 
     //Rundenveränderung auf dem Server

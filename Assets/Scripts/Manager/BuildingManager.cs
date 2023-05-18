@@ -66,21 +66,8 @@ public class BuildingManager : NetworkBehaviour
             Debug.Log("1");
             Vector3Int temp = buildingvectors[vec];
             if(buildingsVec[vec] == volk.getHomeBuilding(0)) {
-                Debug.Log("Game Over"); //Später mit einem Canvas auf dem Bildschirm des Spielers 
-                player.spielerDisqualifizieren(player.id);                Vector3Int tmp = new Vector3Int(vec.x, vec.y, 1);
-                tilemapManager.removeBuilding(temp, 3);
-
-                foreach(KeyValuePair<Vector3Int, Building> kvp in buildingsVec) {
-                    healthManager.removeBuilding(kvp.Key);
-                    tilemapManager.removeBuilding(kvp.Key, 3);
-                }
-
-                buildingsVec = new Dictionary<Vector3Int, Building>();
-                buildingvectors = new Dictionary<Vector3Int, Vector3Int>();
-
+                disqualifyPlayer();
                 GameObject.Find("GameManager").GetComponent<WinLooseScreen>().setLooseScreen();
-
-                unitManager.disqualify();
             }else {
                 tilemapManager.removeBuilding(temp, 2);
                 healthManager.removeBuilding(vec);
@@ -104,6 +91,24 @@ public class BuildingManager : NetworkBehaviour
             }
         }
         reloadShowArea();
+    }
+
+//methode sollte nicht im BUildingManager sein->später ändern
+    public void disqualifyPlayer() {
+        Debug.Log("Game Over"); //Später mit einem Canvas auf dem Bildschirm des Spielers 
+        player.spielerDisqualifizieren(player.id);                
+
+
+
+        foreach(KeyValuePair<Vector3Int, Building> kvp in buildingsVec) {
+            healthManager.removeBuilding(kvp.Key);
+            tilemapManager.removeBuilding(kvp.Key, 3);
+        }
+
+        buildingsVec = new Dictionary<Vector3Int, Building>();
+        buildingvectors = new Dictionary<Vector3Int, Vector3Int>();
+
+        unitManager.disqualify();
     }
 
     //Getter Methode für ZaehlerBuildingsBuiltInRound
@@ -156,6 +161,7 @@ public class BuildingManager : NetworkBehaviour
                         //x und y Koordinaten anpassen, da Gebäude 3x3 Tiles groß ist und man auf die mittlere Tile drückt
                         vec.x = vec.x-1;
                         vec.y = vec.y-1;
+                        
                         vec.z = 1; //Gebäude auf z=1 Ebene gesetzt
                         addBuilding(newArea, volk.getHomeBuilding(0), vec);
                         //Setzen/Speichern der Position des Hauptgebäudes für den Spieler
@@ -168,6 +174,9 @@ public class BuildingManager : NetworkBehaviour
                         //testen für erste einheit direkt am Eingang des hauptgebäudes
                         vec.y = vec.y + 1;
                         vec.z = 2;
+
+                        ZaehlerBuildingsBuiltInRound = maxBuildingPerRound;
+
                         unitManager.spawnUnit(volk.getUnit(0),vec,player.id - 1);
                     }
                 }
@@ -217,8 +226,10 @@ public class BuildingManager : NetworkBehaviour
 
     //Vector Selection
     public void selectVector(Vector3Int vec) {
-
         deselectBuilding();
+
+        selectBuilding(vec);
+        
 
         bool canbuild = canBuildMethod(vec);
 
@@ -360,6 +371,7 @@ public class BuildingManager : NetworkBehaviour
 //setzt Variable selected Building + selected Vector und aktiviert Infobox
     private void selectBuilding(Vector3Int vec) {
         vec.z = 1;
+        
         if(buildingvectors.ContainsKey(vec)) {
             selectedVector = buildingvectors[vec];
             selectedBuilding = buildingsVec[selectedVector];
@@ -384,6 +396,7 @@ public class BuildingManager : NetworkBehaviour
 //Infoxbox Gameobjekt aktiviert
     public void activatePanel(Vector3Int vec) {
         player.infoboxBuilding.SetActive(true);
+
         GameObject.Find("InGame/Canvas/InfoboxBuilding/Infotext").GetComponent<TextMeshProUGUI>().text = "<b><u>Infobox</u></b> \n Name: "+buildingsVec[vec].getName()+"\n Leben: " +healthManager.getBuildingLeben(vec);
     }
 
@@ -405,7 +418,6 @@ public class BuildingManager : NetworkBehaviour
         selectedVector = new Vector3Int(mapBehaviour.mapWidth()+2,mapBehaviour.mapHeight()+2,-1); //selected Vektor außerhalb der Map gesetzt, da nicht auf null setzbar
         selectedBuilding = null;
         player.infoboxBuilding.SetActive(false);
-        
     }
 
 //einfügen in das Dictionary für gebaute Gebäude, einfügen in den HealthManager, alle Vektoren des Gebäudes gespeichert(da oft größer als 1 Tile)

@@ -62,10 +62,11 @@ public class TilemapManager : NetworkBehaviour //Synchronisieren der Tilemap zwi
     [ClientRpc]
     public void rpcRemoveBuilding(Vector3Int vec, int groesse) {
         vec.z = 1;
+        Debug.Log("Test");
         foreach(Vector3Int v in makeAreaBigger(vec, groesse-2)){
+            Debug.Log("Test2");
             tilemap.SetTile(v, null);
-        }
-        
+        }        
     }
 
     public List<Vector3Int> makeAreaBigger(Vector3Int vec, int groesse) {

@@ -104,6 +104,8 @@ public class UnitManager : NetworkBehaviour
         player.infobox.SetActive(false);
     }
     public void selectUnit(Vector3Int vec){
+        vec.z = 2;
+        if(healthManager.getLeben(vec) == -1 && spawnedUnits.ContainsKey(vec)) spawnedUnits.Remove(vec);
         if(spawnedUnits.ContainsKey(vec)){ 
             selectedUnit = spawnedUnits[vec];
             selectedVector = vec;
