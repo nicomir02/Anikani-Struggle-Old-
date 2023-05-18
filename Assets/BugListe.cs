@@ -2,20 +2,18 @@
 
 //Hohe Priorität
 
-    //Next round erst wenn hauptgebäude gesetzt
-    //Gebäude können momentan wenn mittelfeld in eigenem auch ins andere gebiet reingesetzt werden
+    //Game Over Anzeige
+    //Gewonnen Anzeige
 
 //Mittlere Priorität
 
     //showarea nicht immer anzeigen lassen, bei klick im gebiet
-    //Escape- Menü im Spiel (Spiel pausieren/beenden)
     //Speicherung wie viele Ressourcen in Gebäude am Vektor
     //Entfernung von Ressourcen bei Gebäudesetzung auch auf andere Spieler übertragen
 
 //Niedrige Priorität
 
-    //ShowArea zeigt auch Berge an (getestet ganz links)
-    //showarea nicht immer geupdated(hauptgebäude setzen)
+    //showarea nicht immer geupdated(hauptgebäude setzen, spieler ausgeschieden)
     //Wackelnde Animationen
     //Probleme bei disconnect lösen
     //Textfelder auf buttons (evt. auch woanders) autosize

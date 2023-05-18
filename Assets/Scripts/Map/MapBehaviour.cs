@@ -275,6 +275,8 @@ public class MapBehaviour : NetworkBehaviour
     }
 
     public (Biom, Block, Ressource) getBlockDetails(Vector3Int vec) {
+        if(!GetComponent<TilemapHover>().insideField(vec)) return (null, null, null);
+        vec.z = 0;
         Biom biom = biome[blockDetails[vec].Biomindex];
         Block block = biom.getBlockByIndex(blockDetails[vec].Blockindex);
         Ressource ressource = null;

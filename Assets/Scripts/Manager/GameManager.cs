@@ -14,9 +14,38 @@ public class GameManager : NetworkBehaviour
 //Auflisten bei Unity bei den GameObjects ders Szene für verschiedene Teamfarben
     [SerializeField] List<Color> spielFarben = new List<Color>();
 
+
+    //Liste hier, da bei Player Probleme mit Sync gab
+    private readonly SyncList<int> disqualifiedPlayers = new SyncList<int>();
+
+
+    //Methode fürs disqualifien
+    [Command(requiresAuthority = false)]
+    public void spielerDisqualifizieren(int id) {
+        disqualifiedPlayers.Add(id);
+        List<Vector3Int> list = new List<Vector3Int>();
+
+        foreach(KeyValuePair<Vector3Int, int> kvp in teamVecs) {
+            if(kvp.Value == id) {
+                list.Add(kvp.Key);
+            }
+        }
+
+        foreach(Vector3Int v in list) {
+            teamVecs.Remove(v);
+        }
+    }
+
+    //Methode um zu überprüfen ob Spieler disqualifiziert ist
+    public bool isDisqualified(int id) {
+        return disqualifiedPlayers.Contains(id);
+    }
+
+
     //Vector zu einem Team hinzufügen
     [Command(requiresAuthority = false)]
     public void addVec(Vector3Int vec, int id) {
+        if(!GetComponent<TilemapHover>().insideField(vec)) return;
         if(!teamVecs.ContainsKey(vec)) teamVecs.Add(vec, id);
     }
 
@@ -41,6 +70,7 @@ public class GameManager : NetworkBehaviour
     
     //Methode um herauszufinden ob der Vektor einem gegnerischen Team gehört
     public bool isEnemyArea(Vector3Int vec, int ownTeamID) {
+        vec.z = 0;
         if(teamVecs.ContainsKey(vec)) if(teamVecs[vec] != ownTeamID) return true;
         return false;
     }

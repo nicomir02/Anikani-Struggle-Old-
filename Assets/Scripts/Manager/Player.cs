@@ -29,12 +29,17 @@ public class Player : NetworkBehaviour
     public bool isLobby = true;
 
     //Liste mit disqualifizierten Spieler IDs
-    [SyncVar] List<int> disqualifiedPlayers = new List<int>();
+    
     
     //Spieler wird rausgeschmissen 
-    [Command]
+    //Methode aufruf wenn ein hauptgebäude zerstört wird, checked ob mehr als 1 noch drin sind 
+    [Command(requiresAuthority = false)]
     public void spielerDisqualifizieren(int id) {
-        disqualifiedPlayers.Add(id);
+        GameObject.Find("GameManager").GetComponent<GameManager>().spielerDisqualifizieren(id);
+    }
+
+    public bool isDisqualified(int id) {
+        return GameObject.Find("GameManager").GetComponent<GameManager>().isDisqualified(id);
     }
 
     //Initialisieren beim Start und hinzufügen von ID
@@ -86,6 +91,7 @@ public class Player : NetworkBehaviour
     //Runden button Click methode
     public void OnClick() {
         if(GameObject.Find("GameManager").GetComponent<PauseMenu>().getPause()) return;
+        if(round == 0 && GetComponent<BuildingManager>().getZahlBuildInRound() == 0) return;
         if(isYourTurn) { // nur wenn du dran bist
             //if(round == 0 && GetComponent<BuildingManager>().getZahlBuildInRound() == 0) return;
             isYourTurn = false;
@@ -94,11 +100,18 @@ public class Player : NetworkBehaviour
         }
     }
 
+
+    
+    [Command(requiresAuthority = false)]
+    public void howManyAlive(int last) {
+
+    }
+
     //Rundenveränderung auf dem Server
     [Command(requiresAuthority = false)]
     public void onRoundChange() {
         currentTurn++;
-        while(disqualifiedPlayers.Contains(currentTurn)) { //damit rausgeschmissene Spieler nicht den Spielfluss beeinflussen, da deren ID sonst eventuell aufgerufen wird
+        while(isDisqualified(currentTurn)) { //damit rausgeschmissene Spieler nicht den Spielfluss beeinflussen, da deren ID sonst eventuell aufgerufen wird
             currentTurn++;
         }
 

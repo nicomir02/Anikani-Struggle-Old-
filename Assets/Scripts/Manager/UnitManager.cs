@@ -47,6 +47,15 @@ public class UnitManager : NetworkBehaviour
         healthManager = GameObject.Find("GameManager").GetComponent<HealthManager>();
     }
 
+    public void disqualify() {
+        foreach(KeyValuePair<Vector3Int, Unit> kvp in spawnedUnits) {
+            healthManager.removeUnit(kvp.Key);
+            tilemapManager.removeUnit(kvp.Key);
+        }
+        spawnedUnits = new Dictionary<Vector3Int, Unit>();
+        reichweite = new Dictionary<Vector3Int, int>();
+    }
+
     public bool hasUnitOnVec(Vector3Int vec) {
         vec.z = 2;
         if(spawnedUnits.ContainsKey(vec)) {

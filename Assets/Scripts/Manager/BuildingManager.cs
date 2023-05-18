@@ -60,12 +60,7 @@ public class BuildingManager : NetworkBehaviour
     [ClientRpc]
     public void angriffsCheckBuilding(Vector3Int vec) {
         vec.z = 1;
-        Debug.Log("wqdqw" + vec);
         
-        foreach(KeyValuePair<Vector3Int, Vector3Int> kvp in buildingvectors) {
-            Debug.Log(kvp.Key + " with " + vec);
-            Debug.Log((kvp.Key == vec));
-        }
         if(buildingvectors.ContainsKey(vec) && healthManager.getBuildingLeben(vec) <= 0) {
             vec = buildingvectors[vec];
             Debug.Log("1");
@@ -74,25 +69,39 @@ public class BuildingManager : NetworkBehaviour
                 Debug.Log("Game Over"); //Später mit einem Canvas auf dem Bildschirm des Spielers 
                 player.spielerDisqualifizieren(player.id);                Vector3Int tmp = new Vector3Int(vec.x, vec.y, 1);
                 tilemapManager.removeBuilding(temp, 3);
+
+                foreach(KeyValuePair<Vector3Int, Building> kvp in buildingsVec) {
+                    healthManager.removeBuilding(kvp.Key);
+                    tilemapManager.removeBuilding(kvp.Key, 3);
+                }
+
+                buildingsVec = new Dictionary<Vector3Int, Building>();
+                buildingvectors = new Dictionary<Vector3Int, Vector3Int>();
+
+                unitManager.disqualify();
             }else {
                 tilemapManager.removeBuilding(temp, 2);
-            }
-            healthManager.removeBuilding(vec);
+                healthManager.removeBuilding(vec);
 
-            //Remove Building von Listen
-            
-            buildingsVec.Remove(temp);
-            List<Vector3Int> removeList = new List<Vector3Int>();
-            foreach(KeyValuePair<Vector3Int, Vector3Int> kvp in buildingvectors) {
-                if(kvp.Value == temp) removeList.Add(kvp.Key);
-            }
+                //Remove Building von Listen
+                
+                buildingsVec.Remove(temp);
+                List<Vector3Int> removeList = new List<Vector3Int>();
+                foreach(KeyValuePair<Vector3Int, Vector3Int> kvp in buildingvectors) {
+                    if(kvp.Value == temp) removeList.Add(kvp.Key);
+                }
 
-            foreach(Vector3Int v in removeList) {
-                buildingvectors.Remove(v);
-            }
+                if(removeList.Contains(selectedVector)) {
+                    deselectBuilding();
+                }
 
-            
+
+                foreach(Vector3Int v in removeList) {
+                    buildingvectors.Remove(v);
+                }
+            }
         }
+        reloadShowArea();
     }
 
     //Getter Methode für ZaehlerBuildingsBuiltInRound
@@ -134,12 +143,9 @@ public class BuildingManager : NetworkBehaviour
         if(Input.GetMouseButtonDown(0) && player.isYourTurn && !player.isLobby) {
             Vector3Int vec = hover.getVectorFromMouse();
             if(hover.insideField(vec)) {
-                if(player.round == 0 && base.isOwned && ZaehlerBuildingsBuiltInRound == 0) {
-                    bool canBuild = true;
+                if(player.round == 0 && ZaehlerBuildingsBuiltInRound == 0) {
+                    bool canBuild = canBuildMethod(vec);
                     List<Vector3Int> newArea = makeAreaBigger(vec, 1);
-                    foreach(Vector3Int v in newArea) {
-                        if(!hover.insideField(v) || !mapBehaviour.getBlockDetails(new Vector3Int(v.x, v.y, 0)).Item2.getBuildable() || gameManager.getDictionary().ContainsKey(v)) canBuild = false;
-                    }
                     if(canBuild) {
                         //Added zu der eigenen Area
                         add(makeAreaBigger(vec, 4), player.id);
@@ -211,20 +217,13 @@ public class BuildingManager : NetworkBehaviour
     public void selectVector(Vector3Int vec) {
 
         deselectBuilding();
-        selectBuilding(vec);
 
-        bool canbuild = false;
+        bool canbuild = canBuildMethod(vec);
 
         List<Vector3Int> vectors = makeAreaBigger(vec, 1);
+        
 
-        foreach(Vector3Int v in vectors) {
-            if(GameObject.Find("GameManager").GetComponent<MapBehaviour>().getBlockDetails(v).Item2.getBuildable() == false || buildingvectors.ContainsKey(new Vector3Int(v.x, v.y, 1))) {
-                canbuild = true;
-                break;
-            }
-        }
-
-        if(isMyArea(new Vector3Int(vec.x, vec.y, 0)) && ZaehlerBuildingsBuiltInRound < maxBuildingPerRound && !buildingvectors.ContainsKey(new Vector3Int(vec.x, vec.y, 1)) && !canbuild) {
+        if(isMyArea(new Vector3Int(vec.x, vec.y, 0)) && ZaehlerBuildingsBuiltInRound < maxBuildingPerRound && !buildingvectors.ContainsKey(new Vector3Int(vec.x, vec.y, 1)) && canbuild) {
             oldSelectedColor = hover.getOldColor();
             selection = true;
             selectedVector = vec;
@@ -271,6 +270,17 @@ public class BuildingManager : NetworkBehaviour
         Dictionary<Vector3Int, int> teamVectors = gameManager.getDictionary();
 
         return teamVectors.ContainsKey(vec) && teamVectors[vec] == player.id;
+    }
+
+    //Kann man hier bauen? 3x3
+    public bool canBuildMethod(Vector3Int vec) {
+        vec.z = 0;
+        List<Vector3Int> list = makeAreaBigger(vec, 1);
+        
+        foreach(Vector3Int v in list) {
+            if(gameManager.isEnemyArea(v, player.id) || buildingvectors.ContainsKey(new Vector3Int(v.x, v.y, 1)) || mapBehaviour.getBlockDetails(v).Item2.getBuildable() == false) return false;
+        }
+        return true;
     }
 
     //Ist auf Vektor Building vom eigenen Spieler
@@ -494,7 +504,7 @@ public class BuildingManager : NetworkBehaviour
     }
 
 //Synchronisieren von Gebäuden
-    [Command]
+    [Command(requiresAuthority = false)]
     public void add(List<Vector3Int> vecs, int id) {
         foreach(Vector3Int vec in vecs) {
             if(!gameManager.hasVec(vec) || hover.insideField(new Vector3Int(vec.x, vec.y, 0))) {

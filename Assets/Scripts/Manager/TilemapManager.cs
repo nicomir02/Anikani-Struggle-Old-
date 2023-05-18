@@ -79,4 +79,15 @@ public class TilemapManager : NetworkBehaviour //Synchronisieren der Tilemap zwi
         }
         return neighbors;
     }
+
+    [Command(requiresAuthority = false)]
+    public void removeUnit(Vector3Int vec) {
+        RpcRemoveUnit(vec);
+    }
+
+    [ClientRpc]
+    public void RpcRemoveUnit(Vector3Int vec) {
+        vec.z = 2;
+        tilemap.SetTile(vec, null);
+    }
 }
