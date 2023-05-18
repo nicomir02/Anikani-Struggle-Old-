@@ -10,6 +10,7 @@
     //showarea nicht immer anzeigen lassen, bei klick im gebiet
     //Speicherung wie viele Ressourcen in Gebäude am Vektor
     //Entfernung von Ressourcen bei Gebäudesetzung auch auf andere Spieler übertragen
+    //Code kommentieren
 
 //Niedrige Priorität
 

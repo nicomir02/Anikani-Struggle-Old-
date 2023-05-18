@@ -78,6 +78,8 @@ public class BuildingManager : NetworkBehaviour
                 buildingsVec = new Dictionary<Vector3Int, Building>();
                 buildingvectors = new Dictionary<Vector3Int, Vector3Int>();
 
+                GameObject.Find("GameManager").GetComponent<WinLooseScreen>().setLooseScreen();
+
                 unitManager.disqualify();
             }else {
                 tilemapManager.removeBuilding(temp, 2);

@@ -35,7 +35,21 @@ public class Player : NetworkBehaviour
     //Methode aufruf wenn ein hauptgebäude zerstört wird, checked ob mehr als 1 noch drin sind 
     [Command(requiresAuthority = false)]
     public void spielerDisqualifizieren(int id) {
-        GameObject.Find("GameManager").GetComponent<GameManager>().spielerDisqualifizieren(id);
+        GameManager gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        gameManager.spielerDisqualifizieren(id);
+        int temp = 0;
+        for(int i=1; i<=allids; i++) {
+            if(gameManager.isDisqualified(i)) temp++;
+        }
+        if(temp+1 >= allids) {
+            lastPlayerWinScreen();
+        }
+    }
+
+    //Methode um letzten Spieler zu ermitteln
+    [ClientRpc]
+    public void lastPlayerWinScreen() {
+        if(isYourTurn) GameObject.Find("GameManager").GetComponent<WinLooseScreen>().setWinScreen();
     }
 
     public bool isDisqualified(int id) {

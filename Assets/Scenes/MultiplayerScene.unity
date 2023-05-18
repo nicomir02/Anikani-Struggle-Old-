@@ -4521,6 +4521,7 @@ GameObject:
   - component: {fileID: 1223650274}
   - component: {fileID: 1223650275}
   - component: {fileID: 1223650276}
+  - component: {fileID: 1223650277}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -4676,6 +4677,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Pause: {fileID: 1172216298}
+--- !u!114 &1223650277
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1223650267}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0db819d8f25ec848bde7f598823a8be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  winLooseCanvas: {fileID: 512895028}
+  winLooseCanvasBackground: {fileID: 1693742030}
+  winLooseCanvasText: {fileID: 1447660211}
 --- !u!1 &1229184723
 GameObject:
   m_ObjectHideFlags: 0
@@ -6663,7 +6679,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.061931215, g: 0.509434, b: 0, a: 1}
+  m_Color: {r: 0, g: 1, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
