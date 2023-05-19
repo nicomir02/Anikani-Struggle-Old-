@@ -154,7 +154,7 @@ public class MapBehaviour : NetworkBehaviour
 
         vectors.Remove(vec);
 
-        blockDetails.Add(vec, new BlockDetails(indexbiom, indexblock));
+        if(!blockDetails.ContainsKey(vec)) blockDetails.Add(vec, new BlockDetails(indexbiom, indexblock));
 
         for(int i=0; i<=biomgroesse*b.getBiomMultiplier(); i++) {
             if(neighbors.Count > 0) {
