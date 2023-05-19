@@ -95,10 +95,12 @@ public class UnitManager : NetworkBehaviour
     }
 
     public void deselectUnit(){
+        if(getGameObject(selectedVector) != null) {
+            getGameObject(selectedVector).GetComponent<SpriteRenderer>().color = Color.white;
+        }
         Vector3Int vec = new Vector3Int(mapBehaviour.mapWidth()+2,mapBehaviour.mapHeight()+2,-1);
         selectedUnit = null;
-
-        tilemap.SetColor(selectedVector, Color.white);
+        
         selectedVector = vec;
 
         player.infobox.SetActive(false);
@@ -109,8 +111,8 @@ public class UnitManager : NetworkBehaviour
         if(spawnedUnits.ContainsKey(vec)){ 
             selectedUnit = spawnedUnits[vec];
             selectedVector = vec;
-            tilemap.SetTileFlags(selectedVector, TileFlags.None);
-            tilemap.SetColor(vec, Color.grey);
+
+            if(getGameObject(vec) != null) getGameObject(vec).GetComponent<SpriteRenderer>().color = Color.grey;
             activatePanel(vec);
         }
     }
@@ -124,6 +126,17 @@ public class UnitManager : NetworkBehaviour
         return Mathf.Abs(vec1.x - vec2.x) + Mathf.Abs(vec1.y - vec2.y);
     }
 
+    //GameObject von Vektor3Int
+    public GameObject getGameObject(Vector3Int vec) {
+        vec.z = 2;
+        UnitSprite[] unitSprites = FindObjectsOfType<UnitSprite>();
+        foreach(UnitSprite us in unitSprites) {
+            if(us.vec == vec) {
+                return us.gameObject;
+            }
+        }
+        return null;
+    }
 
     //Movement von einem Spieler
     public void moveUnit(Unit unit, Vector3Int vec){
@@ -171,29 +184,33 @@ public class UnitManager : NetworkBehaviour
         UnitSprite[] unitSprites = FindObjectsOfType<UnitSprite>();
         foreach(UnitSprite us in unitSprites) {
             if(us.vec == from) {
-
                 to.z = 2;
                 us.vec = to;
 
                 to.z = 0;
-                //MoveToPosition(us.GetComponent<Transform>(), vec3IntToVec3(to), 2f);
-                us.GetComponent<Transform>().position = Vector3.Lerp(us.GetComponent<Transform>().position, vec3IntToVec3(to), 2f);
+                StartCoroutine(MoveToPosition(us.GetComponent<Transform>(), vec3IntToVec3(to), 0.2f*distance(from, to)));
+            
+                //us.GetComponent<Transform>().position = Vector3.Lerp(us.GetComponent<Transform>().position, vec3IntToVec3(to), 2f);
             }
         }
     }
 
     public IEnumerator MoveToPosition(Transform transform, Vector3 position, float timeToMove)
     {
-        Vector3 currentPos = transform.position;
-        float t = 0f;
-        Debug.Log("test");
-        while(t < 1) {
-            t += Time.deltaTime / timeToMove;
-            transform.position = Vector3.Lerp(currentPos, position, t);
+
+        float elapsedTime = 0f;
+        Vector3 startingPosition = transform.position;
+
+        while (elapsedTime < timeToMove)
+        {
+            elapsedTime += Time.deltaTime;
+            float t = Mathf.Clamp01(elapsedTime / timeToMove);
+            transform.position = Vector3.Lerp(startingPosition, position, t);
             yield return null;
         }
     }
 
+    //Convert Vector3Int von Vec3Int für Units
     public Vector3 vec3IntToVec3(Vector3Int vec){
         vec.z = 0;
         Vector3 position = tilemap.CellToWorld(vec);
@@ -218,6 +235,7 @@ public class UnitManager : NetworkBehaviour
     public void serverAddPlayer(int unitID, Vector3Int vec, int colorID, int volkID)
     {
         GameObject spriteObject = Instantiate(spritePrefab, transform.position, transform.rotation);
+        spriteObject.name = volkManager.getVolk(volkID).getUnit(unitID).getName();
 
         UnitSprite unitSprite = spriteObject.GetComponent<UnitSprite>();
         unitSprite.vec = vec;
