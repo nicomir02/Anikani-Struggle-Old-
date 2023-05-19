@@ -67,7 +67,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 2048
+    maxTextureSize: 4096
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
@@ -108,10 +108,10 @@ TextureImporter:
       name: Everything_holy_0
       rect:
         serializedVersion: 2
-        x: 83
-        y: 2644
-        width: 74
-        height: 133
+        x: 85
+        y: 2645
+        width: 70
+        height: 130
       alignment: 9
       pivot: {x: 0.5, y: -0.03032794}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -129,10 +129,10 @@ TextureImporter:
       name: Everything_holy_1
       rect:
         serializedVersion: 2
-        x: 238
-        y: 2644
-        width: 84
-        height: 128
+        x: 240
+        y: 2645
+        width: 80
+        height: 125
       alignment: 9
       pivot: {x: 0.5, y: -0.03032794}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -150,10 +150,10 @@ TextureImporter:
       name: Everything_holy_2
       rect:
         serializedVersion: 2
-        x: 398
-        y: 2644
-        width: 78
-        height: 133
+        x: 400
+        y: 2645
+        width: 75
+        height: 130
       alignment: 9
       pivot: {x: 0.5, y: -0.03032794}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -171,10 +171,10 @@ TextureImporter:
       name: Everything_holy_3
       rect:
         serializedVersion: 2
-        x: 598
-        y: 2483
-        width: 364
-        height: 253
+        x: 600
+        y: 2485
+        width: 360
+        height: 250
       alignment: 9
       pivot: {x: 0.5, y: -0.03032794}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -192,10 +192,10 @@ TextureImporter:
       name: Everything_holy_4
       rect:
         serializedVersion: 2
-        x: 998
-        y: 2483
-        width: 364
-        height: 253
+        x: 1000
+        y: 2485
+        width: 360
+        height: 250
       alignment: 9
       pivot: {x: 0.5, y: -0.03032794}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -213,10 +213,10 @@ TextureImporter:
       name: Everything_holy_5
       rect:
         serializedVersion: 2
-        x: 1398
-        y: 2483
-        width: 363
-        height: 253
+        x: 1400
+        y: 2485
+        width: 360
+        height: 250
       alignment: 9
       pivot: {x: 0.5, y: -0.03032794}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -234,10 +234,10 @@ TextureImporter:
       name: Everything_holy_6
       rect:
         serializedVersion: 2
-        x: 1799
-        y: 2483
-        width: 362
-        height: 253
+        x: 1800
+        y: 2485
+        width: 360
+        height: 250
       alignment: 9
       pivot: {x: 0.5, y: -0.03032794}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -255,10 +255,10 @@ TextureImporter:
       name: Everything_holy_7
       rect:
         serializedVersion: 2
-        x: 2198
-        y: 2483
-        width: 364
-        height: 253
+        x: 2200
+        y: 2485
+        width: 360
+        height: 250
       alignment: 9
       pivot: {x: 0.5, y: -0.03032794}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -276,10 +276,10 @@ TextureImporter:
       name: Everything_holy_8
       rect:
         serializedVersion: 2
-        x: 598
-        y: 2163
-        width: 364
-        height: 254
+        x: 600
+        y: 2165
+        width: 360
+        height: 250
       alignment: 9
       pivot: {x: 0.5, y: -0.03032794}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -297,10 +297,10 @@ TextureImporter:
       name: Everything_holy_9
       rect:
         serializedVersion: 2
-        x: 998
-        y: 2163
-        width: 364
-        height: 254
+        x: 1000
+        y: 2165
+        width: 360
+        height: 250
       alignment: 9
       pivot: {x: 0.5, y: -0.03032794}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -318,10 +318,10 @@ TextureImporter:
       name: Everything_holy_10
       rect:
         serializedVersion: 2
-        x: 1398
-        y: 2163
-        width: 363
-        height: 254
+        x: 1400
+        y: 2165
+        width: 360
+        height: 250
       alignment: 9
       pivot: {x: 0.5, y: -0.03032794}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -339,10 +339,10 @@ TextureImporter:
       name: Everything_holy_11
       rect:
         serializedVersion: 2
-        x: 1799
-        y: 2163
-        width: 362
-        height: 254
+        x: 1800
+        y: 2165
+        width: 360
+        height: 250
       alignment: 9
       pivot: {x: 0.5, y: -0.03032794}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -360,10 +360,10 @@ TextureImporter:
       name: Everything_holy_12
       rect:
         serializedVersion: 2
-        x: 2198
-        y: 2163
-        width: 364
-        height: 254
+        x: 2200
+        y: 2165
+        width: 360
+        height: 250
       alignment: 9
       pivot: {x: 0.5, y: -0.03032794}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -382,9 +382,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 590
-        y: 1683
-        width: 423
-        height: 413
+        y: 1685
+        width: 420
+        height: 410
       alignment: 9
       pivot: {x: 0.5, y: -0.03032794}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -403,9 +403,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 1070
-        y: 1683
-        width: 423
-        height: 413
+        y: 1685
+        width: 420
+        height: 410
       alignment: 9
       pivot: {x: 0.5, y: -0.03032794}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -423,10 +423,10 @@ TextureImporter:
       name: Everything_holy_15
       rect:
         serializedVersion: 2
-        x: 1548
-        y: 1683
-        width: 423
-        height: 413
+        x: 1550
+        y: 1685
+        width: 420
+        height: 410
       alignment: 9
       pivot: {x: 0.5, y: -0.03032794}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -446,8 +446,8 @@ TextureImporter:
         serializedVersion: 2
         x: 2030
         y: 1685
-        width: 423
-        height: 413
+        width: 420
+        height: 410
       alignment: 9
       pivot: {x: 0.5, y: -0.03032794}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -466,9 +466,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 2510
-        y: 1683
-        width: 423
-        height: 413
+        y: 1685
+        width: 420
+        height: 410
       alignment: 9
       pivot: {x: 0.5, y: -0.03032794}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -486,10 +486,10 @@ TextureImporter:
       name: Everything_holy_18
       rect:
         serializedVersion: 2
-        x: 588
-        y: 1203
-        width: 424
-        height: 413
+        x: 590
+        y: 1205
+        width: 420
+        height: 410
       alignment: 9
       pivot: {x: 0.5, y: -0.03032794}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -507,10 +507,10 @@ TextureImporter:
       name: Everything_holy_19
       rect:
         serializedVersion: 2
-        x: 1069
-        y: 1203
-        width: 423
-        height: 413
+        x: 1070
+        y: 1205
+        width: 420
+        height: 410
       alignment: 9
       pivot: {x: 0.5, y: -0.03032794}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -528,10 +528,10 @@ TextureImporter:
       name: Everything_holy_20
       rect:
         serializedVersion: 2
-        x: 1549
-        y: 1203
-        width: 423
-        height: 413
+        x: 1550
+        y: 1205
+        width: 420
+        height: 410
       alignment: 9
       pivot: {x: 0.5, y: -0.03032794}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -549,10 +549,10 @@ TextureImporter:
       name: Everything_holy_21
       rect:
         serializedVersion: 2
-        x: 2029
-        y: 1210
-        width: 423
-        height: 413
+        x: 2030
+        y: 1205
+        width: 420
+        height: 410
       alignment: 9
       pivot: {x: 0.5, y: -0.03032794}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -570,10 +570,10 @@ TextureImporter:
       name: Everything_holy_22
       rect:
         serializedVersion: 2
-        x: 2508
-        y: 1203
-        width: 424
-        height: 413
+        x: 2510
+        y: 1205
+        width: 420
+        height: 410
       alignment: 9
       pivot: {x: 0.5, y: -0.03032794}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -583,27 +583,6 @@ TextureImporter:
       bones: []
       spriteID: 9bbddfa77f333f144b7b78ac47088aef
       internalID: -1905344590
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Everything_holy_23
-      rect:
-        serializedVersion: 2
-        x: 1069
-        y: 1683
-        width: 423
-        height: 414
-      alignment: 9
-      pivot: {x: 0.5, y: -0.03032794}
-      border: {x: 0, y: 0, z: 2, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 007fc9cbdbd86414ca2515a5d7bcbf1a
-      internalID: 1423511244
       vertices: []
       indices: 
       edges: []
@@ -635,7 +614,6 @@ TextureImporter:
       Everything_holy_20: -1979420129
       Everything_holy_21: 2145343985
       Everything_holy_22: -1905344590
-      Everything_holy_23: 1423511244
       Everything_holy_3: 222531226
       Everything_holy_4: 736636503
       Everything_holy_5: -563985489

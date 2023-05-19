@@ -17,7 +17,6 @@
 //Niedrige Priorität
 
     //showarea nicht immer geupdated(hauptgebäude setzen, spieler ausgeschieden)
-    //Wackelnde Animationen
     //Probleme bei disconnect lösen
     //Sounds
     //nicht durch gebäude gehen
