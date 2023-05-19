@@ -86,12 +86,16 @@ public class BuildGUIPanel : MonoBehaviour
         GameObject.Find("InGame/Canvas/BuildingPanel/AreaExtension/Button").GetComponent<Button>().onClick.AddListener(buyAreaExtension);
         GameObject.Find("InGame/Canvas/BuildingPanel/AreaExtension/Text").GetComponent<TextMeshProUGUI>().text = "Area Extension\n\n4x4\n\nPrice: " + priceArea + " Wood";
     }
+
+    void Update() {
+        
+    }
     
     //Area Extension;
     public void buyAreaExtension() {
         Ressource ressource = getRessource("Wood");
-
         if(GetComponent<BuildingManager>().ressourcenZaehlerRechner(ressource, priceArea)) {
+           
             BuildingManager buildingManager = GetComponent<BuildingManager>();
 
             buildingManager.addFelderToTeam(selectedVector, 3, GetComponent<Player>().id); //Felder zum Team hinzufügen
@@ -109,6 +113,8 @@ public class BuildGUIPanel : MonoBehaviour
         Ressource ressource = getRessource("Wood");
 
         if(GetComponent<BuildingManager>().ressourcenZaehlerRechner(ressource, priceBarracks)) {
+            
+            GameObject.Find("InGame/Canvas/BuildingPanel/Barracks").SetActive(false);
             BuildingManager buildingManager = GetComponent<BuildingManager>();
             TilemapManager tilemapManager = GameObject.Find("GameManager").GetComponent<TilemapManager>();
 
@@ -134,6 +140,7 @@ public class BuildGUIPanel : MonoBehaviour
         Ressource ressource = getRessource("Wood");
 
         if(GetComponent<BuildingManager>().ressourcenZaehlerRechner(ressource, priceWood)) {
+            GameObject.Find("InGame/Canvas/BuildingPanel/Wood").SetActive(false);
             GUIoff();
             GetComponent<BuildingManager>().OnBuildClick(ressource, selectedVector);
         }
@@ -141,6 +148,10 @@ public class BuildGUIPanel : MonoBehaviour
 
     //Methode um GUI wieder auszumachen
     public void GUIoff() {
+        GameObject.Find("InGame/Canvas/BuildingPanel/Wood/Button").GetComponent<Button>().onClick.RemoveListener(buyWood);
+        GameObject.Find("InGame/Canvas/BuildingPanel/Barracks/Button").GetComponent<Button>().onClick.RemoveListener(buyBarracks);
+        GameObject.Find("InGame/Canvas/BuildingPanel/AreaExtension/Button").GetComponent<Button>().onClick.RemoveListener(buyAreaExtension);
+
         GameObject.Find("GameManager").GetComponent<PauseMenu>().setCanPause(true);
         guiOn = false;
         GameObject.Find("GameManager").GetComponent<PauseMenu>().togglePauseOff();
