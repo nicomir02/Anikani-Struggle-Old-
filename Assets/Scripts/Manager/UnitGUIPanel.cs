@@ -93,12 +93,8 @@ public class UnitGUIPanel : MonoBehaviour
         BuildingManager buildingManager = GetComponent<BuildingManager>();
         MapBehaviour mapBehaviour = GameObject.Find("GameManager").GetComponent<MapBehaviour>();
 
-        Ressource ress = null;
-        foreach(Ressource r in mapBehaviour.getAllRessourcen()) {
-            if(r.ressName == "Wood") {
-                ress = r;
-            }
-        }
+        Ressource ress = getRessource("Wood");
+        
         Unit a = GetComponent<Player>().eigenesVolk.getUnit(0);
         if(buildingManager.ressourcenZaehlerRechner(ress, a.getPrice())) {
             
@@ -125,4 +121,11 @@ public class UnitGUIPanel : MonoBehaviour
         GUIoff();
     }
 
+    //Hilfsmethode um Ressourcenkosten zu kriegen
+    public Ressource getRessource(string name) {
+        foreach(Ressource r in GameObject.Find("GameManager").GetComponent<MapBehaviour>().getAllRessourcen()) {
+            if(r.ressName == name) return r;
+        }
+        return null;
+    }
 }

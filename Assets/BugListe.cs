@@ -31,7 +31,8 @@
     //disqualifyPlayer methode noch im Building Manager Skript(ändern)
     //Methoden in Hilfsskripte und so umlagern und allgemein Skripte säubern
     //Force Stop bei Back To Main Menü im Pause(gameObject can only be called in main thread)
-
+    //sehr lange latency/wartezeit auf seite des clients bei online-modus über hamachi
+    //manchmal verschwinden Einheiten auf Feldern
 
 
 

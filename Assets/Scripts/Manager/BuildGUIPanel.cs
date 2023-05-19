@@ -13,6 +13,7 @@ public class BuildGUIPanel : MonoBehaviour
     private Vector3Int selectedVector;
     private int priceWood = 0;
     private int priceBarracks = 0;
+    private int priceArea = 1;
 
     private bool guiOn = false;
     
@@ -80,16 +81,34 @@ public class BuildGUIPanel : MonoBehaviour
         GameObject.Find("InGame/Canvas/BuildingPanel/Barracks").SetActive(true);
         GameObject.Find("InGame/Canvas/BuildingPanel/Barracks/Background/Image").GetComponent<Image>().sprite = sprite;
         GameObject.Find("InGame/Canvas/BuildingPanel/Barracks/Button").GetComponent<Button>().onClick.AddListener(buyBarracks);
+
+        GameObject.Find("InGame/Canvas/BuildingPanel/AreaExtension").SetActive(true);
+        GameObject.Find("InGame/Canvas/BuildingPanel/AreaExtension/Button").GetComponent<Button>().onClick.AddListener(buyAreaExtension);
+        GameObject.Find("InGame/Canvas/BuildingPanel/AreaExtension/Text").GetComponent<TextMeshProUGUI>().text = "Area Extension\n\n4x4\n\nPrice: " + priceArea + " Wood";
     }
+    
+    //Area Extension;
+    public void buyAreaExtension() {
+        Ressource ressource = getRessource("Wood");
+
+        if(GetComponent<BuildingManager>().ressourcenZaehlerRechner(ressource, priceArea)) {
+            BuildingManager buildingManager = GetComponent<BuildingManager>();
+
+            buildingManager.addFelderToTeam(selectedVector, 3, GetComponent<Player>().id); //Felder zum Team hinzufügen
+            if (priceArea < 10) priceArea++; //max Preis für Area soll 10 Wood momentan sein
+
+            buildingManager.reloadShowArea();
+            GUIoff();
+        }
+    }
+
+   
 
     //Methode Button Click Barracks Bau
     public void buyBarracks() {
-        Ressource wood = null;
-        foreach(Ressource r in GameObject.Find("GameManager").GetComponent<MapBehaviour>().getAllRessourcen()) {
-            if(r.ressName == "Wood") wood = r;
-        }
+        Ressource ressource = getRessource("Wood");
 
-        if(GetComponent<BuildingManager>().ressourcenZaehlerRechner(wood, priceBarracks)) {
+        if(GetComponent<BuildingManager>().ressourcenZaehlerRechner(ressource, priceBarracks)) {
             BuildingManager buildingManager = GetComponent<BuildingManager>();
             TilemapManager tilemapManager = GameObject.Find("GameManager").GetComponent<TilemapManager>();
 
@@ -112,14 +131,11 @@ public class BuildGUIPanel : MonoBehaviour
 
     //Methode Button Click Holz Bau
     public void buyWood() {
-        Ressource wood = null;
-        foreach(Ressource r in ressourcen) {
-            if(r.ressName == "Wood") wood = r;
-        }
+        Ressource ressource = getRessource("Wood");
 
-        if(GetComponent<BuildingManager>().ressourcenZaehlerRechner(wood, priceWood)) {
+        if(GetComponent<BuildingManager>().ressourcenZaehlerRechner(ressource, priceWood)) {
             GUIoff();
-            GetComponent<BuildingManager>().OnBuildClick(wood, selectedVector);
+            GetComponent<BuildingManager>().OnBuildClick(ressource, selectedVector);
         }
     }
 
@@ -143,5 +159,13 @@ public class BuildGUIPanel : MonoBehaviour
 
     public bool getGUI() {
         return guiOn;
+    }
+
+    //Hilfsmethode um Ressourcenkosten zu kriegen
+     public Ressource getRessource(string name) {
+        foreach(Ressource r in GameObject.Find("GameManager").GetComponent<MapBehaviour>().getAllRessourcen()) {
+            if(r.ressName == name) return r;
+        }
+        return null;
     }
 }

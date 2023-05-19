@@ -155,7 +155,7 @@ public class BuildingManager : NetworkBehaviour
                     List<Vector3Int> newArea = makeAreaBigger(vec, 1);
                     if(canBuild) {
                         //Added zu der eigenen Area
-                        add(makeAreaBigger(vec, 4), player.id);
+                        add(makeAreaBigger(vec, 5), player.id);
                         //Löschen von Gegenständen im Weg vom Hauptgebäude
                         deleteFelder(vec, 3, null);
                         //x und y Koordinaten anpassen, da Gebäude 3x3 Tiles groß ist und man auf die mittlere Tile drückt
@@ -264,7 +264,7 @@ public class BuildingManager : NetworkBehaviour
             if(ZaehlerBuildingsBuiltInRound >= maxBuildingPerRound || !player.isYourTurn || !teamVectors.ContainsKey(vec) || teamVectors[vec] != player.id) return;
             foreach(Vector3Int v in liste) {
                 if(buildingvectors.ContainsKey(new Vector3Int(v.x, v.y, 1))) return;
-                if(mapBehaviour.getBlockDetails(v).Item3 != null && teamVectors.ContainsKey(v) && teamVectors[v] == player.id) {
+                if(mapBehaviour.getBlockDetails(v).Item3 != null) {
                     ressourcen.Add(mapBehaviour.getBlockDetails(v).Item3);
                 }
             }
@@ -346,8 +346,8 @@ public class BuildingManager : NetworkBehaviour
 
 //Synchronisieren der Felder der einzelnen Spieler
     [Command(requiresAuthority = false)]
-    public void addFelderToTeam(Vector3Int vec, int groesse, int id) {//für 3x3. groesse = 3
-        List<Vector3Int> allefelder = makeAreaBigger(vec, groesse-2);
+    public void addFelderToTeam(Vector3Int vec, int groesse, int id) {//für 2x2. groesse = 3
+        List<Vector3Int> allefelder = makeAreaBigger(vec, groesse-1);
         foreach(Vector3Int v in allefelder) {
             if(!gameManager.hasVec(new Vector3Int(v.x, v.y, 0)) || hover.insideField(new Vector3Int(v.x, v.y, 0))) {
                 gameManager.addVec(new Vector3Int(v.x, v.y, 0), id);
