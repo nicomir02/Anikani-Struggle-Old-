@@ -44,7 +44,6 @@ public class Player : NetworkBehaviour
         if(temp+1 >= allids) {
             lastPlayerWinScreen();
         }
-        
     }
 
     

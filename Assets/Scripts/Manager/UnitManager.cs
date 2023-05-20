@@ -51,6 +51,7 @@ public class UnitManager : NetworkBehaviour
         foreach(KeyValuePair<Vector3Int, Unit> kvp in spawnedUnits) {
             healthManager.removeUnit(kvp.Key);
             tilemapManager.removeUnit(kvp.Key);
+            //cmddeleteUnit(kvp.Key);
         }
         spawnedUnits = new Dictionary<Vector3Int, Unit>();
         reichweite = new Dictionary<Vector3Int, int>();

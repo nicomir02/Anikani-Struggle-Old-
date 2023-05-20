@@ -8,7 +8,6 @@
 
     //Speicherung wie viele Ressourcen in Gebäude am Vektor
     //Code kommentieren
-    //Game Over / Win Screen Button Hauptmenü fix
 
 //Niedrige Priorität
 

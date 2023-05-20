@@ -61,7 +61,6 @@ public class BuildingManager : NetworkBehaviour
         
         if(buildingvectors.ContainsKey(vec) && healthManager.getBuildingLeben(vec) <= 0) {
             vec = buildingvectors[vec];
-            Debug.Log("1");
             Vector3Int temp = buildingvectors[vec];
             if(buildingsVec[vec] == volk.getHomeBuilding(0)) {
                 disqualifyPlayer();
@@ -135,7 +134,6 @@ public class BuildingManager : NetworkBehaviour
     void Update() {
         //Pause deaktivieren
         if(pauseMenu.getPause()) return;
-        
 
         if (Input.GetMouseButtonDown(0) && EventSystem.current.currentSelectedGameObject != null) return;
 
