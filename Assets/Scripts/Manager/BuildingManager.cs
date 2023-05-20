@@ -53,8 +53,6 @@ public class BuildingManager : NetworkBehaviour
     Building selectedBuilding;
     //Farbe
     Color oldSelectedColor;
-    //gibts einen selected Vektor für Feld Erweiterung
-    bool selection = false;
 
     //methode angriffgebäude schaut ob das angegriffene Gebäude einem Spieler selber gehört
     [ClientRpc]
@@ -95,7 +93,6 @@ public class BuildingManager : NetworkBehaviour
 
 //methode sollte nicht im BUildingManager sein->später ändern
     public void disqualifyPlayer() {
-        Debug.Log("Game Over"); //Später mit einem Canvas auf dem Bildschirm des Spielers 
         player.spielerDisqualifizieren(player.id);                
 
 
@@ -138,6 +135,7 @@ public class BuildingManager : NetworkBehaviour
     void Update() {
         //Pause deaktivieren
         if(pauseMenu.getPause()) return;
+        
 
         if (Input.GetMouseButtonDown(0) && EventSystem.current.currentSelectedGameObject != null) return;
 
@@ -151,11 +149,10 @@ public class BuildingManager : NetworkBehaviour
             Vector3Int vec = hover.getVectorFromMouse();
             if(hover.insideField(vec)) {
                 if(player.round == 0 && ZaehlerBuildingsBuiltInRound == 0) {
-                    bool canBuild = canBuildMethod(vec);
                     List<Vector3Int> newArea = makeAreaBigger(vec, 1);
-                    if(canBuild) {
+                    if(canBuildMethod(vec)) {
                         //Added zu der eigenen Area
-                        add(makeAreaBigger(vec, 5), player.id);
+                        addFelderToTeam(vec, 5, player.id);
                         //Löschen von Gegenständen im Weg vom Hauptgebäude
                         deleteFelder(vec, 3, null);
                         //x und y Koordinaten anpassen, da Gebäude 3x3 Tiles groß ist und man auf die mittlere Tile drückt
@@ -178,6 +175,8 @@ public class BuildingManager : NetworkBehaviour
                         ZaehlerBuildingsBuiltInRound = maxBuildingPerRound;
 
                         unitManager.spawnUnit(volk.getUnit(0),vec,player.id - 1);
+
+                        
                     }
                 }
             }
@@ -185,18 +184,17 @@ public class BuildingManager : NetworkBehaviour
         //
         //Maus gedrückt und Hauptgebäude schon gesetzt(isLobby = false)
         if(Input.GetMouseButtonDown(0) && !player.isLobby) {
+            
+
             Vector3Int vec = hover.getVectorFromMouse();
             vec.z=0;
-            if(hover.insideField(vec)) {
+            
+            deselectBuilding();
 
+            if(hover.insideField(vec) && isMyArea(vec)) {
+                
                 //Select Vector
-                if(isMyArea(vec)) {                    
-                    selectVector(vec);
-                }else {
-                    deselectBuilding();
-                }
-            }else {
-                deselectBuilding(); //Infobox weggeblendet
+                selectVector(vec);
             }
         }
 
@@ -226,29 +224,32 @@ public class BuildingManager : NetworkBehaviour
 
     //Vector Selection
     public void selectVector(Vector3Int vec) {
-        deselectBuilding();
-
         selectBuilding(vec);
-        
-
-        bool canbuild = canBuildMethod(vec);
 
         List<Vector3Int> vectors = makeAreaBigger(vec, 1);
-        
 
-        if(isMyArea(new Vector3Int(vec.x, vec.y, 0)) && ZaehlerBuildingsBuiltInRound < maxBuildingPerRound && !buildingvectors.ContainsKey(new Vector3Int(vec.x, vec.y, 1)) && canbuild) {
+        if(isMyArea(new Vector3Int(vec.x, vec.y, 0)) && showAreaBool) {
             oldSelectedColor = hover.getOldColor();
-            selection = true;
             selectedVector = vec;
-            tilemap.SetColor(vec, hover.getSelectColor());
+            
             hover.reload();
-            GameObject.Find("InGame/Canvas/BuildOrBuy").SetActive(true);
-            if(gameManager.hasVec(vec)) {
-                GameObject.Find("InGame/Canvas/BuildOrBuy/Text").GetComponent<TextMeshProUGUI>().text = "Build Building";
-                GameObject.Find("InGame/Canvas/BuildOrBuy").GetComponent<Button>().onClick.AddListener(onClickBuildField);
+            reloadShowArea();
+            
+            tilemap.SetColor(vec, hover.getSelectColor());
+
+            if(ZaehlerBuildingsBuiltInRound < maxBuildingPerRound && !buildingvectors.ContainsKey(new Vector3Int(vec.x, vec.y, 1)) && canBuildMethod(vec)) {
+                
+
+                GameObject.Find("InGame/Canvas/BuildOrBuy").SetActive(true);
+                if(gameManager.hasVec(vec)) {
+                    GameObject.Find("InGame/Canvas/BuildOrBuy/Text").GetComponent<TextMeshProUGUI>().text = "Build Building";
+                    GameObject.Find("InGame/Canvas/BuildOrBuy").GetComponent<Button>().onClick.AddListener(onClickBuildField);
+                }
             }
         }
     }
+
+
 
     //BuildField Button Click
     public void onClickBuildField() {
@@ -353,6 +354,13 @@ public class BuildingManager : NetworkBehaviour
                 gameManager.addVec(new Vector3Int(v.x, v.y, 0), id);
             }
         }
+        AllReloadShowArea();
+    }
+
+    //Reload ShowArea auf allen Clients
+    [ClientRpc]
+    public void AllReloadShowArea() {
+        if(showAreaBool) reloadShowArea();
     }
 
 //Löschen von Tiles auf Ebene z = 1 damit dort Gebäude platziert werden können
@@ -369,9 +377,8 @@ public class BuildingManager : NetworkBehaviour
     }
 
 //setzt Variable selected Building + selected Vector und aktiviert Infobox
-    private void selectBuilding(Vector3Int vec) {
+    public void selectBuilding(Vector3Int vec) {
         vec.z = 1;
-        
         if(buildingvectors.ContainsKey(vec)) {
             selectedVector = buildingvectors[vec];
             selectedBuilding = buildingsVec[selectedVector];
@@ -388,6 +395,10 @@ public class BuildingManager : NetworkBehaviour
         }
     }
 
+    public Vector3Int getSelectedVector() {
+        return selectedVector;
+    }
+
     //Activate Unit Panel Click Event
     public void openUnitPanel() {
         GetComponent<UnitGUIPanel>().generateGUI(buildingvectors[selectedVector]);
@@ -402,9 +413,13 @@ public class BuildingManager : NetworkBehaviour
 
 //Rückgängig machen von selectBuilding Methode/ Rücksetzen der verschiedenen Sachen
     private void deselectBuilding() {
+
+        tilemap.SetColor(selectedVector, Color.white);
+
+        if(showAreaBool) reloadShowArea();
+        
         //Vektor Selektierung
-        if(selection) tilemap.SetColor(selectedVector, Color.white);
-        selection = false;
+        
 
         GameObject.Find("InGame/Canvas/TroopsButton").SetActive(false);
         
@@ -412,8 +427,6 @@ public class BuildingManager : NetworkBehaviour
         GameObject.Find("InGame/Canvas/BuildOrBuy").SetActive(false);
 
         selectedVector.z = 1;
-        
-        reloadShowArea();
 
         selectedVector = new Vector3Int(mapBehaviour.mapWidth()+2,mapBehaviour.mapHeight()+2,-1); //selected Vektor außerhalb der Map gesetzt, da nicht auf null setzbar
         selectedBuilding = null;
@@ -423,6 +436,7 @@ public class BuildingManager : NetworkBehaviour
 //einfügen in das Dictionary für gebaute Gebäude, einfügen in den HealthManager, alle Vektoren des Gebäudes gespeichert(da oft größer als 1 Tile)
     public void addBuilding(List<Vector3Int> vecs, Building b, Vector3Int vec) {
         vec.z = 1;
+        tilemapManager.deleteFelderUnterBuilding(vecs);
         if(buildingsVec.ContainsKey(vec)) {
             Debug.Log(buildingsVec[vec]);
             buildingsVec[vec] = b;
@@ -439,10 +453,11 @@ public class BuildingManager : NetworkBehaviour
                 buildingvectors.Add(new Vector3Int(v.x, v.y, 1), vec);
             }
         }
-
+        deleteSelection();
         int buildingid = volkManager.getBuildingID(volk, b);
         //HomeBuilding wird so synchronisiert
         if(volk.isHomeBuilding(b)) return;
+
     }
 
 //Anzeigen der Spielerfelder
@@ -467,8 +482,8 @@ public class BuildingManager : NetworkBehaviour
         }
     }
 
-//Passt Spielerfelder an nach Gebäudebau und synchronisiert für alle Spieler
-    public void reloadShowArea() {
+    //Reload Area auf nochmale Farben
+    public void deleteSelection() {
         for(int x=0; x<mapBehaviour.mapWidth(); x++) {
             for(int y=0; y<mapBehaviour.mapHeight(); y++) {
                 tilemap.SetTileFlags(new Vector3Int(x, y, 0), TileFlags.None);
@@ -477,6 +492,17 @@ public class BuildingManager : NetworkBehaviour
                 tilemap.SetColor(new Vector3Int(x, y, 1), Color.white);
             }
         }
+    }
+
+    //Methode getter methode ob show Area aktiv ist
+    public bool getShowArea() {
+        return showAreaBool;
+    }
+
+
+//Passt Spielerfelder an nach Gebäudebau und synchronisiert für alle Spieler
+    public void reloadShowArea() {
+        
 
         showAreaBool = true;
         Dictionary<Vector3Int, int> teamVectors = gameManager.getDictionary();
@@ -514,16 +540,6 @@ public class BuildingManager : NetworkBehaviour
     public void reloadLeiste() {
         foreach(KeyValuePair<Ressource, int> kvp in ressourcenZaehler) {
             GameObject.Find("InGame/Canvas/Leiste/"+kvp.Key.ressourceName).GetComponent<TextMeshProUGUI>().text = ressourcenZaehler[kvp.Key] + " " + kvp.Key.ressName;
-        }
-    }
-
-//Synchronisieren von Gebäuden
-    [Command(requiresAuthority = false)]
-    public void add(List<Vector3Int> vecs, int id) {
-        foreach(Vector3Int vec in vecs) {
-            if(!gameManager.hasVec(vec) || hover.insideField(new Vector3Int(vec.x, vec.y, 0))) {
-                gameManager.addVec(new Vector3Int(vec.x, vec.y, 0), id);
-            }
         }
     }
     

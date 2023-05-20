@@ -140,6 +140,7 @@ public class UnitManager : NetworkBehaviour
 
     //Movement von einem Spieler
     public void moveUnit(Unit unit, Vector3Int vec){
+        if(!GetComponent<Player>().isYourTurn) return;
         vec.z = 2;
         if(distance(selectedVector, vec) <= reichweite[selectedVector] && mapBehaviour.getBlockDetails(new Vector3Int(vec.x, vec.y, 0)).Item2.getWalkable()) {
             if(healthManager.isHealth(vec) && !GetComponent<BuildingManager>().isOwnBuilding(new Vector3Int(vec.x, vec.y, 1))){
@@ -148,7 +149,6 @@ public class UnitManager : NetworkBehaviour
                 //if(healthManager.isHealth(vec)) return;    //schaut ob gegner besiegt wurde in dieser runde || Auskommentiert, sonst kann gegner Einheit bewegen
             }
             if(spawnedUnits.ContainsKey(vec)) return;
-            tilemap.SetTile(selectedVector, null);
             //unit.setTile(tilemap,vec,player.id -1);
             //tilemapManager.CmdUpdateTilemapUnit(vec,volkManager.getVolkID(volk).Item2,volk.getUnitID(unit),player.id -1);
             spawnedUnits.Remove(selectedVector);    //diese beiden Zeilen damit die Dictionary sich mit der neuen position updated

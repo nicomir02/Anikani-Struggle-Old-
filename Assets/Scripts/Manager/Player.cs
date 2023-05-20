@@ -47,6 +47,8 @@ public class Player : NetworkBehaviour
         
     }
 
+    
+
 
 
 
@@ -142,6 +144,8 @@ public class Player : NetworkBehaviour
             isYourTurn = true;
             roundButtonText.text = "Next Round";
             auffuellen();
+            BuildingManager buildingManager = GetComponent<BuildingManager>();
+            buildingManager.selectVector(buildingManager.getSelectedVector());
         }
         roundText.text = "Turn " + round;
     }

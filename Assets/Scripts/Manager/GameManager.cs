@@ -16,7 +16,7 @@ public class GameManager : NetworkBehaviour
 
 
     //Liste hier, da bei Player Probleme mit Sync gab
-    private readonly SyncList<int> disqualifiedPlayers = new SyncList<int>();
+    public readonly SyncList<int> disqualifiedPlayers = new SyncList<int>();
 
 
     //Methode fürs disqualifien

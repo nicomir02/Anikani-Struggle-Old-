@@ -129,8 +129,6 @@ public class BuildGUIPanel : MonoBehaviour
 
             buildingManager.addFelderToTeam(selectedVector, 4, GetComponent<Player>().id);
 
-            buildingManager.reloadShowArea();
-
             GUIoff();
         }
     }

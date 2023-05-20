@@ -18,6 +18,7 @@ public class LobbyManager : NetworkBehaviour
     [SerializeField] private GameObject ingameObjects;
 
     [SerializeField] private MapBehaviour mapBehaviour;
+    [SerializeField] private GameObject gameManager;
 
     //Instanzvariablen
 
@@ -32,15 +33,20 @@ public class LobbyManager : NetworkBehaviour
 
 //Nach Lobby erschient der ReadyButton mit Listener
     public override void OnStartClient() {
-        
+        if(mapBehaviour.getTerrainBuild()) network.StopClient();
         lobbyObjects.SetActive(true);
 
+        gameManager.SetActive(true);
+    }
+
+    public void Start() {
         readyButton.onClick.AddListener(OnReadyClick);
     }
 
 //Klicken auf Ready Button setzt ready Variable auf true
     public void OnReadyClick() {
-        if(GameObject.Find("GameManager").GetComponent<PauseMenu>().getPause()) return;
+        gameManager.SetActive(true);
+        if(gameManager.GetComponent<PauseMenu>().getPause()) return;
         if(ready) {
             ready = false;
             readyButtonText.text = "Ready";

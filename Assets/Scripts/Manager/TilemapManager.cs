@@ -10,6 +10,8 @@ public class TilemapManager : NetworkBehaviour //Synchronisieren der Tilemap zwi
     [SerializeField] private Tilemap tilemap;
     [SerializeField] private VolkManager volkManager;
 
+    [SerializeField] private TileBase unterflaeche;
+
     //Änderungen auf jeden Client für Homebuilding
     [ClientRpc]
     private void RpcUpdateTilemap(Vector3Int vec, int volkID, int buildID, int colorID) {
@@ -50,6 +52,28 @@ public class TilemapManager : NetworkBehaviour //Synchronisieren der Tilemap zwi
     private void RpcUpdateTilemapBuilding(Vector3Int vec, int b, int playerID, int volkID, int lvl) {
         Building building = volkManager.getBuildingByID(volkManager.getVolk(volkID), b, lvl);
         building.setTile(tilemap, vec, playerID-1);
+        
+    }
+
+    //Damit unter den Gebäuden keine Bäume mehr stehen
+    //und eine Stein Oberfläche existiert
+    //Command
+    [Command(requiresAuthority = false)]
+    public void deleteFelderUnterBuilding(List<Vector3Int> liste) {
+        rpcdeleteFelderUnterBuilding(liste);
+    }
+
+    //Damit unter den Gebäuden keine Bäume mehr stehen
+    //und eine Stein Oberfläche existiert
+    //Auf Client, clientrpc
+    [ClientRpc]
+    private void rpcdeleteFelderUnterBuilding(List<Vector3Int> liste) {
+        foreach(Vector3Int vec in liste) {
+            Vector3Int v = new Vector3Int(vec.x, vec.y, 0);
+            tilemap.SetTile(v, unterflaeche);
+            v.z = 1;
+            tilemap.SetTile(v, null);
+        }
     }
 
     //Tilemap Change für Gebäude löschen aufruf

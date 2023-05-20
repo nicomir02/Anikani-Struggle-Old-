@@ -47,11 +47,19 @@ public class MapBehaviour : NetworkBehaviour
     [SerializeField] private Tilemap tilemap;
     [SerializeField] private Block randTile;
 
+    //Sync Variable zu ob Terrain generiert wurde
+    [SyncVar] private bool terrainBuild = false;
+
     private HashSet<Vector3Int> vectors = new HashSet<Vector3Int>();
 
     //Alle Ressourcen, die verbaut werden ausgeben
     public List<Ressource> getAllRessourcen() {
         return ressourcen;
+    }
+
+    //Getter Methode für Sync Variable zu ob Terrain generiert wurde
+    public bool getTerrainBuild() {
+        return terrainBuild;
     }
 
     public void buildTerrain() {
@@ -120,6 +128,14 @@ public class MapBehaviour : NetworkBehaviour
         }
 
         createRand();
+
+        setTerrainbuild(true);
+
+    }
+
+    [Command(requiresAuthority = false)]
+    public void setTerrainbuild(bool variable) {
+        terrainBuild = variable;
     }
 
     public Biom getBiomByVec(Vector3Int vec) {
