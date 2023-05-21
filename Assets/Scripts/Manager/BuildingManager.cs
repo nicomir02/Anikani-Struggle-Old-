@@ -40,9 +40,13 @@ public class BuildingManager : NetworkBehaviour
     //hier auflisten um mit buildingsvex zu korrespondieren
     private Dictionary<Vector3Int, Vector3Int> buildingvectors = new Dictionary<Vector3Int, Vector3Int>();
     //zeigt wie viel mehr Ressourcen pro Runde dazu kommen
-    private Dictionary<Ressource, int> ressourcenProRundeZaehler = new Dictionary<Ressource, int>();
+    //old: private Dictionary<Ressource, int> ressourcenProRundeZaehler = new Dictionary<Ressource, int>();
+    private Dictionary<Vector3Int, (Ressource, int)> ressourcenProRundeZaehler = new Dictionary<Vector3Int, (Ressource, int)>();
+
     //zeigt gesamtmenge an Ressourcen die man hat:
     private Dictionary<Ressource, int> ressourcenZaehler = new Dictionary<Ressource, int>();
+
+    
 
     //Knopf um auszuwählen welches Gebäude man platzieren will
     //Button ressourcenButton;
@@ -58,7 +62,6 @@ public class BuildingManager : NetworkBehaviour
     [ClientRpc]
     public void angriffsCheckBuilding(Vector3Int vec) {
         vec.z = 1;
-        
         if(buildingvectors.ContainsKey(vec) && healthManager.getBuildingLeben(vec) <= 0) {
             vec = buildingvectors[vec];
             Vector3Int temp = buildingvectors[vec];
@@ -68,13 +71,15 @@ public class BuildingManager : NetworkBehaviour
             }else {
                 tilemapManager.removeBuilding(temp, 2);
                 healthManager.removeBuilding(vec);
-
                 //Remove Building von Listen
                 
                 buildingsVec.Remove(temp);
                 List<Vector3Int> removeList = new List<Vector3Int>();
                 foreach(KeyValuePair<Vector3Int, Vector3Int> kvp in buildingvectors) {
-                    if(kvp.Value == temp) removeList.Add(kvp.Key);
+                    if(kvp.Value == temp) {
+                        removeList.Add(kvp.Key);
+                        if(ressourcenProRundeZaehler.ContainsKey(kvp.Key)) ressourcenProRundeZaehler.Remove(kvp.Key);
+                    }
                 }
 
                 if(removeList.Contains(selectedVector)) {
@@ -87,7 +92,9 @@ public class BuildingManager : NetworkBehaviour
                 }
             }
         }
-        reloadShowArea();
+        if(showAreaBool) {
+            reloadShowArea();
+        }
     }
 
 //methode sollte nicht im BUildingManager sein->später ändern
@@ -142,6 +149,7 @@ public class BuildingManager : NetworkBehaviour
             GameObject.Find("InGame/Canvas/ShowArea").GetComponent<Button>().onClick.AddListener(OnShowAreaClick);
             isLobby = false;
         }
+
         //Hauptgebäude aufgebaut nach Spielstart(nur einmal)
         if(Input.GetMouseButtonDown(0) && player.isYourTurn && !player.isLobby) {
             Vector3Int vec = hover.getVectorFromMouse();
@@ -150,7 +158,7 @@ public class BuildingManager : NetworkBehaviour
                     List<Vector3Int> newArea = makeAreaBigger(vec, 1);
                     if(canBuildMethod(vec)) {
                         //Added zu der eigenen Area
-                        addFelderToTeam(vec, 5, player.id);
+                        addFelderToTeam(vec, 6, player.id);
                         //Löschen von Gegenständen im Weg vom Hauptgebäude
                         deleteFelder(vec, 3, null);
                         //x und y Koordinaten anpassen, da Gebäude 3x3 Tiles groß ist und man auf die mittlere Tile drückt
@@ -235,15 +243,15 @@ public class BuildingManager : NetworkBehaviour
             
             tilemap.SetColor(vec, hover.getSelectColor());
 
-            if(ZaehlerBuildingsBuiltInRound < maxBuildingPerRound && !buildingvectors.ContainsKey(new Vector3Int(vec.x, vec.y, 1)) && canBuildMethod(vec)) {
-                
-
+            if(ZaehlerBuildingsBuiltInRound < maxBuildingPerRound && !buildingvectors.ContainsKey(new Vector3Int(vec.x, vec.y, 1)) && canBuildMethod(vec) && player.isYourTurn) {
                 GameObject.Find("InGame/Canvas/BuildOrBuy").SetActive(true);
                 if(gameManager.hasVec(vec)) {
                     GameObject.Find("InGame/Canvas/BuildOrBuy/Text").GetComponent<TextMeshProUGUI>().text = "Build Building";
                     GameObject.Find("InGame/Canvas/BuildOrBuy").GetComponent<Button>().onClick.AddListener(onClickBuildField);
                 }
             }
+        }else if(showAreaBool) {
+            reloadShowArea();
         }
     }
 
@@ -273,7 +281,7 @@ public class BuildingManager : NetworkBehaviour
         }
 
         deselectBuilding();
-        reloadShowArea();
+        if(showAreaBool) reloadShowArea();
     }
 
     //Gehört Feld zum eigenen Feld?
@@ -313,12 +321,8 @@ public class BuildingManager : NetworkBehaviour
             }
             if(gebaeudeSetzbar) {
                 int zaehler = deleteFelder(vec, 3, r);//wenn building groesser dann andere zahl
-                //Anpassen des Ressourcenzaehlers pro Runde
-                if(ressourcenProRundeZaehler.ContainsKey(r)) {
-                    ressourcenProRundeZaehler[r] += zaehler;
-                }else {//erstes Ressourcengebäude gesetzt und Dict enthält die Ressource noch nicht
-                    ressourcenProRundeZaehler.Add(r, zaehler);
-                }
+                
+                
                 //Zaehler geht hoch
                 ZaehlerBuildingsBuiltInRound++; 
                 
@@ -332,7 +336,11 @@ public class BuildingManager : NetworkBehaviour
                 Building treeBuilding = volk.getTreeBuilding(0);
                 addBuilding(nachbarcheck, treeBuilding, vec);
 
+                //Anpassen des Ressourcenzaehlers pro Runde
+                
+
                 vec.z = 1;
+                ressourcenProRundeZaehler.Add(vec, (r, zaehler));
                 //Vector3Int vec, int b, int playerID, int volkID, int lvl
                 tilemapManager.CmdUpdateTilemapBuilding(vec, 2, player.id, volkManager.getVolkID(volk).Item2, 0);
 
@@ -352,6 +360,11 @@ public class BuildingManager : NetworkBehaviour
                 gameManager.addVec(new Vector3Int(v.x, v.y, 0), id);
             }
         }
+        AllReloadShowArea();
+    }
+
+    [Command (requiresAuthority = false)]
+    public void CMDallReloadArea() {
         AllReloadShowArea();
     }
 
@@ -399,7 +412,9 @@ public class BuildingManager : NetworkBehaviour
 
     //Activate Unit Panel Click Event
     public void openUnitPanel() {
-        GetComponent<UnitGUIPanel>().generateGUI(buildingvectors[selectedVector]);
+        Vector3Int v = selectedVector;
+        v.z = 1;
+        GetComponent<UnitGUIPanel>().generateGUI(buildingvectors[v]);
     }
 
 //Infoxbox Gameobjekt aktiviert
@@ -414,7 +429,7 @@ public class BuildingManager : NetworkBehaviour
 
         tilemap.SetColor(selectedVector, Color.white);
 
-        if(showAreaBool) reloadShowArea();
+        
         
         //Vektor Selektierung
         
@@ -429,6 +444,8 @@ public class BuildingManager : NetworkBehaviour
         selectedVector = new Vector3Int(mapBehaviour.mapWidth()+2,mapBehaviour.mapHeight()+2,-1); //selected Vektor außerhalb der Map gesetzt, da nicht auf null setzbar
         selectedBuilding = null;
         player.infoboxBuilding.SetActive(false);
+
+        if(showAreaBool) reloadShowArea();
     }
 
 //einfügen in das Dictionary für gebaute Gebäude, einfügen in den HealthManager, alle Vektoren des Gebäudes gespeichert(da oft größer als 1 Tile)
@@ -436,7 +453,7 @@ public class BuildingManager : NetworkBehaviour
         vec.z = 1;
         tilemapManager.deleteFelderUnterBuilding(vecs);
         if(buildingsVec.ContainsKey(vec)) {
-            Debug.Log(buildingsVec[vec]);
+            //Debug.Log(buildingsVec[vec]);
             buildingsVec[vec] = b;
         }else {
             buildingsVec.Add(vec, b);
@@ -523,11 +540,11 @@ public class BuildingManager : NetworkBehaviour
 //Leitet Änderungen an die Leiste(Gameobjekt im Spiel oben im Bildschirm) weiter um aktuellen Stand zu sehen
     public void auffuellen() {
         ZaehlerBuildingsBuiltInRound = 0;
-        foreach(KeyValuePair<Ressource, int> kvp in ressourcenProRundeZaehler) {
-            if(ressourcenZaehler.ContainsKey(kvp.Key)) {
-                ressourcenZaehler[kvp.Key] += kvp.Value;
+        foreach(KeyValuePair<Vector3Int, (Ressource, int)> kvp in ressourcenProRundeZaehler) {
+            if(ressourcenZaehler.ContainsKey(kvp.Value.Item1)) {
+                ressourcenZaehler[kvp.Value.Item1] += kvp.Value.Item2;
             }else {
-                ressourcenZaehler.Add(kvp.Key, kvp.Value);
+                ressourcenZaehler.Add(kvp.Value.Item1, kvp.Value.Item2);
             }
             //GameObject.Find("InGame/Canvas/Leiste/"+kvp.Key.ressourceName).GetComponent<TextMeshProUGUI>().text = ressourcenZaehler[kvp.Key] + " " + kvp.Key.ressName;
         }

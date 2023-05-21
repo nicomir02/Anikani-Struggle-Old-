@@ -55,7 +55,7 @@ public class PauseMenu : MonoBehaviour
 
     public void buttonBackToMainMenu() {
         NetworkClient.localPlayer.GetComponent<BuildingManager>().disqualifyPlayer();
-
+        //NetworkClient.localPlayer.GetComponent<UnitManager>().deleteAllUnits();
         StartCoroutine(disconnectDelay());
 
         gameManager.SetActive(true);
@@ -64,16 +64,15 @@ public class PauseMenu : MonoBehaviour
 //benötigter delay, damit alles fertig geladen ist
     IEnumerator disconnectDelay()
     {
-        for(int i=0; i<5; i++) {
-            if(i>= 4) {
-                if (NetworkServer.active && NetworkClient.isConnected) {
-                    networkManager.StopHost();
-                }else if (NetworkClient.isConnected) {
-                    networkManager.StopClient();
-                }
-            }
-            yield return new WaitForSeconds(0.001f);
+        yield return new WaitForSeconds(0.1f);
+
+        if (NetworkServer.active && NetworkClient.isConnected) {
+            networkManager.StopHost();
+        }else if (NetworkClient.isConnected) {
+            networkManager.StopClient();
         }
+        
+            
     }
 
 //Setter für isPaused Variable

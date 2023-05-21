@@ -51,7 +51,7 @@ MonoBehaviour:
   buildingTile:
   - {fileID: 11400000, guid: b649b7529a8d6d840aef3acfbf3f4102, type: 2}
   - {fileID: 11400000, guid: 7c1448202ecd3f643aca0071935c86f5, type: 2}
-  health: 40
+  health: 300
   buildingname: Barracks
 --- !u!114 &5825383064513479140
 MonoBehaviour:

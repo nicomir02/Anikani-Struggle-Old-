@@ -112,11 +112,13 @@ public class Player : NetworkBehaviour
     //Runden button Click methode
     public void OnClick() {
         if(GameObject.Find("GameManager").GetComponent<PauseMenu>().getPause()) return;
-        if(round == 0 && GetComponent<BuildingManager>().getZahlBuildInRound() == 0) return;
+        BuildingManager buildingManager = GetComponent<BuildingManager>();
+        if(round == 0 && buildingManager.getZahlBuildInRound() == 0) return;
         if(isYourTurn) { // nur wenn du dran bist
             //if(round == 0 && GetComponent<BuildingManager>().getZahlBuildInRound() == 0) return;
             isYourTurn = false;
             roundButtonText.text = "Wait";
+            buildingManager.selectVector(buildingManager.getSelectedVector());
             onRoundChange();
         }
     }

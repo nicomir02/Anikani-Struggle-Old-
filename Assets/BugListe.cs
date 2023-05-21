@@ -6,8 +6,8 @@
 
 //Mittlere Priorität
 
-    //Speicherung wie viele Ressourcen in Gebäude am Vektor
-    //Code kommentieren
+    //Pathfinding [Katharina]
+    //Code kommentieren [Alex, Nico]
 
 //Niedrige Priorität
 

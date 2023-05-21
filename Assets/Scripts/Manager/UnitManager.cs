@@ -47,11 +47,18 @@ public class UnitManager : NetworkBehaviour
         healthManager = GameObject.Find("GameManager").GetComponent<HealthManager>();
     }
 
+    
+    public void deleteAllUnits() {
+        foreach(KeyValuePair<Vector3Int, Unit> kvp in spawnedUnits) {
+            cmddeleteUnit(kvp.Key);
+        }
+        
+    }
+
     public void disqualify() {
         foreach(KeyValuePair<Vector3Int, Unit> kvp in spawnedUnits) {
             healthManager.removeUnit(kvp.Key);
             tilemapManager.removeUnit(kvp.Key);
-            //cmddeleteUnit(kvp.Key);
         }
         spawnedUnits = new Dictionary<Vector3Int, Unit>();
         reichweite = new Dictionary<Vector3Int, int>();
@@ -67,7 +74,8 @@ public class UnitManager : NetworkBehaviour
     
     private void Update(){
         if(GameObject.Find("GameManager").GetComponent<PauseMenu>().getPause()) return;
-        if(Input.GetMouseButtonDown(0)) {
+
+        if(Input.GetMouseButtonDown(0) && isLocalPlayer) {
             Vector3Int vec = hover.getVectorFromMouse();
             vec.z = 2;
             if(hover.insideField(vec)){
@@ -221,15 +229,15 @@ public class UnitManager : NetworkBehaviour
 
 
     public void spawnUnit(Unit unit, Vector3Int vec, int colorID){
-        //unit.setTile(tilemap,vec,colorID);
-        //tilemapManager.CmdUpdateTilemapUnit(vec,volkManager.getVolkID(volk).Item2,volk.getUnitID(unit),colorID);
-        spawnedUnits.Add(vec, unit);
-        healthManager.addUnit(vec, unit.getLeben());
-        reichweite.Add(vec, 0);
+        vec.z = 2;
+        if(!spawnedUnits.ContainsKey(vec) && isLocalPlayer) {
 
-        //tilemap.SetColor(new Vector3Int(vec.x, vec.y, 2), Color.clear);
+            spawnedUnits.Add(vec, unit);
+            healthManager.addUnit(vec, unit.getLeben());
+            reichweite.Add(vec, 0);
 
-        serverAddPlayer(volk.getUnitID(unit), vec, colorID, volkManager.getVolkID(volk).Item2);
+            serverAddPlayer(volk.getUnitID(unit), vec, colorID, volkManager.getVolkID(volk).Item2);
+        }
     }
 
     [Command(requiresAuthority = false)]
@@ -266,6 +274,8 @@ public class UnitManager : NetworkBehaviour
         
         SpriteRenderer spriteRenderer = gameObject.AddComponent<SpriteRenderer>(); 
         spriteRenderer.sprite = sprite;
+
+
     }
 
     public void angriff(Unit unit, Vector3Int vec){
