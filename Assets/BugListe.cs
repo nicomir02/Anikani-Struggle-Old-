@@ -3,6 +3,7 @@
 //Hohe Priorität
 
     //dritte farbe für weiteres team zum testen von paar sachen
+    //man soll sich nicht auf felder stellen können wo Bäume drauf sind oder stein
 
 //Mittlere Priorität
 
