@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 8a9c7ea2fc3addb45b172fd96fbb2aa0
+guid: 72311503f6a3d774a99e40a9eb6de54b
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -33,7 +33,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 0
+    filterMode: 1
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -105,274 +105,148 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: tree_0
+      name: Woodcutter_blue_0
       rect:
         serializedVersion: 2
-        x: 22
+        x: 20
         y: 15
-        width: 20
-        height: 33
-      alignment: 9
-      pivot: {x: 0.5, y: -0.15}
+        width: 63
+        height: 51
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0e93986e13dbe0b4eb2d88ca730395f1
-      internalID: 2014829168
+      spriteID: 24a380607e7085146a4e2bc81094f805
+      internalID: -214409934
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tree_1
+      name: Woodcutter_blue_1
       rect:
         serializedVersion: 2
-        x: 86
+        x: 116
         y: 15
-        width: 20
-        height: 33
-      alignment: 9
-      pivot: {x: 0.5, y: -0.15}
+        width: 63
+        height: 51
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7897611d784ea084ba6f641b44a4429c
-      internalID: -1937290209
+      spriteID: 2ee4d2e6c10f89a45acd446c773d31d6
+      internalID: -1713438984
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tree_2
+      name: Woodcutter_blue_2
       rect:
         serializedVersion: 2
-        x: 150
+        x: 212
         y: 15
-        width: 20
-        height: 33
-      alignment: 9
-      pivot: {x: 0.5, y: -0.15}
+        width: 63
+        height: 51
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e5b31c43db64a38439a8532dc629455c
-      internalID: 1019506768
+      spriteID: 9f29c2ba3e3006241adac474aa579795
+      internalID: -241648695
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tree_3
+      name: Woodcutter_blue_3
       rect:
         serializedVersion: 2
-        x: 214
+        x: 308
         y: 15
-        width: 20
-        height: 33
-      alignment: 9
-      pivot: {x: 0.5, y: -0.15}
+        width: 63
+        height: 51
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 10be79c8c662f084aaae469c7497bd67
-      internalID: -1932196004
+      spriteID: 75cb92ae4696b1d4ebdcaa214f7bcd05
+      internalID: 1307175213
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tree_4
+      name: Woodcutter_blue_4
       rect:
         serializedVersion: 2
-        x: 278
+        x: 404
         y: 15
-        width: 20
-        height: 33
-      alignment: 9
-      pivot: {x: 0.5, y: -0.15}
+        width: 63
+        height: 51
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c7706b1aeed8d8a42b1d6ee3d719e664
-      internalID: -140678251
+      spriteID: 761813cc0e2699647a204a1293813f65
+      internalID: 1968812641
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tree_5
+      name: Woodcutter_blue_5
       rect:
         serializedVersion: 2
-        x: 342
+        x: 500
         y: 15
-        width: 20
-        height: 33
-      alignment: 9
-      pivot: {x: 0.5, y: -0.15}
+        width: 63
+        height: 51
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 09ce61674b87c134b8a02a9a602a6e73
-      internalID: -220837867
+      spriteID: c9bf6ed81e0918446bded1de86195e62
+      internalID: 2140203771
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tree_6
+      name: Woodcutter_blue_6
       rect:
         serializedVersion: 2
-        x: 406
+        x: 596
         y: 15
-        width: 20
-        height: 33
-      alignment: 9
-      pivot: {x: 0.5, y: -0.15}
+        width: 63
+        height: 51
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 559615f4339706f46a6e598d6f6dc1e9
-      internalID: 1181452506
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: tree_7
-      rect:
-        serializedVersion: 2
-        x: 470
-        y: 15
-        width: 20
-        height: 33
-      alignment: 9
-      pivot: {x: 0.5, y: -0.15}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: ff6897801fdfd874fb7c1f00179ab551
-      internalID: 2114904592
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: tree_8
-      rect:
-        serializedVersion: 2
-        x: 534
-        y: 15
-        width: 20
-        height: 33
-      alignment: 9
-      pivot: {x: 0.5, y: -0.15}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 3c778dc2b09ff4d4a99c0e6768c1b1eb
-      internalID: -1572428248
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: tree_9
-      rect:
-        serializedVersion: 2
-        x: 598
-        y: 15
-        width: 20
-        height: 33
-      alignment: 9
-      pivot: {x: 0.5, y: -0.15}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 3d485f6a0179ff24791e3fb59fe49735
-      internalID: 1553939461
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: tree_10
-      rect:
-        serializedVersion: 2
-        x: 662
-        y: 15
-        width: 20
-        height: 33
-      alignment: 9
-      pivot: {x: 0.5, y: -0.15}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 74502067a7e18324e9311a34477e7263
-      internalID: 140320675
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: tree_11
-      rect:
-        serializedVersion: 2
-        x: 726
-        y: 15
-        width: 20
-        height: 33
-      alignment: 9
-      pivot: {x: 0.5, y: -0.15}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: c3c9ce3e389cbb14e8207f11930a0a84
-      internalID: 1494641232
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: tree_12
-      rect:
-        serializedVersion: 2
-        x: 474
-        y: 2
-        width: 16
-        height: 1
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 86672cd4aea056e43ba07b316829ad39
-      internalID: -158093069
+      spriteID: a784eaa2ab3aff34dacdbee691d8b962
+      internalID: 414186008
       vertices: []
       indices: 
       edges: []
@@ -388,20 +262,13 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      tree_0: 2014829168
-      tree_1: -1937290209
-      tree_10: 140320675
-      tree_11: 1494641232
-      tree_12: -158093069
-      tree_13: -2129631578
-      tree_2: 1019506768
-      tree_3: -1932196004
-      tree_4: -140678251
-      tree_5: -220837867
-      tree_6: 1181452506
-      tree_7: 2114904592
-      tree_8: -1572428248
-      tree_9: 1553939461
+      Woodcutter_blue_0: -214409934
+      Woodcutter_blue_1: -1713438984
+      Woodcutter_blue_2: -241648695
+      Woodcutter_blue_3: 1307175213
+      Woodcutter_blue_4: 1968812641
+      Woodcutter_blue_5: 2140203771
+      Woodcutter_blue_6: 414186008
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

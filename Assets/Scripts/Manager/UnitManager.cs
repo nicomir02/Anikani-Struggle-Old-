@@ -203,7 +203,7 @@ public class UnitManager : NetworkBehaviour
                     Debug.Log("shortestPathListe bei cmdMoveUnit" + p);
                 }
 
-                StartCoroutine(MoveToPosition(us.GetComponent<Transform>(), liste, 1f)); //*distance(from, to))
+                StartCoroutine(MoveToPosition(us.GetComponent<Transform>(), liste, 0.5f)); //*distance(from, to))
             
                 //us.GetComponent<Transform>().position = Vector3.Lerp(us.GetComponent<Transform>().position, vec3IntToVec3(to), 2f);
             }
@@ -212,10 +212,6 @@ public class UnitManager : NetworkBehaviour
 
     public IEnumerator MoveToPosition(Transform transform, List<Vector3Int> positions, float timeToMove)
     {
-
-
-        timeToMove = timeToMove;
-
         for(int i=0; i<positions.Count; i++) {
             float elapsedTime = 0f;
             Vector3 startingPosition = vec3IntToVec3(positions[i]);

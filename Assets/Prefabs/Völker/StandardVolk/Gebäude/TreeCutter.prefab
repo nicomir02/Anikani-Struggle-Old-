@@ -49,7 +49,7 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0
   buildingTile:
-  - {fileID: 11400000, guid: b9df768105c921342b6d49771122c91c, type: 2}
+  - {fileID: 11400000, guid: e8a1e4c0a0187694d95969b12c516e6c, type: 2}
   - {fileID: 11400000, guid: 1e8eda54d8cb3e942b27cf9015e348e7, type: 2}
   health: 70
   buildingname: Tree Cutter

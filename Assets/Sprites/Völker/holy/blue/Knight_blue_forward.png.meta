@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 858bbf16773b705438b31359d7b1dc37
+guid: dff9779ec820273468d0f847ad7f37a5
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -33,12 +33,12 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 0
+    filterMode: 1
     aniso: 1
     mipBias: 0
-    wrapU: 0
-    wrapV: 0
-    wrapW: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
@@ -67,11 +67,11 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 128
-    resizeAlgorithm: 1
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 0
-    compressionQuality: 100
+    textureCompression: 1
+    compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
@@ -105,75 +105,12 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Map_tiles 1_0
+      name: Knight_blue_forward_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 48
-        width: 32
-        height: 24
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: bae69dd1511cd78448a1748c0baffe47
-      internalID: 1551600974
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Map_tiles 1_1
-      rect:
-        serializedVersion: 2
-        x: 48
-        y: 48
-        width: 32
-        height: 24
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 3cda8ffb647c1434784d6bc47c0d764b
-      internalID: -7290267
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Map_tiles 1_2
-      rect:
-        serializedVersion: 2
-        x: 96
-        y: 48
-        width: 32
-        height: 24
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 608ca6f2691871e4e9028b70d8cb46e3
-      internalID: 643602595
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Map_tiles 1_3
-      rect:
-        serializedVersion: 2
-        x: 53
-        y: 11
-        width: 23
+        x: 25
+        y: 16
+        width: 14
         height: 26
       alignment: 7
       pivot: {x: 0.5, y: 0}
@@ -182,29 +119,71 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7933b0d31f61ff2429544ed0e34e3462
-      internalID: -998376770
+      spriteID: cfd30f0b50dafc04b97da5ca6f2e8cbb
+      internalID: -105248864
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Map_tiles 1_4
+      name: Knight_blue_forward_1
       rect:
         serializedVersion: 2
-        x: 103
-        y: 28
-        width: 17
-        height: 11
-      alignment: 9
-      pivot: {x: 0.5169, y: -0.36567706}
+        x: 88
+        y: 16
+        width: 16
+        height: 25
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: cd3535280a54f1b42b43e4025a3e53f2
-      internalID: 428153971
+      spriteID: 665a91a090ad66341af73bc10e3aa209
+      internalID: -1957171214
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Knight_blue_forward_2
+      rect:
+        serializedVersion: 2
+        x: 153
+        y: 16
+        width: 14
+        height: 26
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: effb930fe6e34d341bf704527ddefc51
+      internalID: -1891242798
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Knight_blue_forward_3
+      rect:
+        serializedVersion: 2
+        x: 216
+        y: 15
+        width: 15
+        height: 26
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a8f73ece55b8b7e4b81638387febd901
+      internalID: 1162813207
       vertices: []
       indices: 
       edges: []
@@ -220,11 +199,10 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Map_tiles 1_0: 1551600974
-      Map_tiles 1_1: -7290267
-      Map_tiles 1_2: 643602595
-      Map_tiles 1_3: -998376770
-      Map_tiles 1_4: 428153971
+      Knight_blue_forward_0: -105248864
+      Knight_blue_forward_1: -1957171214
+      Knight_blue_forward_2: -1891242798
+      Knight_blue_forward_3: 1162813207
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

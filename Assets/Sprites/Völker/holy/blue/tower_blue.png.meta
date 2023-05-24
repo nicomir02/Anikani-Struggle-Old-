@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 858bbf16773b705438b31359d7b1dc37
+guid: 4fcd2c6870e419e4186f6cb2f854803f
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -33,12 +33,12 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 0
+    filterMode: 1
     aniso: 1
     mipBias: 0
-    wrapU: 0
-    wrapV: 0
-    wrapW: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
@@ -67,11 +67,11 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 128
-    resizeAlgorithm: 1
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 0
-    compressionQuality: 100
+    textureCompression: 1
+    compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
@@ -105,13 +105,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Map_tiles 1_0
+      name: tower_blue_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 48
-        width: 32
-        height: 24
+        x: 13
+        y: 2
+        width: 69
+        height: 92
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -119,20 +119,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: bae69dd1511cd78448a1748c0baffe47
-      internalID: 1551600974
+      spriteID: c56f68a6c7970f5419ebce54bbeb478c
+      internalID: 10392630
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Map_tiles 1_1
+      name: tower_blue_1
       rect:
         serializedVersion: 2
-        x: 48
-        y: 48
-        width: 32
-        height: 24
+        x: 109
+        y: 2
+        width: 69
+        height: 96
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -140,20 +140,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3cda8ffb647c1434784d6bc47c0d764b
-      internalID: -7290267
+      spriteID: 84e38168ef7175b4a935ef188c4c46d8
+      internalID: 183160636
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Map_tiles 1_2
+      name: tower_blue_5
       rect:
         serializedVersion: 2
-        x: 96
-        y: 48
-        width: 32
-        height: 24
+        x: 205
+        y: 2
+        width: 69
+        height: 104
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -161,20 +161,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 608ca6f2691871e4e9028b70d8cb46e3
-      internalID: 643602595
+      spriteID: c276c9054b6db0741b89ecc86619288a
+      internalID: -826053533
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Map_tiles 1_3
+      name: tower_blue_6
       rect:
         serializedVersion: 2
-        x: 53
-        y: 11
-        width: 23
-        height: 26
+        x: 301
+        y: 2
+        width: 69
+        height: 112
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -182,29 +182,29 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7933b0d31f61ff2429544ed0e34e3462
-      internalID: -998376770
+      spriteID: 5cd9c21c00d1ae540964692ba144005c
+      internalID: 2141388899
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Map_tiles 1_4
+      name: tower_blue_7
       rect:
         serializedVersion: 2
-        x: 103
-        y: 28
-        width: 17
-        height: 11
-      alignment: 9
-      pivot: {x: 0.5169, y: -0.36567706}
+        x: 397
+        y: 2
+        width: 69
+        height: 116
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: cd3535280a54f1b42b43e4025a3e53f2
-      internalID: 428153971
+      spriteID: c5f9a7c38be123747bb1c41c967ac7e4
+      internalID: -1280807426
       vertices: []
       indices: 
       edges: []
@@ -220,11 +220,14 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Map_tiles 1_0: 1551600974
-      Map_tiles 1_1: -7290267
-      Map_tiles 1_2: 643602595
-      Map_tiles 1_3: -998376770
-      Map_tiles 1_4: 428153971
+      tower_blue_0: 10392630
+      tower_blue_1: 183160636
+      tower_blue_2: -517912488
+      tower_blue_3: 781784173
+      tower_blue_4: 1042605576
+      tower_blue_5: -826053533
+      tower_blue_6: 2141388899
+      tower_blue_7: -1280807426
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
