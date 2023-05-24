@@ -69,6 +69,9 @@ MonoBehaviour:
   leben: 100
   angriffswert: 30
   maxBloeckeProRunde: 4
+  trainRounds: 2
+  price: 3
+  kampfweite: 1
   colourUnit:
-  - {fileID: 11400000, guid: 0aa677d9eb3af40409dd53e49eefc39f, type: 2}
+  - {fileID: 11400000, guid: bf81322cceb5a584a8fe2a1598e5825e, type: 2}
   - {fileID: 11400000, guid: 255a567aaf73a274d9a870fa7c3ec7c5, type: 2}

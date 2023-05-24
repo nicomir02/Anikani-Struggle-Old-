@@ -57,6 +57,12 @@ public class MapBehaviour : NetworkBehaviour
         return ressourcen;
     }
 
+    void Update() {
+         if(Input.GetMouseButtonDown(0)) {
+            Debug.Log(getBlockDetails(GetComponent<TilemapHover>().getVectorFromMouse()));
+         }
+    }
+
     //Getter Methode für Sync Variable zu ob Terrain generiert wurde
     public bool getTerrainBuild() {
         return terrainBuild;

@@ -73,7 +73,7 @@ public class Pathfinding
                         knoten.F = aktiverK.F+10;
                     }
                 }
-                else if(!geschlosseneL.Contains(knoten))
+                else if(!geschlosseneL.Contains(knoten.position))
                 {
                     offeneL.Add(knoten);
                 }

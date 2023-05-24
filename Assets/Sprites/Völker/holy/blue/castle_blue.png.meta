@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 858bbf16773b705438b31359d7b1dc37
+guid: f3eba4f0a5ec95d409fc36caf1b9802f
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -33,12 +33,12 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 0
+    filterMode: 1
     aniso: 1
     mipBias: 0
-    wrapU: 0
-    wrapV: 0
-    wrapW: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
@@ -67,11 +67,11 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 128
-    resizeAlgorithm: 1
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 0
-    compressionQuality: 100
+    textureCompression: 1
+    compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
@@ -105,13 +105,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Map_tiles 1_0
+      name: castle_blue_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 48
-        width: 32
-        height: 24
+        x: 6
+        y: 0
+        width: 84
+        height: 82
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -119,20 +119,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: bae69dd1511cd78448a1748c0baffe47
-      internalID: 1551600974
+      spriteID: 403b20e9403e8ee4c8a06bd69409aed5
+      internalID: 17000581
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Map_tiles 1_1
+      name: castle_blue_1
       rect:
         serializedVersion: 2
-        x: 48
-        y: 48
-        width: 32
-        height: 24
+        x: 102
+        y: 0
+        width: 84
+        height: 82
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -140,20 +140,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3cda8ffb647c1434784d6bc47c0d764b
-      internalID: -7290267
+      spriteID: d977e748c54c6674bb73b917773f84f5
+      internalID: 1207029093
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Map_tiles 1_2
+      name: castle_blue_2
       rect:
         serializedVersion: 2
-        x: 96
-        y: 48
-        width: 32
-        height: 24
+        x: 198
+        y: 0
+        width: 84
+        height: 82
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -161,20 +161,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 608ca6f2691871e4e9028b70d8cb46e3
-      internalID: 643602595
+      spriteID: 7dd54cbbe7fda124d8298590206c4e4f
+      internalID: -1778896786
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Map_tiles 1_3
+      name: castle_blue_3
       rect:
         serializedVersion: 2
-        x: 53
-        y: 11
-        width: 23
-        height: 26
+        x: 294
+        y: 0
+        width: 84
+        height: 82
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -182,29 +182,29 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7933b0d31f61ff2429544ed0e34e3462
-      internalID: -998376770
+      spriteID: 9f53e0c4e69a52d4fbfc20ca9f433d97
+      internalID: 1156472265
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Map_tiles 1_4
+      name: castle_blue_4
       rect:
         serializedVersion: 2
-        x: 103
-        y: 28
-        width: 17
-        height: 11
-      alignment: 9
-      pivot: {x: 0.5169, y: -0.36567706}
+        x: 390
+        y: 0
+        width: 84
+        height: 82
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: cd3535280a54f1b42b43e4025a3e53f2
-      internalID: 428153971
+      spriteID: cd2fcc835b8a9e944a0018e431e64708
+      internalID: -1634051330
       vertices: []
       indices: 
       edges: []
@@ -220,11 +220,11 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Map_tiles 1_0: 1551600974
-      Map_tiles 1_1: -7290267
-      Map_tiles 1_2: 643602595
-      Map_tiles 1_3: -998376770
-      Map_tiles 1_4: 428153971
+      castle_blue_0: 17000581
+      castle_blue_1: 1207029093
+      castle_blue_2: -1778896786
+      castle_blue_3: 1156472265
+      castle_blue_4: -1634051330
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

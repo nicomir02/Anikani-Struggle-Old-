@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 858bbf16773b705438b31359d7b1dc37
+guid: 1e62bffccf977af4da2dfea17ba39055
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -33,12 +33,12 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 0
+    filterMode: 1
     aniso: 1
     mipBias: 0
-    wrapU: 0
-    wrapV: 0
-    wrapW: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
@@ -67,11 +67,11 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 128
-    resizeAlgorithm: 1
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 0
-    compressionQuality: 100
+    textureCompression: 1
+    compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
@@ -105,13 +105,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Map_tiles 1_0
+      name: quarry_blue_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 48
-        width: 32
-        height: 24
+        x: 8
+        y: 17
+        width: 72
+        height: 50
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -119,20 +119,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: bae69dd1511cd78448a1748c0baffe47
-      internalID: 1551600974
+      spriteID: 7848bf6635d5d2c42a0d54867c750490
+      internalID: -1527862651
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Map_tiles 1_1
+      name: quarry_blue_1
       rect:
         serializedVersion: 2
-        x: 48
-        y: 48
-        width: 32
-        height: 24
+        x: 104
+        y: 17
+        width: 72
+        height: 50
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -140,20 +140,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3cda8ffb647c1434784d6bc47c0d764b
-      internalID: -7290267
+      spriteID: 2a875eaee9ebbda458b6cd567eecc0c9
+      internalID: 1675972346
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Map_tiles 1_2
+      name: quarry_blue_2
       rect:
         serializedVersion: 2
-        x: 96
-        y: 48
-        width: 32
-        height: 24
+        x: 200
+        y: 17
+        width: 72
+        height: 50
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -161,20 +161,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 608ca6f2691871e4e9028b70d8cb46e3
-      internalID: 643602595
+      spriteID: bf46bf6605fb008459f117479279f873
+      internalID: -2140025833
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Map_tiles 1_3
+      name: quarry_blue_3
       rect:
         serializedVersion: 2
-        x: 53
-        y: 11
-        width: 23
-        height: 26
+        x: 296
+        y: 17
+        width: 72
+        height: 50
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -182,29 +182,29 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7933b0d31f61ff2429544ed0e34e3462
-      internalID: -998376770
+      spriteID: 862081a1e3c8b4240b5c62d2ea603c36
+      internalID: 521366104
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Map_tiles 1_4
+      name: quarry_blue_4
       rect:
         serializedVersion: 2
-        x: 103
-        y: 28
-        width: 17
-        height: 11
-      alignment: 9
-      pivot: {x: 0.5169, y: -0.36567706}
+        x: 392
+        y: 17
+        width: 72
+        height: 50
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: cd3535280a54f1b42b43e4025a3e53f2
-      internalID: 428153971
+      spriteID: 56d7db823ff37564fa3789894bfecdc1
+      internalID: 791001077
       vertices: []
       indices: 
       edges: []
@@ -220,11 +220,11 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Map_tiles 1_0: 1551600974
-      Map_tiles 1_1: -7290267
-      Map_tiles 1_2: 643602595
-      Map_tiles 1_3: -998376770
-      Map_tiles 1_4: 428153971
+      quarry_blue_0: -1527862651
+      quarry_blue_1: 1675972346
+      quarry_blue_2: -2140025833
+      quarry_blue_3: 521366104
+      quarry_blue_4: 791001077
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

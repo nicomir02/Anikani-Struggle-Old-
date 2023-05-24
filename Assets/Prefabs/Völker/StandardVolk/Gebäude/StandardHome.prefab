@@ -49,7 +49,7 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0
   buildingTile:
-  - {fileID: 11400000, guid: 1f12517dd574d9843b24ca7acf894653, type: 2}
+  - {fileID: 11400000, guid: 8738f7753025ffd49ad8ac6a938f0519, type: 2}
   - {fileID: 11400000, guid: f226e0e38ae27e44181dfd88971501b1, type: 2}
   health: 600
   buildingname: Main Building
