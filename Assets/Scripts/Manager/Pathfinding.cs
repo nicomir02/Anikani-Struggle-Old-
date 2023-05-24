@@ -29,29 +29,27 @@ public class Pathfinding
         //Startknoten der Liste hinzufügen
         offeneListe.Add(startKnoten);
 
-        Debug.Log("vorWhileSchleife");
+        //Debug.Log("vorWhileSchleife");
         int testzaehler = 0;
 
         while(offeneListe.Count > 0)
         {
             testzaehler++;
-            //if(testzaehler > 20) break;
+            if(testzaehler > 42) break;
             
             Knoten aktiverKnoten = lowestCost(offeneListe); //neuen aktiven Knoten aus der Liste der Nachbarn suchen
 
-            Debug.Log("aktiverKnoten: " + aktiverKnoten.position + ", AbstandS: " + aktiverKnoten.G + ", AbstandE: " + aktiverKnoten.H + ", best?: " + aktiverKnoten.F);
+            /*Debug.Log("aktiverKnoten: " + aktiverKnoten.position + ", AbstandS: " + aktiverKnoten.G + ", AbstandE: " + aktiverKnoten.H + ", best?: " + aktiverKnoten.F);
             Debug.Log("endKonten: " + end);
             Debug.Log(aktiverKnoten.position == end);
-            Debug.Log(offeneListe.Count);
-            /*foreach(Knoten p in offeneListe){
-                Debug.Log("offeneListe" + p);
-            }*/
-
+            Debug.Log(offeneListe.Count);*/
+           
             offeneListe.Remove(aktiverKnoten);
             geschlosseneListe.Add(aktiverKnoten); 
             
             //wenn der aktive Knoten der ZielKnoten ist -> FERTIG
             if(aktiverKnoten.position == end) {
+                testzaehler = 0;
                 kuerzesterWeg = aktiverKnoten;
 
                 Knoten temp1 = kuerzesterWeg;
@@ -59,7 +57,11 @@ public class Pathfinding
                 while(temp1.vorgaenger != null) {
                     path.Add(temp1.position);
                     temp1 = temp1.vorgaenger;
+                    testzaehler++;
                 }
+                
+                if(testzaehler > 4) break;
+
                 path.Reverse();
                 return path;
             }
@@ -75,7 +77,7 @@ public class Pathfinding
 
             foreach (Knoten nachbar in alleNachbarn) 
             {
-                Debug.Log(nachbar.position + "G= "+nachbar.G + "H= " + nachbar.H + "F= " + nachbar.F);
+                //Debug.Log(nachbar.position + "G= "+nachbar.G + "H= " + nachbar.H + "F= " + nachbar.F);
                 if(geschlosseneListe.Contains(nachbar)) continue;
 
                 if(aktiverKnoten.G+1 < nachbar.G){
@@ -89,8 +91,12 @@ public class Pathfinding
             }
 
         }
-        Debug.Log(testzaehler);   
-        //wenn alle felder ausprobiert und kein Ergebnis gefunden -> bescheid sagen dass nicht auf das Feld kommt
+        //Debug.Log("Testezähler: "+testzaehler);   
+
+        //nicht in Reichweite
+        Debug.Log("nicht in Reichweite :(");
+
+        
         return null;
     }
 
