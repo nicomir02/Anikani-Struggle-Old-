@@ -49,9 +49,10 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0
   tile:
-  - {fileID: 11400000, guid: a84fd66d71ad48347a3e5d2e9c64109f, type: 2}
+  - {fileID: 11400000, guid: 0c03daea520eef54dac656466927720c, type: 2}
   block: Plains
   isBuildable: 1
+  isWalkable: 1
 --- !u!114 &481303840535809074
 MonoBehaviour:
   m_ObjectHideFlags: 0

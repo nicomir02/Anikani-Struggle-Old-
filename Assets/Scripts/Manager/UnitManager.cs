@@ -197,26 +197,39 @@ public class UnitManager : NetworkBehaviour
                 us.vec = to;
 
                 to.z = 0;
-                StartCoroutine(MoveToPosition(us.GetComponent<Transform>(), vec3IntToVec3(to), 0.2f*distance(from, to)));
+            
+                List<Vector3Int> liste = new Pathfinding(from, to).shortestPath();
+                foreach(Vector3Int p in liste){
+                    Debug.Log("shortestPathListe bei cmdMoveUnit" + p);
+                }
+
+                StartCoroutine(MoveToPosition(us.GetComponent<Transform>(), liste, 1f)); //*distance(from, to))
             
                 //us.GetComponent<Transform>().position = Vector3.Lerp(us.GetComponent<Transform>().position, vec3IntToVec3(to), 2f);
             }
         }
     }
 
-    public IEnumerator MoveToPosition(Transform transform, Vector3 position, float timeToMove)
+    public IEnumerator MoveToPosition(Transform transform, List<Vector3Int> positions, float timeToMove)
     {
 
-        float elapsedTime = 0f;
-        Vector3 startingPosition = transform.position;
 
-        while (elapsedTime < timeToMove)
-        {
-            elapsedTime += Time.deltaTime;
-            float t = Mathf.Clamp01(elapsedTime / timeToMove);
-            transform.position = Vector3.Lerp(startingPosition, position, t);
-            yield return null;
+        timeToMove = timeToMove;
+
+        for(int i=0; i<positions.Count; i++) {
+            float elapsedTime = 0f;
+            Vector3 startingPosition = vec3IntToVec3(positions[i]);
+            Vector3 position = vec3IntToVec3(positions[i+1]);
+
+            while (elapsedTime < timeToMove)
+            {
+                elapsedTime += Time.deltaTime;
+                float t = Mathf.Clamp01(elapsedTime / timeToMove);
+                transform.position = Vector3.Lerp(startingPosition, position, t);
+                yield return null;
+            }
         }
+        
     }
 
     //Convert Vector3Int von Vec3Int für Units
