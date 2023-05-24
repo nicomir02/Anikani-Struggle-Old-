@@ -5,57 +5,53 @@ using UnityEngine.Tilemaps;
 
 public class Pathfinding 
 {
-    Vector3Int position;
-    int G = 10; //weil nur benachbarte Felder, kann man hübscher lösen aber ich lass es der Vollständigkeit halber drin, sonst komm ich durcheinander :)
-    int H = 0; //Manhatten-Distand zum Ziel-Tile (also einfach die geschätzte Distanz)
-    int F = -1;
-
     Vector3Int start;
     Vector3Int end;
+    Knoten kuerzesterWeg = null;
+    List<Vector3Int> path = new List<Vector3Int>();
 
     //Konstruktor
-    public Pathfinding(Vector3Int positionK, Vector3Int ziel)
+    public Pathfinding(Vector3Int startTile, Vector3Int zielTile)
     {
-        position = positionK;
-        H = Mathf.Abs(position.x - ziel.x) + Mathf.Abs(position.y - ziel.y) + Mathf.Abs(position.z - ziel.z); //Vector3Int.ManhattenDistance(position, ziel);
-        F = G + H;
-        this.start = positionK;
-        this.end = ziel;
+        this.start = startTile;
+        this.end = zielTile;
     }
 
     public List<Vector3Int> shortestPath()
     {
-        List<Pathfinding> offeneL = new List<Pathfinding>();
-        List<Vector3Int> geschlosseneL = new List<Vector3Int>();
+        List<Knoten> offeneListe = new List<Knoten>(); //Knoten die noch überprüft werden müssen
+        List<Knoten> geschlosseneListe = new List<Knoten>(); // Knoten die schon geprüft wurden
 
-        Pathfinding startK = new Pathfinding(start, end);
-        Pathfinding zielK = new Pathfinding(end, end);
+        Knoten startKnoten = new Knoten(start, end, 0, null);
+        Knoten ZielKnoten = new Knoten(end, end, 0, null); //  0???????
 
-        //startknoten der Liste hinzufügen
-        offeneL.Add(startK);
-        Debug.Log("vorWhileSchleife");
+        //Startknoten der Liste hinzufügen
+        offeneListe.Add(startKnoten);
 
-        int testzaehler = 0;
+        //Debug.Log("vorWhileSchleife");
+        //int testzaehler = 0;
 
-        while(offeneL.Count > 0)
+        while(offeneListe.Count > 0)
         {
-            testzaehler++;
-            if(testzaehler > 20) break;
-            Pathfinding aktiverK = lowestCost(offeneL); //neuen aktiven Knoten aus der Liste der Nachbarn suchen
-
-            Debug.Log(offeneL.Count);
-
+            //testzaehler++;
+            //if(testzaehler > 20) break;
             
-            foreach(Pathfinding p in offeneL){
+            Knoten aktiverKnoten = lowestCost(offeneListe); //neuen aktiven Knoten aus der Liste der Nachbarn suchen
+
+            //Debug.Log(offeneL.Count);
+            /*foreach(Knoten p in offeneListe){
                 Debug.Log("offeneListe" + p);
+            }*/
+
+            offeneListe.Remove(aktiverKnoten);
+            geschlosseneListe.Add(aktiverKnoten); 
+            
+            //wenn der aktive Knoten der ZielKnoten ist -> FERTIG
+            if(aktiverKnoten.position == end) {
+                kuerzesterWeg = aktiverKnoten;
             }
 
-            offeneL.Remove(aktiverK);
-            geschlosseneL.Add(aktiverK.position); //aktiven Knoten in die geschlossene Liste hinzufügen
-            
-            if(aktiverK.position == end || aktiverK == null) break; //wenn der aktive Knoten der ZielKnoten ist -> FERTIG
-
-            List<Pathfinding> alleNachbarn = nachbarnFinden(aktiverK, end); //liste mit allen Nachbarn drin zurückgeben, die in Frage kommen
+            List<Knoten> alleNachbarn = nachbarnFinden(aktiverKnoten, end); //liste mit allen Nachbarn drin zurückgeben, die in Frage kommen
 
             /* ist der schon in der offenen Liste? 
             nein -> hinzufügen
@@ -64,70 +60,82 @@ public class Pathfinding
                     ja -> abstand F aktualisieren
             */
 
-            foreach (Pathfinding knoten in alleNachbarn) 
+            foreach (Knoten nachbar in alleNachbarn) 
             {
-                if(offeneL.Contains(knoten))
+                if(offeneListe.Contains(nachbar))
                 {
-                    if(aktiverK.F+10 < knoten.F)
+                    if(aktiverKnoten.F+10 < nachbar.F)
                     {
-                        knoten.F = aktiverK.F+10;
+                        nachbar.F = aktiverKnoten.F+10;
+                        nachbar.vorgaenger = aktiverKnoten;
                     }
                 }
-                else if(!geschlosseneL.Contains(knoten))
+                else if(!geschlosseneListe.Contains(nachbar))
                 {
-                    offeneL.Add(knoten);
+                    offeneListe.Add(nachbar);
                 }
             }
 
         }
+        //Debug.Log(testzaehler);
+        
+        Knoten temp1 = kuerzesterWeg;
 
-        Debug.Log(testzaehler);
+        while(temp1.vorgaenger != null) {
+            path.Add(temp1.position);
+            temp1 = temp1.vorgaenger;
+        }
+        
         //wenn alle felder ausprobiert und kein Ergebnis gefunden -> bescheid sagen dass nicht auf das Feld kommt
-        return geschlosseneL;
+        return path;
     }
 
-    //Tile mit kleinster F Komponente finden
-    Pathfinding lowestCost(List<Pathfinding> offeneListe) 
+    Knoten lowestCost(List<Knoten> moegliche) 
     {
+        //der Knoten mit dem niedrigsten F führt am wahrscheinlichsten schnell zum Ziel
+        int abstand = moegliche[0].F;
 
-        Pathfinding naechstesTile = offeneListe[0];
-        int kuerzesterAbstand = offeneListe[0].F;
-        foreach (Pathfinding tile in offeneListe) 
+        //Knoten mit dem geringsten Abstand
+        Knoten probBestTile = moegliche[0];
+
+        foreach (Knoten k in moegliche) 
         {
-            if(tile.F < kuerzesterAbstand)
+            if(k.F < abstand)
             {
-                kuerzesterAbstand = tile.F;
-                naechstesTile = tile;
+                abstand = k.F;
+                probBestTile = k;
             }
         }
-        return naechstesTile;
+
+        return probBestTile;
     }
 
 
     //alle Nachbarn von einem Tile finden
-    public List<Pathfinding> nachbarnFinden(Pathfinding knoten, Vector3Int end) 
+    public List<Knoten> nachbarnFinden(Knoten knoten, Vector3Int end) 
     {
-        List<Pathfinding> nachbarn = new List<Pathfinding>(); //Liste aller Nachbarn die am ende zurückgegeben wird
+        List<Knoten> nachbarn = new List<Knoten>(); //Liste aller Nachbarn die am ende zurückgegeben wird
         MapBehaviour mapBehaviour = GameObject.Find("GameManager").GetComponent<MapBehaviour>();
 
-        if(mapBehaviour.getBlockDetails((knoten.position + new Vector3Int(1,0,0))).Item2.getWalkable()) //wenn man auf dem Feld stehen kann
+        //prüfen ob man auf dem Feld stehen kann
+        if(mapBehaviour.getBlockDetails((knoten.position + new Vector3Int(1,0,0))).Item2.getWalkable())
         {
-            Pathfinding p = new Pathfinding(knoten.position + new Vector3Int(1,0,0), end);
+            Knoten p = new Knoten(knoten.position + new Vector3Int(1,0,0), end, knoten.F+10, knoten);
             nachbarn.Add(p); //Nachbarfeld hinzufügen
         }
         if(mapBehaviour.getBlockDetails((knoten.position - new Vector3Int(1,0,0))).Item2.getWalkable()) 
         {
-            Pathfinding p = new Pathfinding(knoten.position - new Vector3Int(1,0,0), end);
+            Knoten p = new Knoten(knoten.position - new Vector3Int(1,0,0), end, knoten.F+10, knoten);
             nachbarn.Add(p);
         }
         if(mapBehaviour.getBlockDetails((knoten.position + new Vector3Int(0,1,0))).Item2.getWalkable()) 
         {
-            Pathfinding p = new Pathfinding(knoten.position + new Vector3Int(0,1,0), end);
+            Knoten p = new Knoten(knoten.position + new Vector3Int(0,1,0), end, knoten.F+10, knoten);
             nachbarn.Add(p);
         }
         if(mapBehaviour.getBlockDetails((knoten.position - new Vector3Int(0,1,0))).Item2.getWalkable()) 
         {
-            Pathfinding p = new Pathfinding((knoten.position - new Vector3Int(0,1,0)), end);
+            Knoten p = new Knoten((knoten.position - new Vector3Int(0,1,0)), end, knoten.F+10, knoten);
             nachbarn.Add(p);
         }
         return nachbarn;
