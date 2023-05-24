@@ -74,4 +74,4 @@ MonoBehaviour:
   kampfweite: 1
   colourUnit:
   - {fileID: 11400000, guid: bf81322cceb5a584a8fe2a1598e5825e, type: 2}
-  - {fileID: 11400000, guid: 255a567aaf73a274d9a870fa7c3ec7c5, type: 2}
+  - {fileID: 11400000, guid: 143852c94d7c6054d94aa455b91ae846, type: 2}

@@ -52,6 +52,16 @@ Tilemap:
       m_TileObjectToInstantiateIndex: 65535
       dummyAlignment: 0
       m_AllTileFlags: 1073741825
+  - first: {x: -7, y: 0, z: 0}
+    second:
+      serializedVersion: 2
+      m_TileIndex: 7
+      m_TileSpriteIndex: 7
+      m_TileMatrixIndex: 0
+      m_TileColorIndex: 0
+      m_TileObjectToInstantiateIndex: 65535
+      dummyAlignment: 0
+      m_AllTileFlags: 1073741825
   - first: {x: -4, y: 0, z: 0}
     second:
       serializedVersion: 2
@@ -139,6 +149,8 @@ Tilemap:
     m_Data: {fileID: 11400000, guid: cfa4d5d33fb98674c99bbb75ff969ca4, type: 2}
   - m_RefCount: 1
     m_Data: {fileID: 11400000, guid: bf81322cceb5a584a8fe2a1598e5825e, type: 2}
+  - m_RefCount: 1
+    m_Data: {fileID: 11400000, guid: 143852c94d7c6054d94aa455b91ae846, type: 2}
   m_TileSpriteArray:
   - m_RefCount: 1
     m_Data: {fileID: 1687907003, guid: 2d5b6c3e083e8ee44a4491ab3f9286d1, type: 3}
@@ -154,8 +166,10 @@ Tilemap:
     m_Data: {fileID: 428153971, guid: 858bbf16773b705438b31359d7b1dc37, type: 3}
   - m_RefCount: 1
     m_Data: {fileID: -1891242798, guid: dff9779ec820273468d0f847ad7f37a5, type: 3}
+  - m_RefCount: 1
+    m_Data: {fileID: -2099223465, guid: c31330a66fafaa8499c87fb80748f2fc, type: 3}
   m_TileMatrixArray:
-  - m_RefCount: 7
+  - m_RefCount: 8
     m_Data:
       e00: 1
       e01: 0
@@ -174,13 +188,13 @@ Tilemap:
       e32: 0
       e33: 1
   m_TileColorArray:
-  - m_RefCount: 7
+  - m_RefCount: 8
     m_Data: {r: 1, g: 1, b: 1, a: 1}
   m_TileObjectToInstantiateArray: []
   m_AnimationFrameRate: 1
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Origin: {x: -4, y: -1, z: 0}
-  m_Size: {x: 4, y: 4, z: 1}
+  m_Origin: {x: -7, y: -1, z: 0}
+  m_Size: {x: 7, y: 4, z: 1}
   m_TileAnchor: {x: 0.5, y: 0.5, z: 0}
   m_TileOrientation: 0
   m_TileOrientationMatrix:
@@ -294,7 +308,7 @@ Grid:
   m_CellGap: {x: 0, y: 0, z: 0}
   m_CellLayout: 2
   m_CellSwizzle: 0
---- !u!114 &2874499813591707811
+--- !u!114 &4546819206045866398
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

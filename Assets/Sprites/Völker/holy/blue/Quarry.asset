@@ -10,16 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 13b75c95f34a00d4e8c04f76b73312e6, type: 3}
-  m_Name: CastleBlue
+  m_Name: Quarry
   m_EditorClassIdentifier: 
   m_AnimatedSprites:
-  - {fileID: 17000581, guid: f3eba4f0a5ec95d409fc36caf1b9802f, type: 3}
-  - {fileID: 1207029093, guid: f3eba4f0a5ec95d409fc36caf1b9802f, type: 3}
-  - {fileID: -1778896786, guid: f3eba4f0a5ec95d409fc36caf1b9802f, type: 3}
-  - {fileID: 1156472265, guid: f3eba4f0a5ec95d409fc36caf1b9802f, type: 3}
-  - {fileID: -1634051330, guid: f3eba4f0a5ec95d409fc36caf1b9802f, type: 3}
-  m_MinSpeed: 9
-  m_MaxSpeed: 11
+  - {fileID: -1527862651, guid: 1e62bffccf977af4da2dfea17ba39055, type: 3}
+  - {fileID: 1675972346, guid: 1e62bffccf977af4da2dfea17ba39055, type: 3}
+  - {fileID: -2140025833, guid: 1e62bffccf977af4da2dfea17ba39055, type: 3}
+  - {fileID: 521366104, guid: 1e62bffccf977af4da2dfea17ba39055, type: 3}
+  - {fileID: 791001077, guid: 1e62bffccf977af4da2dfea17ba39055, type: 3}
+  m_MinSpeed: 6
+  m_MaxSpeed: 10
   m_AnimationStartTime: 0
   m_AnimationStartFrame: 0
   m_TileColliderType: 0

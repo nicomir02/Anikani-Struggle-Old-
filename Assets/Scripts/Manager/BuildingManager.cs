@@ -298,7 +298,11 @@ public class BuildingManager : NetworkBehaviour
         List<Vector3Int> list = makeAreaBigger(vec, 1);
         
         foreach(Vector3Int v in list) {
-            if(gameManager.isEnemyArea(v, player.id) || buildingvectors.ContainsKey(new Vector3Int(v.x, v.y, 1)) || mapBehaviour.getBlockDetails(v).Item2.getBuildable() == false) return false;
+            if(hover.insideField(v)) {
+                if(gameManager.isEnemyArea(v, player.id) || buildingvectors.ContainsKey(new Vector3Int(v.x, v.y, 1)) || mapBehaviour.getBlockDetails(v).Item2.getBuildable() == false) return false;
+            }else {
+                return false;
+            }
         }
         return true;
     }
@@ -311,6 +315,42 @@ public class BuildingManager : NetworkBehaviour
 
 //Setzen von Ressourcengebäuden
     public void OnBuildClick(Ressource r, Vector3Int vec) {
+        if(volk.getRessourceBuilding(r, 0) != null) {
+            Building b = volk.getRessourceBuilding(r, 0);
+            List<Vector3Int> nachbarcheck = makeAreaBigger(vec, 1); //wenn building groesser dann andere zahl
+
+            bool gebaeudeSetzbar = true;
+
+            foreach(Vector3Int v in nachbarcheck) {
+                if(buildingvectors.ContainsKey(v) || (hover.insideField(v) && !mapBehaviour.getBlockDetails(v).Item2.getBuildable()) || 
+                buildingvectors.ContainsKey(new Vector3Int(v.x, v.y, 1)) || !hover.insideField(v) || gameManager.isEnemyArea(v, player.id)) gebaeudeSetzbar = false;
+            }
+            if(gebaeudeSetzbar) {
+                int zaehler = deleteFelder(vec, 3, r); //wenn building groesser dann andere zahl
+
+                //Zaehler geht hoch
+                ZaehlerBuildingsBuiltInRound++;
+
+                addFelderToTeam(vec, 4, player.id);//1 groesser als buildinggroesse
+
+                vec.x -= 1;
+                vec.y -= 1;
+
+                //standard Dictionary hinzufügen
+                addBuilding(nachbarcheck, b, vec);
+
+                vec.z = 1;
+                ressourcenProRundeZaehler.Add(vec, (r, zaehler));
+                //Vector3Int vec, int b, int playerID, int volkID, int lvl
+                tilemapManager.CmdUpdateTilemapBuilding(vec, volkManager.getBuildingID(volk, b), player.id, volkManager.getVolkID(volk).Item2, 0);
+
+                b.setTile(tilemap, vec, player.id-1); //später ändern auf generisch, durch Methode vielleicht
+                //synchronisieren für alle Spieler
+                if(showAreaBool) reloadShowArea();
+            }
+        }
+
+        /*
         if(r.ressourceName == "Tree") { //ändern später damit generisch und nicht spezifisch für Tree
             List<Vector3Int> nachbarcheck = makeAreaBigger(vec, 1); //wenn building groesser dann andere zahl
             bool gebaeudeSetzbar = true;
@@ -348,7 +388,7 @@ public class BuildingManager : NetworkBehaviour
                 //synchronisieren für alle Spieler
                 if(showAreaBool) reloadShowArea();
             }
-        }
+        }*/
     }
 
 //Synchronisieren der Felder der einzelnen Spieler

@@ -42,12 +42,12 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 20
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -101,9 +101,168 @@ TextureImporter:
     overridden: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: Woodcutter_red_0
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 15
+        width: 63
+        height: 51
+      alignment: 9
+      pivot: {x: 0.4, y: -0.2}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0266b73546ea2f1499ad2d889f41a8ca
+      internalID: -454462480
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Woodcutter_red_1
+      rect:
+        serializedVersion: 2
+        x: 116
+        y: 15
+        width: 63
+        height: 51
+      alignment: 9
+      pivot: {x: 0.4, y: -0.2}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 636981235188eb148878aa469831d34c
+      internalID: -1145731982
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Woodcutter_red_2
+      rect:
+        serializedVersion: 2
+        x: 212
+        y: 15
+        width: 63
+        height: 51
+      alignment: 9
+      pivot: {x: 0.4, y: -0.2}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d58c67a1319be6a4fb120da7392cf505
+      internalID: -1241164566
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Woodcutter_red_3
+      rect:
+        serializedVersion: 2
+        x: 308
+        y: 15
+        width: 63
+        height: 51
+      alignment: 9
+      pivot: {x: 0.4, y: -0.2}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f954cf57870c7cb48b289c020f259532
+      internalID: 177155227
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Woodcutter_red_4
+      rect:
+        serializedVersion: 2
+        x: 404
+        y: 15
+        width: 63
+        height: 51
+      alignment: 9
+      pivot: {x: 0.4, y: -0.2}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0dbff870b11dfae40a74bde2eab07cb6
+      internalID: -630037683
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Woodcutter_red_5
+      rect:
+        serializedVersion: 2
+        x: 500
+        y: 15
+        width: 63
+        height: 51
+      alignment: 9
+      pivot: {x: 0.4, y: -0.2}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 28f1588321b0fab4ab259e02d55f9091
+      internalID: -2054400137
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Woodcutter_red_6
+      rect:
+        serializedVersion: 2
+        x: 596
+        y: 15
+        width: 63
+        height: 51
+      alignment: 9
+      pivot: {x: 0.4, y: -0.2}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c85bef94285258445b2b5bb573720ba1
+      internalID: -188297056
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -114,7 +273,14 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Woodcutter_red_0: -454462480
+      Woodcutter_red_1: -1145731982
+      Woodcutter_red_2: -1241164566
+      Woodcutter_red_3: 177155227
+      Woodcutter_red_4: -630037683
+      Woodcutter_red_5: -2054400137
+      Woodcutter_red_6: -188297056
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

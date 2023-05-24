@@ -118,7 +118,6 @@ public class Player : NetworkBehaviour
             //if(round == 0 && GetComponent<BuildingManager>().getZahlBuildInRound() == 0) return;
             isYourTurn = false;
             roundButtonText.text = "Wait";
-            buildingManager.selectVector(buildingManager.getSelectedVector());
             onRoundChange();
         }
     }
@@ -145,8 +144,6 @@ public class Player : NetworkBehaviour
             isYourTurn = true;
             roundButtonText.text = "Next Round";
             auffuellen();
-            BuildingManager buildingManager = GetComponent<BuildingManager>();
-            buildingManager.selectVector(buildingManager.getSelectedVector());
         }
         roundText.text = "Turn " + round;
     }

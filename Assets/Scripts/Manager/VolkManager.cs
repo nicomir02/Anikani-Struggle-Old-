@@ -26,6 +26,7 @@ public class VolkManager : MonoBehaviour
         if(v.isHomeBuilding(b)) return 1;
         if(v.isTreeBuilding(b)) return 2;
         if(v.isBarrackBuilding(b)) return 3;
+        if(v.isStoneBuilding(b)) return 4;
         return -1;
     }
 
@@ -37,7 +38,10 @@ public class VolkManager : MonoBehaviour
             return v.getTreeBuilding(lvl);
         }else if(buildingID == 3) {
             return v.getBarrackBuilding(lvl);
+        }else if(buildingID == 4) {
+            return v.getStoneBuilding(lvl);
         }
         return null;
     }
 }
+

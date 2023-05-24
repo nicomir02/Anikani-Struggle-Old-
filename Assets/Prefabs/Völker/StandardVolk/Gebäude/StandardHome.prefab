@@ -50,8 +50,8 @@ MonoBehaviour:
   syncInterval: 0
   buildingTile:
   - {fileID: 11400000, guid: 8738f7753025ffd49ad8ac6a938f0519, type: 2}
-  - {fileID: 11400000, guid: f226e0e38ae27e44181dfd88971501b1, type: 2}
-  health: 600
+  - {fileID: 11400000, guid: 8f957a57ab2a0ee44b5b40f35f592afd, type: 2}
+  health: 300
   buildingname: Main Building
 --- !u!114 &1944866042000035646
 MonoBehaviour:

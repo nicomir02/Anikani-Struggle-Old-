@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Tilemaps;
 using TMPro;
+using UnityEngine.EventSystems;
 
 public class BuildGUIPanel : MonoBehaviour
 {
@@ -11,7 +12,7 @@ public class BuildGUIPanel : MonoBehaviour
     private List<Ressource> ressourcen = new List<Ressource>();
 
     private Vector3Int selectedVector;
-    private int priceWood = 0;
+    private Dictionary<Ressource, (Ressource, int)> priceRessource = new Dictionary<Ressource, (Ressource, int)>();
     private int priceBarracks = 0;
     private int priceArea = 1;
 
@@ -33,32 +34,36 @@ public class BuildGUIPanel : MonoBehaviour
         selectedVector = vec;
 
         int howMany = 0;
-
-        TileBase tile = null;
         Sprite sprite = null;
-
+    
         foreach (Ressource r in ress) {
             howMany = 0;
-            if(r.ressName == "Wood") {
-                ressourcen.Add(r);
-                GameObject.Find("InGame/Canvas/BuildingPanel/Wood").SetActive(true);
-                GameObject.Find("InGame/Canvas/BuildingPanel/Wood/Button").GetComponent<Button>().onClick.AddListener(buyWood);
-                tile = GetComponent<Player>().eigenesVolk.getTreeBuilding(0).getTile(GetComponent<Player>().id-1);
-                sprite = null;
-                if (tile != null && tile is Tile tileComponents)
-                {
-                    sprite = tileComponents.sprite;
-                }
 
-                GameObject.Find("InGame/Canvas/BuildingPanel/Wood/Background/Image").GetComponent<Image>().sprite = sprite; //GetComponent<Player>().eigenesVolk.getTreeBuilding(0).getTile(GetComponent<Player>().id).sprite;
+            if(GameObject.Find("InGame/Canvas/BuildingPanel/"+r.ressName) != null) {
+                ressourcen.Add(r);
+                GameObject.Find("InGame/Canvas/BuildingPanel/"+r.ressName).SetActive(true);
+
+                Building building = GetComponent<Player>().eigenesVolk.getRessourceBuilding(r, 0);
+
+                AnimatedTile animatedtile = (AnimatedTile) building.getTile(GetComponent<Player>().id-1);
+                sprite = animatedtile.m_AnimatedSprites[0];
+
                 
 
-                for(int i=0; i<GetComponent<Player>().eigenesVolk.getBuildings(1); i++) {
-                    howMany += GetComponent<BuildingManager>().howManyBuildings(GetComponent<Player>().eigenesVolk.getTreeBuilding(i));
+                if(!priceRessource.ContainsKey(r)) {
+                    priceRessource.Add(r, (r, 0));
+                }else {
+                    for(int i=0; i<GetComponent<Player>().eigenesVolk.getBuildings(1); i++) {
+                        howMany += GetComponent<BuildingManager>().howManyBuildings(building);
+                    }
+                    priceRessource[r] = (r, 1*howMany);
                 }
 
-                priceWood = howMany*2;
-                GameObject.Find("InGame/Canvas/BuildingPanel/Wood/Text").GetComponent<TextMeshProUGUI>().text = "Woodcutter\n\nPrice: " + priceWood + " Wood";
+                GameObject.Find("InGame/Canvas/BuildingPanel/"+r.ressName+"/Text").GetComponent<TextMeshProUGUI>().text = building.getName() + "\n\nPrice: " + priceRessource[r].Item2 + " "+ priceRessource[r].Item1.ressName;
+
+                GameObject.Find("InGame/Canvas/BuildingPanel/"+r.ressName+"/Background/Image").GetComponent<Image>().sprite = sprite;
+                
+                GameObject.Find("InGame/Canvas/BuildingPanel/"+r.ressName+"/"+r.ressName+"Button").GetComponent<Button>().onClick.AddListener(buy);
             }
         }
 
@@ -68,12 +73,8 @@ public class BuildGUIPanel : MonoBehaviour
             howMany += GetComponent<BuildingManager>().howManyBuildings(GetComponent<Player>().eigenesVolk.getBarrackBuilding(i));
         }
 
-        tile = GetComponent<Player>().eigenesVolk.getBarrackBuilding(0).getTile(GetComponent<Player>().id-1);
-        sprite = null;
-        if (tile != null && tile is Tile tileComponent)
-        {
-            sprite = tileComponent.sprite;
-        }
+        AnimatedTile animated = (AnimatedTile) GetComponent<Player>().eigenesVolk.getBarrackBuilding(0).getTile(GetComponent<Player>().id-1);
+        sprite = animated.m_AnimatedSprites[0];
 
         priceBarracks = howMany*2;
         GameObject.Find("InGame/Canvas/BuildingPanel/Barracks/Text").GetComponent<TextMeshProUGUI>().text = "Barracks\n\nPrice: " + priceBarracks + " Wood";
@@ -87,8 +88,16 @@ public class BuildGUIPanel : MonoBehaviour
         GameObject.Find("InGame/Canvas/BuildingPanel/AreaExtension/Text").GetComponent<TextMeshProUGUI>().text = "Area Extension\n\n4x4\n\nPrice: " + priceArea + " Wood";
     }
 
-    void Update() {
-        
+
+    //Buy Ressource Methode, generisch für alle Ressourcen
+    public void buy() {
+        Ressource ressource = getRessource(EventSystem.current.currentSelectedGameObject.name.Replace("Button", ""));
+
+        if(GetComponent<BuildingManager>().ressourcenZaehlerRechner(priceRessource[ressource].Item1, priceRessource[ressource].Item2)) {
+            GameObject.Find("InGame/Canvas/BuildingPanel/Wood").SetActive(false);
+            GUIoff();
+            GetComponent<BuildingManager>().OnBuildClick(ressource, selectedVector);
+        }
     }
     
     //Area Extension;
@@ -133,20 +142,9 @@ public class BuildGUIPanel : MonoBehaviour
         }
     }
 
-    //Methode Button Click Holz Bau
-    public void buyWood() {
-        Ressource ressource = getRessource("Wood");
-
-        if(GetComponent<BuildingManager>().ressourcenZaehlerRechner(ressource, priceWood)) {
-            GameObject.Find("InGame/Canvas/BuildingPanel/Wood").SetActive(false);
-            GUIoff();
-            GetComponent<BuildingManager>().OnBuildClick(ressource, selectedVector);
-        }
-    }
-
     //Methode um GUI wieder auszumachen
     public void GUIoff() {
-        GameObject.Find("InGame/Canvas/BuildingPanel/Wood/Button").GetComponent<Button>().onClick.RemoveListener(buyWood);
+        
         GameObject.Find("InGame/Canvas/BuildingPanel/Barracks/Button").GetComponent<Button>().onClick.RemoveListener(buyBarracks);
         GameObject.Find("InGame/Canvas/BuildingPanel/AreaExtension/Button").GetComponent<Button>().onClick.RemoveListener(buyAreaExtension);
 
@@ -154,7 +152,12 @@ public class BuildGUIPanel : MonoBehaviour
         guiOn = false;
         GameObject.Find("GameManager").GetComponent<PauseMenu>().togglePauseOff();
 
-        GameObject.Find("InGame/Canvas/BuildingPanel/Wood").SetActive(false);
+
+        //Alle Objects wie inaktiv setzen
+        foreach(Ressource r in ressourcen) {
+            GameObject.Find("InGame/Canvas/BuildingPanel/" + r.ressName).SetActive(false);
+            GameObject.Find("InGame/Canvas/BuildingPanel/" + r.ressName +"/" + r.ressName +"Button").GetComponent<Button>().onClick.RemoveListener(buy);
+        }
         GameObject.Find("InGame/Canvas/BuildingPanel/Barracks").SetActive(false);
 
 

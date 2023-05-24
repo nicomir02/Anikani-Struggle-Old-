@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13b75c95f34a00d4e8c04f76b73312e6, type: 3}
+  m_Name: WoodCutterRed
+  m_EditorClassIdentifier: 
+  m_AnimatedSprites:
+  - {fileID: -454462480, guid: d2cbc4fe0405fb849b69dc53652a46f2, type: 3}
+  - {fileID: -1145731982, guid: d2cbc4fe0405fb849b69dc53652a46f2, type: 3}
+  - {fileID: -1241164566, guid: d2cbc4fe0405fb849b69dc53652a46f2, type: 3}
+  - {fileID: 177155227, guid: d2cbc4fe0405fb849b69dc53652a46f2, type: 3}
+  - {fileID: -630037683, guid: d2cbc4fe0405fb849b69dc53652a46f2, type: 3}
+  - {fileID: -2054400137, guid: d2cbc4fe0405fb849b69dc53652a46f2, type: 3}
+  - {fileID: -188297056, guid: d2cbc4fe0405fb849b69dc53652a46f2, type: 3}
+  m_MinSpeed: 8
+  m_MaxSpeed: 12
+  m_AnimationStartTime: 0
+  m_AnimationStartFrame: 0
+  m_TileColliderType: 0

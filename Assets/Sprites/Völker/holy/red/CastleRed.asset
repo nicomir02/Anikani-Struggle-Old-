@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 13b75c95f34a00d4e8c04f76b73312e6, type: 3}
-  m_Name: CastleBlue
+  m_Name: CastleRed
   m_EditorClassIdentifier: 
   m_AnimatedSprites:
-  - {fileID: 17000581, guid: f3eba4f0a5ec95d409fc36caf1b9802f, type: 3}
-  - {fileID: 1207029093, guid: f3eba4f0a5ec95d409fc36caf1b9802f, type: 3}
-  - {fileID: -1778896786, guid: f3eba4f0a5ec95d409fc36caf1b9802f, type: 3}
-  - {fileID: 1156472265, guid: f3eba4f0a5ec95d409fc36caf1b9802f, type: 3}
-  - {fileID: -1634051330, guid: f3eba4f0a5ec95d409fc36caf1b9802f, type: 3}
+  - {fileID: -808980666, guid: e6c0cb1360f069b41958c50aa81a7ab5, type: 3}
+  - {fileID: 2107846086, guid: e6c0cb1360f069b41958c50aa81a7ab5, type: 3}
+  - {fileID: -2032109407, guid: e6c0cb1360f069b41958c50aa81a7ab5, type: 3}
+  - {fileID: 1174071916, guid: e6c0cb1360f069b41958c50aa81a7ab5, type: 3}
+  - {fileID: 205687859, guid: e6c0cb1360f069b41958c50aa81a7ab5, type: 3}
   m_MinSpeed: 9
   m_MaxSpeed: 11
   m_AnimationStartTime: 0
