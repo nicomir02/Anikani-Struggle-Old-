@@ -199,23 +199,29 @@ public class UnitManager : NetworkBehaviour
                 to.z = 0;
             
                 List<Vector3Int> liste = new Pathfinding(from, to).shortestPath();
-                foreach(Vector3Int p in liste){
-                    Debug.Log("shortestPathListe bei cmdMoveUnit" + p);
-                }
 
-                StartCoroutine(MoveToPosition(us.GetComponent<Transform>(), liste, 0.5f)); //*distance(from, to))
+                StartCoroutine(MoveToPosition(us.GetComponent<Transform>(), liste, 0.5f, from)); //*distance(from, to))
             
                 //us.GetComponent<Transform>().position = Vector3.Lerp(us.GetComponent<Transform>().position, vec3IntToVec3(to), 2f);
             }
         }
     }
 
-    public IEnumerator MoveToPosition(Transform transform, List<Vector3Int> positions, float timeToMove)
+    public IEnumerator MoveToPosition(Transform transform, List<Vector3Int> positions, float timeToMove, Vector3Int from)
     {
-        for(int i=0; i<positions.Count; i++) {
+        for(int i=-1; i<positions.Count-1; i++) {
             float elapsedTime = 0f;
-            Vector3 startingPosition = vec3IntToVec3(positions[i]);
-            Vector3 position = vec3IntToVec3(positions[i+1]);
+            Vector3 startingPosition;
+            Vector3 position;
+            if(i >= 0) {
+                startingPosition = vec3IntToVec3(positions[i]);
+                position = vec3IntToVec3(positions[i+1]);
+            }else {
+                startingPosition = vec3IntToVec3(from);
+                position = vec3IntToVec3(positions[0]);
+            }
+            
+            
 
             while (elapsedTime < timeToMove)
             {
