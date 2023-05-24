@@ -5,7 +5,7 @@ using UnityEngine;
 public class Knoten
 {
     public Vector3Int position;
-    public int G = 0; //weil nur benachbarte Felder, kann man hübscher lösen aber ich lass es der Vollständigkeit halber drin, sonst komm ich durcheinander :)
+    public int G = 0; //abstand zum Start
     public int H = 0; //Manhatten-Distand zum Ziel-Tile (also einfach die geschätzte Distanz)
     public int F;
     public Knoten vorgaenger = null;

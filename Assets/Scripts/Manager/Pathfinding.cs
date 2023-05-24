@@ -15,6 +15,7 @@ public class Pathfinding
     {
         this.start = startTile;
         this.end = zielTile;
+        this.end.z = 2;
     }
 
     public List<Vector3Int> shortestPath()
@@ -28,17 +29,20 @@ public class Pathfinding
         //Startknoten der Liste hinzufügen
         offeneListe.Add(startKnoten);
 
-        //Debug.Log("vorWhileSchleife");
-        //int testzaehler = 0;
+        Debug.Log("vorWhileSchleife");
+        int testzaehler = 0;
 
         while(offeneListe.Count > 0)
         {
-            //testzaehler++;
+            testzaehler++;
             //if(testzaehler > 20) break;
             
             Knoten aktiverKnoten = lowestCost(offeneListe); //neuen aktiven Knoten aus der Liste der Nachbarn suchen
 
-            //Debug.Log(offeneL.Count);
+            Debug.Log("aktiverKnoten: " + aktiverKnoten.position + ", AbstandS: " + aktiverKnoten.G + ", AbstandE: " + aktiverKnoten.H + ", best?: " + aktiverKnoten.F);
+            Debug.Log("endKonten: " + end);
+            Debug.Log(aktiverKnoten.position == end);
+            Debug.Log(offeneListe.Count);
             /*foreach(Knoten p in offeneListe){
                 Debug.Log("offeneListe" + p);
             }*/
@@ -49,6 +53,15 @@ public class Pathfinding
             //wenn der aktive Knoten der ZielKnoten ist -> FERTIG
             if(aktiverKnoten.position == end) {
                 kuerzesterWeg = aktiverKnoten;
+
+                Knoten temp1 = kuerzesterWeg;
+
+                while(temp1.vorgaenger != null) {
+                    path.Add(temp1.position);
+                    temp1 = temp1.vorgaenger;
+                }
+                path.Reverse();
+                return path;
             }
 
             List<Knoten> alleNachbarn = nachbarnFinden(aktiverKnoten, end); //liste mit allen Nachbarn drin zurückgeben, die in Frage kommen
@@ -62,32 +75,23 @@ public class Pathfinding
 
             foreach (Knoten nachbar in alleNachbarn) 
             {
-                if(offeneListe.Contains(nachbar))
-                {
-                    if(aktiverKnoten.F+10 < nachbar.F)
-                    {
-                        nachbar.F = aktiverKnoten.F+10;
-                        nachbar.vorgaenger = aktiverKnoten;
-                    }
+                Debug.Log(nachbar.position + "G= "+nachbar.G + "H= " + nachbar.H + "F= " + nachbar.F);
+                if(geschlosseneListe.Contains(nachbar)) continue;
+
+                if(aktiverKnoten.G+1 < nachbar.G){
+                    nachbar.G = aktiverKnoten.G+1;
+                    nachbar.F = Mathf.Abs(nachbar.position.x - end.x) + Mathf.Abs(nachbar.position.y - end.y) + Mathf.Abs(nachbar.position.z - end.z);
+                    nachbar.vorgaenger = aktiverKnoten;
                 }
-                else if(!geschlosseneListe.Contains(nachbar))
-                {
+                if(!offeneListe.Contains(nachbar)){
                     offeneListe.Add(nachbar);
                 }
             }
 
         }
-        //Debug.Log(testzaehler);
-        
-        Knoten temp1 = kuerzesterWeg;
-
-        while(temp1.vorgaenger != null) {
-            path.Add(temp1.position);
-            temp1 = temp1.vorgaenger;
-        }
-        
+        Debug.Log(testzaehler);   
         //wenn alle felder ausprobiert und kein Ergebnis gefunden -> bescheid sagen dass nicht auf das Feld kommt
-        return path;
+        return null;
     }
 
     Knoten lowestCost(List<Knoten> moegliche) 
@@ -120,22 +124,22 @@ public class Pathfinding
         //prüfen ob man auf dem Feld stehen kann
         if(mapBehaviour.getBlockDetails((knoten.position + new Vector3Int(1,0,0))).Item2.getWalkable())
         {
-            Knoten p = new Knoten(knoten.position + new Vector3Int(1,0,0), end, knoten.F+10, knoten);
+            Knoten p = new Knoten(knoten.position + new Vector3Int(1,0,0), end, knoten.G+1, knoten);
             nachbarn.Add(p); //Nachbarfeld hinzufügen
         }
         if(mapBehaviour.getBlockDetails((knoten.position - new Vector3Int(1,0,0))).Item2.getWalkable()) 
         {
-            Knoten p = new Knoten(knoten.position - new Vector3Int(1,0,0), end, knoten.F+10, knoten);
+            Knoten p = new Knoten(knoten.position - new Vector3Int(1,0,0), end, knoten.G+1, knoten);
             nachbarn.Add(p);
         }
         if(mapBehaviour.getBlockDetails((knoten.position + new Vector3Int(0,1,0))).Item2.getWalkable()) 
         {
-            Knoten p = new Knoten(knoten.position + new Vector3Int(0,1,0), end, knoten.F+10, knoten);
+            Knoten p = new Knoten(knoten.position + new Vector3Int(0,1,0), end, knoten.G+1, knoten);
             nachbarn.Add(p);
         }
         if(mapBehaviour.getBlockDetails((knoten.position - new Vector3Int(0,1,0))).Item2.getWalkable()) 
         {
-            Knoten p = new Knoten((knoten.position - new Vector3Int(0,1,0)), end, knoten.F+10, knoten);
+            Knoten p = new Knoten((knoten.position - new Vector3Int(0,1,0)), end, knoten.G+1, knoten);
             nachbarn.Add(p);
         }
         return nachbarn;
