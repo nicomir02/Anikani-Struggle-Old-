@@ -143,8 +143,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a343ed155bf0f7439f0c213d7e91c7f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  idle:
+  - {fileID: 0}
   moveForwardL:
   - {fileID: -105248864, guid: dff9779ec820273468d0f847ad7f37a5, type: 3}
   - {fileID: -1957171214, guid: dff9779ec820273468d0f847ad7f37a5, type: 3}
   - {fileID: -1891242798, guid: dff9779ec820273468d0f847ad7f37a5, type: 3}
   - {fileID: 1162813207, guid: dff9779ec820273468d0f847ad7f37a5, type: 3}
+  moveBackL:
+  - {fileID: 1551110138, guid: a70d8f358bfd0154f9c14d48fba7e7a9, type: 3}
+  - {fileID: -293762553, guid: a70d8f358bfd0154f9c14d48fba7e7a9, type: 3}
+  - {fileID: 1284026605, guid: a70d8f358bfd0154f9c14d48fba7e7a9, type: 3}
+  - {fileID: 1074840867, guid: a70d8f358bfd0154f9c14d48fba7e7a9, type: 3}
