@@ -45,7 +45,7 @@ public class BuildGUIPanel : MonoBehaviour
 
                 Building building = GetComponent<Player>().eigenesVolk.getRessourceBuilding(r, 0);
 
-                AnimatedTile animatedtile = (AnimatedTile) building.getTile(GetComponent<Player>().id-1);
+                AnimatedTile animatedtile = (AnimatedTile) building.getTile(GameObject.Find("GameManager").GetComponent<RoundManager>().id-1);
                 sprite = animatedtile.m_AnimatedSprites[0];
 
                 
@@ -73,7 +73,7 @@ public class BuildGUIPanel : MonoBehaviour
             howMany += GetComponent<BuildingManager>().howManyBuildings(GetComponent<Player>().eigenesVolk.getBarrackBuilding(i));
         }
 
-        AnimatedTile animated = (AnimatedTile) GetComponent<Player>().eigenesVolk.getBarrackBuilding(0).getTile(GetComponent<Player>().id-1);
+        AnimatedTile animated = (AnimatedTile) GetComponent<Player>().eigenesVolk.getBarrackBuilding(0).getTile(GameObject.Find("GameManager").GetComponent<RoundManager>().id-1);
         sprite = animated.m_AnimatedSprites[0];
 
         priceBarracks = howMany*2;
@@ -107,7 +107,7 @@ public class BuildGUIPanel : MonoBehaviour
            
             BuildingManager buildingManager = GetComponent<BuildingManager>();
 
-            buildingManager.addFelderToTeam(selectedVector, 3, GetComponent<Player>().id); //Felder zum Team hinzufügen
+            buildingManager.addFelderToTeam(selectedVector, 3, GameObject.Find("GameManager").GetComponent<RoundManager>().id); //Felder zum Team hinzufügen
             if (priceArea < 10) priceArea++; //max Preis für Area soll 10 Wood momentan sein
 
             buildingManager.reloadShowArea();
@@ -134,9 +134,9 @@ public class BuildGUIPanel : MonoBehaviour
             buildingManager.buildInRoundZaehlerInkrement();
 
             buildingManager.addBuilding(vectors, GetComponent<Player>().eigenesVolk.getBarrackBuilding(0), selectedVector);
-            tilemapManager.CmdUpdateTilemapBuilding(new Vector3Int(selectedVector.x, selectedVector.y, 1), 3, GetComponent<Player>().id, GameObject.Find("GameManager").GetComponent<VolkManager>().getVolkID(GetComponent<Player>().eigenesVolk).Item2, 0);
+            tilemapManager.CmdUpdateTilemapBuilding(new Vector3Int(selectedVector.x, selectedVector.y, 1), 3, GameObject.Find("GameManager").GetComponent<RoundManager>().id, GameObject.Find("GameManager").GetComponent<VolkManager>().getVolkID(GetComponent<Player>().eigenesVolk).Item2, 0);
 
-            buildingManager.addFelderToTeam(selectedVector, 4, GetComponent<Player>().id);
+            buildingManager.addFelderToTeam(selectedVector, 4, GameObject.Find("GameManager").GetComponent<RoundManager>().id);
 
             GUIoff();
         }

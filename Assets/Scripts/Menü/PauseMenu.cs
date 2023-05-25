@@ -13,8 +13,6 @@ public class PauseMenu : MonoBehaviour
     [SerializeField] private NetworkManager networkManager;
     [SerializeField] private GameObject gameManager;
 
-    private Player player;
-
     bool isPaused = false;
 
     bool canPause = true;

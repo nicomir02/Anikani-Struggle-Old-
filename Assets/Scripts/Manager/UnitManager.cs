@@ -149,7 +149,7 @@ public class UnitManager : NetworkBehaviour
 
     //Movement von einem Spieler
     public void moveUnit(Unit unit, Vector3Int vec){
-        if(!GetComponent<Player>().isYourTurn) return;
+        if(!GameObject.Find("GameManager").GetComponent<RoundManager>().isYourTurn) return;
         vec.z = 2;
         if(distance(selectedVector, vec) <= reichweite[selectedVector] && mapBehaviour.getBlockDetails(new Vector3Int(vec.x, vec.y, 0)).Item2.getWalkable()) {
             if(healthManager.isHealth(vec) && !GetComponent<BuildingManager>().isOwnBuilding(new Vector3Int(vec.x, vec.y, 1))){

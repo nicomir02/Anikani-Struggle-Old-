@@ -26,7 +26,7 @@ public class UnitGUIPanel : MonoBehaviour
         //Melee Unit
         GameObject.Find("InGame/Canvas/UnitPanel/MeleeUnit").SetActive(true);
         Unit meleeUnit = GetComponent<Player>().eigenesVolk.getUnit(0);
-        TileBase tile = meleeUnit.getTile(GetComponent<Player>().id-1);
+        TileBase tile = meleeUnit.getTile(GameObject.Find("GameManager").GetComponent<RoundManager>().id-1);
         Sprite sprite = null;
         if (tile != null && tile is Tile tileComponents)
         {
@@ -38,7 +38,7 @@ public class UnitGUIPanel : MonoBehaviour
 
         //Welche Truppe wird gerade hier trainiert?
         if(howLong.ContainsKey(vec) && trainedUnits.ContainsKey(vec) && trainedUnits[vec] != null) {
-            tile = trainedUnits[vec].getTile(GetComponent<Player>().id-1);
+            tile = trainedUnits[vec].getTile(GameObject.Find("GameManager").GetComponent<RoundManager>().id-1);
             sprite = null;
             if (tile != null && tile is Tile tileComponent)
             {
@@ -75,7 +75,7 @@ public class UnitGUIPanel : MonoBehaviour
             howLong[kvp.Key] -= 1;
             Vector3Int vec = new Vector3Int(kvp.Key.x, kvp.Key.y, 2);
             if(howLong[kvp.Key] <= 0 && !unitManager.hasUnitOnVec(vec)) {
-                unitManager.spawnUnit(kvp.Value, vec, player.id-1);
+                unitManager.spawnUnit(kvp.Value, vec, GameObject.Find("GameManager").GetComponent<RoundManager>().id-1);
                 removeTemp.Add(kvp.Key);
             }
         }

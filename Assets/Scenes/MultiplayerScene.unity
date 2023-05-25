@@ -5428,6 +5428,7 @@ GameObject:
   - component: {fileID: 1223650275}
   - component: {fileID: 1223650276}
   - component: {fileID: 1223650277}
+  - component: {fileID: 1223650278}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -5607,6 +5608,27 @@ MonoBehaviour:
   winLooseCanvasBackground: {fileID: 1693742030}
   winLooseCanvasText: {fileID: 1447660211}
   mainMenu: {fileID: 631800688}
+--- !u!114 &1223650278
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1223650267}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5a4f3af8b70e3e4189c4060b5af0fe1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0
+  eigenesVolk: {fileID: 0}
+  id: 0
+  allids: 0
+  round: 0
+  isYourTurn: 0
+  isLobby: 1
 --- !u!1 &1229184723
 GameObject:
   m_ObjectHideFlags: 0

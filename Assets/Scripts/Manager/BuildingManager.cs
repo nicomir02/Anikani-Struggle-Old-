@@ -99,7 +99,7 @@ public class BuildingManager : NetworkBehaviour
 
 //methode sollte nicht im BUildingManager sein->später ändern
     public void disqualifyPlayer() {
-        player.spielerDisqualifizieren(player.id);                
+        player.spielerDisqualifizieren(GameObject.Find("GameManager").GetComponent<RoundManager>().id);                
 
 
 
@@ -151,14 +151,14 @@ public class BuildingManager : NetworkBehaviour
         }
 
         //Hauptgebäude aufgebaut nach Spielstart(nur einmal)
-        if(Input.GetMouseButtonDown(0) && player.isYourTurn && !player.isLobby) {
+        if(Input.GetMouseButtonDown(0) && GameObject.Find("GameManager").GetComponent<RoundManager>().isYourTurn && !GameObject.Find("GameManager").GetComponent<RoundManager>().isLobby) {
             Vector3Int vec = hover.getVectorFromMouse();
             if(hover.insideField(vec)) {
-                if(player.round == 0 && ZaehlerBuildingsBuiltInRound == 0) {
+                if(GameObject.Find("GameManager").GetComponent<RoundManager>().round == 0 && ZaehlerBuildingsBuiltInRound == 0) {
                     List<Vector3Int> newArea = makeAreaBigger(vec, 1);
                     if(canBuildMethod(vec)) {
                         //Added zu der eigenen Area
-                        addFelderToTeam(vec, 6, player.id);
+                        addFelderToTeam(vec, 6, GameObject.Find("GameManager").GetComponent<RoundManager>().id);
                         //Löschen von Gegenständen im Weg vom Hauptgebäude
                         deleteFelder(vec, 3, null);
                         //x und y Koordinaten anpassen, da Gebäude 3x3 Tiles groß ist und man auf die mittlere Tile drückt
@@ -168,9 +168,9 @@ public class BuildingManager : NetworkBehaviour
                         vec.z = 1; //Gebäude auf z=1 Ebene gesetzt
                         addBuilding(newArea, volk.getHomeBuilding(0), vec);
                         //Setzen/Speichern der Position des Hauptgebäudes für den Spieler
-                        volk.setHomeBuilding(0, player.id-1, tilemap, vec);
+                        volk.setHomeBuilding(0, GameObject.Find("GameManager").GetComponent<RoundManager>().id-1, tilemap, vec);
                         //Synchronisieren mit Gegnern:
-                        tilemapManager.CmdUpdateTilemap(vec, volkManager.getVolkID(volk).Item2, 0, player.id-1);
+                        tilemapManager.CmdUpdateTilemap(vec, volkManager.getVolkID(volk).Item2, 0, GameObject.Find("GameManager").GetComponent<RoundManager>().id-1);
                         //Zaehler geht hoch
                         ZaehlerBuildingsBuiltInRound = maxBuildingPerRound;
                         if((player.name == "Nico" || player.name == "Alex" || player.name == "4n1kan1") && gameManager.getCheatsOn()) maxBuildingPerRound = 1000; //4n1kan1, Nico und Alex dürfen mehr bauen, wenn Cheats aktiviert sind!
@@ -180,7 +180,7 @@ public class BuildingManager : NetworkBehaviour
 
                         ZaehlerBuildingsBuiltInRound = maxBuildingPerRound;
 
-                        unitManager.spawnUnit(volk.getUnit(0),vec,player.id - 1);
+                        unitManager.spawnUnit(volk.getUnit(0),vec,GameObject.Find("GameManager").GetComponent<RoundManager>().id - 1);
 
                         
                     }
@@ -189,7 +189,7 @@ public class BuildingManager : NetworkBehaviour
         }
         //
         //Maus gedrückt und Hauptgebäude schon gesetzt(isLobby = false)
-        if(Input.GetMouseButtonDown(0) && !player.isLobby) {
+        if(Input.GetMouseButtonDown(0) && !GameObject.Find("GameManager").GetComponent<RoundManager>().isLobby) {
             
 
             Vector3Int vec = hover.getVectorFromMouse();
@@ -243,7 +243,7 @@ public class BuildingManager : NetworkBehaviour
             
             tilemap.SetColor(vec, hover.getSelectColor());
 
-            if(ZaehlerBuildingsBuiltInRound < maxBuildingPerRound && !buildingvectors.ContainsKey(new Vector3Int(vec.x, vec.y, 1)) && canBuildMethod(vec) && player.isYourTurn) {
+            if(ZaehlerBuildingsBuiltInRound < maxBuildingPerRound && !buildingvectors.ContainsKey(new Vector3Int(vec.x, vec.y, 1)) && canBuildMethod(vec) && GameObject.Find("GameManager").GetComponent<RoundManager>().isYourTurn) {
                 GameObject.Find("InGame/Canvas/BuildOrBuy").SetActive(true);
                 if(gameManager.hasVec(vec)) {
                     GameObject.Find("InGame/Canvas/BuildOrBuy/Text").GetComponent<TextMeshProUGUI>().text = "Build Building";
@@ -268,7 +268,7 @@ public class BuildingManager : NetworkBehaviour
             List<Ressource> ressourcen = new List<Ressource>();
             Dictionary<Vector3Int, int> teamVectors = gameManager.getDictionary();
 
-            if(ZaehlerBuildingsBuiltInRound >= maxBuildingPerRound || !player.isYourTurn || !teamVectors.ContainsKey(vec) || teamVectors[vec] != player.id) return;
+            if(ZaehlerBuildingsBuiltInRound >= maxBuildingPerRound || !GameObject.Find("GameManager").GetComponent<RoundManager>().isYourTurn || !teamVectors.ContainsKey(vec) || teamVectors[vec] != GameObject.Find("GameManager").GetComponent<RoundManager>().id) return;
             foreach(Vector3Int v in liste) {
                 if(buildingvectors.ContainsKey(new Vector3Int(v.x, v.y, 1))) return;
                 if(mapBehaviour.getBlockDetails(v).Item3 != null) {
@@ -289,7 +289,7 @@ public class BuildingManager : NetworkBehaviour
     bool isMyArea(Vector3Int vec) {
         Dictionary<Vector3Int, int> teamVectors = gameManager.getDictionary();
 
-        return teamVectors.ContainsKey(vec) && teamVectors[vec] == player.id;
+        return teamVectors.ContainsKey(vec) && teamVectors[vec] == GameObject.Find("GameManager").GetComponent<RoundManager>().id;
     }
 
     //Kann man hier bauen? 3x3
@@ -299,7 +299,7 @@ public class BuildingManager : NetworkBehaviour
         
         foreach(Vector3Int v in list) {
             if(hover.insideField(v)) {
-                if(gameManager.isEnemyArea(v, player.id) || buildingvectors.ContainsKey(new Vector3Int(v.x, v.y, 1)) || mapBehaviour.getBlockDetails(v).Item2.getBuildable() == false) return false;
+                if(gameManager.isEnemyArea(v, GameObject.Find("GameManager").GetComponent<RoundManager>().id) || buildingvectors.ContainsKey(new Vector3Int(v.x, v.y, 1)) || mapBehaviour.getBlockDetails(v).Item2.getBuildable() == false) return false;
             }else {
                 return false;
             }
@@ -323,7 +323,7 @@ public class BuildingManager : NetworkBehaviour
 
             foreach(Vector3Int v in nachbarcheck) {
                 if(buildingvectors.ContainsKey(v) || (hover.insideField(v) && !mapBehaviour.getBlockDetails(v).Item2.getBuildable()) || 
-                buildingvectors.ContainsKey(new Vector3Int(v.x, v.y, 1)) || !hover.insideField(v) || gameManager.isEnemyArea(v, player.id)) gebaeudeSetzbar = false;
+                buildingvectors.ContainsKey(new Vector3Int(v.x, v.y, 1)) || !hover.insideField(v) || gameManager.isEnemyArea(v, GameObject.Find("GameManager").GetComponent<RoundManager>().id)) gebaeudeSetzbar = false;
             }
             if(gebaeudeSetzbar) {
                 int zaehler = deleteFelder(vec, 3, r); //wenn building groesser dann andere zahl
@@ -331,7 +331,7 @@ public class BuildingManager : NetworkBehaviour
                 //Zaehler geht hoch
                 ZaehlerBuildingsBuiltInRound++;
 
-                addFelderToTeam(vec, 4, player.id);//1 groesser als buildinggroesse
+                addFelderToTeam(vec, 4, GameObject.Find("GameManager").GetComponent<RoundManager>().id);//1 groesser als buildinggroesse
 
                 vec.x -= 1;
                 vec.y -= 1;
@@ -342,9 +342,9 @@ public class BuildingManager : NetworkBehaviour
                 vec.z = 1;
                 ressourcenProRundeZaehler.Add(vec, (r, zaehler));
                 //Vector3Int vec, int b, int playerID, int volkID, int lvl
-                tilemapManager.CmdUpdateTilemapBuilding(vec, volkManager.getBuildingID(volk, b), player.id, volkManager.getVolkID(volk).Item2, 0);
+                tilemapManager.CmdUpdateTilemapBuilding(vec, volkManager.getBuildingID(volk, b), GameObject.Find("GameManager").GetComponent<RoundManager>().id, volkManager.getVolkID(volk).Item2, 0);
 
-                b.setTile(tilemap, vec, player.id-1); //später ändern auf generisch, durch Methode vielleicht
+                b.setTile(tilemap, vec, GameObject.Find("GameManager").GetComponent<RoundManager>().id-1); //später ändern auf generisch, durch Methode vielleicht
                 //synchronisieren für alle Spieler
                 if(showAreaBool) reloadShowArea();
             }
