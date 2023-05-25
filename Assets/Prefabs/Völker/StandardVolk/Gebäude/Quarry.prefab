@@ -51,6 +51,8 @@ MonoBehaviour:
   buildingTile:
   - {fileID: 11400000, guid: d6fe12f8722ddf64e98004144b12426f, type: 2}
   - {fileID: 11400000, guid: 9e305b032a6029c4a997b65d4bc6c822, type: 2}
+  - {fileID: 11400000, guid: 3dcf62bb25cea7f418411fe60cfbd212, type: 2}
+  - {fileID: 11400000, guid: 87efdd93b42b4b4498b448f0cd782428, type: 2}
   health: 150
   buildingname: Quarry
 --- !u!114 &5825383064513479140

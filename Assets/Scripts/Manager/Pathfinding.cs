@@ -126,24 +126,25 @@ public class Pathfinding
     {
         List<Knoten> nachbarn = new List<Knoten>(); //Liste aller Nachbarn die am ende zurückgegeben wird
         MapBehaviour mapBehaviour = GameObject.Find("GameManager").GetComponent<MapBehaviour>();
+        TilemapHover hover = GameObject.Find("GameManager").GetComponent<TilemapHover>();
 
         //prüfen ob man auf dem Feld stehen kann
-        if(mapBehaviour.getBlockDetails((knoten.position + new Vector3Int(1,0,0))).Item2.getWalkable())
+        if(hover.insideField(knoten.position + new Vector3Int(1,0,0)) && mapBehaviour.getBlockDetails((knoten.position + new Vector3Int(1,0,0))).Item2.getWalkable())
         {
             Knoten p = new Knoten(knoten.position + new Vector3Int(1,0,0), end, knoten.G+1, knoten);
             nachbarn.Add(p); //Nachbarfeld hinzufügen
         }
-        if(mapBehaviour.getBlockDetails((knoten.position - new Vector3Int(1,0,0))).Item2.getWalkable()) 
+        if(hover.insideField(knoten.position - new Vector3Int(1,0,0)) && mapBehaviour.getBlockDetails((knoten.position - new Vector3Int(1,0,0))).Item2.getWalkable()) 
         {
             Knoten p = new Knoten(knoten.position - new Vector3Int(1,0,0), end, knoten.G+1, knoten);
             nachbarn.Add(p);
         }
-        if(mapBehaviour.getBlockDetails((knoten.position + new Vector3Int(0,1,0))).Item2.getWalkable()) 
+        if(hover.insideField(knoten.position + new Vector3Int(0,1,0)) && mapBehaviour.getBlockDetails((knoten.position + new Vector3Int(0,1,0))).Item2.getWalkable()) 
         {
             Knoten p = new Knoten(knoten.position + new Vector3Int(0,1,0), end, knoten.G+1, knoten);
             nachbarn.Add(p);
         }
-        if(mapBehaviour.getBlockDetails((knoten.position - new Vector3Int(0,1,0))).Item2.getWalkable()) 
+        if(hover.insideField(knoten.position - new Vector3Int(0,1,0)) && mapBehaviour.getBlockDetails((knoten.position - new Vector3Int(0,1,0))).Item2.getWalkable()) 
         {
             Knoten p = new Knoten((knoten.position - new Vector3Int(0,1,0)), end, knoten.G+1, knoten);
             nachbarn.Add(p);

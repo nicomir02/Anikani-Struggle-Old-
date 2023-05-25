@@ -159,18 +159,21 @@ public class UnitManager : NetworkBehaviour
             }
             if(spawnedUnits.ContainsKey(vec)) return;
             //unit.setTile(tilemap,vec,player.id -1);
-            //tilemapManager.CmdUpdateTilemapUnit(vec,volkManager.getVolkID(volk).Item2,volk.getUnitID(unit),player.id -1);
+
+            List<Vector3Int> liste = new Pathfinding(selectedVector, vec).shortestPath(); //Berechnung des shortest Path
+            if(liste == null) return; //Wenn der shortest Path größer ist als die Reichweite return
+
             spawnedUnits.Remove(selectedVector);    //diese beiden Zeilen damit die Dictionary sich mit der neuen position updated
             spawnedUnits.Add(vec, unit);
             
             int r = reichweite[selectedVector];
             reichweite.Remove(selectedVector);
-            reichweite.Add(vec, r-distance(selectedVector, vec));
+            reichweite.Add(vec, r-liste.Count);
             
             healthManager.moveUnit(selectedVector, vec);
             syncMovedUnits(selectedVector);
 
-            cmdMoveUnit(selectedVector, vec);
+            cmdMoveUnit(selectedVector, vec, liste);
         }
     }
 
@@ -188,21 +191,16 @@ public class UnitManager : NetworkBehaviour
 
     //Für Sprite movement
     [Command(requiresAuthority = false)]
-    public void cmdMoveUnit(Vector3Int from, Vector3Int to) {
+    public void cmdMoveUnit(Vector3Int from, Vector3Int to, List<Vector3Int> shortestPath) {
         from.z = 2;
         UnitSprite[] unitSprites = FindObjectsOfType<UnitSprite>();
         foreach(UnitSprite us in unitSprites) {
             if(us.vec == from) {
                 to.z = 2;
                 us.vec = to;
-
                 to.z = 0;
-            
-                List<Vector3Int> liste = new Pathfinding(from, to).shortestPath();
 
-                StartCoroutine(MoveToPosition(us.GetComponent<Transform>(), liste, 0.5f, from)); //*distance(from, to))
-            
-                //us.GetComponent<Transform>().position = Vector3.Lerp(us.GetComponent<Transform>().position, vec3IntToVec3(to), 2f);
+                StartCoroutine(MoveToPosition(us.GetComponent<Transform>(), shortestPath, 0.5f, from));
             }
         }
     }

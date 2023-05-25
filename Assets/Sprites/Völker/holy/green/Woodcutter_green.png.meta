@@ -33,7 +33,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -42,12 +42,12 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 20
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -101,9 +101,168 @@ TextureImporter:
     overridden: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: Woodcutter_green_0
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 15
+        width: 63
+        height: 51
+      alignment: 9
+      pivot: {x: 0.4, y: -0.2}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5898834d379cb524aa627038b98996ac
+      internalID: 1261674043
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Woodcutter_green_1
+      rect:
+        serializedVersion: 2
+        x: 116
+        y: 15
+        width: 63
+        height: 51
+      alignment: 9
+      pivot: {x: 0.4, y: -0.2}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 53efff86c95bcad43b55e7754e84cf89
+      internalID: 374778710
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Woodcutter_green_2
+      rect:
+        serializedVersion: 2
+        x: 212
+        y: 15
+        width: 63
+        height: 51
+      alignment: 9
+      pivot: {x: 0.4, y: -0.2}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8796cb55dd4f36748911b5040f40060d
+      internalID: 998053685
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Woodcutter_green_3
+      rect:
+        serializedVersion: 2
+        x: 308
+        y: 15
+        width: 63
+        height: 51
+      alignment: 9
+      pivot: {x: 0.4, y: -0.2}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 53fa25ddafa02c847b0a2d652124ff4c
+      internalID: -162537206
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Woodcutter_green_4
+      rect:
+        serializedVersion: 2
+        x: 404
+        y: 15
+        width: 63
+        height: 51
+      alignment: 9
+      pivot: {x: 0.4, y: -0.2}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b15d49bd252d80b45b9da164615c22a2
+      internalID: 557182842
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Woodcutter_green_5
+      rect:
+        serializedVersion: 2
+        x: 500
+        y: 15
+        width: 63
+        height: 51
+      alignment: 9
+      pivot: {x: 0.4, y: -0.2}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e869bc2f79baa864399149368c5c9139
+      internalID: -131111186
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Woodcutter_green_6
+      rect:
+        serializedVersion: 2
+        x: 596
+        y: 15
+        width: 63
+        height: 51
+      alignment: 9
+      pivot: {x: 0.4, y: -0.2}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fb3c87e0276c4464a957b2a63e12d683
+      internalID: 2062066440
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -114,7 +273,14 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Woodcutter_green_0: 1261674043
+      Woodcutter_green_1: 374778710
+      Woodcutter_green_2: 998053685
+      Woodcutter_green_3: -162537206
+      Woodcutter_green_4: 557182842
+      Woodcutter_green_5: -131111186
+      Woodcutter_green_6: 2062066440
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

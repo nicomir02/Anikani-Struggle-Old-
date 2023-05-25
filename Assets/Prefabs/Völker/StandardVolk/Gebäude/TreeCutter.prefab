@@ -51,6 +51,8 @@ MonoBehaviour:
   buildingTile:
   - {fileID: 11400000, guid: e8a1e4c0a0187694d95969b12c516e6c, type: 2}
   - {fileID: 11400000, guid: ef0cfe159df8a064bae04baf131df04d, type: 2}
+  - {fileID: 11400000, guid: 9b67b5b0b76565149a6282976fe790ba, type: 2}
+  - {fileID: 11400000, guid: fad2c2e7bb16c6943bc5033e6e4665c2, type: 2}
   health: 150
   buildingname: Tree Cutter
 --- !u!114 &5825383064513479140

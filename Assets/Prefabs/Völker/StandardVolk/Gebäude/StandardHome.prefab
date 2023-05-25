@@ -51,6 +51,8 @@ MonoBehaviour:
   buildingTile:
   - {fileID: 11400000, guid: 8738f7753025ffd49ad8ac6a938f0519, type: 2}
   - {fileID: 11400000, guid: 8f957a57ab2a0ee44b5b40f35f592afd, type: 2}
+  - {fileID: 11400000, guid: 413d2c6b2ccd36e4f9d9c79c650f55f1, type: 2}
+  - {fileID: 11400000, guid: 11e445b0f9db86648a943e01fef149c9, type: 2}
   health: 300
   buildingname: Main Building
 --- !u!114 &1944866042000035646

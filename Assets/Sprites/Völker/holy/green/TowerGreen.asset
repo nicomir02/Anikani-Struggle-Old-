@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13b75c95f34a00d4e8c04f76b73312e6, type: 3}
+  m_Name: TowerGreen
+  m_EditorClassIdentifier: 
+  m_AnimatedSprites:
+  - {fileID: 831885958, guid: 1ed28bfe9d04b7945a8ac39c921546a8, type: 3}
+  - {fileID: 264718784, guid: 1ed28bfe9d04b7945a8ac39c921546a8, type: 3}
+  - {fileID: 898468164, guid: 1ed28bfe9d04b7945a8ac39c921546a8, type: 3}
+  - {fileID: 125675131, guid: 1ed28bfe9d04b7945a8ac39c921546a8, type: 3}
+  - {fileID: 1922063155, guid: 1ed28bfe9d04b7945a8ac39c921546a8, type: 3}
+  - {fileID: 125675131, guid: 1ed28bfe9d04b7945a8ac39c921546a8, type: 3}
+  - {fileID: 898468164, guid: 1ed28bfe9d04b7945a8ac39c921546a8, type: 3}
+  - {fileID: 264718784, guid: 1ed28bfe9d04b7945a8ac39c921546a8, type: 3}
+  m_MinSpeed: 8
+  m_MaxSpeed: 12
+  m_AnimationStartTime: 0
+  m_AnimationStartFrame: 0
+  m_TileColliderType: 0

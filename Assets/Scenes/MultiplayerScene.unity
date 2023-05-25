@@ -5554,8 +5554,10 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   spielFarben:
-  - {r: 0.06691784, g: 0.1663073, b: 0.9528302, a: 1}
-  - {r: 0.764151, g: 0.13296548, b: 0.13296548, a: 1}
+  - {r: 0.48531505, g: 0.5307699, b: 0.8962264, a: 1}
+  - {r: 0.7830189, g: 0.4757209, b: 0.4757209, a: 1}
+  - {r: 0.34497866, g: 0.6792453, b: 0.30373797, a: 1}
+  - {r: 0.6367683, g: 0.2890708, b: 0.6603774, a: 1}
 --- !u!114 &1223650275
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8387,7 +8389,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   panSpeed: 100
   zoomSpeed: 5
-  minZoom: 5
+  minZoom: 2
   maxZoom: 20
 --- !u!1 &1806231425
 GameObject:
