@@ -285,7 +285,7 @@ public class UnitManager : NetworkBehaviour
             sprite = tileComponents.sprite;
         }
         
-        SpriteRenderer spriteRenderer = gameObject.AddComponent<SpriteRenderer>(); 
+        SpriteRenderer spriteRenderer = gameObject.GetComponent<SpriteRenderer>(); 
         spriteRenderer.sprite = sprite;
 
 
