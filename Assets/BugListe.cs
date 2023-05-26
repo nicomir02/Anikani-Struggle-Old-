@@ -5,6 +5,7 @@
     //Beim ausscheiden von einem Spieler werden Units nicht despawned
     //letzter verbleibender Spieler bekommt nicht Win Screen angezeigt
     //man soll sich nicht auf felder stellen können wo Bäume drauf sind oder stein
+    //eventuell durch den neuen canvas/HUD von Mirror sind die Einheiten beider spieler beim Test blau gewesen(keine zeit mehr heute das anzuschauen)
 
 //Mittlere Priorität
 
