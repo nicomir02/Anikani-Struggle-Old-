@@ -28,10 +28,11 @@ public class Player : NetworkBehaviour
     //Methode aufruf wenn ein hauptgebäude zerstört wird, checked ob mehr als 1 noch drin sind 
     [Command(requiresAuthority = false)]
     public void spielerDisqualifizieren(int id) {
-        if(GameObject.Find("GameManager").GetComponent<RoundManager>().currentTurn == GameObject.Find("GameManager").GetComponent<RoundManager>().id) GameObject.Find("GameManager").GetComponent<RoundManager>().onRoundChange();
+        if(GameObject.Find("GameManager").GetComponent<RoundManager>().currentTurn == id) GameObject.Find("GameManager").GetComponent<RoundManager>().onRoundChange();
         
         GameManager gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
-        gameManager.spielerDisqualifizieren(GameObject.Find("GameManager").GetComponent<RoundManager>().id);
+        gameManager.spielerDisqualifizieren(id);
+
         int temp = 0;
         for(int i=1; i<=GameObject.Find("GameManager").GetComponent<RoundManager>().allids; i++) {
             if(gameManager.isDisqualified(i)) temp++;
@@ -39,7 +40,15 @@ public class Player : NetworkBehaviour
         if(temp+1 >= GameObject.Find("GameManager").GetComponent<RoundManager>().allids) {
             GameObject.Find("GameManager").GetComponent<RoundManager>().lastPlayerWinScreen();
         }
+        
+        UnitSprite[] units = FindObjectsOfType<UnitSprite>();
+
+        foreach(UnitSprite u in units) {
+            if(u.id == id) NetworkServer.Destroy(u.gameObject);
+        }
     }
+
+
 
     void Start() {
 

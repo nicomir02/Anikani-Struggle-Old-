@@ -6,4 +6,5 @@ using Mirror;
 public class UnitSprite : NetworkBehaviour
 {
     public Vector3Int vec;
+    public int id;
 }

@@ -31,6 +31,7 @@ public class RoundManager : NetworkBehaviour
     [ClientRpc]
     public void lastPlayerWinScreen() {
         if(isYourTurn) GameObject.Find("GameManager").GetComponent<WinLooseScreen>().setWinScreen();
+        if(GameObject.Find("GameManager").GetComponent<GameManager>().isDisqualified(id)) GameObject.Find("GameManager").GetComponent<WinLooseScreen>().setLooseScreen();
     }
 
     public bool isDisqualified(int id) {

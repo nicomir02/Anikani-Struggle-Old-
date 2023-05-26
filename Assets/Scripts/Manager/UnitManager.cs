@@ -60,6 +60,7 @@ public class UnitManager : NetworkBehaviour
             healthManager.removeUnit(kvp.Key);
             tilemapManager.removeUnit(kvp.Key);
         }
+        deleteAllUnits();
         spawnedUnits = new Dictionary<Vector3Int, Unit>();
         reichweite = new Dictionary<Vector3Int, int>();
     }
@@ -262,6 +263,9 @@ public class UnitManager : NetworkBehaviour
         UnitSprite unitSprite = spriteObject.GetComponent<UnitSprite>();
         unitSprite.vec = vec;
         vec.z = 0;
+
+        unitSprite.id = colorID+1;
+
         Vector3 position = tilemap.CellToWorld(vec);
         position.z += 5f;
         spriteObject.transform.position = position;
