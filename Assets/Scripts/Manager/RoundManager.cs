@@ -27,6 +27,8 @@ public class RoundManager : NetworkBehaviour
     //public string name = "Player";    //Spielername; später bei der Lobby einstellbar für das Spiel(Cheats damit verbunden?)
     public bool isLobby = true;
 
+    public readonly SyncList<int> reihenfolge = new SyncList<int>(); //Für veränderte Reihenfolge
+
     //Methode um letzten Spieler zu ermitteln
     [ClientRpc]
     public void lastPlayerWinScreen() {
@@ -40,7 +42,7 @@ public class RoundManager : NetworkBehaviour
 
     //Initialisieren beim Start und hinzufügen von ID
     public override void OnStartClient() {        
-        id = allids+1;
+        id = -1;
         addID();
     }
 
@@ -57,6 +59,7 @@ public class RoundManager : NetworkBehaviour
         allids = aid;
     }
 
+
     
     void Update() {
         if(GameObject.Find("InGame/Canvas/Runde") != null && isLobby) { //schaut ob Spiel anegfangen hat
@@ -69,13 +72,6 @@ public class RoundManager : NetworkBehaviour
             roundText = GameObject.Find("InGame/Canvas/Leiste/RundenText").GetComponent<TextMeshProUGUI>();
             isLobby = false;
             roundButton.onClick.AddListener(OnClick);
-            //Änderungen auf dem Button, für nächste Runde, je nachdem ob du dran bist
-            if(id == 1) {
-                isYourTurn = true;
-                roundButtonText.text = "Next Round";
-            }else {
-                roundButtonText.text = "Wait";
-            }
         }
 
         
@@ -102,19 +98,70 @@ public class RoundManager : NetworkBehaviour
         }
     }
 
+    //Damit es veränderte Reihenfolge gibt
+    [Command(requiresAuthority = false)]
+    public void onStartGame() {
+        List<int> temp = new List<int>();
+        GameManager gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        for(int i=1; i<allids; i++) {
+            if(!gameManager.isDisqualified(i)) reihenfolge.Add(i);
+        }
+
+        /*System.Random rand = new System.Random();
+
+        /*
+        while(temp.Count > 0 && reihenfolge.Count < allids) {
+            int a = rand.Next(0, temp.Count);
+            if(reihenfolge.Contains(temp[a])) continue;
+            Debug.Log(temp[a] + " - " + temp.Count);
+            reihenfolge.Add(temp[a]);
+            temp.Remove(temp[a]);
+        }
+        */
+
+        /*
+        for(int i=0; i<temp.Count;i++) {
+            int a = rand.Next(temp.Count);
+            while(reihenfolge[a] != null) {
+                a = rand.Next(temp.Count);
+            }
+            reihenfolge[a] = temp[i];
+        }*/
+
+        currentTurn = 0;
+
+        startGameRPC();
+    }
+
+    [ClientRpc]
+    public void startGameRPC() {
+        if(reihenfolge[0] == id) {
+            isYourTurn = true;
+            roundButtonText.text = "Next Round";
+        }else {
+            roundButtonText.text = "Wait";
+        }
+    }
+
     //Rundenveränderung auf dem Server
     [Command(requiresAuthority = false)]
     public void onRoundChange() {
-        currentTurn++;
-        while(isDisqualified(currentTurn)) { //damit rausgeschmissene Spieler nicht den Spielfluss beeinflussen, da deren ID sonst eventuell aufgerufen wird
-            currentTurn++;
-        }
-
-        if(currentTurn > network.numPlayers) { //Sollte es größer sein, ist erster Spieler wieder dran
-            currentTurn = 1;
+        currentTurn += 1;
+        int turn = -1;
+        if(currentTurn > reihenfolge.Count-1) { //Sollte es größer sein, ist erster Spieler wieder dran
+            currentTurn = 0;
+            turn = reihenfolge[currentTurn];
             round += 1;
+        }else {
+            turn = reihenfolge[currentTurn];
+            while(isDisqualified(turn)) {
+                turn = reihenfolge[currentTurn++];
+                if(currentTurn > reihenfolge.Count-1) {
+                    currentTurn = 0;
+                }
+            }
         }
-        RpconRoundChange(currentTurn);
+        RpconRoundChange(turn);
     }
 
     //Rundenveränderung auf dem Client

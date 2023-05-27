@@ -4,6 +4,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using Mirror;
+using UnityEngine.EventSystems;
 
 public class LobbyManager : NetworkBehaviour
 {
@@ -12,6 +13,7 @@ public class LobbyManager : NetworkBehaviour
     [SerializeField] private NetworkManagerAnikani network;
     [SerializeField] private Button readyButton;
     [SerializeField] private TextMeshProUGUI readyButtonText;
+    [SerializeField] private RoundManager roundManager;
 
     [SerializeField] private Volk volk;
 
@@ -19,6 +21,10 @@ public class LobbyManager : NetworkBehaviour
 
     [SerializeField] private MapBehaviour mapBehaviour;
     [SerializeField] private GameObject gameManager;
+
+    [SerializeField] private Button[] buttons;
+
+    private bool ausgewaehlt = false;
 
     //Instanzvariablen
 
@@ -41,10 +47,50 @@ public class LobbyManager : NetworkBehaviour
 
     public void Start() {
         readyButton.onClick.AddListener(OnReadyClick);
+
+        foreach(Button b in buttons) {
+            b.onClick.AddListener(farbewaehlen);
+        }
+    }
+
+
+    //Button Click um eigene Farbe zu wählen
+    public void farbewaehlen() {
+        //Debug.Log(.name);
+        if(ausgewaehlt) return;
+        GameObject buttonGameObject = EventSystem.current.currentSelectedGameObject;
+        TextMeshProUGUI textMesh = buttonGameObject.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>();
+
+        if(!textMesh.text.Contains("-")) {
+            int i = 0;
+            foreach(Button b in buttons) {
+                if(b.gameObject == buttonGameObject) break;
+                i++;
+            }
+
+            string playername = "Player";//Später Spielername draufschreiben
+
+            textMesh.text = buttonGameObject.name + " - " +playername; 
+            ausgewaehlt = true;
+            roundManager.id = i+1;
+            CMDfarbewaehlen(i, playername);
+        }
+    }
+
+    [Command(requiresAuthority=false)]
+    public void CMDfarbewaehlen(int i, string playername) {
+        buttons[i].gameObject.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text = buttons[i].name + " - " + playername;
+        RPCfarbewaehlen(i, playername);
+    }
+
+    [ClientRpc]
+    public void RPCfarbewaehlen(int i, string playername) {
+        buttons[i].gameObject.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text = buttons[i].name + " - " + playername;
     }
 
 //Klicken auf Ready Button setzt ready Variable auf true
     public void OnReadyClick() {
+        if(!ausgewaehlt) return;
         gameManager.SetActive(true);
         if(gameManager.GetComponent<PauseMenu>().getPause()) return;
         if(ready) {
@@ -70,6 +116,13 @@ public class LobbyManager : NetworkBehaviour
         }
         //Prüfung ob Spiel starten kann
         if(network.numPlayers >= minPlayers && AllPlayerready == network.numPlayers) {
+            int i = 0;
+            roundManager.allids = 4;
+            foreach(Button b in buttons) {
+                if(!b.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text.Contains("-")) gameManager.GetComponent<GameManager>().spielerDisqualifizieren(i+1);
+                i++;
+            }
+
             mapBehaviour.createTerrain();
             onStartGame();
         }
@@ -81,6 +134,7 @@ public class LobbyManager : NetworkBehaviour
         lobbyObjects.SetActive(false);
         ingameObjects.SetActive(true);
         mapBehaviour.buildTerrain();
+        roundManager.onStartGame();
     }
 
 }
