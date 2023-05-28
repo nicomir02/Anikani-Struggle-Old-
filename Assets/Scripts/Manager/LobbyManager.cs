@@ -43,7 +43,50 @@ public class LobbyManager : NetworkBehaviour
         lobbyObjects.SetActive(true);
 
         gameManager.SetActive(true);
+        startClient();
     }
+
+
+    //Wenn Spieler disconnected muss er wieder ausgetragen werden, sollte lobby noch aktiv sein
+    /*
+    public void OnServerDisconnect() {
+        
+    }
+
+    [Command(requiresAuthority=false)]
+    public void stopClient(int id) {
+        if(id < 0) return; 
+        RpcstopClient(id);
+    }
+
+    [ClientRpc]
+    public void RpcstopClient(int id) {
+        buttons[id].transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text = buttons[id].name;
+    }
+    */
+
+    //Beim starten von Clients müssen die Buttons den richtigen Schriftzug haben
+    //Wird gespeichert und an ClientRpc changeButtons übergeben
+    [Command(requiresAuthority=false)]
+    public void startClient() {
+        List<string> texte = new List<string>();
+        foreach(Button b in buttons) {
+            texte.Add(b.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text);
+        }
+
+        changeButtons(texte);
+    }
+
+    
+
+    //Buttons werden aktualisiert auf den Clients
+    [ClientRpc]
+    public void changeButtons(List<string> texte) {
+        for(int i=0; i<texte.Count; i++) {
+            buttons[i].transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text = texte[i];
+        }
+    }
+
 
     public void Start() {
         readyButton.onClick.AddListener(OnReadyClick);
@@ -77,12 +120,14 @@ public class LobbyManager : NetworkBehaviour
         }
     }
 
+    //Farbe wählen auf Server
     [Command(requiresAuthority=false)]
     public void CMDfarbewaehlen(int i, string playername) {
         buttons[i].gameObject.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text = buttons[i].name + " - " + playername;
         RPCfarbewaehlen(i, playername);
     }
 
+    //Farbe wählen Übertragung auf Client
     [ClientRpc]
     public void RPCfarbewaehlen(int i, string playername) {
         buttons[i].gameObject.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text = buttons[i].name + " - " + playername;
