@@ -11,7 +11,7 @@ public class RoundManager : NetworkBehaviour
 
     //Deklarieren von benötigten Klassen
     [SerializeField] public Volk eigenesVolk;
-    private NetworkManagerAnikani network;
+    [SerializeField] private NetworkManagerAnikani network;
     //Deklarieren von GameObjekten
     private GameObject lobbyObjects;
     
@@ -20,9 +20,9 @@ public class RoundManager : NetworkBehaviour
     [SyncVar] public int currentTurn = 1;  //Angabe welche ID gerade am Turn ist
     [SyncVar] public int allids = 0;    //Zählen von Anzahl an Gesamtid's
     [SyncVar] public int round = 0;     //Zählen der Rundenzahl
-    private Button roundButton;     //Knopf für Runde beenden
-    private TextMeshProUGUI roundButtonText;    //Knopf zeigt an ob man gerade dran ist oder man warten muss
-    private TextMeshProUGUI roundText;  //Text oben in der Leiste, welcher die Rundenanzahl angibt
+    [SerializeField] private Button roundButton;     //Knopf für Runde beenden
+    [SerializeField] private TextMeshProUGUI roundButtonText;    //Knopf zeigt an ob man gerade dran ist oder man warten muss
+    [SerializeField] private TextMeshProUGUI roundText;  //Text oben in der Leiste, welcher die Rundenanzahl angibt
     public bool isYourTurn = false;     //sagt ob dieser Spieler gerade am Turn ist
     //public string name = "Player";    //Spielername; später bei der Lobby einstellbar für das Spiel(Cheats damit verbunden?)
     public bool isLobby = true;
@@ -64,12 +64,6 @@ public class RoundManager : NetworkBehaviour
     void Update() {
         if(GameObject.Find("InGame/Canvas/Runde") != null && isLobby) { //schaut ob Spiel anegfangen hat
             //Initialisieren von GameObjects die vorher nicht geladen werden konnten
-            
-
-            network = GameObject.Find("NetworkManager").GetComponent<NetworkManagerAnikani>();
-            roundButton = GameObject.Find("InGame/Canvas/Runde").GetComponent<Button>();
-            roundButtonText = GameObject.Find("InGame/Canvas/Runde/RundeText").GetComponent<TextMeshProUGUI>();
-            roundText = GameObject.Find("InGame/Canvas/Leiste/RundenText").GetComponent<TextMeshProUGUI>();
             isLobby = false;
             roundButton.onClick.AddListener(OnClick);
         }
@@ -101,32 +95,36 @@ public class RoundManager : NetworkBehaviour
     //Damit es veränderte Reihenfolge gibt
     [Command(requiresAuthority = false)]
     public void onStartGame() {
-        List<int> temp = new List<int>();
         GameManager gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
-        for(int i=1; i<allids; i++) {
-            if(!gameManager.isDisqualified(i)) reihenfolge.Add(i);
-        }
-
-        /*System.Random rand = new System.Random();
-
-        /*
-        while(temp.Count > 0 && reihenfolge.Count < allids) {
-            int a = rand.Next(0, temp.Count);
-            if(reihenfolge.Contains(temp[a])) continue;
-            Debug.Log(temp[a] + " - " + temp.Count);
-            reihenfolge.Add(temp[a]);
-            temp.Remove(temp[a]);
-        }
-        */
-
-        /*
-        for(int i=0; i<temp.Count;i++) {
-            int a = rand.Next(temp.Count);
-            while(reihenfolge[a] != null) {
-                a = rand.Next(temp.Count);
+        if(allids == 1) { //Nur für Testzwecke 1 Spieler erlaubt
+            for(int i=1; i<allids; i++) {
+                if(!gameManager.isDisqualified(i)) { 
+                    reihenfolge.Add(i);
+                }
             }
-            reihenfolge[a] = temp[i];
-        }*/
+        }else {
+            if(reihenfolge.Count == 0) {
+                List<int> temp = new List<int>();
+                for(int i=1; i<=allids; i++) {
+                    if(!gameManager.isDisqualified(i)) { 
+                        temp.Add(i);
+                        reihenfolge.Add(-1);
+                    }
+                }
+
+                Debug.Log(temp.Count);
+
+                System.Random rand = new System.Random();
+
+                for(int i = 0; i<reihenfolge.Count; i++) {
+                    int rndm = rand.Next(temp.Count);
+                    Debug.Log(rndm);
+                    int rndmtemp = temp[rndm];
+                    reihenfolge[i] = rndmtemp;
+                    temp.Remove(rndmtemp);
+                }
+            }
+        }
 
         currentTurn = 0;
 

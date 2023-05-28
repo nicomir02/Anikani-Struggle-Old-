@@ -6986,10 +6986,14 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0
   eigenesVolk: {fileID: 0}
+  network: {fileID: 402433579}
   id: 0
   currentTurn: 1
   allids: 0
   round: 0
+  roundButton: {fileID: 1368692171}
+  roundButtonText: {fileID: 1008200250}
+  roundText: {fileID: 738608917}
   isYourTurn: 0
   isLobby: 1
 --- !u!1 &1229184723
