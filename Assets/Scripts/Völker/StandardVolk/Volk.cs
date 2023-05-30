@@ -7,6 +7,7 @@ using UnityEngine.Tilemaps;
 public class Volk : NetworkBehaviour
 {
       [SerializeField] List<Unit> units = new List<Unit>();
+
       [SerializeField] List<Building> homeBuildings = new List<Building>();
 
       [SerializeField] List<Building> treeBuildings = new List<Building>();
@@ -15,6 +16,13 @@ public class Volk : NetworkBehaviour
 
       [SerializeField] List<Building> stoneBuildings = new List<Building>();
 
+      [TextArea(5,10)]
+      [SerializeField] string description = "";
+
+      
+      public string getDescription() {
+         return description;
+      }
 
       public Building getBarrackBuilding(int buildingid) {
          return barrackBuildings[buildingid];

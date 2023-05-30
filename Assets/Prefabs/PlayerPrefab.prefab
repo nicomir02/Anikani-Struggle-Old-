@@ -69,13 +69,10 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0
-  eigenesVolk: {fileID: -4278761242970012570, guid: 1218b7d4a304a684e9186923e013efcf, type: 3}
+  eigenesVolk: {fileID: 0}
   infobox: {fileID: 0}
   infoboxBuilding: {fileID: 0}
   id: 0
-  allids: 0
-  round: 0
-  isYourTurn: 0
   isLobby: 1
 --- !u!114 &-8107069390763935139
 MonoBehaviour:

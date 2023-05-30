@@ -65,6 +65,7 @@ public class RoundManager : NetworkBehaviour
         if(GameObject.Find("InGame/Canvas/Runde") != null && isLobby) { //schaut ob Spiel anegfangen hat
             //Initialisieren von GameObjects die vorher nicht geladen werden konnten
             isLobby = false;
+            eigenesVolk = GameObject.Find("LobbyManager").GetComponent<LobbyManager>().volk;
             roundButton.onClick.AddListener(OnClick);
         }
 
@@ -112,13 +113,10 @@ public class RoundManager : NetworkBehaviour
                     }
                 }
 
-                Debug.Log(temp.Count);
-
                 System.Random rand = new System.Random();
 
                 for(int i = 0; i<reihenfolge.Count; i++) {
                     int rndm = rand.Next(temp.Count);
-                    Debug.Log(rndm);
                     int rndmtemp = temp[rndm];
                     reihenfolge[i] = rndmtemp;
                     temp.Remove(rndmtemp);

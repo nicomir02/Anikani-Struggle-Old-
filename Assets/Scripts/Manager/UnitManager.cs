@@ -32,6 +32,8 @@ public class UnitManager : NetworkBehaviour
     private Unit selectedUnit;
     private Vector3Int selectedVector;
 
+    private bool isLobby = true;
+
     [SerializeField] GameObject spritePrefab;
     
     
@@ -75,6 +77,11 @@ public class UnitManager : NetworkBehaviour
     
     private void Update(){
         if(GameObject.Find("GameManager").GetComponent<PauseMenu>().getPause()) return;
+
+        if(GameObject.Find("InGame/Canvas/ShowArea") != null && isLobby) {
+            volk = player.eigenesVolk;
+            isLobby = false;
+        }
 
         if(Input.GetMouseButtonDown(0) && isLocalPlayer) {
             Vector3Int vec = hover.getVectorFromMouse();

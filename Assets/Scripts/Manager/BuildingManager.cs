@@ -129,7 +129,6 @@ public class BuildingManager : NetworkBehaviour
         hover = GameObject.Find("GameManager").GetComponent<TilemapHover>();
         tilemap = GameObject.Find("Tilemap").GetComponent<Tilemap>();
         player = GetComponent<Player>();
-        volk = player.eigenesVolk;
         tilemapManager = GameObject.Find("GameManager").GetComponent<TilemapManager>();
         volkManager = GameObject.Find("GameManager").GetComponent<VolkManager>();
         mapBehaviour = GameObject.Find("GameManager").GetComponent<MapBehaviour>();
@@ -146,6 +145,7 @@ public class BuildingManager : NetworkBehaviour
 
         //Initialisieren des ShowArea GameObjects nach Spielstart(nur einmal!)
         if(GameObject.Find("InGame/Canvas/ShowArea") != null && isLobby) {
+            volk = player.eigenesVolk;
             GameObject.Find("InGame/Canvas/ShowArea").GetComponent<Button>().onClick.AddListener(OnShowAreaClick);
             isLobby = false;
         }

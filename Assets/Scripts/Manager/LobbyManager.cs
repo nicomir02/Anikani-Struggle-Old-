@@ -15,14 +15,20 @@ public class LobbyManager : NetworkBehaviour
     [SerializeField] private TextMeshProUGUI readyButtonText;
     [SerializeField] private RoundManager roundManager;
 
-    [SerializeField] private Volk volk;
+    [SerializeField] public Volk volk;
 
     [SerializeField] private GameObject ingameObjects;
 
     [SerializeField] private MapBehaviour mapBehaviour;
     [SerializeField] private GameObject gameManager;
 
+    [SerializeField] private VolkManager volkManager;
+    [SerializeField] private TMP_Dropdown chooseTribe;
+
     [SerializeField] private Button[] buttons;
+
+    [SerializeField] private TextMeshProUGUI title;
+    [SerializeField] private TextMeshProUGUI description;
 
     private bool ausgewaehlt = false;
 
@@ -42,8 +48,29 @@ public class LobbyManager : NetworkBehaviour
         if(mapBehaviour.getTerrainBuild()) network.StopClient();
         lobbyObjects.SetActive(true);
 
+        foreach(Volk v in volkManager.volkList) {
+            chooseTribe.options.Add(new TMP_Dropdown.OptionData(v.name));
+        }
+
+        chooseTribe.onValueChanged.AddListener(delegate {
+            valueChange();
+        });
+        
+
         gameManager.SetActive(true);
         startClient();
+    }
+
+    //Value Change im Dropdown für Choose a Tribe
+    public void valueChange() {
+        volk = volkManager.getVolkByString(chooseTribe.options[chooseTribe.value].text);
+        if(volk != null) {
+            title.text = volk.name;
+            description.text = volk.getDescription();
+        }else {
+            title.text = "";
+            description.text = "";
+        }
     }
 
 
@@ -100,9 +127,25 @@ public class LobbyManager : NetworkBehaviour
     //Button Click um eigene Farbe zu wählen
     public void farbewaehlen() {
         //Debug.Log(.name);
-        if(ausgewaehlt) return;
+
         GameObject buttonGameObject = EventSystem.current.currentSelectedGameObject;
         TextMeshProUGUI textMesh = buttonGameObject.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>();
+
+        if(ausgewaehlt) {
+            int i = 0;
+            foreach(Button b in buttons) {
+                if(b.gameObject == buttonGameObject) break;
+                i++;
+            }
+            
+            if(roundManager.id == i+1) {
+                textMesh.text = buttonGameObject.name;
+                ausgewaehlt = false;
+                roundManager.id = -1;
+            }
+            return;
+        }
+        
 
         if(!textMesh.text.Contains("-")) {
             int i = 0;
@@ -135,7 +178,7 @@ public class LobbyManager : NetworkBehaviour
 
 //Klicken auf Ready Button setzt ready Variable auf true
     public void OnReadyClick() {
-        if(!ausgewaehlt) return;
+        if(!ausgewaehlt || volk == null) return;
         gameManager.SetActive(true);
         if(gameManager.GetComponent<PauseMenu>().getPause()) return;
         if(ready) {

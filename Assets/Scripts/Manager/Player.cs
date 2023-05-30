@@ -18,6 +18,7 @@ public class Player : NetworkBehaviour
 
     public int id = -1;
     
+    private LobbyManager lobbyManager;
     private Button roundButton;     //Knopf für Runde beenden
     private TextMeshProUGUI roundButtonText;    //Knopf zeigt an ob man gerade dran ist oder man warten muss
     private TextMeshProUGUI roundText;  //Text oben in der Leiste, welcher die Rundenanzahl angibt
@@ -53,6 +54,7 @@ public class Player : NetworkBehaviour
     void Start() {
 
         name = "Player";
+        lobbyManager = GameObject.Find("LobbyManager").GetComponent<LobbyManager>();
         lobbyObjects = GameObject.Find("Lobby");
         network = GameObject.Find("NetworkManager").GetComponent<NetworkManagerAnikani>();
 
@@ -70,6 +72,11 @@ public class Player : NetworkBehaviour
             roundText = GameObject.Find("InGame/Canvas/Leiste/RundenText").GetComponent<TextMeshProUGUI>();
             isLobby = false;
             id = GameObject.Find("GameManager").GetComponent<RoundManager>().id;
+        }else {
+            if(lobbyManager == null) return;
+            if(lobbyManager.volk != eigenesVolk) {
+                eigenesVolk = lobbyManager.volk;
+            }
         }
     }
 

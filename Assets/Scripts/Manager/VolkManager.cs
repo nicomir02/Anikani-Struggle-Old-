@@ -7,7 +7,7 @@ public class VolkManager : MonoBehaviour
 
 
 //Instanzvariable
-    [SerializeField] private List<Volk> volkList = new List<Volk>();    //Liste aller Völker(im GameManager bei Unity erweiterbar), später Auswahl in Lobby im LobbyManager, 
+    [SerializeField] public List<Volk> volkList = new List<Volk>();    //Liste aller Völker(im GameManager bei Unity erweiterbar), später Auswahl in Lobby im LobbyManager, 
 
 //Getter für ID des Volkes um auf das Volk zugreifen zu können
     public (bool, int) getVolkID(Volk v) {
@@ -28,6 +28,13 @@ public class VolkManager : MonoBehaviour
         if(v.isBarrackBuilding(b)) return 3;
         if(v.isStoneBuilding(b)) return 4;
         return -1;
+    }
+
+    public Volk getVolkByString(string volkname) {
+        foreach(Volk v in volkList) {
+            if(v.name == volkname) return v;
+        }
+        return null;
     }
 
     //Building herausfinden mit id
