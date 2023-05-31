@@ -5,6 +5,7 @@ using UnityEngine;
 public class UnitAnimator : MonoBehaviour
 { 
     public Sprite[] idle;
+    public Sprite[] idleChoice;
     public Sprite[] moveForwardBLUE;
     public Sprite[] moveBackBLUE;
     public Sprite[] moveForwardRED;
@@ -39,6 +40,7 @@ public class UnitAnimator : MonoBehaviour
             forward = moveForwardPURP;
             back = moveBackPURP;
         }
+        idle[0] = idleChoice[spielerFarbe-1];
         animation = idle;
         
     }
@@ -47,6 +49,7 @@ public class UnitAnimator : MonoBehaviour
     void Update()
     {
         int index = Mathf.FloorToInt(Time.time * 4) % animation.Length; //4 für Geschwindigkeit
+        Debug.Log(idle.Length);
         spriteRenderer.sprite = animation[index];
     }
 
@@ -71,7 +74,6 @@ public class UnitAnimator : MonoBehaviour
                 if(gedreht) rumdrehen();
                 animation = back;
             }
-            //idle = animation[3]; 
         }
     }
 
