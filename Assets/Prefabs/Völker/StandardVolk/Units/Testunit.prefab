@@ -145,13 +145,43 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   idle:
   - {fileID: 0}
-  moveForwardL:
+  moveForwardBLUE:
   - {fileID: -105248864, guid: dff9779ec820273468d0f847ad7f37a5, type: 3}
   - {fileID: -1957171214, guid: dff9779ec820273468d0f847ad7f37a5, type: 3}
   - {fileID: -1891242798, guid: dff9779ec820273468d0f847ad7f37a5, type: 3}
   - {fileID: 1162813207, guid: dff9779ec820273468d0f847ad7f37a5, type: 3}
-  moveBackL:
+  moveBackBLUE:
   - {fileID: 1551110138, guid: a70d8f358bfd0154f9c14d48fba7e7a9, type: 3}
   - {fileID: -293762553, guid: a70d8f358bfd0154f9c14d48fba7e7a9, type: 3}
   - {fileID: 1284026605, guid: a70d8f358bfd0154f9c14d48fba7e7a9, type: 3}
   - {fileID: 1074840867, guid: a70d8f358bfd0154f9c14d48fba7e7a9, type: 3}
+  moveForwardRED:
+  - {fileID: -1295607767, guid: c31330a66fafaa8499c87fb80748f2fc, type: 3}
+  - {fileID: -212935621, guid: c31330a66fafaa8499c87fb80748f2fc, type: 3}
+  - {fileID: -2099223465, guid: c31330a66fafaa8499c87fb80748f2fc, type: 3}
+  - {fileID: -1664186070, guid: c31330a66fafaa8499c87fb80748f2fc, type: 3}
+  moveBackRED:
+  - {fileID: -1376851967, guid: 1997aa012f0443348b25fa0d018304d3, type: 3}
+  - {fileID: -1442628757, guid: 1997aa012f0443348b25fa0d018304d3, type: 3}
+  - {fileID: 1248768405, guid: 1997aa012f0443348b25fa0d018304d3, type: 3}
+  - {fileID: 570830951, guid: 1997aa012f0443348b25fa0d018304d3, type: 3}
+  moveForwardGREEN:
+  - {fileID: -1537685426, guid: f330017a3aa9568479415aab6aeee306, type: 3}
+  - {fileID: 1791707959, guid: f330017a3aa9568479415aab6aeee306, type: 3}
+  - {fileID: -106159594, guid: f330017a3aa9568479415aab6aeee306, type: 3}
+  - {fileID: -773373748, guid: f330017a3aa9568479415aab6aeee306, type: 3}
+  moveBackGREEN:
+  - {fileID: 1100652569, guid: f2f89e97e8475fe4e999628a34facfc1, type: 3}
+  - {fileID: 1542383798, guid: f2f89e97e8475fe4e999628a34facfc1, type: 3}
+  - {fileID: 989970512, guid: f2f89e97e8475fe4e999628a34facfc1, type: 3}
+  - {fileID: 286996089, guid: f2f89e97e8475fe4e999628a34facfc1, type: 3}
+  moveForwardPURP:
+  - {fileID: 1058417788, guid: d0dcbd29711985843aaea160c291e6b9, type: 3}
+  - {fileID: 321962793, guid: d0dcbd29711985843aaea160c291e6b9, type: 3}
+  - {fileID: -244319216, guid: d0dcbd29711985843aaea160c291e6b9, type: 3}
+  - {fileID: 2069466600, guid: d0dcbd29711985843aaea160c291e6b9, type: 3}
+  moveBackPURP:
+  - {fileID: 238905243, guid: 0dcdd88f7c07bb242844d90e819818d2, type: 3}
+  - {fileID: 2086357919, guid: 0dcdd88f7c07bb242844d90e819818d2, type: 3}
+  - {fileID: 494701649, guid: 0dcdd88f7c07bb242844d90e819818d2, type: 3}
+  - {fileID: -188086, guid: 0dcdd88f7c07bb242844d90e819818d2, type: 3}
