@@ -245,7 +245,7 @@ public class UnitManager : NetworkBehaviour
     public Vector3 vec3IntToVec3(Vector3Int vec){
         vec.z = 0;
         Vector3 position = tilemap.CellToWorld(vec);
-        position.z += 5f;
+        position.z += 2.47f;
         return position;
     }
 
@@ -276,7 +276,7 @@ public class UnitManager : NetworkBehaviour
         unitSprite.id = colorID+1;
 
         Vector3 position = tilemap.CellToWorld(vec);
-        position.z += 5f;
+        position.z += 2.47f;
         spriteObject.transform.position = position;
 
         spriteObject.transform.rotation = Quaternion.identity;

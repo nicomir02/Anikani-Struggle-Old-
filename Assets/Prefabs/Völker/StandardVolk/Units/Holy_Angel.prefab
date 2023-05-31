@@ -149,6 +149,8 @@ MonoBehaviour:
   - {fileID: 1604714622, guid: 38a1392da6de03e4c808ce342f6a7b56, type: 3}
   - {fileID: -1626205574, guid: 38a1392da6de03e4c808ce342f6a7b56, type: 3}
   - {fileID: -1626205574, guid: 38a1392da6de03e4c808ce342f6a7b56, type: 3}
+  idleChoice:
+  - {fileID: 1604714622, guid: 38a1392da6de03e4c808ce342f6a7b56, type: 3}
   moveForwardBLUE:
   - {fileID: -1626205574, guid: 38a1392da6de03e4c808ce342f6a7b56, type: 3}
   - {fileID: 1878719473, guid: 38a1392da6de03e4c808ce342f6a7b56, type: 3}

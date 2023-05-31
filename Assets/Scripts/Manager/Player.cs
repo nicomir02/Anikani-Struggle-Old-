@@ -24,7 +24,7 @@ public class Player : NetworkBehaviour
     private TextMeshProUGUI roundText;  //Text oben in der Leiste, welcher die Rundenanzahl angibt
 
     public TMP_InputField ip_InputFieldName; //Input Feld der Lobby für den Namen
-    [SyncVar] public string name;    //Spielername; später bei der Lobby einstellbar für das Spiel(Cheats damit verbunden?)
+    [SyncVar] public new string name;    //Spielername; später bei der Lobby einstellbar für das Spiel(Cheats damit verbunden?)
     public bool isLobby = true;
     
     //Spieler wird rausgeschmissen 

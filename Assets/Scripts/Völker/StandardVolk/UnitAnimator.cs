@@ -18,7 +18,7 @@ public class UnitAnimator : MonoBehaviour
     private SpriteRenderer spriteRenderer; 
     private Sprite[] forward;
     private Sprite[] back;
-    public Sprite[] animation;
+    public new Sprite[] animation;
     bool gedreht = false;
 
     // Start is called before the first frame update
@@ -49,7 +49,6 @@ public class UnitAnimator : MonoBehaviour
     void Update()
     {
         int index = Mathf.FloorToInt(Time.time * 4) % animation.Length; //4 für Geschwindigkeit
-        Debug.Log(idle.Length);
         spriteRenderer.sprite = animation[index];
     }
 
