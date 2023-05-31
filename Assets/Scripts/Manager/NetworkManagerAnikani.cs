@@ -9,6 +9,7 @@ public class NetworkManagerAnikani : NetworkManager
     //Benötigt um Spieler hinzufügen zu können
     [SerializeField] Transform start;
     
+    public string playername;
 
     //Stop Server Methode
     public override void OnStopServer()
@@ -34,13 +35,13 @@ public class NetworkManagerAnikani : NetworkManager
         SceneManager.LoadScene("Menü");
 
         Destroy(gameObject);
-
-        
     }
 
     //Auf Server Spieler hinzufügen
     public override void OnServerAddPlayer(NetworkConnectionToClient conn) {
         GameObject player = Instantiate(playerPrefab, start.position, start.rotation);
+        player.GetComponent<Player>().name = playername;
+        player.name = playername;
         NetworkServer.AddPlayerForConnection(conn, player);
     }
 

@@ -17,6 +17,8 @@ public class Unit : NetworkBehaviour
 
 
     [SerializeField] private int kampfweite = 1; //angriffsreichweite
+
+    [SerializeField] private int heilung = 0; 
     /* 
     [SyncVar] private int verteidigung = 0;
     [SyncVar] private int nahkampf = 10;
@@ -32,6 +34,11 @@ public class Unit : NetworkBehaviour
         tilemap.SetTile(vec, colourUnit[colorFromID]);
     }
 
+    //
+    public int getHeilung() {
+        return heilung;
+    }
+
     //Getter Methoden:
     public int getKampfweite() {
         return kampfweite;
@@ -41,8 +48,10 @@ public class Unit : NetworkBehaviour
         return unitname;
     }
 
-    public TileBase getTile(int colorFromID) {
-        return colourUnit[colorFromID];
+    public Sprite getSprite(int colorFromID) {
+        UnitAnimator animator = GetComponent<UnitAnimator>();
+        if(animator.idle.Length > colorFromID) return animator.idle[colorFromID];
+        return null;
     }
     public int getLeben(){
         return leben;

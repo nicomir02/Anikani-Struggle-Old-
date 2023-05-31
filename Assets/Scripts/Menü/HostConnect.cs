@@ -3,22 +3,27 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 public class HostConnect : MonoBehaviour{
+ 
+    NetworkManagerAnikani manager;
+    public TMP_InputField ip_InputField;
+    public GameObject HostConnect_go;
 
-NetworkManager manager;
-public TMP_InputField ip_InputField;
-public GameObject HostConnect_go;
-void Awake (){
-    manager = GetComponent<NetworkManager>();
-}
-public void HostFunction(){
-    manager.StartHost();
-    HostConnect_go.SetActive(false);
-}
+    [SerializeField] TMP_InputField playername;
 
-public void ConnectFunction(){
-    manager.networkAddress = ip_InputField.text;
-    manager.StartClient();
-    HostConnect_go.SetActive(false);
-}
+    void Awake (){
+        manager = GetComponent<NetworkManagerAnikani>();
+    }
+    public void HostFunction(){
+        manager.playername = playername.text;
+        manager.StartHost();
+        HostConnect_go.SetActive(false);
+    }
+
+    public void ConnectFunction(){
+        manager.playername = playername.text;
+        manager.networkAddress = ip_InputField.text;
+        manager.StartClient();
+        HostConnect_go.SetActive(false);
+    }
 
 }

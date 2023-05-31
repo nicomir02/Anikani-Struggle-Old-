@@ -22,7 +22,9 @@ public class Player : NetworkBehaviour
     private Button roundButton;     //Knopf für Runde beenden
     private TextMeshProUGUI roundButtonText;    //Knopf zeigt an ob man gerade dran ist oder man warten muss
     private TextMeshProUGUI roundText;  //Text oben in der Leiste, welcher die Rundenanzahl angibt
-    //public string name = "Player";    //Spielername; später bei der Lobby einstellbar für das Spiel(Cheats damit verbunden?)
+
+    public TMP_InputField ip_InputFieldName; //Input Feld der Lobby für den Namen
+    [SyncVar] public string name;    //Spielername; später bei der Lobby einstellbar für das Spiel(Cheats damit verbunden?)
     public bool isLobby = true;
     
     //Spieler wird rausgeschmissen 
@@ -52,11 +54,14 @@ public class Player : NetworkBehaviour
 
 
     void Start() {
-
-        name = "Player";
+        //ip_InputFieldName = GameObject.Find("NetworkCanvas/InputFieldName").GetComponent<TMP_InputField>();
+        //name = ip_InputFieldName.text;
         lobbyManager = GameObject.Find("LobbyManager").GetComponent<LobbyManager>();
         lobbyObjects = GameObject.Find("Lobby");
         network = GameObject.Find("NetworkManager").GetComponent<NetworkManagerAnikani>();
+
+        GameObject.Find("GameManager").GetComponent<RoundManager>().playername = name;
+        GameObject.Find("LobbyManager").GetComponent<LobbyManager>().playername = name;
 
         lobbyObjects.SetActive(true);
     }

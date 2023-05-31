@@ -24,7 +24,9 @@ public class RoundManager : NetworkBehaviour
     [SerializeField] private TextMeshProUGUI roundButtonText;    //Knopf zeigt an ob man gerade dran ist oder man warten muss
     [SerializeField] private TextMeshProUGUI roundText;  //Text oben in der Leiste, welcher die Rundenanzahl angibt
     public bool isYourTurn = false;     //sagt ob dieser Spieler gerade am Turn ist
-    //public string name = "Player";    //Spielername; später bei der Lobby einstellbar für das Spiel(Cheats damit verbunden?)
+
+    [SerializeField] private TextMeshProUGUI spielername; //Text oben in Leiste für den Spielernamen
+    public string playername = "Player";    //Spielername; später bei der Lobby einstellbar für das Spiel(Cheats damit verbunden?)
     public bool isLobby = true;
 
     public readonly SyncList<int> reihenfolge = new SyncList<int>(); //Für veränderte Reihenfolge
@@ -67,6 +69,7 @@ public class RoundManager : NetworkBehaviour
             isLobby = false;
             eigenesVolk = GameObject.Find("LobbyManager").GetComponent<LobbyManager>().volk;
             roundButton.onClick.AddListener(OnClick);
+            spielername.text = playername;
         }
 
         

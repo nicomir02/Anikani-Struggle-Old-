@@ -13,8 +13,10 @@ GameObject:
   - component: {fileID: -4510146823345106924}
   - component: {fileID: 6068958018001157040}
   - component: {fileID: -4037991125439618841}
+  - component: {fileID: -4083419351919174216}
+  - component: {fileID: -9187464975387202012}
   m_Layer: 0
-  m_Name: Testunit
+  m_Name: Holy_Knight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -74,6 +76,7 @@ MonoBehaviour:
   trainRounds: 2
   price: 3
   kampfweite: 1
+  heilung: 0
   colourUnit:
   - {fileID: 11400000, guid: bf81322cceb5a584a8fe2a1598e5825e, type: 2}
   - {fileID: 11400000, guid: 143852c94d7c6054d94aa455b91ae846, type: 2}
@@ -144,7 +147,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   idle:
-  - {fileID: 0}
+  - {fileID: -105248864, guid: dff9779ec820273468d0f847ad7f37a5, type: 3}
   moveForwardBLUE:
   - {fileID: -105248864, guid: dff9779ec820273468d0f847ad7f37a5, type: 3}
   - {fileID: -1957171214, guid: dff9779ec820273468d0f847ad7f37a5, type: 3}
@@ -185,3 +188,53 @@ MonoBehaviour:
   - {fileID: 2086357919, guid: 0dcdd88f7c07bb242844d90e819818d2, type: 3}
   - {fileID: 494701649, guid: 0dcdd88f7c07bb242844d90e819818d2, type: 3}
   - {fileID: -188086, guid: 0dcdd88f7c07bb242844d90e819818d2, type: 3}
+  animation: []
+--- !u!114 &-4083419351919174216
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8879690192884572037}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b80dc26513effc34596bac44b91ef2ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0
+  vec: {x: 0, y: 0, z: 0}
+  id: 0
+--- !u!114 &-9187464975387202012
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8879690192884572037}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f74aedd71d9a4f55b3ce499326d45fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0
+  target: {fileID: 4376054792347945962}
+  clientAuthority: 0
+  syncPosition: 1
+  syncRotation: 1
+  syncScale: 0
+  interpolatePosition: 1
+  interpolateRotation: 1
+  interpolateScale: 1
+  showGizmos: 0
+  showOverlay: 0
+  overlayColor: {r: 0, g: 0, b: 0, a: 0.5}
+  onlySyncOnChange: 1
+  bufferResetMultiplier: 5
+  positionSensitivity: 0.01
+  rotationSensitivity: 0.01
+  scaleSensitivity: 0.01
+  timelineOffset: 0

@@ -33,8 +33,6 @@ public class UnitManager : NetworkBehaviour
     private Vector3Int selectedVector;
 
     private bool isLobby = true;
-
-    [SerializeField] GameObject spritePrefab;
     
     
     void Start() {
@@ -159,17 +157,18 @@ public class UnitManager : NetworkBehaviour
     public void moveUnit(Unit unit, Vector3Int vec){
         if(!GameObject.Find("GameManager").GetComponent<RoundManager>().isYourTurn) return;
         vec.z = 2;
-        if(distance(selectedVector, vec) <= reichweite[selectedVector] && mapBehaviour.getBlockDetails(new Vector3Int(vec.x, vec.y, 0)).Item2.getWalkable()) {
+        if((distance(selectedVector, vec) <= (reichweite[selectedVector]+1)) && mapBehaviour.getBlockDetails(new Vector3Int(vec.x, vec.y, 0)).Item2.getWalkable()) {
             if(healthManager.isHealth(vec) && !GetComponent<BuildingManager>().isOwnBuilding(new Vector3Int(vec.x, vec.y, 1))){
                 angriff(unit, vec);
                 return;
                 //if(healthManager.isHealth(vec)) return;    //schaut ob gegner besiegt wurde in dieser runde || Auskommentiert, sonst kann gegner Einheit bewegen
             }
+            if(distance(selectedVector, vec) > reichweite[selectedVector]) return;
             if(spawnedUnits.ContainsKey(vec)) return;
             //unit.setTile(tilemap,vec,player.id -1);
 
             List<Vector3Int> liste = new Pathfinding(selectedVector, vec).shortestPath(); //Berechnung des shortest Path
-            if(liste == null) return; //Wenn der shortest Path größer ist als die Reichweite return
+            if(liste == null || liste.Count > reichweite[selectedVector]) return; //Wenn der shortest Path größer ist als die Reichweite return
 
             spawnedUnits.Remove(selectedVector);    //diese beiden Zeilen damit die Dictionary sich mit der neuen position updated
             spawnedUnits.Add(vec, unit);
@@ -222,9 +221,11 @@ public class UnitManager : NetworkBehaviour
             if(i >= 0) {
                 startingPosition = vec3IntToVec3(positions[i]);
                 position = vec3IntToVec3(positions[i+1]);
+                transform.gameObject.GetComponent<UnitAnimator>().changeDirection(positions[i], positions[i+1]); //hier change Direction methode aufrufen
             }else {
                 startingPosition = vec3IntToVec3(from);
                 position = vec3IntToVec3(positions[0]);
+                transform.gameObject.GetComponent<UnitAnimator>().changeDirection(from, positions[0]); //hier change Direction methode aufrufen
             }
             
             
@@ -237,7 +238,7 @@ public class UnitManager : NetworkBehaviour
                 yield return null;
             }
         }
-        
+        transform.gameObject.GetComponent<UnitAnimator>().changeDirection(positions[positions.Count-1], positions[positions.Count-1]);
     }
 
     //Convert Vector3Int von Vec3Int für Units
@@ -264,7 +265,8 @@ public class UnitManager : NetworkBehaviour
     [Command(requiresAuthority = false)]
     public void serverAddPlayer(int unitID, Vector3Int vec, int colorID, int volkID)
     {
-        GameObject spriteObject = Instantiate(spritePrefab, transform.position, transform.rotation);
+        Unit unit = volkManager.getVolk(volkID).getUnit(unitID);
+        GameObject spriteObject = Instantiate(unit.gameObject, transform.position, transform.rotation);
         spriteObject.name = volkManager.getVolk(volkID).getUnit(unitID).getName();
 
         UnitSprite unitSprite = spriteObject.GetComponent<UnitSprite>();
@@ -289,12 +291,7 @@ public class UnitManager : NetworkBehaviour
     public void setRenderer(GameObject gameObject, int unitID, Vector3Int vec, int colorID, int volkID) {
 
         Unit unit = volkManager.getVolk(volkID).getUnit(unitID);
-        TileBase tile = unit.getTile(colorID);
-        Sprite sprite = null;
-        if (tile != null && tile is Tile tileComponents)
-        {
-            sprite = tileComponents.sprite;
-        }
+        Sprite sprite = unit.getSprite(colorID);
         
         SpriteRenderer spriteRenderer = gameObject.GetComponent<SpriteRenderer>(); 
         spriteRenderer.sprite = sprite;
@@ -303,7 +300,21 @@ public class UnitManager : NetworkBehaviour
     }
 
     public void angriff(Unit unit, Vector3Int vec){
-        if(spawnedUnits.ContainsKey(new Vector3Int(vec.x, vec.y, 2)) || distance(selectedVector, vec) > unit.getKampfweite()) return;
+        Vector3Int v = new Vector3Int(vec.x, vec.y, 2);
+        if(spawnedUnits.ContainsKey(v) && vec != selectedVector) {
+            int maxhealth = spawnedUnits[v].getLeben();
+            int heal = 0;
+            if(healthManager.getLeben(v) + unit.getHeilung() > maxhealth) {
+                heal = maxhealth - healthManager.getLeben(v);       //damit nicht mehr als max leben geheilt wird
+            }else {
+                heal = unit.getHeilung();
+            }
+
+            healthManager.angriff(v, -heal); //da heilung ein negativer angriff in Höhe von heal ist
+
+        }
+
+        if(spawnedUnits.ContainsKey(v) || !canAttack(unit, selectedVector, vec)) return;
 
         reichweite[selectedVector] = 0;
 
@@ -313,6 +324,21 @@ public class UnitManager : NetworkBehaviour
         }else if(healthManager.isBuilding(new Vector3Int(vec.x, vec.y, 1))) {
             healthManager.angriffBuilding(new Vector3Int(vec.x, vec.y, 1), unit.getAngriffswert());
             syncStillExistsBuilding(new Vector3Int(vec.x, vec.y, 1));
+        }
+    }
+
+    public bool canAttack(Unit unit, Vector3Int from, Vector3Int to) {
+        if(unit.getKampfweite() > 1) {
+            if(distance(from, to) > unit.getKampfweite()) return false;
+            return true;
+        }else {
+            for(int x=-1; x<=1; x++) {
+                for(int y=-1; y<=1; y++) {
+                    Vector3Int vector = new Vector3Int(x, y, 0) + from;
+                    if(vector == to) return true;
+                }
+            }
+            return false;
         }
     }
 

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class UnitAnimator : MonoBehaviour
-{
+{ 
     public Sprite[] idle;
     public Sprite[] moveForwardBLUE;
     public Sprite[] moveBackBLUE;
@@ -17,13 +17,14 @@ public class UnitAnimator : MonoBehaviour
     private SpriteRenderer spriteRenderer; 
     private Sprite[] forward;
     private Sprite[] back;
+    public Sprite[] animation;
+    bool gedreht = false;
 
     // Start is called before the first frame update
     void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         int spielerFarbe = GetComponent<UnitSprite>().id;
-        Debug.Log(spielerFarbe);
 
         if(spielerFarbe == 1) {        //BLAU
             forward = moveForwardBLUE;
@@ -38,20 +39,45 @@ public class UnitAnimator : MonoBehaviour
             forward = moveForwardPURP;
             back = moveBackPURP;
         }
+        animation = idle;
+        
     }
 
     // Update is called once per frame
     void Update()
     {
-
-        int index = Mathf.FloorToInt(Time.time * 4) % 4; //erste 4 für Geschwindigkeit, zweite 4 weil in jedem Array 4 Sprites drin sind
-        Debug.Log(index);
-        spriteRenderer.sprite = forward[index];
+        int index = Mathf.FloorToInt(Time.time * 4) % animation.Length; //4 für Geschwindigkeit
+        spriteRenderer.sprite = animation[index];
     }
 
+    //richtige Sprites auswählen
+    public void changeDirection(Vector3Int start, Vector3Int ziel) {
+        if(start == ziel) {
+            animation = idle;
+        } else {
+            if(start.x > ziel.x) {
+                if(gedreht) rumdrehen();
+                animation = forward;
+            }
+            if(start.y > ziel.y) {
+                if(!gedreht) rumdrehen();
+                animation = forward;
+            }
+            if(start.x < ziel.x) {
+                if(!gedreht) rumdrehen();
+                animation = back;
+            }
+            if(start.y < ziel.y) {
+                if(gedreht) rumdrehen();
+                animation = back;
+            }
+            //idle = animation[3]; 
+        }
+    }
 
     //Sprite rumdrehen
     void rumdrehen() {
         GetComponent<Transform>().Rotate(new Vector3(0f, 180f, 0f));
+        gedreht = !gedreht;
     }
 }

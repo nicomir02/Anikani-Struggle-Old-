@@ -30,6 +30,8 @@ public class LobbyManager : NetworkBehaviour
     [SerializeField] private TextMeshProUGUI title;
     [SerializeField] private TextMeshProUGUI description;
 
+    public string playername = "Player";
+
     private bool ausgewaehlt = false;
 
     //Instanzvariablen
@@ -155,8 +157,6 @@ public class LobbyManager : NetworkBehaviour
                 if(b.gameObject == buttonGameObject) break;
                 i++;
             }
-
-            string playername = "Player";//Später Spielername draufschreiben
 
             textMesh.text = buttonGameObject.name + " - " +playername; 
             ausgewaehlt = true;

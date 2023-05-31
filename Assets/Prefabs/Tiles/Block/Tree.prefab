@@ -53,7 +53,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: fdc89f2e90bb17b48a47159e9a5ea71f, type: 2}
   block: Tree
   isBuildable: 1
-  isWalkable: 1
+  isWalkable: 0
 --- !u!114 &481303840535809074
 MonoBehaviour:
   m_ObjectHideFlags: 0

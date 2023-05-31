@@ -25,25 +25,24 @@ public class UnitGUIPanel : MonoBehaviour
 
         //Melee Unit
         GameObject.Find("InGame/Canvas/UnitPanel/MeleeUnit").SetActive(true);
-        Unit meleeUnit = GetComponent<Player>().eigenesVolk.getUnit(0);
-        TileBase tile = meleeUnit.getTile(GameObject.Find("GameManager").GetComponent<RoundManager>().id-1);
-        Sprite sprite = null;
-        if (tile != null && tile is Tile tileComponents)
-        {
-            sprite = tileComponents.sprite;
-        }
+        Unit unit = GetComponent<Player>().eigenesVolk.getUnit(0);
+        Sprite sprite = unit.getSprite(GameObject.Find("GameManager").GetComponent<RoundManager>().id-1);
+        
         GameObject.Find("InGame/Canvas/UnitPanel/MeleeUnit/Button").GetComponent<Button>().onClick.AddListener(ButtonBuyMelee);
-        GameObject.Find("InGame/Canvas/UnitPanel/MeleeUnit/Text").GetComponent<TextMeshProUGUI>().text = meleeUnit.getName() + "\n\n Price: "+meleeUnit.getPrice() + " Wood";
+        GameObject.Find("InGame/Canvas/UnitPanel/MeleeUnit/Text").GetComponent<TextMeshProUGUI>().text = unit.getName() + "\n\n Price: "+unit.getPrice() + " Wood";
         GameObject.Find("InGame/Canvas/UnitPanel/MeleeUnit/Background/Image").GetComponent<Image>().sprite = sprite;
+
+        unit = GetComponent<Player>().eigenesVolk.getUnit(1);
+        sprite = unit.getSprite(GameObject.Find("GameManager").GetComponent<RoundManager>().id-1);
+
+        GameObject.Find("InGame/Canvas/UnitPanel/SpecialUnit/Button").GetComponent<Button>().onClick.AddListener(ButtonBuySpecial);
+        GameObject.Find("InGame/Canvas/UnitPanel/SpecialUnit/Text").GetComponent<TextMeshProUGUI>().text = unit.getName() + "\n\n Price: "+unit.getPrice() + " Stone";
+        GameObject.Find("InGame/Canvas/UnitPanel/SpecialUnit/Background/Image").GetComponent<Image>().sprite = sprite;
 
         //Welche Truppe wird gerade hier trainiert?
         if(howLong.ContainsKey(vec) && trainedUnits.ContainsKey(vec) && trainedUnits[vec] != null) {
-            tile = trainedUnits[vec].getTile(GameObject.Find("GameManager").GetComponent<RoundManager>().id-1);
-            sprite = null;
-            if (tile != null && tile is Tile tileComponent)
-            {
-                sprite = tileComponent.sprite;
-            }
+            sprite = trainedUnits[vec].getSprite(GameObject.Find("GameManager").GetComponent<RoundManager>().id-1);
+            
             GameObject.Find("InGame/Canvas/UnitPanel/CurTrainedUnit/Background/Image").GetComponent<Image>().sprite = sprite;
             GameObject.Find("InGame/Canvas/UnitPanel/CurTrainedUnit").SetActive(true);
             GameObject.Find("InGame/Canvas/UnitPanel/CurTrainedUnit/Text").GetComponent<TextMeshProUGUI>().text = "Currently training:\n" + trainedUnits[vec].getName();
@@ -96,6 +95,25 @@ public class UnitGUIPanel : MonoBehaviour
         Ressource ress = getRessource("Wood");
         
         Unit a = GetComponent<Player>().eigenesVolk.getUnit(0);
+        if(buildingManager.ressourcenZaehlerRechner(ress, a.getPrice())) {
+            
+            trainedUnits.Add(selectedVector, a);
+            howLong.Add(selectedVector, a.getHowManyTrainRounds());
+
+            generateGUI(selectedVector);
+        }
+    }
+
+    //Button Click Buy Special
+    public void ButtonBuySpecial() {
+        if(trainedUnits.ContainsKey(selectedVector) && trainedUnits[selectedVector] != null) return;
+
+        BuildingManager buildingManager = GetComponent<BuildingManager>();
+        MapBehaviour mapBehaviour = GameObject.Find("GameManager").GetComponent<MapBehaviour>();
+
+        Ressource ress = getRessource("Stone");
+        
+        Unit a = GetComponent<Player>().eigenesVolk.getUnit(1);
         if(buildingManager.ressourcenZaehlerRechner(ress, a.getPrice())) {
             
             trainedUnits.Add(selectedVector, a);
