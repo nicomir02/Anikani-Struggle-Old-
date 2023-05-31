@@ -75,4 +75,4 @@ MonoBehaviour:
   - {fileID: -8147225817556961232, guid: 3e5d22dadd071be4299c2bf2aeb79c4f, type: 3}
   stoneBuildings:
   - {fileID: -8147225817556961232, guid: 3aed20220de427a40ac9ba474cfe5cb0, type: 3}
-  description: Special Unit Angel - Can heal own Units
+  description: 'Special Unit: Angel - can heal own Units'

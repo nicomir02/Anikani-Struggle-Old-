@@ -131,6 +131,7 @@ public class LobbyManager : NetworkBehaviour
         GameObject buttonGameObject = EventSystem.current.currentSelectedGameObject;
         TextMeshProUGUI textMesh = buttonGameObject.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>();
 
+        //Für Deselect
         if(ausgewaehlt) {
             int i = 0;
             foreach(Button b in buttons) {
@@ -142,11 +143,12 @@ public class LobbyManager : NetworkBehaviour
                 textMesh.text = buttonGameObject.name;
                 ausgewaehlt = false;
                 roundManager.id = -1;
+                CMDfarbewaehlen(i, "");
             }
             return;
         }
         
-
+        //Für Select
         if(!textMesh.text.Contains("-")) {
             int i = 0;
             foreach(Button b in buttons) {
@@ -166,14 +168,26 @@ public class LobbyManager : NetworkBehaviour
     //Farbe wählen auf Server
     [Command(requiresAuthority=false)]
     public void CMDfarbewaehlen(int i, string playername) {
-        buttons[i].gameObject.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text = buttons[i].name + " - " + playername;
+        TextMeshProUGUI textgui = buttons[i].gameObject.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>();
+        if(playername != "") {
+            textgui.text = buttons[i].name + " - " + playername;
+            
+        }else {
+            textgui.text = buttons[i].name;
+        }
         RPCfarbewaehlen(i, playername);
+        
     }
 
     //Farbe wählen Übertragung auf Client
     [ClientRpc]
     public void RPCfarbewaehlen(int i, string playername) {
-        buttons[i].gameObject.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text = buttons[i].name + " - " + playername;
+        TextMeshProUGUI textgui = buttons[i].gameObject.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>();
+        if(playername != "") {
+            textgui.text = buttons[i].name + " - " + playername;
+        }else {
+            textgui.text = buttons[i].name;
+        }
     }
 
 //Klicken auf Ready Button setzt ready Variable auf true
