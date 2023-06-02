@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Mirror;
 
-public class UnitAnimator : MonoBehaviour
+public class UnitAnimator : NetworkBehaviour
 { 
     public Sprite[] idleBLUE;
     public Sprite[] idleRED;
@@ -29,7 +30,7 @@ public class UnitAnimator : MonoBehaviour
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         int spielerFarbe = GetComponent<UnitSprite>().id;
-
+        
         if(spielerFarbe == 1) {        //BLAU
             forward = moveForwardBLUE;
             back = moveBackBLUE;
@@ -73,8 +74,15 @@ public class UnitAnimator : MonoBehaviour
         return null;
     }
 
-    //richtige Sprites auswählen
+    //Vom Server changeDirection anstoßen
+    [Command(requiresAuthority=false)]
     public void changeDirection(Vector3Int start, Vector3Int ziel) {
+        RPCchangeDirection(start, ziel);
+    }
+
+    //richtige Sprites auswählen auf Clients
+    [ClientRpc]
+    public void RPCchangeDirection(Vector3Int start, Vector3Int ziel) {
         if(start == ziel) {
             animation = idle;
         } else {

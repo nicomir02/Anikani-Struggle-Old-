@@ -290,6 +290,8 @@ public class UnitManager : NetworkBehaviour
     [ClientRpc]
     public void setRenderer(GameObject gameObject, int unitID, Vector3Int vec, int colorID, int volkID) {
 
+        gameObject.GetComponent<UnitSprite>().id = colorID+1;
+
         Unit unit = volkManager.getVolk(volkID).getUnit(unitID);
         Sprite sprite = unit.getSprite(colorID);
         
