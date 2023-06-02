@@ -77,6 +77,7 @@ MonoBehaviour:
   price: 3
   kampfweite: 3
   heilung: 30
+  standardSprite: 3
   colourUnit: []
 --- !u!212 &6068958018001157040
 SpriteRenderer:
@@ -142,15 +143,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a343ed155bf0f7439f0c213d7e91c7f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  idle:
+  idleBLUE:
   - {fileID: -1626205574, guid: 38a1392da6de03e4c808ce342f6a7b56, type: 3}
   - {fileID: 1878719473, guid: 38a1392da6de03e4c808ce342f6a7b56, type: 3}
   - {fileID: -137815047, guid: 38a1392da6de03e4c808ce342f6a7b56, type: 3}
   - {fileID: 1604714622, guid: 38a1392da6de03e4c808ce342f6a7b56, type: 3}
+  - {fileID: -544457822, guid: 38a1392da6de03e4c808ce342f6a7b56, type: 3}
+  - {fileID: -987284840, guid: 38a1392da6de03e4c808ce342f6a7b56, type: 3}
+  idleRED:
   - {fileID: -1626205574, guid: 38a1392da6de03e4c808ce342f6a7b56, type: 3}
-  - {fileID: -1626205574, guid: 38a1392da6de03e4c808ce342f6a7b56, type: 3}
-  idleChoice:
+  - {fileID: 1878719473, guid: 38a1392da6de03e4c808ce342f6a7b56, type: 3}
+  - {fileID: -137815047, guid: 38a1392da6de03e4c808ce342f6a7b56, type: 3}
   - {fileID: 1604714622, guid: 38a1392da6de03e4c808ce342f6a7b56, type: 3}
+  - {fileID: -544457822, guid: 38a1392da6de03e4c808ce342f6a7b56, type: 3}
+  - {fileID: -987284840, guid: 38a1392da6de03e4c808ce342f6a7b56, type: 3}
+  idleGREEN:
+  - {fileID: -1626205574, guid: 38a1392da6de03e4c808ce342f6a7b56, type: 3}
+  - {fileID: 1878719473, guid: 38a1392da6de03e4c808ce342f6a7b56, type: 3}
+  - {fileID: -137815047, guid: 38a1392da6de03e4c808ce342f6a7b56, type: 3}
+  - {fileID: 1604714622, guid: 38a1392da6de03e4c808ce342f6a7b56, type: 3}
+  - {fileID: -544457822, guid: 38a1392da6de03e4c808ce342f6a7b56, type: 3}
+  - {fileID: -987284840, guid: 38a1392da6de03e4c808ce342f6a7b56, type: 3}
+  idlePURP:
+  - {fileID: -1626205574, guid: 38a1392da6de03e4c808ce342f6a7b56, type: 3}
+  - {fileID: 1878719473, guid: 38a1392da6de03e4c808ce342f6a7b56, type: 3}
+  - {fileID: -137815047, guid: 38a1392da6de03e4c808ce342f6a7b56, type: 3}
+  - {fileID: 1604714622, guid: 38a1392da6de03e4c808ce342f6a7b56, type: 3}
+  - {fileID: -544457822, guid: 38a1392da6de03e4c808ce342f6a7b56, type: 3}
+  - {fileID: -987284840, guid: 38a1392da6de03e4c808ce342f6a7b56, type: 3}
+  idle: []
   moveForwardBLUE:
   - {fileID: -1626205574, guid: 38a1392da6de03e4c808ce342f6a7b56, type: 3}
   - {fileID: 1878719473, guid: 38a1392da6de03e4c808ce342f6a7b56, type: 3}

@@ -26,14 +26,14 @@ public class UnitGUIPanel : MonoBehaviour
         //Melee Unit
         GameObject.Find("InGame/Canvas/UnitPanel/MeleeUnit").SetActive(true);
         Unit unit = GetComponent<Player>().eigenesVolk.getUnit(0);
-        Sprite sprite = unit.getSprite(GameObject.Find("GameManager").GetComponent<RoundManager>().id-1);
+        Sprite sprite = unit.getSprite(GameObject.Find("GameManager").GetComponent<RoundManager>().id);
         
         GameObject.Find("InGame/Canvas/UnitPanel/MeleeUnit/Button").GetComponent<Button>().onClick.AddListener(ButtonBuyMelee);
         GameObject.Find("InGame/Canvas/UnitPanel/MeleeUnit/Text").GetComponent<TextMeshProUGUI>().text = unit.getName() + "\n\n Price: "+unit.getPrice() + " Wood";
         GameObject.Find("InGame/Canvas/UnitPanel/MeleeUnit/Background/Image").GetComponent<Image>().sprite = sprite;
 
         unit = GetComponent<Player>().eigenesVolk.getUnit(1);
-        sprite = unit.getSprite(GameObject.Find("GameManager").GetComponent<RoundManager>().id-1);
+        sprite = unit.getSprite(GameObject.Find("GameManager").GetComponent<RoundManager>().id);
 
         GameObject.Find("InGame/Canvas/UnitPanel/SpecialUnit/Button").GetComponent<Button>().onClick.AddListener(ButtonBuySpecial);
         GameObject.Find("InGame/Canvas/UnitPanel/SpecialUnit/Text").GetComponent<TextMeshProUGUI>().text = unit.getName() + "\n\n Price: "+unit.getPrice() + " Stone";
@@ -41,7 +41,7 @@ public class UnitGUIPanel : MonoBehaviour
 
         //Welche Truppe wird gerade hier trainiert?
         if(howLong.ContainsKey(vec) && trainedUnits.ContainsKey(vec) && trainedUnits[vec] != null) {
-            sprite = trainedUnits[vec].getSprite(GameObject.Find("GameManager").GetComponent<RoundManager>().id-1);
+            sprite = trainedUnits[vec].getSprite(GameObject.Find("GameManager").GetComponent<RoundManager>().id);
             
             GameObject.Find("InGame/Canvas/UnitPanel/CurTrainedUnit/Background/Image").GetComponent<Image>().sprite = sprite;
             GameObject.Find("InGame/Canvas/UnitPanel/CurTrainedUnit").SetActive(true);

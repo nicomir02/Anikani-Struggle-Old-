@@ -309,6 +309,7 @@ public class BuildingManager : NetworkBehaviour
 
     //Ist auf Vektor Building vom eigenen Spieler
     public bool isOwnBuilding(Vector3Int vec) {
+        vec.z = 1;
         //Debug.Log(buildingvectors.ContainsKey(vec));
         return buildingvectors.ContainsKey(vec);
     }

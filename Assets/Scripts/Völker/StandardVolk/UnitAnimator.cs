@@ -4,8 +4,11 @@ using UnityEngine;
 
 public class UnitAnimator : MonoBehaviour
 { 
+    public Sprite[] idleBLUE;
+    public Sprite[] idleRED;
+    public Sprite[] idleGREEN;
+    public Sprite[] idlePURP;
     public Sprite[] idle;
-    public Sprite[] idleChoice;
     public Sprite[] moveForwardBLUE;
     public Sprite[] moveBackBLUE;
     public Sprite[] moveForwardRED;
@@ -30,17 +33,20 @@ public class UnitAnimator : MonoBehaviour
         if(spielerFarbe == 1) {        //BLAU
             forward = moveForwardBLUE;
             back = moveBackBLUE;
+            idle = idleBLUE;
         } else if(spielerFarbe == 2) { //ROT
             forward = moveForwardRED;
             back = moveBackRED;
+            idle = idleRED;
         } else if(spielerFarbe == 3) { //GRÜN
             forward = moveForwardGREEN;
             back = moveBackGREEN;
+            idle = idleGREEN;
         } else {                       //LILA
             forward = moveForwardPURP;
             back = moveBackPURP;
+            idle = idlePURP;
         }
-        idle[0] = idleChoice[spielerFarbe-1];
         animation = idle;
         
     }
@@ -50,6 +56,21 @@ public class UnitAnimator : MonoBehaviour
     {
         int index = Mathf.FloorToInt(Time.time * 4) % animation.Length; //4 für Geschwindigkeit
         spriteRenderer.sprite = animation[index];
+    }
+
+
+    //Für UnitGUIPanel um richtiges Sprite auszuwählen
+    public Sprite getSprite(int spielerFarbe, int auswahl) {
+        if(spielerFarbe == 1) {        //BLAU
+            return idleBLUE[auswahl];
+        } else if(spielerFarbe == 2) { //ROT
+            return idleRED[auswahl];
+        } else if(spielerFarbe == 3) { //GRÜN
+            return idleGREEN[auswahl];
+        } else if(spielerFarbe == 4){  //LILA
+            return idlePURP[auswahl];
+        }
+        return null;
     }
 
     //richtige Sprites auswählen

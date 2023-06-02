@@ -2,9 +2,9 @@
 
 //Hohe Priorität
 
+    //Unit Syncro doesnt work
     //Beim ausscheiden von einem Spieler werden Units nicht despawned
     //letzter verbleibender Spieler bekommt nicht Win Screen angezeigt
-    //man soll sich nicht auf felder stellen können wo Bäume drauf sind oder stein(geändert aber testen)
     //grobe skizzen/sprites für verschiedene Völker um mal ein umfangreicheres spiel aufzubauen 
     //wanderer programmierung dahinter
 
@@ -13,7 +13,6 @@
     //Sounds
     //engel bewegungsanimation
     //Code kommentieren [Alex, Nico]
-    //nicht durch gebäude gehen (beim gebäude bau werden tiles ersetzt durch nicht-walkable tiles)
     //Name nur von Host, nicht von clients
 
     //Kostenüberlegungen für Truppen und Gebäude

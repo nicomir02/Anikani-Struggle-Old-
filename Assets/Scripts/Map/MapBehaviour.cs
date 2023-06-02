@@ -118,6 +118,7 @@ public class MapBehaviour : NetworkBehaviour
                 r.getBlock().setTile(vec, tilemap);
                 BlockDetails bdetails = blockDetails[vec];
                 bdetails.Ressourcenbool = true;
+                bdetails.Blockindex = -1;
                 bdetails.ressindex = rindex;
                 vecBlock.Add(vec, bdetails);
             }
@@ -295,10 +296,13 @@ public class MapBehaviour : NetworkBehaviour
         if(!GetComponent<TilemapHover>().insideField(vec)) return (null, null, null);
         vec.z = 0;
         Biom biom = biome[blockDetails[vec].Biomindex];
-        Block block = biom.getBlockByIndex(blockDetails[vec].Blockindex);
+        Block block = null;
         Ressource ressource = null;
-        if(blockDetails[vec].Ressourcenbool) {
+        if(blockDetails[vec].Blockindex == -1) {
             ressource = ressourcen[blockDetails[vec].ressindex];
+            block = ressource.getBlock();
+        }else {
+            block = biom.getBlockByIndex(blockDetails[vec].Blockindex);
         }
 
         return (biom, block, ressource);

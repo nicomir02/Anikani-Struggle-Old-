@@ -19,6 +19,8 @@ public class Unit : NetworkBehaviour
     [SerializeField] private int kampfweite = 1; //angriffsreichweite
 
     [SerializeField] private int heilung = 0; 
+
+    [SerializeField] private int standardSprite = 0;
     /* 
     [SyncVar] private int verteidigung = 0;
     [SyncVar] private int nahkampf = 10;
@@ -48,10 +50,8 @@ public class Unit : NetworkBehaviour
         return unitname;
     }
 
-    public Sprite getSprite(int colorFromID) {
-        UnitAnimator animator = GetComponent<UnitAnimator>();
-        if(animator.idle.Length > colorFromID) return animator.idle[colorFromID];
-        return null;
+    public Sprite getSprite(int playerid) {
+        return GetComponent<UnitAnimator>().getSprite(playerid, standardSprite);
     }
     public int getLeben(){
         return leben;

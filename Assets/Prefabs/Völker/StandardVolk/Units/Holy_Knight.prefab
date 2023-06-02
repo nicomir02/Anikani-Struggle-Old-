@@ -146,13 +146,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a343ed155bf0f7439f0c213d7e91c7f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  idleBLUE:
+  - {fileID: -1891242798, guid: dff9779ec820273468d0f847ad7f37a5, type: 3}
+  idleRED:
+  - {fileID: -2099223465, guid: c31330a66fafaa8499c87fb80748f2fc, type: 3}
+  idleGREEN:
+  - {fileID: -106159594, guid: f330017a3aa9568479415aab6aeee306, type: 3}
+  idlePURP:
+  - {fileID: -244319216, guid: d0dcbd29711985843aaea160c291e6b9, type: 3}
   idle:
   - {fileID: 0}
-  idleChoice:
-  - {fileID: -105248864, guid: dff9779ec820273468d0f847ad7f37a5, type: 3}
-  - {fileID: -1295607767, guid: c31330a66fafaa8499c87fb80748f2fc, type: 3}
-  - {fileID: -1537685426, guid: f330017a3aa9568479415aab6aeee306, type: 3}
-  - {fileID: 1058417788, guid: d0dcbd29711985843aaea160c291e6b9, type: 3}
   moveForwardBLUE:
   - {fileID: -105248864, guid: dff9779ec820273468d0f847ad7f37a5, type: 3}
   - {fileID: -1957171214, guid: dff9779ec820273468d0f847ad7f37a5, type: 3}
@@ -223,7 +226,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f74aedd71d9a4f55b3ce499326d45fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  syncDirection: 0
+  syncDirection: 1
   syncMode: 0
   syncInterval: 0
   target: {fileID: 4376054792347945962}
