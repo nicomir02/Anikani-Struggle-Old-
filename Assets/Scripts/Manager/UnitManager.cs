@@ -239,6 +239,7 @@ public class UnitManager : NetworkBehaviour
             }
         }
         transform.gameObject.GetComponent<UnitAnimator>().changeDirection(positions[positions.Count-1], positions[positions.Count-1]);
+        transform.gameObject.GetComponent<SpriteRenderer>().color = Color.white;
     }
 
     //Convert Vector3Int von Vec3Int für Units
@@ -315,10 +316,9 @@ public class UnitManager : NetworkBehaviour
             healthManager.angriff(v, -heal); //da heilung ein negativer angriff in Höhe von heal ist
 
         }
+        reichweite[selectedVector] = 0;
 
         if(spawnedUnits.ContainsKey(v) || !canAttack(unit, selectedVector, vec)) return;
-
-        reichweite[selectedVector] = 0;
 
         if(healthManager.isUnit(new Vector3Int(vec.x, vec.y, 2))) {
             healthManager.angriff(new Vector3Int(vec.x, vec.y, 2), unit.getAngriffswert());

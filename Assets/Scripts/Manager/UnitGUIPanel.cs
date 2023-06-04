@@ -87,7 +87,7 @@ public class UnitGUIPanel : MonoBehaviour
 
     //Button Click Buy Melee
     public void ButtonBuyMelee() {
-        if(trainedUnits.ContainsKey(selectedVector) && trainedUnits[selectedVector] != null) return;
+        if(trainedUnits.ContainsKey(selectedVector) && trainedUnits[selectedVector] != null || !GameObject.Find("GameManager").GetComponent<RoundManager>().isYourTurn) return;
 
         BuildingManager buildingManager = GetComponent<BuildingManager>();
         MapBehaviour mapBehaviour = GameObject.Find("GameManager").GetComponent<MapBehaviour>();
@@ -106,7 +106,7 @@ public class UnitGUIPanel : MonoBehaviour
 
     //Button Click Buy Special
     public void ButtonBuySpecial() {
-        if(trainedUnits.ContainsKey(selectedVector) && trainedUnits[selectedVector] != null) return;
+        if(trainedUnits.ContainsKey(selectedVector) && trainedUnits[selectedVector] != null || !GameObject.Find("GameManager").GetComponent<RoundManager>().isYourTurn) return;
 
         BuildingManager buildingManager = GetComponent<BuildingManager>();
         MapBehaviour mapBehaviour = GameObject.Find("GameManager").GetComponent<MapBehaviour>();
