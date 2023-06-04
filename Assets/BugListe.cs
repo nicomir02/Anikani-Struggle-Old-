@@ -9,6 +9,7 @@
     //wanderer programmierung dahinter
     //Name nur von Host, nicht von clients
     //Spielernamensliste durch Tab anzeigen lassen können(Alex)
+    //Beenden Button im Hauptmenü klappt nicht
     
 
 //Mittlere Priorität
@@ -16,9 +17,8 @@
     //Gegnerische Einheiten können durch feindliche Gebäude durchgehen
 
     //Sounds
-    //engel bewegungsanimation
     //Code kommentieren [Alex, Nico]
-    //Animation von Sword Attack Knight besser ausschneiden
+    //Animation von Sword Attack Knight besser ausschneiden und einfügen
     //Engelsanimation ausschneiden damit Engel fliegt
 
     //Einheiten wenn man dran ist kann man anfangen zu trainieren
@@ -56,3 +56,34 @@
     
     
     //cheats
+
+    //beim spielen noch rausgefunden: noch unsortiert nach Dringlichkeit(muss noch gemacht werden)
+
+    //animationen der engel hoch und runter wie bei blau
+    //animationen der engel unsynchron
+    //angriffe möglich obwohl nicht in angrifssdistanz-> kein schaden aber aktion durchgeführt und keine bewegungen mehr
+    //nicht durch gegnerische truppen und gebäude bewegen können(ishealth healthmanager als hilfe?)
+    //engel über kleine wasserstellen fliegen? über einheiten?
+    //balancen von angriff und leben
+    //balancen von truppenrekrutierung
+    //neben lebensbalken verbleibende schritte als kleine notiz/zahl
+    //knopf für verbleibende rekrutierungszeiten der Baracken
+    //knopf um durch truppen durchzuklicken und diese für bewegung direkt auszuwählen
+    //kamerabewegung durch ziehen der maus in die ecken
+    //bestimmter abstand zwischen hauptgebäuden der verschiedenen Spieler und eventuelle Eingrenzung wo SPieler ihr HQ setzen dürfen
+    //markierte Felder in die Bewegung dieser Truppe möglich ist
+    //durch taste, Gebäude ausblenden lassen
+    //knights mehr schaden und engel weniger leben haben
+    //eigene Einheiten nicht auf zerstörte Gebäude bewegbar
+    //gebäude können von Engeln noch geheilt werden
+
+
+
+
+
+
+
+    //List of Fixed Bugs: (noch vervollständigen durch history aus gitHub)
+    //escape taste aus Building und TruppenManager
+    //engel bewegungsanimation
+    

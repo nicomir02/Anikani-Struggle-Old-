@@ -12,8 +12,11 @@ public class UnitGUIPanel : MonoBehaviour
     private Dictionary<Vector3Int, int> howLong = new Dictionary<Vector3Int, int>();
     
     private Vector3Int selectedVector;
+    
+    private bool generated = false;
 
     public void generateGUI(Vector3Int vec) {
+        generated = true;
 
         selectedVector = vec;
 
@@ -125,6 +128,7 @@ public class UnitGUIPanel : MonoBehaviour
 
     //Methode um GUI wieder auszumachen
     public void GUIoff() {
+        generated = false;
         GameObject.Find("GameManager").GetComponent<PauseMenu>().setCanPause(true);
         GameObject.Find("GameManager").GetComponent<PauseMenu>().togglePauseOff();
 
@@ -132,6 +136,11 @@ public class UnitGUIPanel : MonoBehaviour
 
 
         GameObject.Find("InGame/Canvas/UnitPanel").SetActive(false);
+    }
+
+    void Update() {
+        if(!generated) return;
+        if(Input.GetKeyDown(KeyCode.Escape)) GUIoff();
     }
 
     //Methode Button Click Close GUI

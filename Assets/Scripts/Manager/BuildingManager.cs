@@ -461,8 +461,8 @@ public class BuildingManager : NetworkBehaviour
 //Infoxbox Gameobjekt aktiviert
     public void activatePanel(Vector3Int vec) {
         player.infoboxBuilding.SetActive(true);
-
-        GameObject.Find("InGame/Canvas/InfoboxBuilding/Infotext").GetComponent<TextMeshProUGUI>().text = "<b><u>Infobox</u></b> \n Name: "+buildingsVec[vec].getName()+"\n Leben: " +healthManager.getBuildingLeben(vec);
+        //NOTIZÄNDERUNG Leben zu Health damit es auf englisch ist
+        GameObject.Find("InGame/Canvas/InfoboxBuilding/Infotext").GetComponent<TextMeshProUGUI>().text = "<b><u>Infobox</u></b> \n Name: "+buildingsVec[vec].getName()+"\n Health: " +healthManager.getBuildingLeben(vec);
     }
 
 //Rückgängig machen von selectBuilding Methode/ Rücksetzen der verschiedenen Sachen

@@ -17,6 +17,8 @@ public class BuildGUIPanel : MonoBehaviour
     private int priceArea = 1;
 
     private bool guiOn = false;
+
+
     
 
     //Methode um Buildings Buy GUI zu generieren
@@ -86,6 +88,12 @@ public class BuildGUIPanel : MonoBehaviour
         GameObject.Find("InGame/Canvas/BuildingPanel/AreaExtension").SetActive(true);
         GameObject.Find("InGame/Canvas/BuildingPanel/AreaExtension/Button").GetComponent<Button>().onClick.AddListener(buyAreaExtension);
         GameObject.Find("InGame/Canvas/BuildingPanel/AreaExtension/Text").GetComponent<TextMeshProUGUI>().text = "Area Extension\n\n4x4\n\nPrice: " + priceArea + " Wood";
+    }
+
+    //damit durch Esc auch GUI geschlossen werden kann
+     void Update() {
+        if(!guiOn) return;
+        if(Input.GetKeyDown(KeyCode.Escape)) GUIoff();
     }
 
 

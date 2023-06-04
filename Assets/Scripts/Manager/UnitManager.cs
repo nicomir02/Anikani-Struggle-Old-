@@ -134,7 +134,9 @@ public class UnitManager : NetworkBehaviour
 
     public void activatePanel(Vector3Int vec) {
         player.infobox.SetActive(true);
-        GameObject.Find("InGame/Canvas/Infobox/Infotext").GetComponent<TextMeshProUGUI>().text = "<b><u>Infobox</u></b> \n Name: "+spawnedUnits[vec].getName()+"\n Leben: "+ healthManager.getLeben(vec) +" \n Angriffswert: "+ spawnedUnits[vec].getAngriffswert() +" \n verfügbare Bewegung: " +reichweite[vec];
+
+        //NOTIZÄNDERUNG Leben zu Health und Angriffswert zu Attackpower und verfügbare Bewegung zu Available Movement damit es auf englishc ist
+        GameObject.Find("InGame/Canvas/Infobox/Infotext").GetComponent<TextMeshProUGUI>().text = "<b><u>Infobox</u></b> \n Name: "+spawnedUnits[vec].getName()+"\n Health: "+ healthManager.getLeben(vec) +" \n Attackpower: "+ spawnedUnits[vec].getAngriffswert() +" \n Available Movement: " +reichweite[vec];
     }
 
     public int distance(Vector3Int vec1, Vector3Int vec2) {
