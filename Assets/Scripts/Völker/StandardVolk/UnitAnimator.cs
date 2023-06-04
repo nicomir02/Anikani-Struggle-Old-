@@ -5,21 +5,21 @@ using Mirror;
 
 public class UnitAnimator : NetworkBehaviour
 { 
-    public Sprite[] idleBLUE;
-    public Sprite[] idleRED;
-    public Sprite[] idleGREEN;
-    public Sprite[] idlePURP;
-    public Sprite[] idle;
-    public Sprite[] moveForwardBLUE;
-    public Sprite[] moveBackBLUE;
-    public Sprite[] moveForwardRED;
-    public Sprite[] moveBackRED;
-    public Sprite[] moveForwardGREEN;
-    public Sprite[] moveBackGREEN;
-    public Sprite[] moveForwardPURP;
-    public Sprite[] moveBackPURP;
+    [SerializeField] private Sprite[] idleBLUE;
+    [SerializeField] private Sprite[] idleRED;
+    [SerializeField] private Sprite[] idleGREEN;
+    [SerializeField] private Sprite[] idlePURP;
+    [SerializeField] private Sprite[] moveForwardBLUE;
+    [SerializeField] private Sprite[] moveBackBLUE;
+    [SerializeField] private Sprite[] moveForwardRED;
+    [SerializeField] private Sprite[] moveBackRED;
+    [SerializeField] private Sprite[] moveForwardGREEN;
+    [SerializeField] private Sprite[] moveBackGREEN;
+    [SerializeField] private Sprite[] moveForwardPURP;
+    [SerializeField] private Sprite[] moveBackPURP;
 
     private SpriteRenderer spriteRenderer; 
+    private Sprite[] idle;
     private Sprite[] forward;
     private Sprite[] back;
     public new Sprite[] animation;

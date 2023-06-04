@@ -29,13 +29,6 @@ public class Unit : NetworkBehaviour
 
     [SyncVar] private int BloeckeProRunde; */
 
-    [SerializeField] List<TileBase> colourUnit = new List<TileBase>(); //Farben für die Spieler/Einheiten- und Gebäudeunterschiede
-
-    //Setter Methoden:
-    public void setTile(Tilemap tilemap, Vector3Int vec, int colorFromID) {
-        tilemap.SetTile(vec, colourUnit[colorFromID]);
-    }
-
     //
     public int getHeilung() {
         return heilung;

@@ -83,12 +83,6 @@ public class Volk : NetworkBehaviour
          return null;
       }
 
-      //für Units
-
-      public void setUnit(int unitID, int idColor, Tilemap tilemap, Vector3Int vec) {
-         units[unitID].setTile(tilemap, vec, idColor);
-      }
-
       public Unit getUnit(int unitID) {
          return units[unitID];
       } 

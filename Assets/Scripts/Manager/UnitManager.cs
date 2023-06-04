@@ -120,6 +120,7 @@ public class UnitManager : NetworkBehaviour
 
         player.infobox.SetActive(false);
     }
+
     public void selectUnit(Vector3Int vec){
         vec.z = 2;
         if(healthManager.getLeben(vec) == -1 && spawnedUnits.ContainsKey(vec)) spawnedUnits.Remove(vec);
@@ -127,7 +128,9 @@ public class UnitManager : NetworkBehaviour
             selectedUnit = spawnedUnits[vec];
             selectedVector = vec;
 
-            if(getGameObject(vec) != null) getGameObject(vec).GetComponent<SpriteRenderer>().color = Color.grey;
+            if(getGameObject(vec) != null) {
+                getGameObject(vec).GetComponent<SpriteRenderer>().color = Color.grey;
+            }
             activatePanel(vec);
         }
     }
@@ -208,7 +211,6 @@ public class UnitManager : NetworkBehaviour
                 to.z = 2;
                 us.vec = to;
                 to.z = 0;
-
                 StartCoroutine(MoveToPosition(us.GetComponent<Transform>(), shortestPath, 0.5f, from));
             }
         }
@@ -262,6 +264,7 @@ public class UnitManager : NetworkBehaviour
             reichweite.Add(vec, 0);
 
             serverAddPlayer(volk.getUnitID(unit), vec, colorID, volkManager.getVolkID(volk).Item2);
+
         }
     }
 
@@ -270,13 +273,11 @@ public class UnitManager : NetworkBehaviour
     {
         Unit unit = volkManager.getVolk(volkID).getUnit(unitID);
         GameObject spriteObject = Instantiate(unit.gameObject, transform.position, transform.rotation);
-        spriteObject.name = volkManager.getVolk(volkID).getUnit(unitID).getName();
 
-        UnitSprite unitSprite = spriteObject.GetComponent<UnitSprite>();
-        unitSprite.vec = vec;
+        spriteObject.GetComponent<UnitSprite>().vec = vec;
         vec.z = 0;
 
-        unitSprite.id = colorID+1;
+        spriteObject.GetComponent<UnitSprite>().id = colorID+1;
 
         Vector3 position = tilemap.CellToWorld(vec);
         position.z += 2.47f;
@@ -297,10 +298,12 @@ public class UnitManager : NetworkBehaviour
 
         Unit unit = volkManager.getVolk(volkID).getUnit(unitID);
         Sprite sprite = unit.getSprite(colorID);
+
+        vec.z = 2;
+        gameObject.GetComponent<UnitSprite>().vec = vec;
         
         SpriteRenderer spriteRenderer = gameObject.GetComponent<SpriteRenderer>(); 
         spriteRenderer.sprite = sprite;
-
 
     }
 
@@ -309,6 +312,7 @@ public class UnitManager : NetworkBehaviour
         if(spawnedUnits.ContainsKey(v) && vec != selectedVector) {
             int maxhealth = spawnedUnits[v].getLeben();
             int heal = 0;
+            if(healthManager.getLeben(v) == maxhealth) return;
             if(healthManager.getLeben(v) + unit.getHeilung() > maxhealth) {
                 heal = maxhealth - healthManager.getLeben(v);       //damit nicht mehr als max leben geheilt wird
             }else {
@@ -316,11 +320,14 @@ public class UnitManager : NetworkBehaviour
             }
 
             healthManager.angriff(v, -heal); //da heilung ein negativer angriff in Höhe von heal ist
-
+            reichweite[selectedVector] = 0;
+            return;
         }
-        reichweite[selectedVector] = 0;
+        
 
         if(spawnedUnits.ContainsKey(v) || !canAttack(unit, selectedVector, vec)) return;
+
+        reichweite[selectedVector] = 0;
 
         if(healthManager.isUnit(new Vector3Int(vec.x, vec.y, 2))) {
             healthManager.angriff(new Vector3Int(vec.x, vec.y, 2), unit.getAngriffswert());

@@ -78,11 +78,6 @@ MonoBehaviour:
   kampfweite: 1
   heilung: 0
   standardSprite: 0
-  colourUnit:
-  - {fileID: 11400000, guid: bf81322cceb5a584a8fe2a1598e5825e, type: 2}
-  - {fileID: 11400000, guid: 143852c94d7c6054d94aa455b91ae846, type: 2}
-  - {fileID: 11400000, guid: 3353abaa11985234890ee630d1064c9d, type: 2}
-  - {fileID: 11400000, guid: 90488510df102bd4baa7c79c78d8c230, type: 2}
 --- !u!212 &6068958018001157040
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -129,7 +124,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.85, y: 1.35}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 0
@@ -147,6 +142,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a343ed155bf0f7439f0c213d7e91c7f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0
   idleBLUE:
   - {fileID: -1891242798, guid: dff9779ec820273468d0f847ad7f37a5, type: 3}
   idleRED:
@@ -155,8 +153,6 @@ MonoBehaviour:
   - {fileID: -106159594, guid: f330017a3aa9568479415aab6aeee306, type: 3}
   idlePURP:
   - {fileID: -244319216, guid: d0dcbd29711985843aaea160c291e6b9, type: 3}
-  idle:
-  - {fileID: 0}
   moveForwardBLUE:
   - {fileID: -105248864, guid: dff9779ec820273468d0f847ad7f37a5, type: 3}
   - {fileID: -1957171214, guid: dff9779ec820273468d0f847ad7f37a5, type: 3}

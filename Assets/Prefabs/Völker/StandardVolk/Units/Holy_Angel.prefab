@@ -78,7 +78,6 @@ MonoBehaviour:
   kampfweite: 3
   heilung: 30
   standardSprite: 3
-  colourUnit: []
 --- !u!212 &6068958018001157040
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -125,7 +124,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 1.45, y: 1.6}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 0
@@ -174,7 +173,6 @@ MonoBehaviour:
   - {fileID: -1590240161, guid: 4ded1a18fb697d448843f9a971cd2367, type: 3}
   - {fileID: -1066773654, guid: 4ded1a18fb697d448843f9a971cd2367, type: 3}
   - {fileID: 1290001964, guid: 4ded1a18fb697d448843f9a971cd2367, type: 3}
-  idle: []
   moveForwardBLUE:
   - {fileID: -1626205574, guid: 38a1392da6de03e4c808ce342f6a7b56, type: 3}
   - {fileID: 1878719473, guid: 38a1392da6de03e4c808ce342f6a7b56, type: 3}

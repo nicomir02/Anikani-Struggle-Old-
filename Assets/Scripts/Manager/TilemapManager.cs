@@ -25,20 +25,6 @@ public class TilemapManager : NetworkBehaviour //Synchronisieren der Tilemap zwi
     {
         RpcUpdateTilemap(vec, volkID, buildID, colorID);
     }
-    
-    //Änderungen auf jeden Client für Units
-    [ClientRpc]
-    private void RpcUpdateTilemapUnit(Vector3Int vec, int volkID, int unitID, int colorID) {
-        Volk v = volkManager.getVolk(volkID);
-        v.setUnit(unitID, colorID, tilemap, vec);
-    }
-    
-    //Tilemap Change für Units auf Server
-    [Command(requiresAuthority = false)]
-    public void CmdUpdateTilemapUnit(Vector3Int vec, int volkID, int unitID, int colorID)
-    {
-        RpcUpdateTilemapUnit(vec, volkID, unitID, colorID);
-    }
 
     //Tilemap Change für Ressourcengebäude(generisch für alle gebäude?)
     [Command(requiresAuthority = false)]

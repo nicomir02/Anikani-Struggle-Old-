@@ -2,39 +2,50 @@
 
 //Hohe Priorität
 
-    //Unit Syncro doesnt work
-    //Beim ausscheiden von einem Spieler werden Units nicht despawned
     //letzter verbleibender Spieler bekommt nicht Win Screen angezeigt
     //grobe skizzen/sprites für verschiedene Völker um mal ein umfangreicheres spiel aufzubauen 
     //wanderer programmierung dahinter
     //Name nur von Host, nicht von clients
     //Spielernamensliste durch Tab anzeigen lassen können(Alex)
     //Beenden Button im Hauptmenü klappt nicht
-    
+    //eigene Einheiten nicht auf zerstörte Gebäude bewegbar
 
 //Mittlere Priorität
 
-    //Gegnerische Einheiten können durch feindliche Gebäude durchgehen
+    //Gegnerische Einheiten können durch feindliche Gebäude durchgehen //nicht durch gegnerische truppen und gebäude bewegen können(ishealth healthmanager als hilfe?) || Unit dürfte schon einmal funkt.
 
     //Sounds
     //Code kommentieren [Alex, Nico]
     //Animation von Sword Attack Knight besser ausschneiden und einfügen
-    //Engelsanimation ausschneiden damit Engel fliegt
-
-    //Einheiten wenn man dran ist kann man anfangen zu trainieren
 
     //Select Unit funkt. nur richtig beim Host
 
     //In Leiste ist schrift unterschiedlich groß
 
     //Kostenüberlegungen für Truppen und Gebäude
+    //balancen von angriff und leben
+    //balancen von truppenrekrutierung
+    //knights mehr schaden und engel weniger leben haben
+
     //angegriffene truppen sollen sich im Nahkampf wehren!!
     //Truppen brauchen mehr Statistiken als Angriff + leben + bewegungsreichweite + angriffsreichweite
     //generischer flächenschaden bei angriff(für heilung, angriffe, angriffe über zeit(curse, poison))
     //IP Speicherung um benutzte IPS wieder zu wervenden(Alex)
     //Speicherung des eigenen Namens bei nöchstem SPiel(Alex)
 
+    //animationen der engel unsynchron machen
+
+    //neben lebensbalken verbleibende schritte als kleine notiz/zahl
+
+    //knopf um durch truppen durchzuklicken und diese für bewegung direkt auszuwählen
+
+    //bestimmter abstand zwischen hauptgebäuden der verschiedenen Spieler und eventuelle Eingrenzung wo SPieler ihr HQ setzen dürfen
+
 //Niedrige Priorität
+
+    //markierte Felder in die Bewegung dieser Truppe möglich ist // Markierung wo kann die Truppe hin?
+    //durch taste, Gebäude ausblenden lassen
+    //knopf für verbleibende rekrutierungszeiten der Baracken
 
     //Wenn Engel heilen will und schon volles Leben hat, dann soll nicht Bewegung runter gehen
 
@@ -45,45 +56,30 @@
     //Menü mit existierenden Spielern
     //disqualifyPlayer methode noch im Building Manager Skript(ändern)
     //Methoden in Hilfsskripte und so umlagern und allgemein Skripte säubern
-    //sehr lange latency/wartezeit auf seite des clients bei online-modus über hamachi(bleibt laut dozent)
+    //sehr lange latency/wartezeit auf seite des clients bei online-modus über hamachi(bleibt laut dozent) //scheinbar nicht mehr so??
     //manchmal verschwinden Einheiten auf Feldern(im multiplayer)
-    //beim unitprefab im unit script sind die farbsprites unnötig da sie im unitanimator skript zu finden sind
-    //heilung des engels funktioniert nicht (geheilte truppe nicht mehr anklickbar)
+
+    
     //hauptgebäude soll auch angreifen
     //Ladebildschirm mit Katharina
     //manchmal bleiben Einheiten halb angelickt(graues feld unter ihnen), obwohl nicht mehr angeklickt eigentlich
     //Partikeleffekte für Attacken(z.b. Heilung des Engels auf Einheit)
-    
+
+    //kamerabewegung durch ziehen der maus in die ecken
     
     //cheats
 
-    //beim spielen noch rausgefunden: noch unsortiert nach Dringlichkeit(muss noch gemacht werden)
 
-    //animationen der engel hoch und runter wie bei blau
-    //animationen der engel unsynchron
-    //angriffe möglich obwohl nicht in angrifssdistanz-> kein schaden aber aktion durchgeführt und keine bewegungen mehr
-    //nicht durch gegnerische truppen und gebäude bewegen können(ishealth healthmanager als hilfe?)
+    //Fragen:
     //engel über kleine wasserstellen fliegen? über einheiten?
-    //balancen von angriff und leben
-    //balancen von truppenrekrutierung
-    //neben lebensbalken verbleibende schritte als kleine notiz/zahl
-    //knopf für verbleibende rekrutierungszeiten der Baracken
-    //knopf um durch truppen durchzuklicken und diese für bewegung direkt auszuwählen
-    //kamerabewegung durch ziehen der maus in die ecken
-    //bestimmter abstand zwischen hauptgebäuden der verschiedenen Spieler und eventuelle Eingrenzung wo SPieler ihr HQ setzen dürfen
-    //markierte Felder in die Bewegung dieser Truppe möglich ist
-    //durch taste, Gebäude ausblenden lassen
-    //knights mehr schaden und engel weniger leben haben
-    //eigene Einheiten nicht auf zerstörte Gebäude bewegbar
-    //gebäude können von Engeln noch geheilt werden
-
-
-
-
-
+    //gebäude können von Engeln noch geheilt werden? Eher nicht
 
 
     //List of Fixed Bugs: (noch vervollständigen durch history aus gitHub)
     //escape taste aus Building und TruppenManager
     //engel bewegungsanimation
-    
+    //Engelsanimation ausschneiden damit Engel fliegt, animationen der engel hoch und runter wie bei blau
+    //Einheiten wenn man nicht dran ist kann man anfangen zu trainieren
+    //beim unitprefab im unit script sind die farbsprites unnötig da sie im unitanimator skript zu finden sind
+    //heilung des engels funktioniert nicht (geheilte truppe nicht mehr anklickbar)
+    //angriffe möglich obwohl nicht in angrifssdistanz-> kein schaden aber aktion durchgeführt und keine bewegungen mehr
