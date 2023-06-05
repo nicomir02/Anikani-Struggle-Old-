@@ -12,6 +12,8 @@
 
 //Mittlere Priorität
 
+    //Tutorial oder Handbuch
+
     //Gegnerische Einheiten können durch feindliche Gebäude durchgehen //nicht durch gegnerische truppen und gebäude bewegen können(ishealth healthmanager als hilfe?) || Unit dürfte schon einmal funkt.
 
     //Sounds
@@ -21,11 +23,6 @@
     //Select Unit funkt. nur richtig beim Host
 
     //In Leiste ist schrift unterschiedlich groß
-
-    //Kostenüberlegungen für Truppen und Gebäude
-    //balancen von angriff und leben
-    //balancen von truppenrekrutierung
-    //knights mehr schaden und engel weniger leben haben
 
     //angegriffene truppen sollen sich im Nahkampf wehren!!
     //Truppen brauchen mehr Statistiken als Angriff + leben + bewegungsreichweite + angriffsreichweite
@@ -40,6 +37,9 @@
     //knopf um durch truppen durchzuklicken und diese für bewegung direkt auszuwählen
 
     //bestimmter abstand zwischen hauptgebäuden der verschiedenen Spieler und eventuelle Eingrenzung wo SPieler ihr HQ setzen dürfen
+
+    //engel über kleine wasserstellen fliegen (über Einheiten?)
+    //gebäude können von Engeln noch geheilt werden
 
 //Niedrige Priorität
 
@@ -58,6 +58,7 @@
     //Methoden in Hilfsskripte und so umlagern und allgemein Skripte säubern
     //sehr lange latency/wartezeit auf seite des clients bei online-modus über hamachi(bleibt laut dozent) //scheinbar nicht mehr so??
     //manchmal verschwinden Einheiten auf Feldern(im multiplayer)
+    
 
     
     //hauptgebäude soll auch angreifen
@@ -70,10 +71,10 @@
     //cheats
 
 
-    //Fragen:
-    //engel über kleine wasserstellen fliegen? über einheiten?
-    //gebäude können von Engeln noch geheilt werden? Eher nicht
-
+    //Kontinuierlich schauen (Balancing):
+    //Kostenüberlegungen für Truppen und Gebäude
+    //balancen von angriff und leben
+    //balancen von truppenrekrutierung
 
     //List of Fixed Bugs: (noch vervollständigen durch history aus gitHub)
     //escape taste aus Building und TruppenManager

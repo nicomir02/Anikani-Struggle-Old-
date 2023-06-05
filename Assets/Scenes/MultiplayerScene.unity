@@ -8193,6 +8193,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1223650268}
   - component: {fileID: 1223650270}
+  - component: {fileID: 1223650279}
   - component: {fileID: 1223650269}
   - component: {fileID: 1223650271}
   - component: {fileID: 1223650272}
@@ -8409,6 +8410,20 @@ MonoBehaviour:
   spielername: {fileID: 379888614}
   playername: Player
   isLobby: 1
+--- !u!114 &1223650279
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1223650267}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7cf494f49f423654196948da7aa0a8bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tilemap: {fileID: 106385659}
+  durchsichtig: {r: 1, g: 1, b: 1, a: 0.39215687}
 --- !u!1 &1229184723
 GameObject:
   m_ObjectHideFlags: 0

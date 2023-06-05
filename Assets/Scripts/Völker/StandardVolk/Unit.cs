@@ -21,15 +21,17 @@ public class Unit : NetworkBehaviour
     [SerializeField] private int heilung = 0; 
 
     [SerializeField] private int standardSprite = 0;
-    /* 
-    [SyncVar] private int verteidigung = 0;
-    [SyncVar] private int nahkampf = 10;
-    [SyncVar] private int fernkampf = 5;
-    [SyncVar] private int fernkampfweite = 2; 
 
-    [SyncVar] private int BloeckeProRunde; */
+    //Standard Sachen werden hier nicht rein gemacht, aber beim Engel bspw Wasser
+    //Hier kann er nicht drauf stehen bleiben aber überqueren
+    [SerializeField] private List<Block> canWalkOver = new List<Block>(); 
 
-    //
+    
+    public bool canWalk(Block b) {
+        return canWalkOver.Contains(b);
+    }
+
+    //Wie viel kann die Unit andere heilen
     public int getHeilung() {
         return heilung;
     }

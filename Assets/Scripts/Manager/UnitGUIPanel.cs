@@ -29,17 +29,18 @@ public class UnitGUIPanel : MonoBehaviour
         //Melee Unit
         GameObject.Find("InGame/Canvas/UnitPanel/MeleeUnit").SetActive(true);
         Unit unit = GetComponent<Player>().eigenesVolk.getUnit(0);
+
         Sprite sprite = unit.getSprite(GameObject.Find("GameManager").GetComponent<RoundManager>().id);
         
         GameObject.Find("InGame/Canvas/UnitPanel/MeleeUnit/Button").GetComponent<Button>().onClick.AddListener(ButtonBuyMelee);
-        GameObject.Find("InGame/Canvas/UnitPanel/MeleeUnit/Text").GetComponent<TextMeshProUGUI>().text = unit.getName() + "\n\n Price: "+unit.getPrice() + " Wood";
+        GameObject.Find("InGame/Canvas/UnitPanel/MeleeUnit/Text").GetComponent<TextMeshProUGUI>().text = unit.getName() + "\n\n Price: "+ getPricing(unit)  + " Wood";
         GameObject.Find("InGame/Canvas/UnitPanel/MeleeUnit/Background/Image").GetComponent<Image>().sprite = sprite;
 
         unit = GetComponent<Player>().eigenesVolk.getUnit(1);
         sprite = unit.getSprite(GameObject.Find("GameManager").GetComponent<RoundManager>().id);
 
         GameObject.Find("InGame/Canvas/UnitPanel/SpecialUnit/Button").GetComponent<Button>().onClick.AddListener(ButtonBuySpecial);
-        GameObject.Find("InGame/Canvas/UnitPanel/SpecialUnit/Text").GetComponent<TextMeshProUGUI>().text = unit.getName() + "\n\n Price: "+unit.getPrice() + " Stone";
+        GameObject.Find("InGame/Canvas/UnitPanel/SpecialUnit/Text").GetComponent<TextMeshProUGUI>().text = unit.getName() + "\n\n Price: "+ getPricing(unit) + " Stone";
         GameObject.Find("InGame/Canvas/UnitPanel/SpecialUnit/Background/Image").GetComponent<Image>().sprite = sprite;
 
         //Welche Truppe wird gerade hier trainiert?
@@ -62,6 +63,28 @@ public class UnitGUIPanel : MonoBehaviour
         }
 
         
+    }
+
+    public int getPricing(Unit u) {
+        int m = getHowManyTroops(u);
+
+        if(m > 20) {
+            m = 20;
+        }
+        
+        if(m > 0) {
+            m--;
+        }
+
+        return m + u.getPrice();
+    } 
+
+    public int getHowManyTroops(Unit u) {
+        int i = 0;
+        foreach(KeyValuePair<Vector3Int, Unit> kvp in GetComponent<UnitManager>().spawnedUnits) {
+            if(kvp.Value.getName() == u.getName()) i++;
+        }
+        return i;
     }
 
     //Bei Rundenanfang aufgerufene Methode
@@ -98,7 +121,8 @@ public class UnitGUIPanel : MonoBehaviour
         Ressource ress = getRessource("Wood");
         
         Unit a = GetComponent<Player>().eigenesVolk.getUnit(0);
-        if(buildingManager.ressourcenZaehlerRechner(ress, a.getPrice())) {
+
+        if(buildingManager.ressourcenZaehlerRechner(ress, getPricing(a))) {
             
             trainedUnits.Add(selectedVector, a);
             howLong.Add(selectedVector, a.getHowManyTrainRounds());
@@ -117,7 +141,11 @@ public class UnitGUIPanel : MonoBehaviour
         Ressource ress = getRessource("Stone");
         
         Unit a = GetComponent<Player>().eigenesVolk.getUnit(1);
-        if(buildingManager.ressourcenZaehlerRechner(ress, a.getPrice())) {
+        int m = getHowManyTroops(a);
+
+        if(m > 17) m = 17;
+
+        if(buildingManager.ressourcenZaehlerRechner(ress, getPricing(a))) {
             
             trainedUnits.Add(selectedVector, a);
             howLong.Add(selectedVector, a.getHowManyTrainRounds());

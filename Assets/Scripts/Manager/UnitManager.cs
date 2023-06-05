@@ -22,7 +22,7 @@ public class UnitManager : NetworkBehaviour
 
     //private int buildInRound = 0;
     //bewegungsreichweite fehlt/angriffsbegrenzung fehlt/begrenzte blöcke fehlen
-    Dictionary<Vector3Int, Unit> spawnedUnits = new Dictionary<Vector3Int, Unit>();
+    public Dictionary<Vector3Int, Unit> spawnedUnits = new Dictionary<Vector3Int, Unit>();
 
     //Bewegungsreichweite
     Dictionary<Vector3Int, int> reichweite = new Dictionary<Vector3Int, int>();
@@ -172,7 +172,7 @@ public class UnitManager : NetworkBehaviour
             if(spawnedUnits.ContainsKey(vec)) return;
             //unit.setTile(tilemap,vec,player.id -1);
 
-            List<Vector3Int> liste = new Pathfinding(selectedVector, vec).shortestPath(); //Berechnung des shortest Path
+            List<Vector3Int> liste = new Pathfinding(selectedVector, vec, unit).shortestPath(); //Berechnung des shortest Path
             if(liste == null || liste.Count > reichweite[selectedVector]) return; //Wenn der shortest Path größer ist als die Reichweite return
 
             spawnedUnits.Remove(selectedVector);    //diese beiden Zeilen damit die Dictionary sich mit der neuen position updated
@@ -310,6 +310,7 @@ public class UnitManager : NetworkBehaviour
     public void angriff(Unit unit, Vector3Int vec){
         Vector3Int v = new Vector3Int(vec.x, vec.y, 2);
         if(spawnedUnits.ContainsKey(v) && vec != selectedVector) {
+            if(unit.getHeilung() == 0) return;
             int maxhealth = spawnedUnits[v].getLeben();
             int heal = 0;
             if(healthManager.getLeben(v) == maxhealth) return;

@@ -9,13 +9,15 @@ public class Pathfinding
     Vector3Int end;
     Knoten kuerzesterWeg = null;
     List<Vector3Int> path = new List<Vector3Int>();
+    Unit unit;
 
     //Konstruktor
-    public Pathfinding(Vector3Int startTile, Vector3Int zielTile)
+    public Pathfinding(Vector3Int startTile, Vector3Int zielTile, Unit unit)
     {
         this.start = startTile;
         this.end = zielTile;
         this.end.z = 2;
+        this.unit = unit;
     }
 
     public List<Vector3Int> shortestPath()
@@ -125,31 +127,48 @@ public class Pathfinding
     public List<Knoten> nachbarnFinden(Knoten knoten, Vector3Int end) 
     {
         List<Knoten> nachbarn = new List<Knoten>(); //Liste aller Nachbarn die am ende zurückgegeben wird
-        MapBehaviour mapBehaviour = GameObject.Find("GameManager").GetComponent<MapBehaviour>();
-        TilemapHover hover = GameObject.Find("GameManager").GetComponent<TilemapHover>();
-        HealthManager healthManager = GameObject.Find("GameManager").GetComponent<HealthManager>();
+        
 
         //prüfen ob man auf dem Feld stehen kann
-        if(hover.insideField(knoten.position + new Vector3Int(1,0,0)) && mapBehaviour.getBlockDetails((knoten.position + new Vector3Int(1,0,0))).Item2.getWalkable() && !healthManager.isUnit(knoten.position + new Vector3Int(1,0,0)))
+        if(canWalk(knoten.position + new Vector3Int(1,0,0)))
         {
             Knoten p = new Knoten(knoten.position + new Vector3Int(1,0,0), end, knoten.G+1, knoten);
             nachbarn.Add(p); //Nachbarfeld hinzufügen
         }
-        if(hover.insideField(knoten.position - new Vector3Int(1,0,0)) && mapBehaviour.getBlockDetails((knoten.position - new Vector3Int(1,0,0))).Item2.getWalkable() && !healthManager.isUnit(knoten.position - new Vector3Int(1,0,0))) 
+        if(canWalk(knoten.position - new Vector3Int(1,0,0))) 
         {
             Knoten p = new Knoten(knoten.position - new Vector3Int(1,0,0), end, knoten.G+1, knoten);
             nachbarn.Add(p);
         }
-        if(hover.insideField(knoten.position + new Vector3Int(0,1,0)) && mapBehaviour.getBlockDetails((knoten.position + new Vector3Int(0,1,0))).Item2.getWalkable() && !healthManager.isUnit(knoten.position + new Vector3Int(0,1,0))) 
+        if(canWalk(knoten.position + new Vector3Int(0,1,0))) 
         {
             Knoten p = new Knoten(knoten.position + new Vector3Int(0,1,0), end, knoten.G+1, knoten);
             nachbarn.Add(p);
         }
-        if(hover.insideField(knoten.position - new Vector3Int(0,1,0)) && mapBehaviour.getBlockDetails((knoten.position - new Vector3Int(0,1,0))).Item2.getWalkable() && !healthManager.isUnit(knoten.position - new Vector3Int(0,1,0))) 
+        if(canWalk(knoten.position - new Vector3Int(0,1,0))) 
         {
             Knoten p = new Knoten((knoten.position - new Vector3Int(0,1,0)), end, knoten.G+1, knoten);
             nachbarn.Add(p);
         }
         return nachbarn;
+    }
+
+
+    //Ich hab mal Katharinas ganze Abfragen in eine Methode gemacht, damit man da Sachen verändern kann
+    //Bspw. das der Engel über Wasser gehen darf
+    public bool canWalk(Vector3Int vec) {
+
+        //Benötigt für Abfragen:
+        MapBehaviour mapBehaviour = GameObject.Find("GameManager").GetComponent<MapBehaviour>();
+        TilemapHover hover = GameObject.Find("GameManager").GetComponent<TilemapHover>();
+        HealthManager healthManager = GameObject.Find("GameManager").GetComponent<HealthManager>();
+
+        if(hover.insideField(vec) //Ist der Vektor im Feld?
+            &&
+            (mapBehaviour.getBlockDetails((vec)).Item2.getWalkable() || unit.canWalk(mapBehaviour.getBlockDetails((vec)).Item2)) //Kann die Einheit über den Vektor laufen?
+            &&
+            !healthManager.isUnit(vec) //Ist auf dem Feld keine Einheit?
+            ) return true;
+        return false;
     }
 }

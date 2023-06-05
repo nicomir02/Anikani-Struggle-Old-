@@ -71,13 +71,15 @@ MonoBehaviour:
   syncInterval: 0
   unitname: Angel
   leben: 150
-  angriffswert: 10
-  maxBloeckeProRunde: 4
-  trainRounds: 3
-  price: 3
+  angriffswert: 20
+  maxBloeckeProRunde: 3
+  trainRounds: 4
+  price: 4
   kampfweite: 3
   heilung: 30
   standardSprite: 3
+  canWalkOver:
+  - {fileID: 4844201588082161927, guid: 68726c97b75bfed4c963fc0dea6dc0ff, type: 3}
 --- !u!212 &6068958018001157040
 SpriteRenderer:
   m_ObjectHideFlags: 0

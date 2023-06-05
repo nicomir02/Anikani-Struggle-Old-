@@ -71,9 +71,9 @@ MonoBehaviour:
   syncInterval: 0
   unitname: Knight
   leben: 100
-  angriffswert: 30
+  angriffswert: 50
   maxBloeckeProRunde: 4
-  trainRounds: 2
+  trainRounds: 3
   price: 3
   kampfweite: 1
   heilung: 0
