@@ -250,7 +250,7 @@ public class UnitManager : NetworkBehaviour
     public Vector3 vec3IntToVec3(Vector3Int vec){
         vec.z = 0;
         Vector3 position = tilemap.CellToWorld(vec);
-        position.z += 2.47f;
+        position.z = 3f;
         return position;
     }
 

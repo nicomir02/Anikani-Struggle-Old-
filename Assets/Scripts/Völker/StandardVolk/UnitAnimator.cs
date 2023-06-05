@@ -9,10 +9,12 @@ public class UnitAnimator : NetworkBehaviour
     [SerializeField] private Sprite[] idleRED;
     [SerializeField] private Sprite[] idleGREEN;
     [SerializeField] private Sprite[] idlePURP;
+
     [SerializeField] private Sprite[] moveForwardBLUE;
     [SerializeField] private Sprite[] moveBackBLUE;
     [SerializeField] private Sprite[] moveForwardRED;
     [SerializeField] private Sprite[] moveBackRED;
+
     [SerializeField] private Sprite[] moveForwardGREEN;
     [SerializeField] private Sprite[] moveBackGREEN;
     [SerializeField] private Sprite[] moveForwardPURP;
@@ -23,7 +25,7 @@ public class UnitAnimator : NetworkBehaviour
     private Sprite[] forward;
     private Sprite[] back;
     public new Sprite[] animation;
-    bool gedreht = false;
+    private bool gedreht = false;
 
     // Start is called before the first frame update
     void Start()
@@ -49,7 +51,6 @@ public class UnitAnimator : NetworkBehaviour
             idle = idlePURP;
         }
         animation = idle;
-        
     }
 
     // Update is called once per frame

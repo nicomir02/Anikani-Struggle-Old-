@@ -2,49 +2,50 @@
 
 //Hohe Priorität
 
-    //letzter verbleibender Spieler bekommt nicht Win Screen angezeigt
-    //grobe skizzen/sprites für verschiedene Völker um mal ein umfangreicheres spiel aufzubauen 
-    //wanderer programmierung dahinter
-    //Name nur von Host, nicht von clients
-    //Spielernamensliste durch Tab anzeigen lassen können(Alex)
-    //Beenden Button im Hauptmenü klappt nicht
-    //eigene Einheiten nicht auf zerstörte Gebäude bewegbar
+    //letzter verbleibender Spieler bekommt nicht Win Screen angezeigt [Nico]
+    //Mehr Sprites [Nikolai]
+    //wanderer programmierung dahinter [Alex?]
+    //Name nur von Host, nicht von clients [Alex]
+    //Spielernamensliste durch Tab anzeigen lassen können [Alex]
+    //Beenden Button im Hauptmenü klappt nicht [Katharina, Nico, Alex?]
+    //eigene Einheiten nicht auf zerstörte Gebäude bewegbar [Nico]
 
 //Mittlere Priorität
 
-    //Tutorial oder Handbuch
+    //Tutorial oder Handbuch [Alex & Nico?]
 
-    //Gegnerische Einheiten können durch feindliche Gebäude durchgehen //nicht durch gegnerische truppen und gebäude bewegen können(ishealth healthmanager als hilfe?) || Unit dürfte schon einmal funkt.
+    //Gegnerische Einheiten können durch feindliche Gebäude durchgehen //nicht durch gegnerische truppen und gebäude bewegen können(ishealth healthmanager als hilfe?) || Unit dürfte schon einmal funkt. [Alex & Nico?]
 
-    //Sounds
+    //Sounds [Nikolai, Alex, Katharina, Nico]
     //Code kommentieren [Alex, Nico]
-    //Animation von Sword Attack Knight besser ausschneiden und einfügen
 
-    //Select Unit funkt. nur richtig beim Host
+    //Animation von Sword Attack Knight besser ausschneiden und einfügen [Katharina?]
+    //Angriffsanimation implementierung [Katharina]
+    //animationen der engel unsynchron machen [Katharina]
 
-    //In Leiste ist schrift unterschiedlich groß
+    //Select Unit funkt. nur richtig beim Host [Nico]
 
-    //angegriffene truppen sollen sich im Nahkampf wehren!!
-    //Truppen brauchen mehr Statistiken als Angriff + leben + bewegungsreichweite + angriffsreichweite
-    //generischer flächenschaden bei angriff(für heilung, angriffe, angriffe über zeit(curse, poison))
-    //IP Speicherung um benutzte IPS wieder zu wervenden(Alex)
-    //Speicherung des eigenen Namens bei nöchstem SPiel(Alex)
+    //In Leiste ist schrift unterschiedlich groß [Alex]
 
-    //animationen der engel unsynchron machen
+    //angegriffene truppen sollen sich im Nahkampf wehren!! [Alex & Nico?]
+    //Truppen brauchen mehr Statistiken als Angriff + leben + bewegungsreichweite + angriffsreichweite [Was denn noch außer wehren?]
 
-    //neben lebensbalken verbleibende schritte als kleine notiz/zahl
+    //IP Speicherung um benutzte IPS wieder zu wervenden [Alex]
+    //Speicherung des eigenen Namens bei nöchstem SPiel [Alex]
 
-    //knopf um durch truppen durchzuklicken und diese für bewegung direkt auszuwählen
+    //neben lebensbalken verbleibende schritte als kleine notiz/zahl [Alex & Nico?]
 
-    //bestimmter abstand zwischen hauptgebäuden der verschiedenen Spieler und eventuelle Eingrenzung wo SPieler ihr HQ setzen dürfen
+    //knopf um durch truppen durchzuklicken und diese für bewegung direkt auszuwählen [Nico]
 
-    //engel über kleine wasserstellen fliegen (über Einheiten?)
-    //gebäude können von Engeln noch geheilt werden
+    //bestimmter abstand zwischen hauptgebäuden der verschiedenen Spieler und eventuelle Eingrenzung wo SPieler ihr HQ setzen dürfen [Nico]
+
+    //gebäude können von Engeln noch geheilt werden [Ausprobieren]
 
 //Niedrige Priorität
 
-    //markierte Felder in die Bewegung dieser Truppe möglich ist // Markierung wo kann die Truppe hin?
-    //durch taste, Gebäude ausblenden lassen
+    //generischer flächenschaden bei angriff(für heilung, angriffe, angriffe über zeit(curse, poison)) [erstmal niedrigere Priorität, Wanderer Implementierung ist wichtiger]
+
+    //markierte Felder in die Bewegung dieser Truppe möglich ist // Markierung wo kann die Truppe hin
     //knopf für verbleibende rekrutierungszeiten der Baracken
 
     //Wenn Engel heilen will und schon volles Leben hat, dann soll nicht Bewegung runter gehen
@@ -76,6 +77,9 @@
     //balancen von angriff und leben
     //balancen von truppenrekrutierung
 
+    //Fragen:
+    //engel über Einheiten fliegen?
+
     //List of Fixed Bugs: (noch vervollständigen durch history aus gitHub)
     //escape taste aus Building und TruppenManager
     //engel bewegungsanimation
@@ -84,3 +88,5 @@
     //beim unitprefab im unit script sind die farbsprites unnötig da sie im unitanimator skript zu finden sind
     //heilung des engels funktioniert nicht (geheilte truppe nicht mehr anklickbar)
     //angriffe möglich obwohl nicht in angrifssdistanz-> kein schaden aber aktion durchgeführt und keine bewegungen mehr
+    //engel über kleine wasserstellen fliegen
+    //durch taste, Gebäude ausblenden lassen

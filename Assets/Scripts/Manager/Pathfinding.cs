@@ -154,7 +154,7 @@ public class Pathfinding
     }
 
 
-    //Ich hab mal Katharinas ganze Abfragen in eine Methode gemacht, damit man da Sachen verändern kann
+    //Ich(Nico) hab mal Katharinas ganze Abfragen in eine Methode gemacht, damit man da Sachen verändern kann
     //Bspw. das der Engel über Wasser gehen darf
     public bool canWalk(Vector3Int vec) {
 
@@ -167,7 +167,7 @@ public class Pathfinding
             &&
             (mapBehaviour.getBlockDetails((vec)).Item2.getWalkable() || unit.canWalk(mapBehaviour.getBlockDetails((vec)).Item2)) //Kann die Einheit über den Vektor laufen?
             &&
-            !healthManager.isUnit(vec) //Ist auf dem Feld keine Einheit?
+            !healthManager.isUnit(vec) //Ist auf dem Feld keine Einheit? Weil man soll ja nicht über Einheiten gehen, außer später vllt hinzufügen, über eigene Units schon
             ) return true;
         return false;
     }
