@@ -18,6 +18,12 @@ public class GameManager : NetworkBehaviour
     //Liste hier, da bei Player Probleme mit Sync gab
     public readonly SyncList<int> disqualifiedPlayers = new SyncList<int>();
 
+    [SerializeField] private int minAbstandMainBuilding = 20;
+    
+
+    public int getMinAbstandMainBuilding() {
+        return minAbstandMainBuilding;
+    }
 
     //Methode fürs disqualifien
     [Command(requiresAuthority = false)]

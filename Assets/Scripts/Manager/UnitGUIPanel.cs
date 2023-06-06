@@ -20,6 +20,8 @@ public class UnitGUIPanel : MonoBehaviour
 
         selectedVector = vec;
 
+        
+
         GameObject.Find("InGame/Canvas/UnitPanel").SetActive(true);
         GameObject.Find("GameManager").GetComponent<PauseMenu>().togglePauseOn();
         GameObject.Find("GameManager").GetComponent<PauseMenu>().setCanPause(false);
@@ -61,8 +63,6 @@ public class UnitGUIPanel : MonoBehaviour
                 GameObject.Find("InGame/Canvas/UnitPanel/CurTrainedUnit/BG/Text").GetComponent<TextMeshProUGUI>().text += "s";
             }
         }
-
-        
     }
 
     public int getPricing(Unit u) {
@@ -98,7 +98,7 @@ public class UnitGUIPanel : MonoBehaviour
 
         foreach(KeyValuePair<Vector3Int, Unit> kvp in trainedUnits) {
             howLong[kvp.Key] -= 1;
-            Vector3Int vec = new Vector3Int(kvp.Key.x, kvp.Key.y, 2);
+            Vector3Int vec = new Vector3Int(kvp.Key.x-1, kvp.Key.y, 2);
             if(howLong[kvp.Key] <= 0 && !unitManager.hasUnitOnVec(vec)) {
                 unitManager.spawnUnit(kvp.Value, vec, GameObject.Find("GameManager").GetComponent<RoundManager>().id-1);
                 removeTemp.Add(kvp.Key);
@@ -169,6 +169,67 @@ public class UnitGUIPanel : MonoBehaviour
     void Update() {
         if(!generated) return;
         if(Input.GetKeyDown(KeyCode.Escape)) GUIoff();
+
+        if(Input.GetKeyDown(KeyCode.LeftArrow)) {
+            Vector3Int last = new Vector3Int(-1,-1,-1);
+            Vector3Int next = new Vector3Int(-1,-1,-1);
+
+            bool vorbei = false;
+
+            foreach(KeyValuePair<Vector3Int, Building> kvp in GetComponent<BuildingManager>().buildingsVec) {
+                if(kvp.Value.getName() == "Barracks") {
+                    if(kvp.Key == selectedVector) {
+                        vorbei = true;
+                    }else {
+                        if(vorbei) {
+                            next = kvp.Key;
+                        }else {
+                            last = kvp.Key;
+                        }
+                    }
+                }
+            }
+
+            if(last.z != -1) {
+                GUIoff();
+                generateGUI(last);
+                GameObject.Find("GameManager").GetComponent<MapBehaviour>().cameraChange(last.x, last.y);
+            }else if(next.z != -1) {
+                GUIoff();
+                generateGUI(next);
+                GameObject.Find("GameManager").GetComponent<MapBehaviour>().cameraChange(next.x, next.y);
+            }
+            
+        }
+        if(Input.GetKeyDown(KeyCode.RightArrow)) {
+            Vector3Int first = new Vector3Int(-1,-1,-1);
+            Vector3Int next = new Vector3Int(-1,-1,-1);
+
+            bool vorbei = false;
+            foreach(KeyValuePair<Vector3Int, Building> kvp in GetComponent<BuildingManager>().buildingsVec) {
+                if(kvp.Value.getName() == "Barracks") {
+                    if(kvp.Key == selectedVector) {
+                        vorbei = true;
+                    }else {
+                        if(vorbei && next.z == -1) {
+                            next = kvp.Key;
+                        }else {
+                            if(first.z == -1) first = kvp.Key;
+                        }
+                    }
+                }
+            }
+
+            if(next.z != -1) {
+                GUIoff();
+                generateGUI(next);
+                GameObject.Find("GameManager").GetComponent<MapBehaviour>().cameraChange(next.x, next.y);
+            }else if(first.z != -1) {
+                GUIoff();
+                generateGUI(first);
+                GameObject.Find("GameManager").GetComponent<MapBehaviour>().cameraChange(first.x, first.y);
+            }
+        }
     }
 
     //Methode Button Click Close GUI

@@ -5,6 +5,7 @@ using Mirror;
 using TMPro;
 using UnityEngine.UI;
 using UnityEngine.Tilemaps;
+using System.Linq;
 
 public class UnitManager : NetworkBehaviour
 {
@@ -15,10 +16,13 @@ public class UnitManager : NetworkBehaviour
     private TilemapManager tilemapManager;
     private VolkManager volkManager;
     private MapBehaviour mapBehaviour;
+    private BuildingManager buildingManager;
 
     private GameManager gameManager;
 
     private HealthManager healthManager;
+
+    private RoundManager roundManager;
 
     //private int buildInRound = 0;
     //bewegungsreichweite fehlt/angriffsbegrenzung fehlt/begrenzte blöcke fehlen
@@ -32,6 +36,10 @@ public class UnitManager : NetworkBehaviour
     private Unit selectedUnit;
     private Vector3Int selectedVector;
 
+
+    //Benötigt um zu markieren wohin die Einheit kann
+    private List<Vector3Int> weite = new List<Vector3Int>();
+
     private bool isLobby = true;
     
     
@@ -43,8 +51,10 @@ public class UnitManager : NetworkBehaviour
         volk = player.eigenesVolk;
         tilemapManager = GameObject.Find("GameManager").GetComponent<TilemapManager>();
         volkManager = GameObject.Find("GameManager").GetComponent<VolkManager>();
+        roundManager = GameObject.Find("GameManager").GetComponent<RoundManager>();
         mapBehaviour = GameObject.Find("GameManager").GetComponent<MapBehaviour>();
         healthManager = GameObject.Find("GameManager").GetComponent<HealthManager>();
+        buildingManager = GetComponent<BuildingManager>();
     }
 
     
@@ -106,7 +116,134 @@ public class UnitManager : NetworkBehaviour
                 reichweite.Remove(healthManager.angegriffenVec);
             } else if(selectedVector == healthManager.angegriffenVec) activatePanel(selectedVector);
         }
+
+
+        if(selectedUnit != null) {
+            if(Input.GetKeyDown(KeyCode.LeftArrow)) {
+                Vector3Int last = new Vector3Int(-1,-1,-1);
+                Vector3Int next = new Vector3Int(-1,-1,-1);
+
+                bool vorbei = false;
+
+                foreach(KeyValuePair<Vector3Int, Unit> kvp in spawnedUnits) {
+                    if(kvp.Key == selectedVector) {
+                        vorbei = true;
+                    }else {
+                        if(vorbei) {
+                            next = kvp.Key;
+                        }else {
+                            last = kvp.Key;
+                        }
+                    }
+                }
+
+                if(last.z != -1) {
+                    deselectUnit();
+                    selectUnit(last);
+                    GameObject.Find("GameManager").GetComponent<MapBehaviour>().cameraChange(last.x, last.y);
+                }else if(next.z != -1) {
+                    deselectUnit();
+                    selectUnit(next);
+                    GameObject.Find("GameManager").GetComponent<MapBehaviour>().cameraChange(next.x, next.y);
+                }
+                
+            }
+
+            if(Input.GetKeyDown(KeyCode.RightArrow)) {
+                Vector3Int first = new Vector3Int(-1,-1,-1);
+                Vector3Int next = new Vector3Int(-1,-1,-1);
+
+                bool vorbei = false;
+                foreach(KeyValuePair<Vector3Int, Unit> kvp in spawnedUnits) {
+                    if(kvp.Key == selectedVector) {
+                        vorbei = true;
+                    }else {
+                        if(vorbei && next.z == -1) {
+                            next = kvp.Key;
+                        }else {
+                            if(first.z == -1) first = kvp.Key;
+                        }
+                    }
+                }
+
+                if(next.z != -1) {
+                    deselectUnit();
+                    selectUnit(next);
+                    GameObject.Find("GameManager").GetComponent<MapBehaviour>().cameraChange(next.x, next.y);
+                }else if(first.z != -1) {
+                    deselectUnit();
+                    selectUnit(first);
+                    GameObject.Find("GameManager").GetComponent<MapBehaviour>().cameraChange(first.x, first.y);
+                }
+            }
+        }
         
+
+        einheitReichweiteMarkierer();
+        
+    }
+    
+    //Methode um zu markieren wo Einheit hin kann
+    private Vector3Int old = new Vector3Int(-1, -1, -1);
+    void einheitReichweiteMarkierer() {
+        if (!isLocalPlayer) return;
+
+        if (selectedUnit != null) {
+            Vector3Int vec = hover.getVectorFromMouse();
+            if (old == vec) return;
+            old = vec;
+
+            int curReichweite = reichweite[selectedVector];
+
+            if (hover.insideField(vec) && distance(selectedVector, vec) <= curReichweite) {
+                List<Vector3Int> tempweite = new Pathfinding(selectedVector, vec, selectedUnit).shortestPath();
+
+                if (weite != null && tempweite != null && weite == tempweite) return;
+
+                if (weite != null && tempweite != null) {
+                    foreach (Vector3Int vector in weite) {
+                        Vector3Int v = new Vector3Int(vector.x, vector.y, 0);
+                        if (!tempweite.Contains(v)) {
+                            if (buildingManager.getShowArea() && gameManager.teamVecs.ContainsKey(v) && gameManager.teamVecs[v] == roundManager.id) {
+                                tilemap.SetColor(v, gameManager.getColorByID(roundManager.id));
+                            } else {
+                                tilemap.SetColor(v, Color.white);
+                            }
+                        }
+                    }
+                }
+
+                weite = tempweite;
+
+                if (weite != null && weite.Count <= curReichweite) {
+                    int i = 0;
+                    foreach (Vector3Int v in weite) {
+                        if (i > curReichweite) break;
+                        i++;
+                        tilemap.SetTileFlags(new Vector3Int(v.x, v.y, 0), TileFlags.None);
+                        tilemap.SetColor(new Vector3Int(v.x, v.y, 0), hover.getSelectColor());
+                    }
+                }
+
+            } else if (weite != null && weite.Count > 0) {
+                ClearWeite();
+            }
+
+        } else if (weite != null && weite.Count > 0) {
+            ClearWeite();
+        }
+    }
+
+    void ClearWeite() {
+        if (buildingManager.getShowArea()) {
+            buildingManager.reloadShowArea();
+        } else {
+            foreach (Vector3Int v in weite) {
+                tilemap.SetColor(new Vector3Int(v.x, v.y, 0), Color.white);
+            }
+        }
+        weite.Clear();
+        hover.reload();
     }
 
     public void deselectUnit(){
@@ -127,7 +264,6 @@ public class UnitManager : NetworkBehaviour
         if(spawnedUnits.ContainsKey(vec)){ 
             selectedUnit = spawnedUnits[vec];
             selectedVector = vec;
-
             if(getGameObject(vec) != null) {
                 getGameObject(vec).GetComponent<SpriteRenderer>().color = Color.grey;
             }
@@ -162,7 +298,7 @@ public class UnitManager : NetworkBehaviour
     public void moveUnit(Unit unit, Vector3Int vec){
         if(!GameObject.Find("GameManager").GetComponent<RoundManager>().isYourTurn) return;
         vec.z = 2;
-        if((distance(selectedVector, vec) <= (reichweite[selectedVector]+1)) && mapBehaviour.getBlockDetails(new Vector3Int(vec.x, vec.y, 0)).Item2.getWalkable() && !GetComponent<BuildingManager>().isOwnBuilding(vec)) {
+        if((distance(selectedVector, vec) <= (reichweite[selectedVector]+1)) && mapBehaviour.getBlockDetails(new Vector3Int(vec.x, vec.y, 0)).Item2.getWalkable() && !healthManager.isHealth(vec)) {
             if(healthManager.isHealth(vec) && !GetComponent<BuildingManager>().isOwnBuilding(new Vector3Int(vec.x, vec.y, 1))){
                 angriff(unit, vec);
                 return;
@@ -170,7 +306,7 @@ public class UnitManager : NetworkBehaviour
             }
             if(distance(selectedVector, vec) > reichweite[selectedVector]) return;
             if(spawnedUnits.ContainsKey(vec)) return;
-            //unit.setTile(tilemap,vec,player.id -1);
+            //unit.set(tilemap,vec,player.id -1);
 
             List<Vector3Int> liste = new Pathfinding(selectedVector, vec, unit).shortestPath(); //Berechnung des shortest Path
             if(liste == null || liste.Count > reichweite[selectedVector]) return; //Wenn der shortest Path größer ist als die Reichweite return
@@ -184,6 +320,8 @@ public class UnitManager : NetworkBehaviour
             
             healthManager.moveUnit(selectedVector, vec);
             syncMovedUnits(selectedVector);
+
+            
 
             cmdMoveUnit(selectedVector, vec, liste);
         }
@@ -212,7 +350,20 @@ public class UnitManager : NetworkBehaviour
                 us.vec = to;
                 to.z = 0;
                 StartCoroutine(MoveToPosition(us.GetComponent<Transform>(), shortestPath, 0.5f, from));
+                changeVecInUnitSprite(from, to);
             }
+        }
+    }
+
+    //Change in UnitSprite bei jedem Client
+    [ClientRpc]
+    public void changeVecInUnitSprite(Vector3Int from, Vector3Int to) {
+
+        from.z = 2;
+        to.z = 2;
+
+        foreach(UnitSprite us in FindObjectsOfType<UnitSprite>()) {
+            if(us.vec == from) us.vec = to;
         }
     }
 

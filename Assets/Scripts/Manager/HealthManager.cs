@@ -34,7 +34,14 @@ public class HealthManager : NetworkBehaviour
                 if(!building.ContainsKey(v)) building.Add(new Vector3Int(v.x, v.y, 1), vec);
             }
         }
+    }
 
+    public List<Vector3Int> getAllVecsOnZero() {
+        List<Vector3Int> liste = new List<Vector3Int>();
+        foreach(KeyValuePair<Vector3Int, Vector3Int> kvp in building) {
+            liste.Add(new Vector3Int(kvp.Key.x, kvp.Key.y, 0));
+        }
+        return liste;
     }
 
     //schaut ob an diesem Vektor leben gespeichert gewerden

@@ -3691,7 +3691,6 @@ GameObject:
   m_Component:
   - component: {fileID: 402433576}
   - component: {fileID: 402433579}
-  - component: {fileID: 402433578}
   - component: {fileID: 402433577}
   - component: {fileID: 402433580}
   m_Layer: 0
@@ -3745,20 +3744,6 @@ MonoBehaviour:
   debugLog: 0
   statisticsGUI: 0
   statisticsLog: 0
---- !u!114 &402433578
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 402433575}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6442dc8070ceb41f094e44de0bf87274, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  offsetX: 0
-  offsetY: 0
 --- !u!114 &402433579
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8117,7 +8102,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1082151009
 RectTransform:
   m_ObjectHideFlags: 0
@@ -8940,6 +8925,7 @@ MonoBehaviour:
   biomgroesse: 250
   tilemap: {fileID: 106385659}
   randTile: {fileID: 4844201588082161927, guid: f0f84a696b61e524c914b8c21cd114e5, type: 3}
+  cameraObject: {fileID: 1792141988}
 --- !u!114 &1223650270
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13167,7 +13153,14 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'B : Hide Buildings'
+  m_text: 'B : Hide Buildings
+
+
+    Click the left or right arrow to switch through
+    your barracks (in the panel) or units (after selecting one unit)
+
+
+'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -13298,7 +13291,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 6.33
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2

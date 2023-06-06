@@ -47,6 +47,8 @@ public class MapBehaviour : NetworkBehaviour
     [SerializeField] private Tilemap tilemap;
     [SerializeField] private Block randTile;
 
+    [SerializeField] private GameObject cameraObject;
+
     //Sync Variable zu ob Terrain generiert wurde
     [SyncVar] private bool terrainBuild = false;
 
@@ -72,6 +74,20 @@ public class MapBehaviour : NetworkBehaviour
             }
         }
         createRand();
+
+
+        cameraChange(mapWidth() / 2, mapHeight() / 2);
+    }
+
+    public void cameraChange(int x, int y) {
+        
+
+        Vector3 vec = tilemap.CellToWorld(new Vector3Int(x, y, 0));
+
+        vec.z = -20;
+
+        cameraObject.GetComponent<Transform>().position = vec;
+        
     }
 
     public void createTerrain() {
@@ -133,6 +149,7 @@ public class MapBehaviour : NetworkBehaviour
 
         setTerrainbuild(true);
 
+        cameraChange(mapWidth() / 2, mapHeight() / 2);
     }
 
     [Command(requiresAuthority = false)]

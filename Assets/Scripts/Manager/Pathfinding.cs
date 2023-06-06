@@ -36,9 +36,6 @@ public class Pathfinding
 
         while(offeneListe.Count > 0)
         {
-            testzaehler++;
-            if(testzaehler > 42) break;
-            
             Knoten aktiverKnoten = lowestCost(offeneListe); //neuen aktiven Knoten aus der Liste der Nachbarn suchen
 
             /*Debug.Log("aktiverKnoten: " + aktiverKnoten.position + ", AbstandS: " + aktiverKnoten.G + ", AbstandE: " + aktiverKnoten.H + ", best?: " + aktiverKnoten.F);
@@ -62,7 +59,7 @@ public class Pathfinding
                     testzaehler++;
                 }
                 
-                if(testzaehler > 4) break;
+                if(testzaehler > unit.getMaxBloeckeProRunde()+1) break; //Einheiten vllt mehr als 4 Schritte haben kommentier ich das mal aus
 
                 path.Reverse();
                 return path;
@@ -167,7 +164,7 @@ public class Pathfinding
             &&
             (mapBehaviour.getBlockDetails((vec)).Item2.getWalkable() || unit.canWalk(mapBehaviour.getBlockDetails((vec)).Item2)) //Kann die Einheit über den Vektor laufen?
             &&
-            !healthManager.isUnit(vec) //Ist auf dem Feld keine Einheit? Weil man soll ja nicht über Einheiten gehen, außer später vllt hinzufügen, über eigene Units schon
+            !healthManager.isUnit(vec) //Ist auf dem Feld eine Einheit oder ein Gebäude?
             ) return true;
         return false;
     }

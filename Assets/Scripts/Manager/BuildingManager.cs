@@ -35,7 +35,7 @@ public class BuildingManager : NetworkBehaviour
     private int ZaehlerBuildingsBuiltInRound = 0;
 
     //was für ein Building an diesem Vektor sich befindet(jedes bUilding einmal in dem Dictionary)
-    private Dictionary<Vector3Int, Building> buildingsVec = new Dictionary<Vector3Int, Building>();
+    public Dictionary<Vector3Int, Building> buildingsVec = new Dictionary<Vector3Int, Building>();
     //da manche Buildings größer als 1 Feld sind muss man alle besetzten Felder
     //hier auflisten um mit buildingsvex zu korrespondieren
     private Dictionary<Vector3Int, Vector3Int> buildingvectors = new Dictionary<Vector3Int, Vector3Int>();
@@ -69,11 +69,13 @@ public class BuildingManager : NetworkBehaviour
                 disqualifyPlayer();
                 GameObject.Find("GameManager").GetComponent<WinLooseScreen>().setLooseScreen();
             }else {
-                tilemapManager.removeBuilding(temp, 2);
-                healthManager.removeBuilding(vec);
-                //Remove Building von Listen
                 
+                
+                //Remove Building von Listen
                 buildingsVec.Remove(temp);
+
+                Debug.Log(temp);
+                
                 List<Vector3Int> removeList = new List<Vector3Int>();
                 foreach(KeyValuePair<Vector3Int, Vector3Int> kvp in buildingvectors) {
                     if(kvp.Value == temp) {
@@ -90,6 +92,9 @@ public class BuildingManager : NetworkBehaviour
                 foreach(Vector3Int v in removeList) {
                     buildingvectors.Remove(v);
                 }
+
+                tilemapManager.removeBuilding(temp, 2);
+                healthManager.removeBuilding(vec);
             }
         }
         if(showAreaBool) {
@@ -156,6 +161,20 @@ public class BuildingManager : NetworkBehaviour
             if(hover.insideField(vec)) {
                 if(GameObject.Find("GameManager").GetComponent<RoundManager>().round == 0 && ZaehlerBuildingsBuiltInRound == 0) {
                     List<Vector3Int> newArea = makeAreaBigger(vec, 1);
+
+                    /*List<Vector3Int> check = healthManager.getAllVecsOnZero();
+
+                    bool mainBuildingNear = false;
+                    int minAbstand = gameManager.getMinAbstandMainBuilding();
+
+                    foreach(Vector3Int v in check) {
+                        foreach(Vector3Int ve in newArea) {
+                            if(unitManager.distance(v, ve) <= minAbstand) {
+                                mainBuildingNear = true;
+                            }
+                        }
+                    }*/
+
                     if(canBuildMethod(vec)) {
                         //Added zu der eigenen Area
                         addFelderToTeam(vec, 6, GameObject.Find("GameManager").GetComponent<RoundManager>().id);
@@ -350,46 +369,6 @@ public class BuildingManager : NetworkBehaviour
                 if(showAreaBool) reloadShowArea();
             }
         }
-
-        /*
-        if(r.ressourceName == "Tree") { //ändern später damit generisch und nicht spezifisch für Tree
-            List<Vector3Int> nachbarcheck = makeAreaBigger(vec, 1); //wenn building groesser dann andere zahl
-            bool gebaeudeSetzbar = true;
-            //schaut nach ob auf den Nachbarfeldern sich andere Gebäude befinden
-            foreach(Vector3Int v in nachbarcheck) {
-                if(buildingvectors.ContainsKey(v) || (hover.insideField(v) && !mapBehaviour.getBlockDetails(v).Item2.getBuildable()) || 
-                buildingvectors.ContainsKey(new Vector3Int(v.x, v.y, 1)) || !hover.insideField(v) || gameManager.isEnemyArea(v, player.id)) gebaeudeSetzbar = false;
-            }
-            if(gebaeudeSetzbar) {
-                int zaehler = deleteFelder(vec, 3, r);//wenn building groesser dann andere zahl
-                
-                
-                //Zaehler geht hoch
-                ZaehlerBuildingsBuiltInRound++; 
-                
-                
-                addFelderToTeam(vec, 4, player.id);//1 groesser als buildinggroesse
-
-
-                vec.x -= 1;
-                vec.y -= 1;
-                //standard Dictionary hinzufügen
-                Building treeBuilding = volk.getTreeBuilding(0);
-                addBuilding(nachbarcheck, treeBuilding, vec);
-
-                //Anpassen des Ressourcenzaehlers pro Runde
-                
-
-                vec.z = 1;
-                ressourcenProRundeZaehler.Add(vec, (r, zaehler));
-                //Vector3Int vec, int b, int playerID, int volkID, int lvl
-                tilemapManager.CmdUpdateTilemapBuilding(vec, 2, player.id, volkManager.getVolkID(volk).Item2, 0);
-
-                treeBuilding.setTile(tilemap, vec, player.id-1); //später ändern auf generisch, durch Methode vielleicht
-                //synchronisieren für alle Spieler
-                if(showAreaBool) reloadShowArea();
-            }
-        }*/
     }
 
 //Synchronisieren der Felder der einzelnen Spieler
