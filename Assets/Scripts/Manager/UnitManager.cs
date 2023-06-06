@@ -82,6 +82,14 @@ public class UnitManager : NetworkBehaviour
         }
         return false;
     }
+
+    List<Vector3Int> spawnedUnitsToVectorList(int z) { //liste mit spawnedUnits Vektoren, normalisiert auf einen Z-Wert(weil bspw. Pathfinding braucht z=-1)
+        List<Vector3Int> result = new List<Vector3Int>();
+        foreach(KeyValuePair<Vector3Int, Unit> kvp in spawnedUnits) {
+            result.Add(new Vector3Int(kvp.Key.x, kvp.Key.y, z));
+        }
+        return result;
+    }
     
     private void Update(){
         if(GameObject.Find("GameManager").GetComponent<PauseMenu>().getPause()) return;
@@ -178,25 +186,25 @@ public class UnitManager : NetworkBehaviour
             }
         }
         
-
-        einheitReichweiteMarkierer();
-        
+        Vector3Int vector = hover.getVectorFromMouse();
+        einheitReichweiteMarkierer();       
     }
     
     //Methode um zu markieren wo Einheit hin kann
     private Vector3Int old = new Vector3Int(-1, -1, -1);
     void einheitReichweiteMarkierer() {
+        Vector3Int vec = hover.getVectorFromMouse();
         if (!isLocalPlayer) return;
 
         if (selectedUnit != null) {
-            Vector3Int vec = hover.getVectorFromMouse();
-            if (old == vec) return;
+            Pathfinding pathfinding = new Pathfinding(selectedVector, vec, selectedUnit, spawnedUnitsToVectorList(-1));
+            if (old == vec || !pathfinding.canWalk(vec) || GetComponent<BuildingManager>().isOwnBuilding(vec) || spawnedUnits.ContainsKey(new Vector3Int(vec.x, vec.y, 2))) return;
             old = vec;
 
             int curReichweite = reichweite[selectedVector];
 
             if (hover.insideField(vec) && distance(selectedVector, vec) <= curReichweite) {
-                List<Vector3Int> tempweite = new Pathfinding(selectedVector, vec, selectedUnit).shortestPath();
+                List<Vector3Int> tempweite = pathfinding.shortestPath();
 
                 if (weite != null && tempweite != null && weite == tempweite) return;
 
@@ -212,8 +220,8 @@ public class UnitManager : NetworkBehaviour
                         }
                     }
                 }
-
-                weite = tempweite;
+                if(tempweite == null) return;
+                weite = tempweite.ToList();
 
                 if (weite != null && weite.Count <= curReichweite) {
                     int i = 0;
@@ -298,17 +306,17 @@ public class UnitManager : NetworkBehaviour
     public void moveUnit(Unit unit, Vector3Int vec){
         if(!GameObject.Find("GameManager").GetComponent<RoundManager>().isYourTurn) return;
         vec.z = 2;
-        if((distance(selectedVector, vec) <= (reichweite[selectedVector]+1)) && mapBehaviour.getBlockDetails(new Vector3Int(vec.x, vec.y, 0)).Item2.getWalkable() && !healthManager.isHealth(vec)) {
+        if((distance(selectedVector, vec) <= (reichweite[selectedVector]+1)) && mapBehaviour.getBlockDetails(new Vector3Int(vec.x, vec.y, 0)).Item2.getWalkable() && !GetComponent<BuildingManager>().isOwnBuilding(vec)) {
             if(healthManager.isHealth(vec) && !GetComponent<BuildingManager>().isOwnBuilding(new Vector3Int(vec.x, vec.y, 1))){
                 angriff(unit, vec);
                 return;
                 //if(healthManager.isHealth(vec)) return;    //schaut ob gegner besiegt wurde in dieser runde || Auskommentiert, sonst kann gegner Einheit bewegen
             }
-            if(distance(selectedVector, vec) > reichweite[selectedVector]) return;
-            if(spawnedUnits.ContainsKey(vec)) return;
+
+            if(distance(selectedVector, vec) > reichweite[selectedVector] || spawnedUnits.ContainsKey(vec)) return;
             //unit.set(tilemap,vec,player.id -1);
 
-            List<Vector3Int> liste = new Pathfinding(selectedVector, vec, unit).shortestPath(); //Berechnung des shortest Path
+            List<Vector3Int> liste = new Pathfinding(selectedVector, vec, unit, spawnedUnitsToVectorList(-1)).shortestPath(); //Berechnung des shortest Path
             if(liste == null || liste.Count > reichweite[selectedVector]) return; //Wenn der shortest Path größer ist als die Reichweite return
 
             spawnedUnits.Remove(selectedVector);    //diese beiden Zeilen damit die Dictionary sich mit der neuen position updated
@@ -401,7 +409,7 @@ public class UnitManager : NetworkBehaviour
     public Vector3 vec3IntToVec3(Vector3Int vec){
         vec.z = 0;
         Vector3 position = tilemap.CellToWorld(vec);
-        position.z = 3f;
+        position.z = 3.1f;
         return position;
     }
 
@@ -431,7 +439,7 @@ public class UnitManager : NetworkBehaviour
         spriteObject.GetComponent<UnitSprite>().id = colorID+1;
 
         Vector3 position = tilemap.CellToWorld(vec);
-        position.z += 2.47f;
+        position.z = 3.1f;
         spriteObject.transform.position = position;
 
         spriteObject.transform.rotation = Quaternion.identity;
@@ -480,11 +488,11 @@ public class UnitManager : NetworkBehaviour
         if(spawnedUnits.ContainsKey(v) || !canAttack(unit, selectedVector, vec)) return;
 
         reichweite[selectedVector] = 0;
-
         if(healthManager.isUnit(new Vector3Int(vec.x, vec.y, 2))) {
             healthManager.angriff(new Vector3Int(vec.x, vec.y, 2), unit.getAngriffswert());
             syncStillExists(new Vector3Int(vec.x, vec.y, 2));
         }else if(healthManager.isBuilding(new Vector3Int(vec.x, vec.y, 1))) {
+            
             healthManager.angriffBuilding(new Vector3Int(vec.x, vec.y, 1), unit.getAngriffswert());
             syncStillExistsBuilding(new Vector3Int(vec.x, vec.y, 1));
         }
