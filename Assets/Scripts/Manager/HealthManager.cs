@@ -47,10 +47,8 @@ public class HealthManager : NetworkBehaviour
     //schaut ob an diesem Vektor leben gespeichert gewerden
     public bool isHealth(Vector3Int vec) {
         bool b = false;
-        if(health.ContainsKey(vec)) b = true;
-        vec.z = 1;
-        if(health.ContainsKey(vec)) b = true;
-        if(building.ContainsKey(vec)) b = true;
+        if(isUnit(vec)) b = true;
+        if(isBuilding(vec)) b = true;
         return b;
     }
 
@@ -80,6 +78,7 @@ public class HealthManager : NetworkBehaviour
 
     //vorherige Methode noch unter verwendung, neue isHealth()
     public bool isBuilding(Vector3Int vec) {
+        vec.z = 1;
         return building.ContainsKey(vec);
     }
 

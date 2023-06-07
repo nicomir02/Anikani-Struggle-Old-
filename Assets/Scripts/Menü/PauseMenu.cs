@@ -62,7 +62,7 @@ public class PauseMenu : MonoBehaviour
 //benötigter delay, damit alles fertig geladen ist
     IEnumerator disconnectDelay()
     {
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(0.001f);
 
         if (NetworkServer.active && NetworkClient.isConnected) {
             networkManager.StopHost();

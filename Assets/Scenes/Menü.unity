@@ -638,7 +638,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 898481424}
         m_TargetAssemblyTypeName: MainMenu, Assembly-CSharp
-        m_MethodName: EndMYGame
+        m_MethodName: CloseMYGame
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

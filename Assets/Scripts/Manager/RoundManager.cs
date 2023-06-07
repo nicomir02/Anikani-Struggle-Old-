@@ -12,6 +12,8 @@ public class RoundManager : NetworkBehaviour
     //Deklarieren von benötigten Klassen
     [SerializeField] public Volk eigenesVolk;
     [SerializeField] private NetworkManagerAnikani network;
+
+    [SerializeField] private TextMeshProUGUI curTurnText;
     //Deklarieren von GameObjekten
     private GameObject lobbyObjects;
     
@@ -166,18 +168,16 @@ public class RoundManager : NetworkBehaviour
     //Rundenveränderung auf dem Client
     [ClientRpc]
     public void RpconRoundChange(int a) {
+        foreach(Player p in FindObjectsOfType<Player>()) {
+            if(p.id == a) {
+                p.auffuellen();
+            }
+        }
+
+        curTurnText.text = "Spieler: " + a; //später in Namen umwandeln
         if(a == id) {
             isYourTurn = true;
             roundButtonText.text = "Next Round";
-            Player[] players = FindObjectsOfType<Player>();
-
-            foreach(Player p in players) {
-                if(p.id == id) {
-                    p.auffuellen();
-                }
-            }
-
-            //auffuellen();
         }
         roundText.text = "Turn " + round;
     }

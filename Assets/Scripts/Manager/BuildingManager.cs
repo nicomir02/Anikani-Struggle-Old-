@@ -104,10 +104,6 @@ public class BuildingManager : NetworkBehaviour
 
 //methode sollte nicht im BUildingManager sein->später ändern
     public void disqualifyPlayer() {
-        player.spielerDisqualifizieren(GameObject.Find("GameManager").GetComponent<RoundManager>().id);                
-
-
-
         foreach(KeyValuePair<Vector3Int, Building> kvp in buildingsVec) {
             healthManager.removeBuilding(kvp.Key);
             tilemapManager.removeBuilding(kvp.Key, 3);
@@ -117,6 +113,7 @@ public class BuildingManager : NetworkBehaviour
         buildingvectors = new Dictionary<Vector3Int, Vector3Int>();
 
         unitManager.disqualify();
+        player.spielerDisqualifizieren(GameObject.Find("GameManager").GetComponent<RoundManager>().id);
     }
 
     //Getter Methode für ZaehlerBuildingsBuiltInRound

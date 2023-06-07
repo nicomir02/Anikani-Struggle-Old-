@@ -185,7 +185,7 @@ public class UnitManager : NetworkBehaviour
                 }
             }
         }
-        
+
         Vector3Int vector = hover.getVectorFromMouse();
         einheitReichweiteMarkierer();       
     }
@@ -194,11 +194,10 @@ public class UnitManager : NetworkBehaviour
     private Vector3Int old = new Vector3Int(-1, -1, -1);
     void einheitReichweiteMarkierer() {
         Vector3Int vec = hover.getVectorFromMouse();
-        if (!isLocalPlayer) return;
 
         if (selectedUnit != null) {
             Pathfinding pathfinding = new Pathfinding(selectedVector, vec, selectedUnit, spawnedUnitsToVectorList(-1));
-            if (old == vec || !pathfinding.canWalk(vec) || GetComponent<BuildingManager>().isOwnBuilding(vec) || spawnedUnits.ContainsKey(new Vector3Int(vec.x, vec.y, 2))) return;
+            if (old == vec || !pathfinding.canWalk(vec) || healthManager.isHealth(vec)) return;
             old = vec;
 
             int curReichweite = reichweite[selectedVector];
