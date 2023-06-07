@@ -775,7 +775,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 26.8
+  m_fontSize: 16.8
   m_fontSizeBase: 20
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -2404,7 +2404,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 25.9
+  m_fontSize: 21.85
   m_fontSizeBase: 20
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -2945,7 +2945,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 15.15
+  m_fontSize: 11.1
   m_fontSizeBase: 14
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -3906,7 +3906,7 @@ MonoBehaviour:
   autoCreatePlayer: 1
   playerSpawnMethod: 0
   spawnPrefabs:
-  - {fileID: 8879690192884572037, guid: 3d8c9e35a52997e46ae92a06878c9c18, type: 3}
+  - {fileID: 3651839826317333919, guid: 10c7f0d5cc0f34c40a48fcff585a5dcc, type: 3}
   - {fileID: 8879690192884572037, guid: d2d5cbb270df5fe4c9eb06ca6fa4b90a, type: 3}
   snapshotSettings:
     bufferTimeMultiplier: 2
@@ -7253,7 +7253,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.1, y: 0.18451668}
   m_AnchorMax: {x: 0.9166612, y: 0.8154834}
-  m_AnchoredPosition: {x: -0.9999924, y: -0.4999962}
+  m_AnchoredPosition: {x: -0.99999046, y: -0.4999962}
   m_SizeDelta: {x: 2, y: -1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &888948215
@@ -15524,7 +15524,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 18.8
+  m_fontSize: 11.15
   m_fontSizeBase: 14
   m_fontWeight: 400
   m_enableAutoSizing: 1

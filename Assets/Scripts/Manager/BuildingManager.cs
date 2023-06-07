@@ -220,6 +220,10 @@ public class BuildingManager : NetworkBehaviour
             }
         }
 
+        //ShowArea auch durch tätigen der Keyboard Taste m auswählbar
+        if (Input.GetKeyDown(KeyCode.M)){
+            OnShowAreaClick();
+        }
 
     }
 

@@ -118,8 +118,23 @@ public class HealthManager : NetworkBehaviour
     //Normale Angriffsmethode
     [Command(requiresAuthority = false)]
     public void angriff(Vector3Int vec, int angriff) {
-        if(health.ContainsKey(vec)) health[vec] -= angriff;
+        if(health.ContainsKey(vec)) {
+            health[vec] -= angriff;
+            ChangeBar(vec, angriff);
+        }
         angegriffenVec = vec;
+    }
+
+    [ClientRpc]
+    public void ChangeBar(Vector3Int vec, int angriff) {
+        vec.z = 2;
+        foreach(UnitSprite us in FindObjectsOfType<UnitSprite>()) {
+            if(us.vec == vec) {
+                HealthBar bar = us.gameObject.transform.GetChild(0).GetComponent<HealthBar>();
+                bar.MaxValue = us.GetComponent<Unit>().getLeben();
+                bar.Change(-angriff);
+            }
+        }
     }
 
     //Setzt angriffsvektor um
