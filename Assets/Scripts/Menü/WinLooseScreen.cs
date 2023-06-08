@@ -11,6 +11,8 @@ public class WinLooseScreen : MonoBehaviour
     [SerializeField] RawImage winLooseCanvasBackground;
     [SerializeField] TextMeshProUGUI winLooseCanvasText;
     [SerializeField] Button mainMenu;
+    [SerializeField] Button spectateButton;
+    [SerializeField] GameObject inGameObjects;
 
 
     public void setLooseScreen() {
@@ -18,6 +20,14 @@ public class WinLooseScreen : MonoBehaviour
         winLooseCanvasBackground.color = Color.red;
         winLooseCanvasText.text = "You loose";
         mainMenu.onClick.AddListener(goMainMenu);
+        spectateButton.onClick.AddListener(spectate);
+    }
+
+    public void spectate() {
+        mainMenu.onClick.RemoveListener(goMainMenu);
+        spectateButton.onClick.RemoveListener(spectate);
+        inGameObjects.SetActive(false);
+        winLooseCanvas.SetActive(false);
     }
 
     public void setWinScreen() {
@@ -25,6 +35,7 @@ public class WinLooseScreen : MonoBehaviour
         winLooseCanvasBackground.color = Color.green;
         winLooseCanvasText.text = "You win";
         mainMenu.onClick.AddListener(goMainMenu);
+        spectateButton.onClick.AddListener(spectate);
     }
 
     public void goMainMenu() {
