@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
+using UnityEngine.UI;
 
 public class HealthBar : MonoBehaviour
 {
@@ -11,6 +13,9 @@ public class HealthBar : MonoBehaviour
     [SerializeField] private RectTransform topBar;
 
     [SerializeField] private float speed = 10f;
+
+    [SerializeField] private TextMeshProUGUI reichweite;
+    [SerializeField] private GameObject reichweitenBackground;
 
     private float fullWidth;
     private float targetWidth => Value * fullWidth / MaxValue;
@@ -46,7 +51,12 @@ public class HealthBar : MonoBehaviour
         }
 
         slowChangeBar.SetWidth(targetWidth);
-    } 
+    }
+
+    public void changeReichweite(int rw) {
+        this.reichweitenBackground.SetActive(true);
+        this.reichweite.text = rw +"";
+    }
 
     void Start() {
         fullWidth = topBar.rect.width; 

@@ -325,6 +325,10 @@ public class UnitManager : NetworkBehaviour
             int r = reichweite[selectedVector];
             reichweite.Remove(selectedVector);
             reichweite.Add(vec, r-liste.Count);
+
+            foreach(UnitSprite us in FindObjectsOfType<UnitSprite>()) {
+                if(us.vec == selectedVector) us.gameObject.transform.GetChild(0).GetComponent<HealthBar>().changeReichweite(r-liste.Count);
+            }
             
             healthManager.moveUnit(selectedVector, vec);
             syncMovedUnits(selectedVector);
@@ -460,6 +464,10 @@ public class UnitManager : NetworkBehaviour
 
         vec.z = 2;
         gameObject.GetComponent<UnitSprite>().vec = vec;
+
+        if(GetComponent<Player>().id == colorID+1) {
+            gameObject.transform.GetChild(0).GetComponent<HealthBar>().changeReichweite(0);
+        }
         
         SpriteRenderer spriteRenderer = gameObject.GetComponent<SpriteRenderer>(); 
         spriteRenderer.sprite = sprite;
@@ -481,6 +489,11 @@ public class UnitManager : NetworkBehaviour
 
             healthManager.angriff(v, -heal); //da heilung ein negativer angriff in Höhe von heal ist
             reichweite[selectedVector] = 0;
+
+            foreach(UnitSprite us in FindObjectsOfType<UnitSprite>()) {
+                if(us.vec == selectedVector) us.gameObject.transform.GetChild(0).GetComponent<HealthBar>().changeReichweite(0);
+            }
+
             return;
         }
         
@@ -524,6 +537,10 @@ public class UnitManager : NetworkBehaviour
         Dictionary<Vector3Int, int> temp = new Dictionary<Vector3Int, int>();
         foreach (KeyValuePair<Vector3Int, Unit> kvp in spawnedUnits) {
             temp.Add(kvp.Key, kvp.Value.getMaxBloeckeProRunde());
+
+            foreach(UnitSprite us in FindObjectsOfType<UnitSprite>()) {
+                if(us.vec == kvp.Key) us.gameObject.transform.GetChild(0).GetComponent<HealthBar>().changeReichweite(kvp.Value.getMaxBloeckeProRunde());
+            }
         }
         reichweite = temp;
     }
