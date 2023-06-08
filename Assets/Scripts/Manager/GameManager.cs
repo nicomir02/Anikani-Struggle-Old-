@@ -12,7 +12,9 @@ public class GameManager : NetworkBehaviour
     public readonly SyncDictionary<Vector3Int, int> teamVecs = new SyncDictionary<Vector3Int, int>();
 
 //Auflisten bei Unity bei den GameObjects ders Szene für verschiedene Teamfarben
-    [SerializeField] List<Color> spielFarben = new List<Color>();
+    [SerializeField] public List<Color> spielFarben = new List<Color>();
+
+    public readonly SyncDictionary<int, string> playernames = new SyncDictionary<int, string>();
 
 
     //Liste hier, da bei Player Probleme mit Sync gab
@@ -23,6 +25,22 @@ public class GameManager : NetworkBehaviour
 
     public int getMinAbstandMainBuilding() {
         return minAbstandMainBuilding;
+    }
+
+
+    [Command(requiresAuthority = false)]
+    public void syncNames() {
+        addPlayer();
+    }
+
+    [ClientRpc]
+    public void addPlayer() {
+        if(!playernames.ContainsKey(GetComponent<RoundManager>().id)) addInDictionary(GetComponent<RoundManager>().id, GetComponent<RoundManager>().playername);
+    }
+
+    [Command(requiresAuthority=false)]
+    public void addInDictionary(int id, string pname) {
+        if(!playernames.ContainsKey(id)) playernames.Add(id, pname);
     }
 
     //Methode fürs disqualifien

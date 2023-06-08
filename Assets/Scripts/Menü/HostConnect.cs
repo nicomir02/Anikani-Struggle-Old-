@@ -15,12 +15,13 @@ public class HostConnect : MonoBehaviour{
     }
     public void HostFunction(){
         manager.playername = playername.text;
+        GetComponent<PlayerInfo>().playername = playername.text;
         manager.StartHost();
         HostConnect_go.SetActive(false);
     }
 
     public void ConnectFunction(){
-        manager.playername = playername.text;
+        GetComponent<PlayerInfo>().playername = playername.text;
         manager.networkAddress = ip_InputField.text;
         manager.StartClient();
         HostConnect_go.SetActive(false);

@@ -72,6 +72,7 @@ public class RoundManager : NetworkBehaviour
             eigenesVolk = GameObject.Find("LobbyManager").GetComponent<LobbyManager>().volk;
             roundButton.onClick.AddListener(OnClick);
             spielername.text = playername;
+            GetComponent<GameManager>().syncNames();
         }
 
         
@@ -129,19 +130,9 @@ public class RoundManager : NetworkBehaviour
             }
         }
 
-        currentTurn = 0;
+        currentTurn = -1;
 
-        startGameRPC();
-    }
-
-    [ClientRpc]
-    public void startGameRPC() {
-        if(reihenfolge[0] == id) {
-            isYourTurn = true;
-            roundButtonText.text = "Next Round";
-        }else {
-            roundButtonText.text = "Wait";
-        }
+        onRoundChange();
     }
 
     //Rundenveränderung auf dem Server
@@ -168,18 +159,34 @@ public class RoundManager : NetworkBehaviour
     //Rundenveränderung auf dem Client
     [ClientRpc]
     public void RpconRoundChange(int a) {
+        string tryname = "";
         foreach(Player p in FindObjectsOfType<Player>()) {
             if(p.id == a) {
                 p.auffuellen();
+                tryname = p.name;
+                isYourTurn = true;
+                roundButtonText.text = "Next Round";
+            }else {
+                roundButtonText.text = "Wait";
             }
         }
-
+        
         curTurnText.text = "Spieler: " + a; //später in Namen umwandeln
-        if(a == id) {
-            isYourTurn = true;
-            roundButtonText.text = "Next Round";
-        }
         roundText.text = "Turn " + round;
+
+        if(tryname != "") turnName(tryname, a);
+    }
+
+    [Command(requiresAuthority = false)]
+    public void turnName(string turn, int a) {
+        curTurnText.text = "Spieler: " + turn;
+        RpcturnName(turn, a);
+    }
+
+    [ClientRpc]
+    public void RpcturnName(string turn, int a) {
+        curTurnText.text = "Spieler: " + turn;
+        curTurnText.color = GetComponent<GameManager>().spielFarben[a-1];
     }
     
     

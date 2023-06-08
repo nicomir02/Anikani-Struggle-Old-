@@ -12,7 +12,7 @@ PlayerSettings:
   targetDevice: 2
   useOnDemandResources: 0
   accelerometerFrequency: 60
-  companyName: DefaultCompany
+  companyName: Anikani-Studio
   productName: Anikani-Struggle
   defaultCursor: {fileID: 0}
   cursorHotspot: {x: 0, y: 0}
@@ -134,7 +134,7 @@ PlayerSettings:
     16:10: 1
     16:9: 1
     Others: 1
-  bundleVersion: 1.0
+  bundleVersion: 0.1
   preloadedAssets: []
   metroInputSource: 0
   wsaTransparentSwapchain: 0
@@ -776,11 +776,11 @@ PlayerSettings:
   apiCompatibilityLevel: 6
   activeInputHandler: 0
   windowsGamepadBackendHint: 0
-  cloudProjectId: 57520962-1a90-48ac-91a0-425035c2f4dc
+  cloudProjectId: 56cf2cd1-b28a-46fd-a607-0d926b467304
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames: []
-  projectName: Anikani-Struggle
-  organizationId: katha_strophe
+  projectName: Anikani-Struggle (2)
+  organizationId: unity_2002nicomir
   cloudEnabled: 0
   legacyClampBlendShapeWeights: 0
   playerDataPath: 

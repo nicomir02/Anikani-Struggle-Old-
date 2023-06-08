@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using TMPro;
+using UnityEngine.UI;
 
 public class InputManager : MonoBehaviour
 {
@@ -14,6 +16,9 @@ public class InputManager : MonoBehaviour
     [SerializeField] private Tilemap tilemap;
 
     [SerializeField] private Color durchsichtig;
+
+    [SerializeField] private GameObject tabPanel;
+    [SerializeField] private TextMeshProUGUI playernameText;
     
 
     void Start() {
@@ -24,9 +29,27 @@ public class InputManager : MonoBehaviour
 
     void Update()
     {
+
         if(Input.GetKeyDown(KeyCode.B)) {
             onShowBuildings();
         }
+
+        if(Input.GetKeyDown(KeyCode.Tab)) {
+            
+            showTabNames(true);
+        }else if(Input.GetKeyUp(KeyCode.Tab)) {
+            showTabNames(false);
+        }
+    }
+
+    void showTabNames(bool show) {
+        string result = "";
+        foreach(KeyValuePair<int, string> kvp in GetComponent<GameManager>().playernames) {
+            result += "<color=#"+ ColorUtility.ToHtmlStringRGB(GetComponent<GameManager>().spielFarben[kvp.Key-1]) +">"+kvp.Value + "</color>\n";
+        }
+        playernameText.text = result;
+        
+        tabPanel.SetActive(show);
     }
 
     void onShowBuildings() {
