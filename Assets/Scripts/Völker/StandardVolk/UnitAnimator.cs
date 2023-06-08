@@ -109,8 +109,14 @@ public class UnitAnimator : NetworkBehaviour
     //Sprite rumdrehen
     void rumdrehen() {
         GetComponent<Transform>().Rotate(new Vector3(0f, 180f, 0f));
-        /* für HealthBar Verscuh der Rotierung
         RectTransform rectTransform = gameObject.transform.GetChild(0).GetComponent<RectTransform>();
+        rectTransform.Rotate(new Vector3(0f, 180f, 0f));
+        Vector3 vector = rectTransform.localPosition;
+        vector.x = -vector.x;
+        rectTransform.localPosition = vector;
+
+        /* für HealthBar Verscuh der Rotierung
+        
 
         Vector3 position;
         Quaternion rotation;

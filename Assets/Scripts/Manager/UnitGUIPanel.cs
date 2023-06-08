@@ -98,7 +98,7 @@ public class UnitGUIPanel : MonoBehaviour
 
         foreach(KeyValuePair<Vector3Int, Unit> kvp in trainedUnits) {
             howLong[kvp.Key] -= 1;
-            Vector3Int vec = new Vector3Int(kvp.Key.x-1, kvp.Key.y, 2);
+            Vector3Int vec = new Vector3Int(kvp.Key.x, kvp.Key.y, 2);
             if(howLong[kvp.Key] <= 0 && !unitManager.hasUnitOnVec(vec)) {
                 unitManager.spawnUnit(kvp.Value, vec, GameObject.Find("GameManager").GetComponent<RoundManager>().id-1);
                 removeTemp.Add(kvp.Key);

@@ -10,17 +10,19 @@ public class Pathfinding
     Knoten kuerzesterWeg = null;
     List<Vector3Int> path = new List<Vector3Int>();
     Unit unit;
+    bool isOnBuilding = false;
 
     List<Vector3Int> listeUnits = new List<Vector3Int>(); //Liste, wo Vektoren reingeschrieben werden, wo Units ausm eigenen Team stehen, noch nicht implementier
 
     //Konstruktor
-    public Pathfinding(Vector3Int startTile, Vector3Int zielTile, Unit unit, List<Vector3Int> liste)
+    public Pathfinding(Vector3Int startTile, Vector3Int zielTile, Unit unit, List<Vector3Int> liste, bool onBuilding)
     {
         this.start = startTile;
         this.end = zielTile;
         this.end.z = 2;
         this.unit = unit;
         this.listeUnits = liste;
+        this.isOnBuilding = onBuilding; //Wenn auf Building, dann kann man über Building gehen
     }
 
     public List<Vector3Int> shortestPath()
@@ -166,7 +168,7 @@ public class Pathfinding
             &&
             (mapBehaviour.getBlockDetails((vec)).Item2.getWalkable() || unit.canWalk(mapBehaviour.getBlockDetails((vec)).Item2)) //Kann die Einheit über den Vektor laufen?
             &&
-            (!healthManager.isHealth(vec) || listeUnits.Contains(new Vector3Int(vec.x, vec.y, -1)))//Ist auf dem Feld eine Einheit oder ein Gebäude? Wenn Einheit, ist die Einheit keine Einheit von dir?
+            (!healthManager.isHealth(vec) || listeUnits.Contains(new Vector3Int(vec.x, vec.y, -1))) || isOnBuilding//Ist auf dem Feld eine Einheit oder ein Gebäude? Wenn Einheit, ist die Einheit keine Einheit von dir?
             ) return true;
         return false;
     }

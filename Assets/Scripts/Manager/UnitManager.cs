@@ -196,7 +196,7 @@ public class UnitManager : NetworkBehaviour
         Vector3Int vec = hover.getVectorFromMouse();
 
         if (selectedUnit != null) {
-            Pathfinding pathfinding = new Pathfinding(selectedVector, vec, selectedUnit, spawnedUnitsToVectorList(-1));
+            Pathfinding pathfinding = new Pathfinding(selectedVector, vec, selectedUnit, spawnedUnitsToVectorList(-1), healthManager.isBuilding(selectedVector));
             if (old == vec || !pathfinding.canWalk(vec) || healthManager.isHealth(vec)) return;
             old = vec;
 
@@ -242,6 +242,7 @@ public class UnitManager : NetworkBehaviour
     }
 
     void ClearWeite() {
+        hover.reload();
         if (buildingManager.getShowArea()) {
             buildingManager.reloadShowArea();
         } else {
@@ -250,7 +251,7 @@ public class UnitManager : NetworkBehaviour
             }
         }
         weite.Clear();
-        hover.reload();
+        
     }
 
     public void deselectUnit(){
@@ -315,7 +316,7 @@ public class UnitManager : NetworkBehaviour
             if(distance(selectedVector, vec) > reichweite[selectedVector] || spawnedUnits.ContainsKey(vec)) return;
             //unit.set(tilemap,vec,player.id -1);
 
-            List<Vector3Int> liste = new Pathfinding(selectedVector, vec, unit, spawnedUnitsToVectorList(-1)).shortestPath(); //Berechnung des shortest Path
+            List<Vector3Int> liste = new Pathfinding(selectedVector, vec, unit, spawnedUnitsToVectorList(-1), healthManager.isBuilding(selectedVector)).shortestPath(); //Berechnung des shortest Path
             if(liste == null || liste.Count > reichweite[selectedVector]) return; //Wenn der shortest Path größer ist als die Reichweite return
 
             spawnedUnits.Remove(selectedVector);    //diese beiden Zeilen damit die Dictionary sich mit der neuen position updated

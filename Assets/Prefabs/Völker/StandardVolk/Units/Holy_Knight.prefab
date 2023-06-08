@@ -517,7 +517,7 @@ MonoBehaviour:
   Value: 100
   bottomBar: {fileID: 5011531357890503491}
   topBar: {fileID: 2837709848347797578}
-  speed: 0.1
+  speed: 3
 --- !u!1 &8975349122089550804
 GameObject:
   m_ObjectHideFlags: 0

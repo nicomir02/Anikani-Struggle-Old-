@@ -48,6 +48,7 @@ public class HealthManager : NetworkBehaviour
     public bool isHealth(Vector3Int vec) {
         bool b = false;
         if(isUnit(vec)) b = true;
+        
         if(isBuilding(vec)) b = true;
         return b;
     }
@@ -131,7 +132,6 @@ public class HealthManager : NetworkBehaviour
         foreach(UnitSprite us in FindObjectsOfType<UnitSprite>()) {
             if(us.vec == vec) {
                 HealthBar bar = us.gameObject.transform.GetChild(0).GetComponent<HealthBar>();
-                bar.MaxValue = us.GetComponent<Unit>().getLeben();
                 bar.Change(-angriff);
             }
         }

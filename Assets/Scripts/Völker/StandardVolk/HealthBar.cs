@@ -40,7 +40,6 @@ public class HealthBar : MonoBehaviour
         }
 
         suddenChangeBar.SetWidth(targetWidth);
-        Debug.Log("test");
         while(Mathf.Abs(suddenChangeBar.rect.width - slowChangeBar.rect.width) > 0.1f) {
             slowChangeBar.SetWidth(Mathf.Lerp(slowChangeBar.rect.width, targetWidth, Time.deltaTime * speed));
             yield return null; //new WaitForSecondsRealtime(0.1f);
@@ -51,5 +50,7 @@ public class HealthBar : MonoBehaviour
 
     void Start() {
         fullWidth = topBar.rect.width; 
+        MaxValue = gameObject.transform.parent.GetComponent<Unit>().getLeben();
+        Value = MaxValue;
     }
 }
