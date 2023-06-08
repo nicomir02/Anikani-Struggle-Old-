@@ -20,8 +20,6 @@ public class GameManager : NetworkBehaviour
 
     [SerializeField] private int minAbstandMainBuilding = 20;
     
-    //Alexänderung
-    public readonly SyncList<string> playerNames = new SyncList<string>();
 
     public int getMinAbstandMainBuilding() {
         return minAbstandMainBuilding;
@@ -94,12 +92,5 @@ public class GameManager : NetworkBehaviour
     //Getter Methode für cheats
     public bool getCheatsOn() {
         return cheatsOn;
-    }
-    //Spielernamen hinzufügen
-    public void AddToSpielerNameList(string name){
-        playerNames.Add(name);
-        foreach(string s in playerNames){
-            Debug.Log("GameManager PlayerNamensliste: " + s);
-        }
     }
 }

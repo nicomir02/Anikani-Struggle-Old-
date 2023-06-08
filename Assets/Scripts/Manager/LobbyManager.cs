@@ -45,12 +45,6 @@ public class LobbyManager : NetworkBehaviour
 //mindest Spieler Anzahl damit Spiel startet
     private int minPlayers = 1; //aus Testzwekcen nur 1 momentan
 
-
-//alexänderung
-    [SerializeField] public List<string> spielerNamen = new List<string>();
-
-
-
 //Nach Lobby erschient der ReadyButton mit Listener
     public override void OnStartClient() {
         if(mapBehaviour.getTerrainBuild()) network.StopClient();
@@ -108,7 +102,7 @@ public class LobbyManager : NetworkBehaviour
         foreach(Button b in buttons) {
             texte.Add(b.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text);
         }
-        
+
         changeButtons(texte);
     }
 
@@ -139,8 +133,6 @@ public class LobbyManager : NetworkBehaviour
         GameObject buttonGameObject = EventSystem.current.currentSelectedGameObject;
         TextMeshProUGUI textMesh = buttonGameObject.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>();
 
-        playername = NetworkClient.localPlayer.gameObject.name;
-
         //Für Deselect
         if(ausgewaehlt) {
             int i = 0;
@@ -157,7 +149,7 @@ public class LobbyManager : NetworkBehaviour
             }
             return;
         }
-       
+        
         //Für Select
         if(!textMesh.text.Contains("-")) {
             int i = 0;
@@ -169,7 +161,6 @@ public class LobbyManager : NetworkBehaviour
             textMesh.text = buttonGameObject.name + " - " +playername; 
             ausgewaehlt = true;
             roundManager.id = i+1;
-            NetworkClient.localPlayer.gameObject.GetComponent<Player>().id = i+1;
             CMDfarbewaehlen(i, playername);
         }
     }
@@ -177,7 +168,6 @@ public class LobbyManager : NetworkBehaviour
     //Farbe wählen auf Server
     [Command(requiresAuthority=false)]
     public void CMDfarbewaehlen(int i, string playername) {
-        Debug.Log(playername);
         TextMeshProUGUI textgui = buttons[i].gameObject.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>();
         if(playername != "") {
             textgui.text = buttons[i].name + " - " + playername;
@@ -185,14 +175,6 @@ public class LobbyManager : NetworkBehaviour
         }else {
             textgui.text = buttons[i].name;
         }
-
-        foreach(Player players in FindObjectsOfType<Player>()) {
-            if(players.gameObject.name == playername) {
-                Debug.Log("hi");
-                players.id = i+1;
-            }
-        }
-
         RPCfarbewaehlen(i, playername);
         
     }
@@ -211,8 +193,6 @@ public class LobbyManager : NetworkBehaviour
 //Klicken auf Ready Button setzt ready Variable auf true
     public void OnReadyClick() {
         if(!ausgewaehlt || volk == null) return;
-
-        NetworkClient.localPlayer.gameObject.GetComponent<Player>().eigenesVolk = volk;
         gameManager.SetActive(true);
         if(gameManager.GetComponent<PauseMenu>().getPause()) return;
         if(ready) {
@@ -222,19 +202,14 @@ public class LobbyManager : NetworkBehaviour
             readyButtonText.text = "Not ready";
             ready = true;
         } 
-        readyPlayer(ready, volkManager.getVolkID(volk).Item2, NetworkClient.localPlayer.gameObject.GetComponent<Player>().id, NetworkClient.localPlayer.gameObject);
+        readyPlayer(ready);
     }
 
 //Synchronisieren der Ready-Variablen der verschiednen Spieler
 //Schauen ob mindest-Spieleranzahl erreicht
 //schauen ob alle connected players auch ready sind
     [Command(requiresAuthority = false)]
-    public void readyPlayer(bool readyornot, int volkid, int id, GameObject o) {
-        o.GetComponent<Player>().eigenesVolk = volkManager.getVolk(volkid);
-
-        changeValues(volkid, id, o);
-
-
+    public void readyPlayer(bool readyornot) {
        //Counter for Ready Players
         if(readyornot) {
             AllPlayerready++;
@@ -255,11 +230,6 @@ public class LobbyManager : NetworkBehaviour
         }
     }
 
-    [ClientRpc]
-    public void changeValues(int volkid, int id, GameObject o) {
-        o.GetComponent<Player>().eigenesVolk = volkManager.getVolk(volkid);
-    }
-
 //Bei jedem Client startet Spiel und ingameobjekte generiert, Lobby ausgeschaltet, Map erstellt
     [ClientRpc]
     public void onStartGame() {
@@ -267,12 +237,6 @@ public class LobbyManager : NetworkBehaviour
         ingameObjects.SetActive(true);
         mapBehaviour.buildTerrain();
         roundManager.onStartGame();
-    }
-
-    //Alexänderung
-    public void AddToSpielerNameList(string name){
-        spielerNamen.Add(name);
-        //GameObject.Find("GameManager").GetComponent<GameManager>().AddToSpielerNameList(name);
     }
 
 }

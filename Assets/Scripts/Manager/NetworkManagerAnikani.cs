@@ -11,9 +11,6 @@ public class NetworkManagerAnikani : NetworkManager
     
     public string playername;
 
-//alexänderung
-    [SerializeField] public List<string> spielerNamen = new List<string>();
-
     //Stop Server Methode
     public override void OnStopServer()
     {
@@ -43,18 +40,13 @@ public class NetworkManagerAnikani : NetworkManager
     //Auf Server Spieler hinzufügen
     public override void OnServerAddPlayer(NetworkConnectionToClient conn) {
         GameObject player = Instantiate(playerPrefab, start.position, start.rotation);
-        player.name = "player";
+        player.GetComponent<Player>().name = playername;
+        player.name = playername;
         NetworkServer.AddPlayerForConnection(conn, player);
     }
 
     //Spieler disconnected
     public override void OnServerDisconnect(NetworkConnectionToClient conn) {
         base.OnServerDisconnect(conn);
-    }
-
-//Alexänderung
-    public void AddToSpielerNameList(string name){
-        spielerNamen.Add(name);
-        GameObject.Find("GameManager").GetComponent<GameManager>().AddToSpielerNameList(name);
     }
 }
