@@ -59,14 +59,30 @@ public class Player : NetworkBehaviour
     void Start() {
         //ip_InputFieldName = GameObject.Find("NetworkCanvas/InputFieldName").GetComponent<TMP_InputField>();
         //name = ip_InputFieldName.text;
+        if(!isLocalPlayer) return;
         lobbyManager = GameObject.Find("LobbyManager").GetComponent<LobbyManager>();
         lobbyObjects = GameObject.Find("Lobby");
         network = GameObject.Find("NetworkManager").GetComponent<NetworkManagerAnikani>();
 
-        GameObject.Find("GameManager").GetComponent<RoundManager>().playername = name;
-        GameObject.Find("LobbyManager").GetComponent<LobbyManager>().playername = name;
+        name = network.GetComponent<PlayerInfo>().playername;
+        gameObject.name = name;
 
+        GameObject.Find("GameManager").GetComponent<RoundManager>().playername = name;
+        Debug.Log("inPlayer RoundmanagerName=" + name);
+        GameObject.Find("LobbyManager").GetComponent<LobbyManager>().playername = name;
+        Debug.Log("InPlayer LobbymanagerName=" + name);
+        //network.playername = name;
+        //Debug.Log("InPlayer NetworkManagerAnikaniName=" + name);
         lobbyObjects.SetActive(true);
+
+        changeName(gameObject, name);
+
+    }
+
+    [Command(requiresAuthority=false)]
+    public void changeName(GameObject o, string pn) {
+        o.name = pn;
+        o.GetComponent<Player>().name = pn;
     }
 
      void Update() {
@@ -79,12 +95,8 @@ public class Player : NetworkBehaviour
             roundButtonText = GameObject.Find("InGame/Canvas/Runde/RundeText").GetComponent<TextMeshProUGUI>();
             roundText = GameObject.Find("InGame/Canvas/Leiste/RundenText").GetComponent<TextMeshProUGUI>();
             isLobby = false;
-            id = GameObject.Find("GameManager").GetComponent<RoundManager>().id;
         }else {
             if(lobbyManager == null) return;
-            if(lobbyManager.volk != eigenesVolk) {
-                eigenesVolk = lobbyManager.volk;
-            }
         }
     }
 

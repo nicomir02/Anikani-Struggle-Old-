@@ -162,19 +162,24 @@ public class RoundManager : NetworkBehaviour
                 }
             }
         }
-        RpconRoundChange(turn);
+        string curTurnName = "";
+        foreach(Player p in FindObjectsOfType<Player>()) {
+            if(p.id == turn) curTurnName = p.name;
+        }
+
+        RpconRoundChange(turn, curTurnName);
     }
 
     //Rundenveränderung auf dem Client
     [ClientRpc]
-    public void RpconRoundChange(int a) {
+    public void RpconRoundChange(int a, string curTurnName) {
         foreach(Player p in FindObjectsOfType<Player>()) {
             if(p.id == a) {
                 p.auffuellen();
             }
         }
 
-        curTurnText.text = "Spieler: " + a; //später in Namen umwandeln
+        curTurnText.text = "Spieler: " + curTurnName; //später in Namen umwandeln
         if(a == id) {
             isYourTurn = true;
             roundButtonText.text = "Next Round";
