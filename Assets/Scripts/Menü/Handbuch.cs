@@ -14,6 +14,10 @@ public class Handbuch : MonoBehaviour
     [SerializeField] private GameObject developerspanel;
     [SerializeField] private GameObject gamePlaypanel;
 
+        //in gamePlayPanel
+        [SerializeField] private GameObject goalpanel;
+        [SerializeField] private GameObject rulespanel;
+
         //in tribepanel
         [SerializeField] private GameObject holypanel;
         [SerializeField] private GameObject wandererpanel;
@@ -62,6 +66,11 @@ public class Handbuch : MonoBehaviour
     [SerializeField] private Button developersButton;
     [SerializeField] private Button gamePlayButton;
 
+    //innerhalb gamePlay nöchste Unterschicht
+        [SerializeField] private Button gamePlayGoalButton;
+        [SerializeField] private Button gamePlayRulesButton;
+
+
     //innerhalb Tribes nächste Unterschicht
         [SerializeField] private Button holyButton;
 
@@ -101,6 +110,26 @@ public class Handbuch : MonoBehaviour
                 [SerializeField] private Button wandererHolzButton;
                 [SerializeField] private Button wandererSteinButton;
                 [SerializeField] private Button wandererMainButton;
+
+            //Gameobjects in Schicht 4
+                //Holy Schicht 4 GameObjects
+                [SerializeField] private GameObject NahkampfHoly;
+                [SerializeField] private GameObject FernkampfHoly;
+                [SerializeField] private GameObject  SpezialEinheitHoly;
+
+                [SerializeField] private GameObject MainBuildingHoly;
+                [SerializeField] private GameObject WoodCutterHoly;
+                [SerializeField] private GameObject StoneCutterHoly;
+                [SerializeField] private GameObject BarracksHoly;
+                //Wanderer Schicht 4 Gameobjects
+                [SerializeField] private GameObject NahkampfWanderer;
+                [SerializeField] private GameObject FernkampfWanderer;
+                [SerializeField] private GameObject  SpezialEinheitWanderer;
+
+                [SerializeField] private GameObject MainBuildingWanderer;
+                [SerializeField] private GameObject WoodCutterWanderer;
+                [SerializeField] private GameObject StoneCutterWanderer;
+                [SerializeField] private GameObject BarracksWanderer;
             
 
     // Start is called before the first frame update
@@ -114,10 +143,13 @@ public class Handbuch : MonoBehaviour
         loreButton.onClick.AddListener(anikaniLorePanelStart);
         developersButton.onClick.AddListener(developersPanelStart);
         gamePlayButton.onClick.AddListener(gamePlayPanelStart);
-            //Schicht 2 Panels(vieleicht in Methoden unterordnen und Listener starten und stoppen?)
+            //in GamePlay Schicht 2
+            gamePlayGoalButton.onClick.AddListener(gamePlayGoalPanelStart);
+            gamePlayRulesButton.onClick.AddListener(gamePlayRulesPanelStart);
+            //in Tribes Schicht 2
             holyButton.onClick.AddListener(holyPanelStart);
             WandererButton.onClick.AddListener(wandererPanelStart);
-            //noch methoden für folgende einbauen Schicht 3
+                // Schicht 3
                 holyUnitsButton.onClick.AddListener(holyUnitsPanelStart);
                 wandererUnitsButton.onClick.AddListener(wandererUnitsPanelStart);
                 holyBuildingsButton.onClick.AddListener(holyBuildingsPanelStart);
@@ -126,7 +158,7 @@ public class Handbuch : MonoBehaviour
                 wandererSpecialAbilitiesButton.onClick.AddListener(wandererSpecialAbilitiesPanelStart);
                 holyLoreButton.onClick.AddListener(holyLorePanelStart);
                 wandererLoreButton.onClick.AddListener(wandererLorePanelStart);
-                    //noch Schicht 4. methoden auch einbauen
+                    //Schicht 4.
                     //Units
                     
                     holyNahkampfButton.onClick.AddListener(holyNahkampfPanelStart);
@@ -186,8 +218,19 @@ public class Handbuch : MonoBehaviour
         closePanels();
         gamePlaypanel.SetActive(true);
     }     
+//Schicht 2 Panels in GamePlay
 
-//Schicht 2 Panels
+        void gamePlayGoalPanelStart(){
+            gamePlayPanelStart();
+            goalpanel.SetActive(true);
+        }
+        void gamePlayRulesPanelStart(){
+            gamePlayPanelStart();
+            rulespanel.SetActive(true);
+        }
+
+
+//Schicht 2 Panels in Tribes
         void holyPanelStart() {
             tribePanelStart();
             holypanel.SetActive(true);
@@ -201,10 +244,17 @@ public class Handbuch : MonoBehaviour
         void holyUnitsPanelStart(){
             holyPanelStart();
             holyUnitsPanel.SetActive(true);
+            NahkampfHoly.SetActive(true);
+            FernkampfHoly.SetActive(true);
+            SpezialEinheitHoly.SetActive(true);
         }
         void holyBuildingsPanelStart(){
             holyPanelStart();
             holyBuildingsPanel.SetActive(true);
+            MainBuildingHoly.SetActive(true);
+            StoneCutterHoly.SetActive(true);
+            WoodCutterHoly.SetActive(true);
+            BarracksHoly.SetActive(true);
         }
         void holySpecialAbilitiesPanelStart(){
             holyPanelStart();
@@ -218,10 +268,19 @@ public class Handbuch : MonoBehaviour
         void wandererUnitsPanelStart(){
             wandererPanelStart();
             wandererUnitsPanel.SetActive(true);
+            //Gameobjects aktivieren
+            NahkampfWanderer.SetActive(true);
+            FernkampfWanderer.SetActive(true);
+            SpezialEinheitWanderer.SetActive(true);
         }
         void wandererBuildingsPanelStart(){
             wandererPanelStart();
             wandererBuildingsPanel.SetActive(true);
+            //Gameobjects aktivieren
+            MainBuildingWanderer.SetActive(true);
+            StoneCutterWanderer.SetActive(true);
+            WoodCutterWanderer.SetActive(true);
+            BarracksWanderer.SetActive(true);
         }
         void wandererSpecialAbilitiesPanelStart(){
             wandererPanelStart();
@@ -235,64 +294,92 @@ public class Handbuch : MonoBehaviour
     //Holy Units
     
             void holyNahkampfPanelStart(){
-                holyUnitsPanelStart();
+                holyUnitsPanelStart();                
+                HolyEinheitenDeaktivieren(); //alle außer Nahkampf
+                NahkampfHoly.SetActive(true);   //deswegen hier weider aktiviert
                 holyNahkampfInfoPanel.SetActive(true);
             }
             void holyFernkampfPanelStart(){
                 holyUnitsPanelStart();
+                HolyEinheitenDeaktivieren(); //alle außer Fernkampf
+                FernkampfHoly.SetActive(true);   //deswegen hier weider aktiviert
                 holyFernkampfInfoPanel.SetActive(true);
             }
             void holySpezialEinheitPanelStart(){
                 holyUnitsPanelStart();
+                HolyEinheitenDeaktivieren(); //alle außer SpezialEinheit
+                SpezialEinheitHoly.SetActive(true);   //deswegen hier weider aktiviert               
                 holySpezialEinheitInfoPanel.SetActive(true);
             }
 
     //Schicht 4 Wanderer Units
             void wandererNahkampfPanelStart(){
-                wandererUnitsPanelStart();
+                wandererUnitsPanelStart();                
+                WandererEinheitenDeaktivieren();//alle außer Nahkampf
+                NahkampfWanderer.SetActive(true); //deswegen hier weider aktiviert
                 wandererNahkampfInfoPanel.SetActive(true);
             }
             void wandererFernkampfPanelStart(){
                 wandererUnitsPanelStart();
+                WandererEinheitenDeaktivieren();//alle außer Fernkampf
+                FernkampfWanderer.SetActive(true); //deswegen hier weider aktiviert
                 wandererFernkampfInfoPanel.SetActive(true);
             }
             void wandererSpezialEinheitPanelStart(){
                 wandererUnitsPanelStart();
+                WandererEinheitenDeaktivieren();//alle außer SpezialEinheit
+                SpezialEinheitWanderer.SetActive(true); //deswegen hier weider aktiviert               
                 wandererSpezialEinheitInfoPanel.SetActive(true);
             }
 
         //Schicht 4 Holy Buildings
             void holyBaracksPanelStart(){
                 holyBuildingsPanelStart();
+                HolyBuildingsDeaktivieren(); //alle außer Barracken
+                BarracksHoly.SetActive(true); //deswegen hier wieder aktiviert               
                 holyBarracksInfoPanel.SetActive(true);
             }
             void holyWoodCutterPanelStart(){
                 holyBuildingsPanelStart();
+                HolyBuildingsDeaktivieren(); //alle außer WoodCutter
+                WoodCutterHoly.SetActive(true); //deswegen hier wieder aktiviert  
                 holyWoodCutterInfoPanel.SetActive(true);
             }
             void holyStoneCutterPanelStart(){
                 holyBuildingsPanelStart();
+                HolyBuildingsDeaktivieren(); //alle außer StoneCutter
+                StoneCutterHoly.SetActive(true); //deswegen hier wieder aktiviert  
                 holyStoneCutterInfoPanel.SetActive(true);
             }
             void holyMainBuildingPanelStart(){
-                holyBuildingsPanelStart();
+                holyBuildingsPanelStart();                
+                HolyBuildingsDeaktivieren(); //alle außer MainBuilding
+                MainBuildingHoly.SetActive(true); //deswegen hier wieder aktiviert  
                 holyMainBuildingInfoPanel.SetActive(true);
             }
         //Schicht 4 Wanderer Buildings
             void wandererBaracksPanelStart(){
                 wandererBuildingsPanelStart();
+                WandererBuildingsDeaktivieren(); //alle außer Barracken
+                BarracksWanderer.SetActive(true); //deswegen hier wieder aktiviert                
                 wandererBarracksInfoPanel.SetActive(true);
             }
             void wandererWoodCutterPanelStart(){
                 wandererBuildingsPanelStart();
+                WandererBuildingsDeaktivieren(); //alle außer WoodCutter
+                WoodCutterWanderer.SetActive(true); //deswegen hier wieder aktiviert  
                 wandererWoodCutterInfoPanel.SetActive(true);
             }
             void wandererStoneCutterPanelStart(){
                 wandererBuildingsPanelStart();
+                WandererBuildingsDeaktivieren(); //alle außer StoneCutter
+                StoneCutterWanderer.SetActive(true); //deswegen hier wieder aktiviert  
                 wandererStoneCutterInfoPanel.SetActive(true);
             }
             void wandererMainBuildingPanelStart(){
-                wandererBuildingsPanelStart();
+                wandererBuildingsPanelStart();                
+                WandererBuildingsDeaktivieren(); //alle außer MainBuilding
+                MainBuildingWanderer.SetActive(true); //deswegen hier wieder aktiviert
                 wandererMainBuildingInfoPanel.SetActive(true);
             }
 
@@ -306,25 +393,31 @@ public class Handbuch : MonoBehaviour
 
     //Schließt alle Untermenü Panels
     void closePanels() {
+    //Schicht 1 Menüs/Panels
         hotkeypanel.SetActive(false);
         tribepanel.SetActive(false);
         anikaniLorepanel.SetActive(false);
         developerspanel.SetActive(false);
         gamePlaypanel.SetActive(false);
-        //Schicht 2
+        //Schicht 2 GamePlay
+            goalpanel.SetActive(false);
+            rulespanel.SetActive(false);
+        //Schicht 2 Tribes
             holypanel.SetActive(false);
             wandererpanel.SetActive(false);
         //Schicht 3
+            //Holy
                 holyUnitsPanel.SetActive(false);
                 holyBuildingsPanel.SetActive(false);
                 holySpecialAbilitiesPanel.SetActive(false);
                 holyLorePanel.SetActive(false);
+            //Wanderer
                 wandererUnitsPanel.SetActive(false);
                 wandererBuildingsPanel.SetActive(false);
                 wandererSpecialAbilitiesPanel.SetActive(false);
                 wandererLorePanel.SetActive(false);
-
         //Schicht 4
+            //Holy
                     //Holy Units
                     holyNahkampfInfoPanel.SetActive(false);
                     holyFernkampfInfoPanel.SetActive(false);
@@ -334,7 +427,7 @@ public class Handbuch : MonoBehaviour
                     holyWoodCutterInfoPanel.SetActive(false);
                     holyStoneCutterInfoPanel.SetActive(false);
                     holyBarracksInfoPanel.SetActive(false);
-
+            //Wanderer
                     //Wanderer Units
                     wandererNahkampfInfoPanel.SetActive(false);
                     wandererFernkampfInfoPanel.SetActive(false);
@@ -345,4 +438,28 @@ public class Handbuch : MonoBehaviour
                     wandererStoneCutterInfoPanel.SetActive(false);
                     wandererBarracksInfoPanel.SetActive(false);
     }
+
+    //Hilfsmethode
+        void HolyEinheitenDeaktivieren(){
+            NahkampfHoly.SetActive(false);
+            FernkampfHoly.SetActive(false);
+            SpezialEinheitHoly.SetActive(false);
+        }
+        void HolyBuildingsDeaktivieren(){
+            MainBuildingHoly.SetActive(false);
+            StoneCutterHoly.SetActive(false);
+            WoodCutterHoly.SetActive(false);
+            BarracksHoly.SetActive(false);
+        }
+        void WandererEinheitenDeaktivieren(){
+            NahkampfWanderer.SetActive(false);
+            FernkampfWanderer.SetActive(false);
+            SpezialEinheitWanderer.SetActive(false);
+        }        
+        void WandererBuildingsDeaktivieren(){
+            MainBuildingWanderer.SetActive(false);
+            StoneCutterWanderer.SetActive(false);
+            WoodCutterWanderer.SetActive(false);
+            BarracksWanderer.SetActive(false);
+        }
 }
