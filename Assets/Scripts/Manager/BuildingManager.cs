@@ -223,6 +223,18 @@ public class BuildingManager : NetworkBehaviour
             OnShowAreaClick();
         }
 
+        //Troop Recruitment Menu öffnen (erste Barracke ausgewählt)
+        if(Input.GetKeyDown(KeyCode.T)){
+            foreach(KeyValuePair<Vector3Int,Building> kvp in buildingsVec){
+                if(kvp.Value.getName() == "Barracks"){
+                    selectedVector = kvp.Key;
+                    mapBehaviour.cameraChange(kvp.Key.x,kvp.Key.y);
+                    openUnitPanel();
+
+                }
+            }
+        }
+
     }
 
     //minus Ressourcen fürs kaufen
