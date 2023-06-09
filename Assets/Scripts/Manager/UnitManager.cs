@@ -269,7 +269,7 @@ public class UnitManager : NetworkBehaviour
     public void selectUnit(Vector3Int vec){
         vec.z = 2;
         if(healthManager.getLeben(vec) == -1 && spawnedUnits.ContainsKey(vec)) spawnedUnits.Remove(vec);
-        if(spawnedUnits.ContainsKey(vec)){ 
+        if(spawnedUnits.ContainsKey(vec) || findUnit(vec)){ 
             selectedUnit = spawnedUnits[vec];
             selectedVector = vec;
             if(getGameObject(vec) != null) {
@@ -277,6 +277,22 @@ public class UnitManager : NetworkBehaviour
             }
             activatePanel(vec);
         }
+    }
+
+    public bool findUnit(Vector3Int vec) {
+        foreach(UnitSprite us in FindObjectsOfType<UnitSprite>()) {
+            if(us.vec.x == vec.x && us.vec.y == vec.y && us.id == player.id) {
+                if(!spawnedUnits.ContainsKey(new Vector3Int(vec.x, vec.y, 2))) {
+                    if(healthManager.getLeben(new Vector3Int(vec.x, vec.y, 2)) < 0) {
+                        cmddeleteUnit(us.vec);
+                        return false;
+                    }
+                    spawnedUnits.Add(new Vector3Int(vec.x, vec.y, 2), us.GetComponent<Unit>());
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     public void activatePanel(Vector3Int vec) {
@@ -335,7 +351,7 @@ public class UnitManager : NetworkBehaviour
 
             
 
-            cmdMoveUnit(selectedVector, vec, liste);
+            cmdMoveUnit(selectedVector, vec, liste, player.id);
         }
     }
 
@@ -353,7 +369,7 @@ public class UnitManager : NetworkBehaviour
 
     //Für Sprite movement
     [Command(requiresAuthority = false)]
-    public void cmdMoveUnit(Vector3Int from, Vector3Int to, List<Vector3Int> shortestPath) {
+    public void cmdMoveUnit(Vector3Int from, Vector3Int to, List<Vector3Int> shortestPath, int id) {
         from.z = 2;
         UnitSprite[] unitSprites = FindObjectsOfType<UnitSprite>();
         foreach(UnitSprite us in unitSprites) {
@@ -361,7 +377,7 @@ public class UnitManager : NetworkBehaviour
                 to.z = 2;
                 us.vec = to;
                 to.z = 0;
-                StartCoroutine(MoveToPosition(us.GetComponent<Transform>(), shortestPath, 0.5f, from));
+                StartCoroutine(MoveToPosition(us.GetComponent<Transform>(), shortestPath, 0.5f, from, id));
                 changeVecInUnitSprite(from, to);
             }
         }
@@ -379,7 +395,7 @@ public class UnitManager : NetworkBehaviour
         }
     }
 
-    public IEnumerator MoveToPosition(Transform transform, List<Vector3Int> positions, float timeToMove, Vector3Int from)
+    public IEnumerator MoveToPosition(Transform transform, List<Vector3Int> positions, float timeToMove, Vector3Int from, int id)
     {
         for(int i=-1; i<positions.Count-1; i++) {
             float elapsedTime = 0f;
@@ -388,11 +404,11 @@ public class UnitManager : NetworkBehaviour
             if(i >= 0) {
                 startingPosition = vec3IntToVec3(positions[i]);
                 position = vec3IntToVec3(positions[i+1]);
-                transform.gameObject.GetComponent<UnitAnimator>().changeDirection(positions[i], positions[i+1]); //hier change Direction methode aufrufen
+                transform.gameObject.GetComponent<UnitAnimator>().changeDirection(positions[i], positions[i+1], id); //hier change Direction methode aufrufen
             }else {
                 startingPosition = vec3IntToVec3(from);
                 position = vec3IntToVec3(positions[0]);
-                transform.gameObject.GetComponent<UnitAnimator>().changeDirection(from, positions[0]); //hier change Direction methode aufrufen
+                transform.gameObject.GetComponent<UnitAnimator>().changeDirection(from, positions[0], id); //hier change Direction methode aufrufen
             }
             
             
@@ -405,7 +421,7 @@ public class UnitManager : NetworkBehaviour
                 yield return null;
             }
         }
-        transform.gameObject.GetComponent<UnitAnimator>().changeDirection(positions[positions.Count-1], positions[positions.Count-1]);
+        transform.gameObject.GetComponent<UnitAnimator>().changeDirection(positions[positions.Count-1], positions[positions.Count-1], id);
         transform.gameObject.GetComponent<SpriteRenderer>().color = Color.white;
     }
 

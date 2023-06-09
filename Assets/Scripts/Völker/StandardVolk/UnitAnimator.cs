@@ -33,6 +33,11 @@ public class UnitAnimator : NetworkBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
         int spielerFarbe = GetComponent<UnitSprite>().id;
         
+        chooseColor(spielerFarbe);
+    }
+
+    //Versuch den Bug mit unterschiedlichen Spielerfarben zu lösen bei den Clients
+    public void chooseColor(int spielerFarbe) {
         if(spielerFarbe == 1) {        //BLAU
             forward = moveForwardBLUE;
             back = moveBackBLUE;
@@ -77,13 +82,14 @@ public class UnitAnimator : NetworkBehaviour
 
     //Vom Server changeDirection anstoßen
     [Command(requiresAuthority=false)]
-    public void changeDirection(Vector3Int start, Vector3Int ziel) {
-        RPCchangeDirection(start, ziel);
+    public void changeDirection(Vector3Int start, Vector3Int ziel, int playerid) {
+        RPCchangeDirection(start, ziel, playerid);
     }
 
     //richtige Sprites auswählen auf Clients
     [ClientRpc]
-    public void RPCchangeDirection(Vector3Int start, Vector3Int ziel) {
+    public void RPCchangeDirection(Vector3Int start, Vector3Int ziel, int playerid) {
+        chooseColor(playerid); //Siehe Methode
         if(start == ziel) {
             animation = idle;
         } else {
