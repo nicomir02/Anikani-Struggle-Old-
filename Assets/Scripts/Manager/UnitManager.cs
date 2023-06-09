@@ -480,6 +480,7 @@ public class UnitManager : NetworkBehaviour
 
         vec.z = 2;
         gameObject.GetComponent<UnitSprite>().vec = vec;
+        gameObject.GetComponent<UnitAnimator>().chooseColor(colorID+1);
 
         if(GetComponent<Player>().id == colorID+1) {
             gameObject.transform.GetChild(0).GetComponent<HealthBar>().changeReichweite(0);

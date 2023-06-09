@@ -197,8 +197,6 @@ public class BuildingManager : NetworkBehaviour
                         ZaehlerBuildingsBuiltInRound = maxBuildingPerRound;
 
                         unitManager.spawnUnit(volk.getUnit(0),vec,GameObject.Find("GameManager").GetComponent<RoundManager>().id - 1);
-
-                        
                     }
                 }
             }
