@@ -47,7 +47,8 @@ public class Pathfinding
             Debug.Log("endKonten: " + end);
             Debug.Log(aktiverKnoten.position == end);
             Debug.Log(offeneListe.Count);*/
-           
+            if(testzaehler > unit.getMaxBloeckeProRunde()*unit.getMaxBloeckeProRunde()) break;
+            testzaehler++;
             offeneListe.Remove(aktiverKnoten);
             geschlosseneListe.Add(aktiverKnoten); 
             

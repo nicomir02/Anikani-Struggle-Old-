@@ -50,6 +50,11 @@ public class HealthBar : MonoBehaviour
             yield return null; //new WaitForSecondsRealtime(0.1f);
         }
 
+        UnitSprite us = gameObject.transform.parent.GetComponent<UnitSprite>();
+        foreach(UnitManager um in FindObjectsOfType<UnitManager>()) {
+            if(um.GetComponent<Player>().id == us.id) um.syncStillExists(us.vec);
+        }
+
         slowChangeBar.SetWidth(targetWidth);
     }
 

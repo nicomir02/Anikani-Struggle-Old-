@@ -14,6 +14,8 @@ public class WinLooseScreen : MonoBehaviour
     [SerializeField] Button spectateButton;
     [SerializeField] GameObject inGameObjects;
 
+    [SerializeField] List<GameObject> objects;
+
 
     public void setLooseScreen() {
         winLooseCanvas.SetActive(true);
@@ -26,16 +28,11 @@ public class WinLooseScreen : MonoBehaviour
     public void spectate() {
         mainMenu.onClick.RemoveListener(goMainMenu);
         spectateButton.onClick.RemoveListener(spectate);
-        GameObject.Find("InGame/Canvas/Runde").SetActive(false);
-        GameObject.Find("InGame/Canvas/ShowArea").SetActive(false);
-        GameObject.Find("InGame/Canvas/Leiste/Tree").SetActive(false);
-        GameObject.Find("InGame/Canvas/Leiste/Stone").SetActive(false);
-        GameObject.Find("InGame/Canvas/Infobox").SetActive(false);
-        GameObject.Find("InGame/Canvas/InfoboxBuilding").SetActive(false);
-        GameObject.Find("InGame/Canvas/BuildOrBuy").SetActive(false);
-        GameObject.Find("InGame/Canvas/BuildingPanel").SetActive(false);
-        GameObject.Find("InGame/Canvas/TroopButton").SetActive(false);
-        GameObject.Find("InGame/Canvas/UnitPanel").SetActive(false);
+
+        foreach(GameObject o in objects) {
+            o.SetActive(false);
+        }
+        
         winLooseCanvas.SetActive(false);
     }
 

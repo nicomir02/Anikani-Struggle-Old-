@@ -343,7 +343,7 @@ public class UnitManager : NetworkBehaviour
             reichweite.Add(vec, r-liste.Count);
 
             foreach(UnitSprite us in FindObjectsOfType<UnitSprite>()) {
-                if(us.vec == selectedVector) us.gameObject.transform.GetChild(0).GetComponent<HealthBar>().changeReichweite(r-liste.Count);
+                if(us.vec.x == selectedVector.x && us.vec.y == selectedVector.y) us.gameObject.transform.GetChild(0).GetComponent<HealthBar>().changeReichweite(r-liste.Count);
             }
             
             healthManager.moveUnit(selectedVector, vec);
@@ -503,13 +503,14 @@ public class UnitManager : NetworkBehaviour
             }else {
                 heal = unit.getHeilung();
             }
-
+            foreach(UnitSprite us in FindObjectsOfType<UnitSprite>()) {
+                if(us.vec.x == selectedVector.x && us.vec.y == selectedVector.y) us.gameObject.transform.GetChild(0).GetComponent<HealthBar>().changeReichweite(0);
+            }
+            
             healthManager.angriff(v, -heal); //da heilung ein negativer angriff in Höhe von heal ist
             reichweite[selectedVector] = 0;
 
-            foreach(UnitSprite us in FindObjectsOfType<UnitSprite>()) {
-                if(us.vec == selectedVector) us.gameObject.transform.GetChild(0).GetComponent<HealthBar>().changeReichweite(0);
-            }
+            
 
             return;
         }
@@ -518,11 +519,15 @@ public class UnitManager : NetworkBehaviour
         if(spawnedUnits.ContainsKey(v) || !canAttack(unit, selectedVector, vec)) return;
 
         reichweite[selectedVector] = 0;
+
+        foreach(UnitSprite us in FindObjectsOfType<UnitSprite>()) {
+                if(us.vec.x == selectedVector.x && us.vec.y == selectedVector.y) us.gameObject.transform.GetChild(0).GetComponent<HealthBar>().changeReichweite(0);
+            }
+
         if(healthManager.isUnit(new Vector3Int(vec.x, vec.y, 2))) {
             healthManager.angriff(new Vector3Int(vec.x, vec.y, 2), unit.getAngriffswert());
-            syncStillExists(new Vector3Int(vec.x, vec.y, 2));
+            //Sync Still Exists nun in healthbar
         }else if(healthManager.isBuilding(new Vector3Int(vec.x, vec.y, 1))) {
-            
             healthManager.angriffBuilding(new Vector3Int(vec.x, vec.y, 1), unit.getAngriffswert());
             syncStillExistsBuilding(new Vector3Int(vec.x, vec.y, 1));
         }
@@ -556,7 +561,7 @@ public class UnitManager : NetworkBehaviour
             temp.Add(kvp.Key, kvp.Value.getMaxBloeckeProRunde());
 
             foreach(UnitSprite us in FindObjectsOfType<UnitSprite>()) {
-                if(us.vec == kvp.Key) us.gameObject.transform.GetChild(0).GetComponent<HealthBar>().changeReichweite(kvp.Value.getMaxBloeckeProRunde());
+                if(us.vec.x == kvp.Key.x && us.vec.y == kvp.Key.y) us.gameObject.transform.GetChild(0).GetComponent<HealthBar>().changeReichweite(kvp.Value.getMaxBloeckeProRunde());
             }
         }
         reichweite = temp;
