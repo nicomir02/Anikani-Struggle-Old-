@@ -134,11 +134,16 @@ public class LobbyManager : NetworkBehaviour
         TextMeshProUGUI textMesh = buttonGameObject.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>();
 
         if(ausgewaehlt) {
-            
             CMDfarbewaehlen(roundManager.id-1, "");
+            if(ready) leave(ready);
         }
 
         StartCoroutine(disconnectDelay());
+    }
+
+    [Command(requiresAuthority=false)]
+    public void leave(bool r) {
+        if(r) AllPlayerready--;
     }
 
     IEnumerator disconnectDelay()

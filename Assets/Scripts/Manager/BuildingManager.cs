@@ -139,6 +139,18 @@ public class BuildingManager : NetworkBehaviour
         unitManager = GetComponent<UnitManager>();//für testzwecke der ersten einheit
     }
 
+    private IEnumerator kurzRot(Vector3Int v) {
+        v.z = 0;
+
+        tilemap.SetTileFlags(v, TileFlags.None);
+        tilemap.SetColor(v, Color.red);
+
+        yield return new WaitForSeconds(0.5f);
+
+        tilemap.SetColor(v, Color.white);
+
+    }
+
     void Update() {
         //Pause deaktivieren
         if(pauseMenu.getPause()) return;
@@ -159,20 +171,25 @@ public class BuildingManager : NetworkBehaviour
                 if(GameObject.Find("GameManager").GetComponent<RoundManager>().round == 0 && ZaehlerBuildingsBuiltInRound == 0) {
                     List<Vector3Int> newArea = makeAreaBigger(vec, 1);
 
-                    /*List<Vector3Int> check = healthManager.getAllVecsOnZero();
+
+                    //Check ob ein Main Building in der Nähe ist
+                    List<Vector3Int> check = healthManager.getAllVecsOnZero();
 
                     bool mainBuildingNear = false;
                     int minAbstand = gameManager.getMinAbstandMainBuilding();
 
                     foreach(Vector3Int v in check) {
+                        if(buildingvectors.ContainsKey(new Vector3Int(v.x, v.y, 1)) || newArea.Contains(new Vector3Int(v.x, v.y, -1)) ) continue;
                         foreach(Vector3Int ve in newArea) {
-                            if(unitManager.distance(v, ve) <= minAbstand) {
+                            if(unitManager.distance(v, new Vector3Int(ve.x, ve.y, -1)) <= minAbstand) {
                                 mainBuildingNear = true;
                             }
                         }
-                    }*/
+                    }
 
-                    if(canBuildMethod(vec)) {
+        	        if(mainBuildingNear) StartCoroutine(kurzRot(vec));
+
+                    if(canBuildMethod(vec) && !mainBuildingNear) {
                         //Added zu der eigenen Area
                         addFelderToTeam(vec, 6, GameObject.Find("GameManager").GetComponent<RoundManager>().id);
                         //Löschen von Gegenständen im Weg vom Hauptgebäude

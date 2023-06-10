@@ -10,7 +10,7 @@ public class TilemapHover : MonoBehaviour
     
     private Vector3Int oldVec;
     private Color oldColor;
-    [SerializeField] private Color select = Color.grey;
+    [SerializeField] public Color select = Color.grey;
 
     private MapBehaviour mapSettings;
     //private BuildingManager buildingManager;
