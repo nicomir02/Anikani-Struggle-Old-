@@ -13,6 +13,8 @@ public class TilemapHover : MonoBehaviour
     [SerializeField] public Color select = Color.grey;
 
     private MapBehaviour mapSettings;
+    //Nur ausschalten solange nicht anderer Vektor
+    bool hoverOnKurz = true;
     //private BuildingManager buildingManager;
 
     // Start is called before the first frame update
@@ -28,11 +30,17 @@ public class TilemapHover : MonoBehaviour
         return select;
     }
 
+    public void setHoverBoolKurz(bool h) {
+        hoverOnKurz = h;
+    }
+
     // Update is called once per frame
     void Update()
     {
-        if(GameObject.Find("GameManager").GetComponent<PauseMenu>().getPause()) return;
         Vector3Int cellPosition = getVectorFromMouse();
+        if(oldVec != cellPosition) hoverOnKurz = true;
+        if(GameObject.Find("GameManager").GetComponent<PauseMenu>().getPause() || !hoverOnKurz) return;
+        
         
         if(insideField(cellPosition) && oldVec != cellPosition) {
             cellPosition.z = 0;

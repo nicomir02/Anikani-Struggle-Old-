@@ -46,6 +46,8 @@ public class BuildingManager : NetworkBehaviour
     //zeigt gesamtmenge an Ressourcen die man hat:
     private Dictionary<Ressource, int> ressourcenZaehler = new Dictionary<Ressource, int>();
 
+    [SerializeField] GameObject wandererMainBuildingPrefab;
+
     
 
     //Knopf um auszuwählen welches Gebäude man platzieren will
@@ -142,10 +144,15 @@ public class BuildingManager : NetworkBehaviour
     private IEnumerator kurzRot(Vector3Int v) {
         v.z = 0;
 
+        hover.reload();
+        hover.setHoverBoolKurz(false);
+        
         tilemap.SetTileFlags(v, TileFlags.None);
         tilemap.SetColor(v, Color.red);
 
         yield return new WaitForSeconds(0.5f);
+        hover.setHoverBoolKurz(true);
+        hover.reload();
 
         tilemap.SetColor(v, Color.white);
 
@@ -225,8 +232,6 @@ public class BuildingManager : NetworkBehaviour
 
             Vector3Int vec = hover.getVectorFromMouse();
             vec.z=0;
-            
-            deselectBuilding();
 
             if(hover.insideField(vec) && isMyArea(vec)) {
                 
@@ -277,6 +282,11 @@ public class BuildingManager : NetworkBehaviour
 
     //Vector Selection
     public void selectVector(Vector3Int vec) {
+        //Erste Tests für Wanderer
+        if(selectedBuilding != null && selectedBuilding.getName() == "Main Animal" && unitManager.distance(selectedVector, vec) <= 3) {
+            moveMainBuildingWanderer(selectedVector, vec, selectedBuilding);
+        }
+        deselectBuilding();
         selectBuilding(vec);
 
         List<Vector3Int> vectors = makeAreaBigger(vec, 1);
@@ -565,7 +575,11 @@ public class BuildingManager : NetworkBehaviour
 
 //Passt Spielerfelder an nach Gebäudebau und synchronisiert für alle Spieler
     public void reloadShowArea() {
-        
+        for (int x=0; x<mapBehaviour.mapWidth(); x++) {
+            for (int y=0; y<mapBehaviour.mapHeight(); y++) {
+                tilemap.SetColor(new Vector3Int(x, y, 0), Color.white);
+            }
+        }
 
         showAreaBool = true;
         Dictionary<Vector3Int, int> teamVectors = gameManager.getDictionary();
@@ -617,5 +631,52 @@ public class BuildingManager : NetworkBehaviour
             }
         }
         return neighbors;
+    }
+
+
+
+    //Wanderer Test
+    public void moveMainBuildingWanderer(Vector3Int from, Vector3Int to, Building b) {
+        tilemapManager.removeBuilding(from, 2);
+        StartCoroutine(MoveToPosition(to, player.id, wandererMainBuildingPrefab, from));
+    }
+
+    private GameObject mainBuilding;
+
+    [Command(requiresAuthority = false)]
+    public void startObject(Vector3Int from, int id) {
+        GameObject sprite = Instantiate(wandererMainBuildingPrefab, GetComponent<UnitManager>().vec3IntToVec3(from), Quaternion.identity);
+
+
+        sprite.GetComponent<SpriteRenderer>().sprite = wandererMainBuildingPrefab.GetComponent<WandererMainBuilding>().sprite[id-1]; 
+
+        Transform transform = sprite.GetComponent<Transform>();
+        Vector3 newpos = transform.position;
+        newpos.y -=  0.33782f;
+        mainBuilding = sprite;
+
+        transform.position = newpos;
+        NetworkServer.Spawn(sprite);
+        rpcwandererbuilding(sprite, id);
+    }
+
+    [ClientRpc]
+    public void rpcwandererbuilding(GameObject o, int id) {
+        mainBuilding = o;
+        o.GetComponent<SpriteRenderer>().sprite = wandererMainBuildingPrefab.GetComponent<WandererMainBuilding>().sprite[id-1]; 
+    }
+
+    [Command(requiresAuthority = false)]
+    public void deleteObject(GameObject o) {
+        NetworkServer.Destroy(mainBuilding);
+    }
+
+    public IEnumerator MoveToPosition(Vector3Int to, int id, GameObject o, Vector3Int from) {
+        startObject(from, id);
+        string volkname = "Wanderer[Experimental]";
+        yield return new WaitForSeconds(2f);
+        to.z = 1;
+        tilemapManager.CmdUpdateTilemap(to, volkManager.getVolkID(volkManager.getVolkByString(volkname)).Item2, 0, id-1); //Vector3Int vec, int volkID, int buildID, int colorID
+        deleteObject(mainBuilding);
     }
 }

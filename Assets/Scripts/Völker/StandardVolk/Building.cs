@@ -8,7 +8,7 @@ public class Building : NetworkBehaviour
 {
     //Farbe 1: Blau
     //Farbe 2: Rot
-
+    [SerializeField] public List<Sprite> sprite = new List<Sprite>();
     [SerializeField] List<TileBase> buildingTile = new List<TileBase>();
     [SerializeField] private int health = 1000;
     [SerializeField] private string buildingname = "";

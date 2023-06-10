@@ -7,7 +7,7 @@ using Mirror;
 public class TilemapManager : NetworkBehaviour //Synchronisieren der Tilemap zwischen Server und Spielern
 {
     //Deklarieren von benötigten Klassen
-    [SerializeField] private Tilemap tilemap;
+    [SerializeField] public Tilemap tilemap;
     [SerializeField] private VolkManager volkManager;
 
     [SerializeField] private TileBase unterflaeche;

@@ -27,6 +27,10 @@ public class GameManager : NetworkBehaviour
         return minAbstandMainBuilding;
     }
 
+    public void setMinAbstandMainBuilding(int distance) {
+        minAbstandMainBuilding = distance;
+    }
+
 
     [Command(requiresAuthority = false)]
     public void syncNames() {

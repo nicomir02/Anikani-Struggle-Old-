@@ -91,6 +91,7 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0
+  wandererMainBuildingPrefab: {fileID: 737587089655155995, guid: 44cb3a3842cdb724587970255a5e4d0c, type: 3}
 --- !u!114 &7573024525503976991
 MonoBehaviour:
   m_ObjectHideFlags: 0

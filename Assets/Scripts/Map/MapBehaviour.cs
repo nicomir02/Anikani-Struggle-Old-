@@ -39,8 +39,8 @@ public class MapBehaviour : NetworkBehaviour
     private System.Random rand = new System.Random();
 
     //Einstellungen Größe der Karte
-    [SerializeField] private int width = 25; 
-    [SerializeField] private int height = 25;
+    [SerializeField] public int width = 25; 
+    [SerializeField] public int height = 25;
     [SerializeField] private int biomgroesse = 250;
 
     //Karteneinstellungen
@@ -213,20 +213,20 @@ public class MapBehaviour : NetworkBehaviour
     }
 
     void createRand() {
-        int a=height+1;
+        int a=mapHeight()+1;
 
         for(int i=-1; i<=a; i++) {
-            Vector3Int vec = new Vector3Int(i, a, 0);
+            Vector3Int vec = new Vector3Int(mapWidth()+1, i, 0);
             randTile.setTile(vec, tilemap);
-            vec = new Vector3Int(i, -1, 0);
+            vec = new Vector3Int(-1, i, 0);
             randTile.setTile(vec, tilemap);
         }
 
-        a = width+1;
+        a = mapWidth()+1;
         for(int i=-1; i<=a; i++) {
-            Vector3Int vec = new Vector3Int(a, i, 0);
+            Vector3Int vec = new Vector3Int(i, mapHeight()+1, 0);
             randTile.setTile(vec, tilemap);
-            vec = new Vector3Int(-1, i, 0);
+            vec = new Vector3Int(i, -1, 0);
             randTile.setTile(vec, tilemap);
         }
     }

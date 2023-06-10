@@ -4,8 +4,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
+using Mirror;
 
-public class WinLooseScreen : MonoBehaviour
+public class WinLooseScreen : NetworkBehaviour
 {
     [SerializeField] GameObject winLooseCanvas;
     [SerializeField] RawImage winLooseCanvasBackground;
@@ -13,6 +14,7 @@ public class WinLooseScreen : MonoBehaviour
     [SerializeField] Button mainMenu;
     [SerializeField] Button spectateButton;
     [SerializeField] GameObject inGameObjects;
+    [SerializeField] NetworkManager networkManager;
 
     [SerializeField] List<GameObject> objects;
 
@@ -45,6 +47,19 @@ public class WinLooseScreen : MonoBehaviour
     }
 
     public void goMainMenu() {
-        GetComponent<PauseMenu>().buttonBackToMainMenu();
+        StartCoroutine(disconnectDelay());
+    }
+
+    IEnumerator disconnectDelay()
+    {
+        yield return new WaitForSeconds(0.001f);
+
+        if (NetworkServer.active && NetworkClient.isConnected) {
+            networkManager.StopHost();
+        }else if (NetworkClient.isConnected) {
+            networkManager.StopClient();
+        }
+        
+            
     }
 }

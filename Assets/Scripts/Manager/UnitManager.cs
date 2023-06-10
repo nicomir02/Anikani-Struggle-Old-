@@ -243,13 +243,17 @@ public class UnitManager : NetworkBehaviour
 
     void ClearWeite() {
         hover.reload();
+        
         if (buildingManager.getShowArea()) {
             buildingManager.reloadShowArea();
-        } else {
-            foreach (Vector3Int v in weite) {
-                tilemap.SetColor(new Vector3Int(v.x, v.y, 0), Color.white);
+        }else {
+            for (int x=0; x<mapBehaviour.mapWidth(); x++) {
+                for (int y=0; y<mapBehaviour.mapHeight(); y++) {
+                    tilemap.SetColor(new Vector3Int(x, y, 0), Color.white);
+                }
             }
         }
+        
         weite.Clear();
         
     }
