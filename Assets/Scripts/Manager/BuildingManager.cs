@@ -75,8 +75,6 @@ public class BuildingManager : NetworkBehaviour
                 
                 //Remove Building von Listen
                 buildingsVec.Remove(temp);
-
-                Debug.Log(temp);
                 
                 List<Vector3Int> removeList = new List<Vector3Int>();
                 foreach(KeyValuePair<Vector3Int, Vector3Int> kvp in buildingvectors) {
@@ -85,6 +83,8 @@ public class BuildingManager : NetworkBehaviour
                         if(ressourcenProRundeZaehler.ContainsKey(kvp.Key)) ressourcenProRundeZaehler.Remove(kvp.Key);
                     }
                 }
+
+                
 
                 if(removeList.Contains(selectedVector)) {
                     deselectBuilding();

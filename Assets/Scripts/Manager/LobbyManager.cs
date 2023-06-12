@@ -110,8 +110,14 @@ public class LobbyManager : NetworkBehaviour
         changeButtons(texte);
     }
 
-    [Command(requiresAuthority=false)]
     public void addName(string pn) {
+        playername = pn;
+        CMDaddName(pn);
+    }
+    
+
+    [Command(requiresAuthority=false)]
+    public void CMDaddName(string pn) {
         RpcAddName(pn);
     }
 
@@ -247,7 +253,8 @@ public class LobbyManager : NetworkBehaviour
         }else {
             readyButtonText.text = "Not ready";
             ready = true;
-        } 
+        }
+        
         readyPlayer(ready, playername);
     }
 
