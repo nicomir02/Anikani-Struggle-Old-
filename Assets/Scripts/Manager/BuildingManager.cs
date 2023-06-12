@@ -30,9 +30,9 @@ public class BuildingManager : NetworkBehaviour
 //isLobby wird nur benutzt bei der Spielinitialisierung in der Update Methode
     private bool isLobby = true; 
 
-    private int maxBuildingPerRound = 1;
+    public int maxBuildingPerRound = 1;
     //ZaehlerBuildingsbuiltInRound zählt die Anzahl an Gebäuden die in der Runde gebaut wurden(eventuell Limit setzen später)
-    private int ZaehlerBuildingsBuiltInRound = 0;
+    public int ZaehlerBuildingsBuiltInRound = 0;
 
     //was für ein Building an diesem Vektor sich befindet(jedes bUilding einmal in dem Dictionary)
     public Dictionary<Vector3Int, Building> buildingsVec = new Dictionary<Vector3Int, Building>();
@@ -256,7 +256,15 @@ public class BuildingManager : NetworkBehaviour
                 }
             }
         }
+    }
 
+    public bool buildUnitPanelNextRound() {
+        foreach(KeyValuePair<Vector3Int,Building> kvp in buildingsVec){
+            if(kvp.Value.getName() == "Barracks"){
+                if(!GetComponent<UnitGUIPanel>().howLong.ContainsKey(kvp.Key)) return false;
+            }
+        }
+        return true;
     }
 
     //minus Ressourcen fürs kaufen

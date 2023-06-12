@@ -165,11 +165,17 @@ public class Pathfinding
         MapBehaviour mapBehaviour = GameObject.Find("GameManager").GetComponent<MapBehaviour>();
         TilemapHover hover = GameObject.Find("GameManager").GetComponent<TilemapHover>();
         HealthManager healthManager = GameObject.Find("GameManager").GetComponent<HealthManager>();
+        
+        bool ownBuilding = false;
+        foreach(BuildingManager bm in GameObject.FindObjectsOfType<BuildingManager>()) {
+            if(bm.isOwnBuilding(vec) && bm.isLocalPlayer) ownBuilding = true;
+        }
+
         if(hover.insideField(vec) //Ist der Vektor im Feld?
             &&
             (mapBehaviour.getBlockDetails((vec)).Item2.getWalkable() || unit.canWalk(mapBehaviour.getBlockDetails((vec)).Item2)) //Kann die Einheit über den Vektor laufen?
             &&
-            (!healthManager.isHealth(vec) || listeUnits.Contains(new Vector3Int(vec.x, vec.y, -1))) || isOnBuilding//Ist auf dem Feld eine Einheit oder ein Gebäude? Wenn Einheit, ist die Einheit keine Einheit von dir?
+            ((!healthManager.isHealth(vec) || ownBuilding) || listeUnits.Contains(new Vector3Int(vec.x, vec.y, -1))) || isOnBuilding//Ist auf dem Feld eine Einheit oder ein Gebäude? Wenn Einheit, ist die Einheit keine Einheit von dir?
             ) return true;
         return false;
     }

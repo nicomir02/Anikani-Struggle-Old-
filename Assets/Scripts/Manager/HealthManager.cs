@@ -56,6 +56,7 @@ public class HealthManager : NetworkBehaviour
     [Command(requiresAuthority = false)]
     public void removeBuilding(Vector3Int vec) {
         vec.z = 1;
+
         if(building.ContainsKey(vec)) {
             Vector3Int temp = building[vec];
             health.Remove(temp);
@@ -69,6 +70,10 @@ public class HealthManager : NetworkBehaviour
                 building.Remove(v);
             }
             
+        }
+
+        foreach(BuildingManager bm in FindObjectsOfType<BuildingManager>()) {
+            bm.angriffsCheckBuilding(vec);
         }
     }
     

@@ -64,7 +64,7 @@ public class Player : NetworkBehaviour
         network = GameObject.Find("NetworkManager").GetComponent<NetworkManagerAnikani>();
         name = network.GetComponent<PlayerInfo>().playername;
         GameObject.Find("GameManager").GetComponent<RoundManager>().playername = name;
-        GameObject.Find("LobbyManager").GetComponent<LobbyManager>().playername = name;
+        GameObject.Find("LobbyManager").GetComponent<LobbyManager>().addName(name);
         lobbyObjects.SetActive(true);
     }
 

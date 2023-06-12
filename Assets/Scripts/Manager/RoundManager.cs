@@ -5,6 +5,7 @@ using Mirror;
 using TMPro;
 using UnityEngine.UI;
 using UnityEngine.Tilemaps;
+using UnityEngine.EventSystems;
 
 public class RoundManager : NetworkBehaviour
 {
@@ -14,6 +15,7 @@ public class RoundManager : NetworkBehaviour
     [SerializeField] private NetworkManagerAnikani network;
 
     [SerializeField] private TextMeshProUGUI curTurnText;
+    
     //Deklarieren von GameObjekten
     private GameObject lobbyObjects;
     
@@ -25,6 +27,7 @@ public class RoundManager : NetworkBehaviour
     [SerializeField] private Button roundButton;     //Knopf für Runde beenden
     [SerializeField] private TextMeshProUGUI roundButtonText;    //Knopf zeigt an ob man gerade dran ist oder man warten muss
     [SerializeField] private TextMeshProUGUI roundText;  //Text oben in der Leiste, welcher die Rundenanzahl angibt
+    [SerializeField] private GameObject nextrounderr;
     public bool isYourTurn = false;     //sagt ob dieser Spieler gerade am Turn ist
 
     [SerializeField] private TextMeshProUGUI spielername; //Text oben in Leiste für den Spielernamen
@@ -75,6 +78,10 @@ public class RoundManager : NetworkBehaviour
             GetComponent<GameManager>().syncNames();
         }
 
+        if(EventSystem.current.currentSelectedGameObject == null && nextrounderr.activeSelf) {
+            nextrounderr.SetActive(false);
+        } 
+
         
     }
 
@@ -92,10 +99,35 @@ public class RoundManager : NetworkBehaviour
         }
         
         if(isYourTurn) { // nur wenn du dran bist
-            //if(round == 0 && GetComponent<BuildingManager>().getZahlBuildInRound() == 0) return;
-            isYourTurn = false;
-            roundButtonText.text = "Wait";
-            onRoundChange();
+            bool canNextRound = false;
+            if(!nextrounderr.activeSelf) {
+                bool unitsRound = false;
+                foreach(UnitManager um in FindObjectsOfType<UnitManager>()) {
+                    if(um.canNextRound() && um.isLocalPlayer) unitsRound = true;
+                }
+
+                bool buildsRound = false;
+
+                bool unitTrainer = false;
+                foreach(BuildingManager bm in FindObjectsOfType<BuildingManager>()) {
+                    if(bm.ZaehlerBuildingsBuiltInRound == bm.maxBuildingPerRound && bm.isLocalPlayer) buildsRound = true;
+                    if(bm.buildUnitPanelNextRound() && bm.isLocalPlayer) unitTrainer = true;
+                }
+
+                canNextRound = unitsRound && buildsRound && unitTrainer;
+            }else {
+                canNextRound = true;
+            }
+
+            if(canNextRound) {
+                //if(round == 0 && GetComponent<BuildingManager>().getZahlBuildInRound() == 0) return;
+                isYourTurn = false;
+                roundButtonText.text = "Wait";
+                nextrounderr.SetActive(false);
+                onRoundChange();
+            }else {
+                nextrounderr.SetActive(true);
+            }
         }
     }
 

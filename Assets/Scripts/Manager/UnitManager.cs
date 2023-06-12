@@ -57,6 +57,14 @@ public class UnitManager : NetworkBehaviour
         buildingManager = GetComponent<BuildingManager>();
     }
 
+    //Nächste Runde abfrage
+    public bool canNextRound() {
+        foreach(KeyValuePair<Vector3Int, int> kvp in reichweite) {
+            if(kvp.Value > 0) return false;
+        }
+        return true;
+    }
+
     
     public void deleteAllUnits() {
         foreach(KeyValuePair<Vector3Int, Unit> kvp in spawnedUnits) {

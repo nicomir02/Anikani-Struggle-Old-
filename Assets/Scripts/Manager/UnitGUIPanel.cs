@@ -9,7 +9,7 @@ public class UnitGUIPanel : MonoBehaviour
 {
 
     private Dictionary<Vector3Int, Unit> trainedUnits = new Dictionary<Vector3Int, Unit>();
-    private Dictionary<Vector3Int, int> howLong = new Dictionary<Vector3Int, int>();
+    public Dictionary<Vector3Int, int> howLong = new Dictionary<Vector3Int, int>();
     
     private Vector3Int selectedVector;
     
@@ -168,7 +168,7 @@ public class UnitGUIPanel : MonoBehaviour
 
     void Update() {
         if(!generated) return;
-        if(Input.GetKeyDown(KeyCode.Escape)) GUIoff();
+        if(Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.T)) GUIoff();
 
         if(Input.GetKeyDown(KeyCode.LeftArrow)) {
             Vector3Int last = new Vector3Int(-1,-1,-1);

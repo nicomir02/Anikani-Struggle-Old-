@@ -33,6 +33,8 @@ public class LobbyManager : NetworkBehaviour
     [SerializeField] private Button backToMainMenu;
     [SerializeField] private NetworkManager networkManager;
 
+    [SerializeField] private TextMeshProUGUI playerlist;
+
     public string playername = "Player";
 
     private bool ausgewaehlt = false;
@@ -105,8 +107,17 @@ public class LobbyManager : NetworkBehaviour
         foreach(Button b in buttons) {
             texte.Add(b.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text);
         }
-
         changeButtons(texte);
+    }
+
+    [Command(requiresAuthority=false)]
+    public void addName(string pn) {
+        RpcAddName(pn);
+    }
+
+    [ClientRpc]
+    public void RpcAddName(string pn) {
+        if(!playerlist.text.Contains(pn)) playerlist.text += "\n"+pn;
     }
 
     
@@ -222,6 +233,7 @@ public class LobbyManager : NetworkBehaviour
         }else {
             textgui.text = buttons[i].name;
         }
+
     }
 
 //Klicken auf Ready Button setzt ready Variable auf true
@@ -236,20 +248,47 @@ public class LobbyManager : NetworkBehaviour
             readyButtonText.text = "Not ready";
             ready = true;
         } 
-        readyPlayer(ready);
+        readyPlayer(ready, playername);
     }
 
 //Synchronisieren der Ready-Variablen der verschiednen Spieler
 //Schauen ob mindest-Spieleranzahl erreicht
 //schauen ob alle connected players auch ready sind
     [Command(requiresAuthority = false)]
-    public void readyPlayer(bool readyornot) {
+    public void readyPlayer(bool readyornot, string pn) {
        //Counter for Ready Players
+        string result = "";
         if(readyornot) {
             AllPlayerready++;
+            string text = playerlist.text;
+            string[] subs = text.Split("\n");
+            text = "";
+            foreach(string n in subs) {
+                Debug.Log(n);
+                Debug.Log(pn);
+                if(n == pn) {
+                    result += n + " - ready";
+                }else {
+                    result += n;
+                }
+                result += "\n";
+            }
+
         }else {
             AllPlayerready--;
+            string text = playerlist.text;
+            string[] subs = text.Split("\n");
+            foreach(string n in subs) {
+                if(n.Contains(pn)) {
+                    result += pn;
+                }else {
+                    result += n;
+                }
+                result += "\n";
+            }
         }
+        textChange(result);
+
         //Prüfung ob Spiel starten kann
         if(network.numPlayers >= minPlayers && AllPlayerready == network.numPlayers) {
             int i = 0;
@@ -262,6 +301,11 @@ public class LobbyManager : NetworkBehaviour
             mapBehaviour.createTerrain();
             onStartGame();
         }
+    }
+
+    [ClientRpc]
+    public void textChange(string text) {
+        playerlist.text = text;
     }
 
 //Bei jedem Client startet Spiel und ingameobjekte generiert, Lobby ausgeschaltet, Map erstellt
