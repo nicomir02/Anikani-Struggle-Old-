@@ -26,6 +26,9 @@ public class BuildingManager : NetworkBehaviour
 
     private Button showArea;
 
+    private Button mainAnimalMove; //Für Wanderer
+    private bool moveMode; //Wanderer
+
     private bool showAreaBool = false;
 //isLobby wird nur benutzt bei der Spielinitialisierung in der Update Methode
     private bool isLobby = true; 
@@ -291,9 +294,45 @@ public class BuildingManager : NetworkBehaviour
     //Vector Selection
     public void selectVector(Vector3Int vec) {
         //Erste Tests für Wanderer
-        if(selectedBuilding != null && selectedBuilding.getName() == "Main Animal" && unitManager.distance(selectedVector, vec) <= 3) {
-            moveMainBuildingWanderer(selectedVector, vec, selectedBuilding);
+        if(moveMode) {
+            vec.z = 1;
+            if(unitManager.distance(selectedVector, vec) <= 4) {
+
+                int x = selectedVector.x - vec.x;
+                int y = selectedVector.y - vec.y;
+                Vector3Int rechner = new Vector3Int(x, y, 0);
+                Dictionary<Vector3Int, Vector3Int> newBuildingVecs = new Dictionary<Vector3Int, Vector3Int>();
+
+                foreach(KeyValuePair<Vector3Int, Vector3Int> kvp in buildingvectors) {
+                    newBuildingVecs.Add(kvp.Key - rechner, kvp.Value-rechner);
+                }
+                buildingvectors = new Dictionary<Vector3Int, Vector3Int>();
+                foreach(KeyValuePair<Vector3Int, Vector3Int> kvp in newBuildingVecs) {
+                    buildingvectors.Add(kvp.Key, kvp.Value);
+                }
+
+                Dictionary<Vector3Int, Building> newBuildingVec = new Dictionary<Vector3Int, Building>();
+
+                foreach(KeyValuePair<Vector3Int, Building> kvp in buildingsVec) {
+                    newBuildingVec.Add(kvp.Key-rechner, kvp.Value);
+                    tilemapManager.removeBuilding(kvp.Key, 2);
+
+                }
+                buildingsVec = new Dictionary<Vector3Int, Building>();
+                Volk v = volkManager.GetComponent<RoundManager>().eigenesVolk;
+                foreach(KeyValuePair<Vector3Int, Building> kvp in newBuildingVec) {
+                    buildingsVec.Add(kvp.Key, kvp.Value);
+                    tilemapManager.CmdUpdateTilemapBuilding(kvp.Key, volkManager.getBuildingID(v, kvp.Value), player.id, volkManager.getVolkID(v).Item2, 0);
+                }
+
+                toggleAnimalMode();
+
+            }
+            return;
         }
+
+        if(mainAnimalMove != null) mainAnimalMove.gameObject.SetActive(false);
+
         deselectBuilding();
         selectBuilding(vec);
 
@@ -462,13 +501,29 @@ public class BuildingManager : NetworkBehaviour
             selectedVector.z = 1;
             tilemap.SetTileFlags(selectedVector, TileFlags.None);
             tilemap.SetColor(selectedVector, hover.getSelectColor());
-
+            
             if(selectedBuilding.getName() == "Barracks") { //Setzt Troops Button
                 GameObject.Find("InGame/Canvas/TroopsButton").SetActive(true);
                 GameObject.Find("InGame/Canvas/TroopsButton").GetComponent<Button>().onClick.AddListener(openUnitPanel);
+            }else if(selectedBuilding.getName() == "Main Animal") {
+                if(mainAnimalMove == null) {
+                    mainAnimalMove =  GameObject.Find("InGame/Canvas/WandererMoveMainButton").GetComponent<Button>();
+                    mainAnimalMove.onClick.AddListener(toggleAnimalMode);
+                }
+                mainAnimalMove.gameObject.SetActive(true);
             }
             
             activatePanel(selectedVector);
+        }
+    }
+
+    public void toggleAnimalMode(){
+        moveMode = !moveMode;
+
+        if(moveMode) { 
+            mainAnimalMove.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Dont move";
+        }else {
+            mainAnimalMove.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "move";
         }
     }
 

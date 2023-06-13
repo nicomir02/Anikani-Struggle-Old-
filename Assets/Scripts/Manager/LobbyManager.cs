@@ -271,8 +271,6 @@ public class LobbyManager : NetworkBehaviour
             string[] subs = text.Split("\n");
             text = "";
             foreach(string n in subs) {
-                Debug.Log(n);
-                Debug.Log(pn);
                 if(n == pn) {
                     result += n + " - ready";
                 }else {
