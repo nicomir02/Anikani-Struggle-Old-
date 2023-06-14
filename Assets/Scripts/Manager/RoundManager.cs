@@ -106,11 +106,11 @@ public class RoundManager : NetworkBehaviour
                     if(um.canNextRound() && um.isLocalPlayer) unitsRound = true;
                 }
 
-                bool buildsRound = false;
+                bool buildsRound = true;
 
                 bool unitTrainer = false;
                 foreach(BuildingManager bm in FindObjectsOfType<BuildingManager>()) {
-                    if(bm.ZaehlerBuildingsBuiltInRound == bm.maxBuildingPerRound && bm.isLocalPlayer) buildsRound = true;
+                    //if(bm.ZaehlerBuildingsBuiltInRound < bm.maxBuildingPerRound && bm.isLocalPlayer) buildsRound = false; Immer nach Buildings zu checken ist glaub ich unnötig
                     if(bm.buildUnitPanelNextRound() && bm.isLocalPlayer) unitTrainer = true;
                 }
 

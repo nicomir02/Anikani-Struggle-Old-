@@ -29,15 +29,13 @@ public class InputManager : MonoBehaviour
 
     void Update()
     {
-
-        if(Input.GetKeyDown(KeyCode.B)) {
+        if(Input.GetButtonDown("Toggle invisible Buildings")) {
             onShowBuildings();
         }
 
-        if(Input.GetKeyDown(KeyCode.Tab)) {
-            
+        if(Input.GetButtonDown("Show List")) {
             showTabNames(true);
-        }else if(Input.GetKeyUp(KeyCode.Tab)) {
+        }else if(Input.GetButtonUp("Show List")) {
             showTabNames(false);
         }
     }

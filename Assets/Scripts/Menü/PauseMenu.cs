@@ -13,6 +13,10 @@ public class PauseMenu : MonoBehaviour
     [SerializeField] private NetworkManager networkManager;
     [SerializeField] private GameObject gameManager;
 
+    [SerializeField] private Button settingsButton;
+    [SerializeField] private GameObject settingsPanel;
+    [SerializeField] private Button settingsClose;
+
     bool isPaused = false;
 
     bool canPause = true;
@@ -25,6 +29,16 @@ public class PauseMenu : MonoBehaviour
     void Start()
     {
         Pause.SetActive(false);
+        settingsButton.onClick.AddListener(openSettings);
+        settingsClose.onClick.AddListener(closeSettings);
+    }
+
+    void openSettings() {
+        settingsPanel.SetActive(true);
+    }
+
+    void closeSettings() {
+        settingsPanel.SetActive(false);
     }
 
     public void setCanPause(bool can) {
