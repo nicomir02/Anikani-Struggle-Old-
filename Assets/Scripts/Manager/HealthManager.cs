@@ -23,6 +23,33 @@ public class HealthManager : NetworkBehaviour
         mapBehaviour = GameObject.Find("GameManager").GetComponent<MapBehaviour>();
     }
 
+    //Move Building
+    [Command(requiresAuthority=false)]
+    public void moveBuilding(Vector3Int v, Vector3Int rechner) {
+        v.z = 1;
+        Vector3Int vec = building[v];
+        int h = health[vec];
+
+        List<Vector3Int> liste = new List<Vector3Int>();
+
+        foreach(KeyValuePair<Vector3Int, Vector3Int> kvp in building) {
+            if(kvp.Value == vec) {
+                liste.Add(kvp.Key);
+            }
+        }
+
+        foreach(Vector3Int vector in liste) {
+            building.Remove(vector);
+        }
+
+        foreach(Vector3Int vector in liste) {
+            building.Add(vector-rechner, vec-rechner);
+        }
+
+        health.Remove(vec);
+        health.Add(vec-rechner, h);
+    }
+
     //neues Building wird gesetzt, also add für health
     [Command(requiresAuthority = false)]
     public void addBuilding(List<Vector3Int> listVec, int leben, Vector3Int vec) {
@@ -40,6 +67,22 @@ public class HealthManager : NetworkBehaviour
         List<Vector3Int> liste = new List<Vector3Int>();
         foreach(KeyValuePair<Vector3Int, Vector3Int> kvp in building) {
             liste.Add(new Vector3Int(kvp.Key.x, kvp.Key.y, 0));
+        }
+        return liste;
+    }
+
+    public Dictionary<Vector3Int, Vector3Int> getBuildingDictionary() {
+        Dictionary<Vector3Int, Vector3Int> liste = new Dictionary<Vector3Int, Vector3Int>();
+        foreach(KeyValuePair<Vector3Int, Vector3Int> kvp in building) {
+            liste.Add(kvp.Key, kvp.Value);
+        }
+        return liste;
+    }
+
+    public Dictionary<Vector3Int, int> getHealthDictionary() {
+        Dictionary<Vector3Int, int> liste = new Dictionary<Vector3Int, int>();
+        foreach(KeyValuePair<Vector3Int, int> kvp in health) {
+            liste.Add(kvp.Key, kvp.Value);
         }
         return liste;
     }

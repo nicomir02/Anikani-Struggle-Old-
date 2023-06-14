@@ -62,6 +62,17 @@ public class GameManager : NetworkBehaviour
         foreach(Vector3Int v in list) {
             teamVecs.Remove(v);
         }
+        foreach(BuildingManager bm in FindObjectsOfType<BuildingManager>()) {
+            bm.CMDallReloadArea();
+        }
+    }
+
+    [Command(requiresAuthority=false)]
+    public void removeTeamVec(Vector3Int v) {
+        teamVecs.Remove(v);
+        foreach(BuildingManager bm in FindObjectsOfType<BuildingManager>()) {
+            bm.CMDallReloadArea();
+        }
     }
 
     //Methode um zu überprüfen ob Spieler disqualifiziert ist
@@ -75,6 +86,9 @@ public class GameManager : NetworkBehaviour
     public void addVec(Vector3Int vec, int id) {
         if(!GetComponent<TilemapHover>().insideField(vec)) return;
         if(!teamVecs.ContainsKey(vec)) teamVecs.Add(vec, id);
+        foreach(BuildingManager bm in FindObjectsOfType<BuildingManager>()) {
+            bm.CMDallReloadArea();
+        }
     }
 
     //Gehört der Vektor schon zu einem Team Prüfung

@@ -10,6 +10,8 @@ public class TilemapManager : NetworkBehaviour //Synchronisieren der Tilemap zwi
     [SerializeField] public Tilemap tilemap;
     [SerializeField] private VolkManager volkManager;
 
+    [SerializeField] private MapBehaviour mapBehaviour;
+
     [SerializeField] private TileBase unterflaeche;
 
     //Änderungen auf jeden Client für Homebuilding
@@ -59,6 +61,20 @@ public class TilemapManager : NetworkBehaviour //Synchronisieren der Tilemap zwi
             tilemap.SetTile(v, unterflaeche);
             v.z = 1;
             tilemap.SetTile(v, null);
+        }
+    }
+
+    [Command]
+    public void resetFelder(List<Vector3Int> liste) {
+        rpcResetFelder(liste);
+    }
+
+    [ClientRpc]
+    public void rpcResetFelder(List<Vector3Int> liste) {
+        foreach(Vector3Int v in liste) {
+            Vector3Int vec = v;
+            vec.z = 0;
+            mapBehaviour.getBlockDetails(vec).Item2.setTile(vec, tilemap);
         }
     }
 

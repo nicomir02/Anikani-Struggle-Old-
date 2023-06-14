@@ -1,4 +1,5 @@
 using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -301,23 +302,41 @@ public class BuildingManager : NetworkBehaviour
                 int x = selectedVector.x - vec.x;
                 int y = selectedVector.y - vec.y;
                 Vector3Int rechner = new Vector3Int(x, y, 0);
+
+                string[] canGo = {"Main Animal", "Barracks"};
+
+                foreach(KeyValuePair<Vector3Int, Vector3Int> kvp in buildingvectors) {
+                    //if(Array.Exists(canGo, element => element == buildingsVec[kvp.Value].getName())) {
+                        if(gameManager.isEnemyArea(kvp.Key-rechner, player.id)) return;
+                        if(healthManager.isBuilding(kvp.Key-rechner) && !buildingvectors.ContainsKey(kvp.Key-rechner)) return;
+                    //}
+                }
+
+
                 Dictionary<Vector3Int, Vector3Int> newBuildingVecs = new Dictionary<Vector3Int, Vector3Int>();
 
+                
+                //Building Vector Anpassungen
                 foreach(KeyValuePair<Vector3Int, Vector3Int> kvp in buildingvectors) {
                     newBuildingVecs.Add(kvp.Key - rechner, kvp.Value-rechner);
                 }
                 buildingvectors = new Dictionary<Vector3Int, Vector3Int>();
+
                 foreach(KeyValuePair<Vector3Int, Vector3Int> kvp in newBuildingVecs) {
                     buildingvectors.Add(kvp.Key, kvp.Value);
                 }
 
+                
+                
+                //Tilemap Anpassungen
                 Dictionary<Vector3Int, Building> newBuildingVec = new Dictionary<Vector3Int, Building>();
 
                 foreach(KeyValuePair<Vector3Int, Building> kvp in buildingsVec) {
                     newBuildingVec.Add(kvp.Key-rechner, kvp.Value);
                     tilemapManager.removeBuilding(kvp.Key, 2);
-
+                    healthManager.moveBuilding(kvp.Key, rechner);
                 }
+
                 buildingsVec = new Dictionary<Vector3Int, Building>();
                 Volk v = volkManager.GetComponent<RoundManager>().eigenesVolk;
                 foreach(KeyValuePair<Vector3Int, Building> kvp in newBuildingVec) {
@@ -325,8 +344,20 @@ public class BuildingManager : NetworkBehaviour
                     tilemapManager.CmdUpdateTilemapBuilding(kvp.Key, volkManager.getBuildingID(v, kvp.Value), player.id, volkManager.getVolkID(v).Item2, 0);
                 }
 
-                toggleAnimalMode();
+                Dictionary<Vector3Int, int> teamVecs = gameManager.getDictionary();
+                List<Vector3Int> vecs = new List<Vector3Int>();
+                foreach(KeyValuePair<Vector3Int, int> kvp in teamVecs) {
+                    if(kvp.Value == player.id) {
+                        gameManager.removeTeamVec(kvp.Key);
+                        vecs.Add(kvp.Key-rechner);
+                    }
+                }
 
+                foreach(Vector3Int vector in vecs) {
+                    gameManager.addVec(vector, player.id);
+                }
+
+                toggleAnimalMode();
             }
             return;
         }
