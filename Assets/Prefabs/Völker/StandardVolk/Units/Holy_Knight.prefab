@@ -345,6 +345,21 @@ MonoBehaviour:
   - {fileID: 2086357919, guid: 0dcdd88f7c07bb242844d90e819818d2, type: 3}
   - {fileID: 494701649, guid: 0dcdd88f7c07bb242844d90e819818d2, type: 3}
   - {fileID: -188086, guid: 0dcdd88f7c07bb242844d90e819818d2, type: 3}
+  attackBLUE:
+  - {fileID: -2079928851, guid: f4d810cd508b71240a4a6dfbd6d58354, type: 3}
+  - {fileID: 961644040, guid: f4d810cd508b71240a4a6dfbd6d58354, type: 3}
+  - {fileID: 500604637, guid: f4d810cd508b71240a4a6dfbd6d58354, type: 3}
+  - {fileID: 213230459, guid: f4d810cd508b71240a4a6dfbd6d58354, type: 3}
+  - {fileID: -1832543050, guid: f4d810cd508b71240a4a6dfbd6d58354, type: 3}
+  - {fileID: -1131335127, guid: f4d810cd508b71240a4a6dfbd6d58354, type: 3}
+  - {fileID: -345884320, guid: f4d810cd508b71240a4a6dfbd6d58354, type: 3}
+  - {fileID: -1442665602, guid: f4d810cd508b71240a4a6dfbd6d58354, type: 3}
+  - {fileID: 1217711615, guid: f4d810cd508b71240a4a6dfbd6d58354, type: 3}
+  - {fileID: 1944999406, guid: f4d810cd508b71240a4a6dfbd6d58354, type: 3}
+  - {fileID: 2039213842, guid: f4d810cd508b71240a4a6dfbd6d58354, type: 3}
+  attackRED: []
+  attackGREEN: []
+  attackPURP: []
   animation: []
 --- !u!114 &1063914310650402722
 MonoBehaviour:

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
+using System.Threading.Tasks;
 
 public class UnitAnimator : NetworkBehaviour
 { 
@@ -12,18 +13,26 @@ public class UnitAnimator : NetworkBehaviour
 
     [SerializeField] private Sprite[] moveForwardBLUE;
     [SerializeField] private Sprite[] moveBackBLUE;
+
     [SerializeField] private Sprite[] moveForwardRED;
     [SerializeField] private Sprite[] moveBackRED;
 
     [SerializeField] private Sprite[] moveForwardGREEN;
     [SerializeField] private Sprite[] moveBackGREEN;
+
     [SerializeField] private Sprite[] moveForwardPURP;
     [SerializeField] private Sprite[] moveBackPURP;
+
+    [SerializeField] private Sprite[] attackBLUE;
+    [SerializeField] private Sprite[] attackRED;
+    [SerializeField] private Sprite[] attackGREEN;
+    [SerializeField] private Sprite[] attackPURP;
 
     private SpriteRenderer spriteRenderer; 
     private Sprite[] idle;
     private Sprite[] forward;
     private Sprite[] back;
+    private Sprite[] attack;
     public new Sprite[] animation;
     private bool gedreht = false;
 
@@ -42,21 +51,26 @@ public class UnitAnimator : NetworkBehaviour
             forward = moveForwardBLUE;
             back = moveBackBLUE;
             idle = idleBLUE;
+            attack = attackBLUE;
         } else if(spielerFarbe == 2) { //ROT
             forward = moveForwardRED;
             back = moveBackRED;
             idle = idleRED;
+            attack = attackRED;
         } else if(spielerFarbe == 3) { //GRÜN
             forward = moveForwardGREEN;
             back = moveBackGREEN;
             idle = idleGREEN;
+            attack = attackGREEN;
         } else {                       //LILA
             forward = moveForwardPURP;
             back = moveBackPURP;
             idle = idlePURP;
+            attack = attackPURP;
         }
         animation = idle;
     }
+
 
     // Update is called once per frame
     void Update()
@@ -86,8 +100,8 @@ public class UnitAnimator : NetworkBehaviour
         RPCchangeDirection(start, ziel, playerid);
     }
 
-    //richtige Sprites auswählen auf Clients
-    [ClientRpc]
+    
+    [ClientRpc] //richtige Sprites auswählen auf Clients
     public void RPCchangeDirection(Vector3Int start, Vector3Int ziel, int playerid) {
         chooseColor(playerid); //Siehe Methode
         if(start == ziel) {
@@ -138,5 +152,15 @@ public class UnitAnimator : NetworkBehaviour
         rectTransform.SetPositionAndRotation(position, rotation);//RotateAround(rectTransform.position, Vector3.up, 180f);
         */
         gedreht = !gedreht;
+    }
+
+    [ClientRpc]
+    void angreifen(Vector3Int player, Vector3Int enemy) {
+        animation = attack;
+
+        //Animation einmal abspielen
+        await Task.Delay(5000);
+
+        animation = idle;
     }
 }
