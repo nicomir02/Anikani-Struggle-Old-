@@ -101,9 +101,252 @@ TextureImporter:
     overridden: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Windows Store Apps
+    maxTextureSize: 1024
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: sword_attack_purple_forward_0
+      rect:
+        serializedVersion: 2
+        x: 19
+        y: 16
+        width: 20
+        height: 47
+      alignment: 9
+      pivot: {x: 0.64904344, y: 0.053632613}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b02180a7e29d4f94cb033f09fc4a2260
+      internalID: -1475265262
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sword_attack_purple_forward_5
+      rect:
+        serializedVersion: 2
+        x: 325
+        y: 14
+        width: 34
+        height: 46
+      alignment: 9
+      pivot: {x: 0.79492366, y: 0.0976186}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: aa78d0824e88fc84c8aa1c9799ab19ff
+      internalID: 474361219
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sword_attack_purple_forward_6
+      rect:
+        serializedVersion: 2
+        x: 389
+        y: 14
+        width: 34
+        height: 35
+      alignment: 9
+      pivot: {x: 0.79337263, y: 0.13016231}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 88d564c8a4bf3f94bba67be83b6d5531
+      internalID: -215596098
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sword_attack_purple_forward_7
+      rect:
+        serializedVersion: 2
+        x: 81
+        y: 16
+        width: 22
+        height: 48
+      alignment: 9
+      pivot: {x: 0.6810331, y: 0.05044377}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bf0ce79fe0e107b40b07ebdd4a705c1c
+      internalID: 869912269
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sword_attack_purple_forward_8
+      rect:
+        serializedVersion: 2
+        x: 147
+        y: 16
+        width: 20
+        height: 47
+      alignment: 9
+      pivot: {x: 0.6536064, y: 0.05373683}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 82dd79bca845a414a88e875b1befa22c
+      internalID: -655045023
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sword_attack_purple_forward_9
+      rect:
+        serializedVersion: 2
+        x: 214
+        y: 16
+        width: 17
+        height: 45
+      alignment: 9
+      pivot: {x: 0.58872175, y: 0.055694155}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e7897a1689cf25c4291167f7824ab056
+      internalID: 1785069772
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sword_attack_purple_forward_10
+      rect:
+        serializedVersion: 2
+        x: 277
+        y: 16
+        width: 18
+        height: 45
+      alignment: 9
+      pivot: {x: 0.609258, y: 0.05673154}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 60e816fc710daee45beb5891e28bd93c
+      internalID: 193314782
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sword_attack_purple_forward_11
+      rect:
+        serializedVersion: 2
+        x: 453
+        y: 14
+        width: 34
+        height: 31
+      alignment: 9
+      pivot: {x: 0.79471004, y: 0.1448694}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a4578bd69a45c444ba228b244c330f47
+      internalID: 552378544
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sword_attack_purple_forward_12
+      rect:
+        serializedVersion: 2
+        x: 521
+        y: 14
+        width: 30
+        height: 28
+      alignment: 9
+      pivot: {x: 0.7668579, y: 0.16082199}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ffa9f3c31baf9dc41b4f13607e6a99d2
+      internalID: 1606121992
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sword_attack_purple_forward_14
+      rect:
+        serializedVersion: 2
+        x: 586
+        y: 15
+        width: 29
+        height: 27
+      alignment: 9
+      pivot: {x: 0.75891536, y: 0.12969773}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3397ac7131854b144970a47a511a7d93
+      internalID: 594860085
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sword_attack_purple_forward_16
+      rect:
+        serializedVersion: 2
+        x: 650
+        y: 15
+        width: 29
+        height: 27
+      alignment: 9
+      pivot: {x: 0.75933415, y: 0.12993254}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 709d0ce64cc1a7e48a7562cd51d82300
+      internalID: -1178837782
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -114,7 +357,24 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      sword_attack_purple_forward_0: -1475265262
+      sword_attack_purple_forward_1: -106626556
+      sword_attack_purple_forward_10: 193314782
+      sword_attack_purple_forward_11: 552378544
+      sword_attack_purple_forward_12: 1606121992
+      sword_attack_purple_forward_13: -1756403490
+      sword_attack_purple_forward_14: 594860085
+      sword_attack_purple_forward_15: 454388364
+      sword_attack_purple_forward_16: -1178837782
+      sword_attack_purple_forward_2: 204692725
+      sword_attack_purple_forward_3: 1367224419
+      sword_attack_purple_forward_4: -1310984881
+      sword_attack_purple_forward_5: 474361219
+      sword_attack_purple_forward_6: -215596098
+      sword_attack_purple_forward_7: 869912269
+      sword_attack_purple_forward_8: -655045023
+      sword_attack_purple_forward_9: 1785069772
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

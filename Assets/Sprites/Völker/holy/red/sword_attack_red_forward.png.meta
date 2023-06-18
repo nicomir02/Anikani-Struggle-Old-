@@ -101,6 +101,18 @@ TextureImporter:
     overridden: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Windows Store Apps
+    maxTextureSize: 1024
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
@@ -113,7 +125,7 @@ TextureImporter:
         width: 20
         height: 47
       alignment: 9
-      pivot: {x: 0.5, y: 0.1}
+      pivot: {x: 0.6512228, y: 0.05348222}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -121,90 +133,6 @@ TextureImporter:
       bones: []
       spriteID: cb0473b9701e0344bbafcd2ca696b291
       internalID: -254822706
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: sword_attack_red_forward_1
-      rect:
-        serializedVersion: 2
-        x: 81
-        y: 45
-        width: 14
-        height: 19
-      alignment: 9
-      pivot: {x: 0.5, y: 0.1}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 158de35e8b632d54a9ab058cc1fb9046
-      internalID: -904992733
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: sword_attack_red_forward_2
-      rect:
-        serializedVersion: 2
-        x: 147
-        y: 41
-        width: 10
-        height: 22
-      alignment: 9
-      pivot: {x: 0.5, y: 0.1}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 2551c6c43f4e4664bbfb20599aaa32d5
-      internalID: -2056731249
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: sword_attack_red_forward_3
-      rect:
-        serializedVersion: 2
-        x: 214
-        y: 44
-        width: 4
-        height: 16
-      alignment: 9
-      pivot: {x: 0.5, y: 0.1}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: f6f4b96f82dd19442a168161b328d184
-      internalID: 767392882
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: sword_attack_red_forward_4
-      rect:
-        serializedVersion: 2
-        x: 277
-        y: 43
-        width: 6
-        height: 18
-      alignment: 9
-      pivot: {x: 0.5, y: 0.1}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 2cf00572a225c514eba36cc3ffc703bf
-      internalID: -994026551
       vertices: []
       indices: 
       edges: []
@@ -218,7 +146,7 @@ TextureImporter:
         width: 34
         height: 46
       alignment: 9
-      pivot: {x: 0.5, y: 0.1}
+      pivot: {x: 0.7940656, y: 0.09778666}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -239,7 +167,7 @@ TextureImporter:
         width: 34
         height: 35
       alignment: 9
-      pivot: {x: 0.5, y: 0.1}
+      pivot: {x: 0.7933852, y: 0.12834282}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -255,12 +183,12 @@ TextureImporter:
       name: sword_attack_red_forward_7
       rect:
         serializedVersion: 2
-        x: 87
+        x: 81
         y: 16
-        width: 16
-        height: 27
+        width: 22
+        height: 48
       alignment: 9
-      pivot: {x: 0.5, y: 0.1}
+      pivot: {x: 0.6815272, y: 0.05138874}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -276,12 +204,12 @@ TextureImporter:
       name: sword_attack_red_forward_8
       rect:
         serializedVersion: 2
-        x: 152
+        x: 147
         y: 16
-        width: 15
-        height: 26
+        width: 20
+        height: 47
       alignment: 9
-      pivot: {x: 0.5, y: 0.1}
+      pivot: {x: 0.651001, y: 0.05319153}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -297,12 +225,12 @@ TextureImporter:
       name: sword_attack_red_forward_9
       rect:
         serializedVersion: 2
-        x: 216
+        x: 214
         y: 16
-        width: 15
-        height: 26
+        width: 17
+        height: 44
       alignment: 9
-      pivot: {x: 0.5, y: 0.1}
+      pivot: {x: 0.5882371, y: 0.05727278}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -318,12 +246,12 @@ TextureImporter:
       name: sword_attack_red_forward_10
       rect:
         serializedVersion: 2
-        x: 280
+        x: 277
         y: 16
-        width: 15
-        height: 26
+        width: 18
+        height: 45
       alignment: 9
-      pivot: {x: 0.5, y: 0.1}
+      pivot: {x: 0.61247087, y: 0.05562757}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -344,7 +272,7 @@ TextureImporter:
         width: 34
         height: 31
       alignment: 9
-      pivot: {x: 0.5, y: 0.1}
+      pivot: {x: 0.79438245, y: 0.14534268}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -365,7 +293,7 @@ TextureImporter:
         width: 30
         height: 28
       alignment: 9
-      pivot: {x: 0.5, y: 0.1}
+      pivot: {x: 0.7680847, y: 0.15925755}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -378,36 +306,15 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: sword_attack_red_forward_13
+      name: sword_attack_red_forward_14
       rect:
         serializedVersion: 2
         x: 586
         y: 15
-        width: 11
-        height: 11
+        width: 29
+        height: 27
       alignment: 9
-      pivot: {x: 0.5, y: 0.1}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 2c41ef60574e8774fa77e3ac9a2856fb
-      internalID: -440855819
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: sword_attack_red_forward_14
-      rect:
-        serializedVersion: 2
-        x: 598
-        y: 16
-        width: 17
-        height: 26
-      alignment: 9
-      pivot: {x: 0.5, y: 0.1}
+      pivot: {x: 0.75904375, y: 0.1273666}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -420,36 +327,15 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: sword_attack_red_forward_15
+      name: sword_attack_red_forward_16
       rect:
         serializedVersion: 2
         x: 650
         y: 15
-        width: 10
-        height: 10
+        width: 29
+        height: 27
       alignment: 9
-      pivot: {x: 0.5, y: 0.1}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: e1239030f594a3b4383969f5797db820
-      internalID: 254925017
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: sword_attack_red_forward_16
-      rect:
-        serializedVersion: 2
-        x: 662
-        y: 16
-        width: 17
-        height: 26
-      alignment: 9
-      pivot: {x: 0.5, y: 0.1}
+      pivot: {x: 0.75862277, y: 0.12962984}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
