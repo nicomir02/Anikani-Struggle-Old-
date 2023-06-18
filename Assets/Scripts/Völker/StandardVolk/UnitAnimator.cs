@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
-using System.Threading.Tasks;
+using System.Threading;
 
 public class UnitAnimator : NetworkBehaviour
 { 
@@ -28,12 +28,18 @@ public class UnitAnimator : NetworkBehaviour
     [SerializeField] private Sprite[] attackGREEN;
     [SerializeField] private Sprite[] attackPURP;
 
+    [SerializeField] private Sprite[] backAttackBLUE;
+    [SerializeField] private Sprite[] backAttackRED;
+    [SerializeField] private Sprite[] backAttackGREEN;
+    [SerializeField] private Sprite[] backAttackPURP;
+
     private SpriteRenderer spriteRenderer; 
     private Sprite[] idle;
     private Sprite[] forward;
     private Sprite[] back;
     private Sprite[] attack;
-    public new Sprite[] animation;
+    private Sprite[] backAttack;  
+    private Sprite[] animation;
     private bool gedreht = false;
 
     // Start is called before the first frame update
@@ -155,12 +161,37 @@ public class UnitAnimator : NetworkBehaviour
     }
 
     [ClientRpc]
-    void angreifen(Vector3Int player, Vector3Int enemy) {
-        animation = attack;
+    void angreifenN(Vector3Int player, Vector3Int enemy) {
+
+        //richtig drehen
+        if(player.x > enemy.x) {
+            if(gedreht) rumdrehen();
+            animation = attack;
+        }
+        if(player.y > enemy.y) {
+            if(!gedreht) rumdrehen();
+            animation = attack;
+        }
+        if(player.x < enemy.x) {
+            if(!gedreht) rumdrehen();
+            animation = backAttack;
+        }
+        if(player.y < enemy.y) {
+            if(gedreht) rumdrehen();
+            animation = backAttack;
+        }
 
         //Animation einmal abspielen
-        await Task.Delay(5000);
+        animationOneTime();
+    }
 
+    //Hilfsfunktion für angreifenN()
+    //spielt die Angriffsanimation genau einmal ab und setzt dann wieder idle
+    private IEnumerator animationOneTime() {
+        foreach(Sprite i in animation) {
+            spriteRenderer.sprite = i;
+            yield return new WaitForSeconds(0.2f);
+        }
         animation = idle;
     }
 }
