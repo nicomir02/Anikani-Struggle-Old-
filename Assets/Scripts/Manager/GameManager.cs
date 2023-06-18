@@ -69,6 +69,7 @@ public class GameManager : NetworkBehaviour
 
     [Command(requiresAuthority=false)]
     public void removeTeamVec(Vector3Int v) {
+        v.z = 0;
         teamVecs.Remove(v);
         foreach(BuildingManager bm in FindObjectsOfType<BuildingManager>()) {
             bm.CMDallReloadArea();
@@ -84,6 +85,7 @@ public class GameManager : NetworkBehaviour
     //Vector zu einem Team hinzufügen
     [Command(requiresAuthority = false)]
     public void addVec(Vector3Int vec, int id) {
+        vec.z = 0;
         if(!GetComponent<TilemapHover>().insideField(vec)) return;
         if(!teamVecs.ContainsKey(vec)) teamVecs.Add(vec, id);
         foreach(BuildingManager bm in FindObjectsOfType<BuildingManager>()) {
@@ -93,6 +95,7 @@ public class GameManager : NetworkBehaviour
 
     //Gehört der Vektor schon zu einem Team Prüfung
     public bool hasVec(Vector3Int vec) {
+        vec.z = 0;
         return teamVecs.ContainsKey(vec);
     }
 

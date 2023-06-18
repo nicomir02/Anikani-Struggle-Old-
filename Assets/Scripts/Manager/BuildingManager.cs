@@ -64,6 +64,15 @@ public class BuildingManager : NetworkBehaviour
     //Farbe
     Color oldSelectedColor;
 
+    public bool nearBuilding(Vector3Int vec, int naehe) {
+        foreach(KeyValuePair<Vector3Int, Vector3Int> kvp in buildingvectors) {
+            if(unitManager.distance(vec, kvp.Key) <= naehe) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     //methode angriffgebäude schaut ob das angegriffene Gebäude einem Spieler selber gehört
     [ClientRpc]
     public void angriffsCheckBuilding(Vector3Int vec) {
@@ -94,10 +103,24 @@ public class BuildingManager : NetworkBehaviour
                     deselectBuilding();
                 }
 
-
                 foreach(Vector3Int v in removeList) {
                     buildingvectors.Remove(v);
                 }
+
+                //Algorithmus, der prüft ob in der Nähe der Vektoren noch ein Building ist, sonst rauslöschen
+                Vector3Int forGameManager = vec;
+                vec.x += 1;
+                vec.y += 1;
+                List<Vector3Int> liste = makeAreaBigger(vec, 4);
+
+                foreach(Vector3Int v in liste) {
+                    if(!nearBuilding(v, 3)) {
+                        gameManager.removeTeamVec(v);
+                    }
+                }
+
+
+                
 
                 tilemapManager.removeBuilding(temp, 2);
                 healthManager.removeBuilding(vec);
