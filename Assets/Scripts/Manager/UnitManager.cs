@@ -530,6 +530,8 @@ public class UnitManager : NetworkBehaviour
 
         if(spawnedUnits.ContainsKey(v) || !canAttack(unit, selectedVector, vec)) return;
 
+        angriffAusfuehren(selectedVector, vec);
+
         reichweite[selectedVector] = 0;
 
         foreach(UnitSprite us in FindObjectsOfType<UnitSprite>()) {
@@ -542,6 +544,15 @@ public class UnitManager : NetworkBehaviour
         }else if(healthManager.isBuilding(new Vector3Int(vec.x, vec.y, 1))) {
             healthManager.angriffBuilding(new Vector3Int(vec.x, vec.y, 1), unit.getAngriffswert());
             syncStillExistsBuilding(new Vector3Int(vec.x, vec.y, 1));
+        }
+        
+    }
+
+    [Command(requiresAuthority=false)]
+    public void angriffAusfuehren(Vector3Int from, Vector3Int to) {
+        Debug.Log(from +" "+ to);
+        foreach(UnitSprite us in FindObjectsOfType<UnitSprite>()) {
+            if(us.vec.x==from.x && us.vec.y==from.y) us.GetComponent<UnitAnimator>().angreifenN(from, to);
         }
     }
 

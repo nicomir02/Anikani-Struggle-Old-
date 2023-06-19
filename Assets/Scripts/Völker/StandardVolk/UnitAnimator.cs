@@ -39,7 +39,7 @@ public class UnitAnimator : NetworkBehaviour
     private Sprite[] back;
     private Sprite[] attack;
     private Sprite[] backAttack;  
-    private Sprite[] animation;
+    private new Sprite[] animation;
     private bool gedreht = false;
 
     // Start is called before the first frame update
@@ -161,7 +161,7 @@ public class UnitAnimator : NetworkBehaviour
     }
 
     [ClientRpc]
-    void angreifenN(Vector3Int player, Vector3Int enemy) {
+    public void angreifenN(Vector3Int player, Vector3Int enemy) {
 
         //richtig drehen
         if(player.x > enemy.x) {
@@ -182,7 +182,7 @@ public class UnitAnimator : NetworkBehaviour
         }
 
         //Animation einmal abspielen
-        animationOneTime();
+        StartCoroutine(animationOneTime());
     }
 
     //Hilfsfunktion für angreifenN()
