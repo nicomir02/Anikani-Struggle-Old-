@@ -11,7 +11,7 @@ using UnityEngine.EventSystems;
 public class BuildingManager : NetworkBehaviour
 {
     //Deklarieren von benötigten Klassen
-    private Volk volk; //Eigenes Volk
+    [SerializeField] private Volk volk; //Eigenes Volk
     private Player player; //Spielerscript
     private TilemapHover hover; //abfragung, wo mauszeiger ist
     private Tilemap tilemap; //Tilemap abfragen
@@ -27,8 +27,6 @@ public class BuildingManager : NetworkBehaviour
 
     private Button showArea;
 
-    private Button mainAnimalMove; //Für Wanderer
-    private bool moveMode; //Wanderer
 
     private bool showAreaBool = false;
 //isLobby wird nur benutzt bei der Spielinitialisierung in der Update Methode
@@ -49,8 +47,6 @@ public class BuildingManager : NetworkBehaviour
 
     //zeigt gesamtmenge an Ressourcen die man hat:
     private Dictionary<Ressource, int> ressourcenZaehler = new Dictionary<Ressource, int>();
-
-    [SerializeField] GameObject wandererMainBuildingPrefab;
 
     
 
@@ -224,29 +220,38 @@ public class BuildingManager : NetworkBehaviour
         	        if(mainBuildingNear) StartCoroutine(kurzRot(vec));
 
                     if(canBuildMethod(vec) && !mainBuildingNear) {
+                        
                         //Added zu der eigenen Area
                         addFelderToTeam(vec, 6, GameObject.Find("GameManager").GetComponent<RoundManager>().id);
                         //Löschen von Gegenständen im Weg vom Hauptgebäude
                         deleteFelder(vec, 3, null);
+
                         //x und y Koordinaten anpassen, da Gebäude 3x3 Tiles groß ist und man auf die mittlere Tile drückt
                         vec.x = vec.x-1;
                         vec.y = vec.y-1;
                         
                         vec.z = 1; //Gebäude auf z=1 Ebene gesetzt
                         addBuilding(newArea, volk.getHomeBuilding(0), vec);
-                        //Setzen/Speichern der Position des Hauptgebäudes für den Spieler
-                        volk.setHomeBuilding(0, GameObject.Find("GameManager").GetComponent<RoundManager>().id-1, tilemap, vec);
-                        //Synchronisieren mit Gegnern:
-                        tilemapManager.CmdUpdateTilemap(vec, volkManager.getVolkID(volk).Item2, 0, GameObject.Find("GameManager").GetComponent<RoundManager>().id-1);
+
+
+                        if(!volk.getHomeBuilding(0).getCanMove()) {
+
+                            //Setzen/Speichern der Position des Hauptgebäudes für den Spieler
+                            volk.setHomeBuilding(0, GameObject.Find("GameManager").GetComponent<RoundManager>().id-1, tilemap, vec);
+                            //Synchronisieren mit Gegnern:
+                            tilemapManager.CmdUpdateTilemap(vec, volkManager.getVolkID(volk).Item2, 0, GameObject.Find("GameManager").GetComponent<RoundManager>().id-1);
+
+                        }else {
+                            
+                        }
+
+                        //4n1kan1, Nico und Alex dürfen mehr bauen, wenn Cheats aktiviert sind!s
+                        if((player.name == "Nico" || player.name == "Alex" || player.name == "4n1kan1") && gameManager.getCheatsOn()) maxBuildingPerRound = 1000;
                         //Zaehler geht hoch
                         ZaehlerBuildingsBuiltInRound = maxBuildingPerRound;
-                        if((player.name == "Nico" || player.name == "Alex" || player.name == "4n1kan1") && gameManager.getCheatsOn()) maxBuildingPerRound = 1000; //4n1kan1, Nico und Alex dürfen mehr bauen, wenn Cheats aktiviert sind!
-                        //testen für erste einheit direkt am Eingang des hauptgebäudes
+
                         vec.y = vec.y + 1;
                         vec.z = 2;
-
-                        ZaehlerBuildingsBuiltInRound = maxBuildingPerRound;
-
                         unitManager.spawnUnit(volk.getUnit(0),vec,GameObject.Find("GameManager").GetComponent<RoundManager>().id - 1);
                     }
                 }
@@ -285,6 +290,16 @@ public class BuildingManager : NetworkBehaviour
         }
     }
 
+    [Command(requiresAuthority = false)]
+    public void CMDsetBuildingObject(int buildID, Vector3Int vec, int colorID, int volkID) {
+        
+    }
+
+    [ClientRpc]
+    public void setRenderer(GameObject gameObject, int unitID, Vector3Int vec, int colorID, int volkID) {
+
+    }
+
     public bool buildUnitPanelNextRound() {
         foreach(KeyValuePair<Vector3Int,Building> kvp in buildingsVec){
             if(kvp.Value.getName() == "Barracks"){
@@ -317,75 +332,6 @@ public class BuildingManager : NetworkBehaviour
 
     //Vector Selection
     public void selectVector(Vector3Int vec) {
-        //Erste Tests für Wanderer
-        if(moveMode) {
-            vec.z = 1;
-            if(unitManager.distance(selectedVector, vec) <= 4) {
-
-                int x = selectedVector.x - vec.x;
-                int y = selectedVector.y - vec.y;
-                Vector3Int rechner = new Vector3Int(x, y, 0);
-
-                string[] canGo = {"Main Animal", "Barracks"};
-
-                foreach(KeyValuePair<Vector3Int, Vector3Int> kvp in buildingvectors) {
-                    //if(Array.Exists(canGo, element => element == buildingsVec[kvp.Value].getName())) {
-                        if(gameManager.isEnemyArea(kvp.Key-rechner, player.id)) return;
-                        if(healthManager.isBuilding(kvp.Key-rechner) && !buildingvectors.ContainsKey(kvp.Key-rechner)) return;
-                    //}
-                }
-
-
-                Dictionary<Vector3Int, Vector3Int> newBuildingVecs = new Dictionary<Vector3Int, Vector3Int>();
-
-                
-                //Building Vector Anpassungen
-                foreach(KeyValuePair<Vector3Int, Vector3Int> kvp in buildingvectors) {
-                    newBuildingVecs.Add(kvp.Key - rechner, kvp.Value-rechner);
-                }
-                buildingvectors = new Dictionary<Vector3Int, Vector3Int>();
-
-                foreach(KeyValuePair<Vector3Int, Vector3Int> kvp in newBuildingVecs) {
-                    buildingvectors.Add(kvp.Key, kvp.Value);
-                }
-
-                
-                
-                //Tilemap Anpassungen
-                Dictionary<Vector3Int, Building> newBuildingVec = new Dictionary<Vector3Int, Building>();
-
-                foreach(KeyValuePair<Vector3Int, Building> kvp in buildingsVec) {
-                    newBuildingVec.Add(kvp.Key-rechner, kvp.Value);
-                    tilemapManager.removeBuilding(kvp.Key, 2);
-                    healthManager.moveBuilding(kvp.Key, rechner);
-                }
-
-                buildingsVec = new Dictionary<Vector3Int, Building>();
-                Volk v = volkManager.GetComponent<RoundManager>().eigenesVolk;
-                foreach(KeyValuePair<Vector3Int, Building> kvp in newBuildingVec) {
-                    buildingsVec.Add(kvp.Key, kvp.Value);
-                    tilemapManager.CmdUpdateTilemapBuilding(kvp.Key, volkManager.getBuildingID(v, kvp.Value), player.id, volkManager.getVolkID(v).Item2, 0);
-                }
-
-                Dictionary<Vector3Int, int> teamVecs = gameManager.getDictionary();
-                List<Vector3Int> vecs = new List<Vector3Int>();
-                foreach(KeyValuePair<Vector3Int, int> kvp in teamVecs) {
-                    if(kvp.Value == player.id) {
-                        gameManager.removeTeamVec(kvp.Key);
-                        vecs.Add(kvp.Key-rechner);
-                    }
-                }
-
-                foreach(Vector3Int vector in vecs) {
-                    gameManager.addVec(vector, player.id);
-                }
-
-                toggleAnimalMode();
-            }
-            return;
-        }
-
-        if(mainAnimalMove != null) mainAnimalMove.gameObject.SetActive(false);
 
         deselectBuilding();
         selectBuilding(vec);
@@ -559,25 +505,9 @@ public class BuildingManager : NetworkBehaviour
             if(selectedBuilding.getName() == "Barracks") { //Setzt Troops Button
                 GameObject.Find("InGame/Canvas/TroopsButton").SetActive(true);
                 GameObject.Find("InGame/Canvas/TroopsButton").GetComponent<Button>().onClick.AddListener(openUnitPanel);
-            }else if(selectedBuilding.getName() == "Main Animal") {
-                if(mainAnimalMove == null) {
-                    mainAnimalMove =  GameObject.Find("InGame/Canvas/WandererMoveMainButton").GetComponent<Button>();
-                    mainAnimalMove.onClick.AddListener(toggleAnimalMode);
-                }
-                mainAnimalMove.gameObject.SetActive(true);
             }
             
             activatePanel(selectedVector);
-        }
-    }
-
-    public void toggleAnimalMode(){
-        moveMode = !moveMode;
-
-        if(moveMode) { 
-            mainAnimalMove.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Dont move";
-        }else {
-            mainAnimalMove.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "move";
         }
     }
 
@@ -748,52 +678,5 @@ public class BuildingManager : NetworkBehaviour
             }
         }
         return neighbors;
-    }
-
-
-
-    //Wanderer Test
-    public void moveMainBuildingWanderer(Vector3Int from, Vector3Int to, Building b) {
-        tilemapManager.removeBuilding(from, 2);
-        StartCoroutine(MoveToPosition(to, player.id, wandererMainBuildingPrefab, from));
-    }
-
-    private GameObject mainBuilding;
-
-    [Command(requiresAuthority = false)]
-    public void startObject(Vector3Int from, int id) {
-        GameObject sprite = Instantiate(wandererMainBuildingPrefab, GetComponent<UnitManager>().vec3IntToVec3(from), Quaternion.identity);
-
-
-        sprite.GetComponent<SpriteRenderer>().sprite = wandererMainBuildingPrefab.GetComponent<WandererMainBuilding>().sprite[id-1]; 
-
-        Transform transform = sprite.GetComponent<Transform>();
-        Vector3 newpos = transform.position;
-        newpos.y -=  0.33782f;
-        mainBuilding = sprite;
-
-        transform.position = newpos;
-        NetworkServer.Spawn(sprite);
-        rpcwandererbuilding(sprite, id);
-    }
-
-    [ClientRpc]
-    public void rpcwandererbuilding(GameObject o, int id) {
-        mainBuilding = o;
-        o.GetComponent<SpriteRenderer>().sprite = wandererMainBuildingPrefab.GetComponent<WandererMainBuilding>().sprite[id-1]; 
-    }
-
-    [Command(requiresAuthority = false)]
-    public void deleteObject(GameObject o) {
-        NetworkServer.Destroy(mainBuilding);
-    }
-
-    public IEnumerator MoveToPosition(Vector3Int to, int id, GameObject o, Vector3Int from) {
-        startObject(from, id);
-        string volkname = "Wanderer[Experimental]";
-        yield return new WaitForSeconds(2f);
-        to.z = 1;
-        tilemapManager.CmdUpdateTilemap(to, volkManager.getVolkID(volkManager.getVolkByString(volkname)).Item2, 0, id-1); //Vector3Int vec, int volkID, int buildID, int colorID
-        deleteObject(mainBuilding);
     }
 }

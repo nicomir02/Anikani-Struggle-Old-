@@ -12,6 +12,7 @@ public class Building : NetworkBehaviour
     [SerializeField] List<TileBase> buildingTile = new List<TileBase>();
     [SerializeField] private int health = 1000;
     [SerializeField] private string buildingname = "";
+    [SerializeField] private bool canMove = false;
 
     public void setTile(Tilemap tilemap, Vector3Int vec, int colorFromID) {
         tilemap.SetTile(vec, buildingTile[colorFromID]);
@@ -27,5 +28,9 @@ public class Building : NetworkBehaviour
 
     public string getName() {
         return buildingname;
+    }
+
+    public bool getCanMove() {
+        return canMove;
     }
 }
