@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
-using System.Threading;
+using System.Threading.Tasks;
 
 public class UnitAnimator : NetworkBehaviour
 { 
@@ -41,6 +41,8 @@ public class UnitAnimator : NetworkBehaviour
     private Sprite[] backAttack;  
     private new Sprite[] animation;
     private bool gedreht = false;
+    private bool angriff = false;
+    private bool laeuft = false; //läuft die coroutine
 
     // Start is called before the first frame update
     void Start()
@@ -58,31 +60,50 @@ public class UnitAnimator : NetworkBehaviour
             back = moveBackBLUE;
             idle = idleBLUE;
             attack = attackBLUE;
+            backAttack = backAttackBLUE;
         } else if(spielerFarbe == 2) { //ROT
             forward = moveForwardRED;
             back = moveBackRED;
             idle = idleRED;
             attack = attackRED;
+            backAttack = backAttackRED;
         } else if(spielerFarbe == 3) { //GRÜN
             forward = moveForwardGREEN;
             back = moveBackGREEN;
             idle = idleGREEN;
             attack = attackGREEN;
+            backAttack = backAttackGREEN;
         } else {                       //LILA
             forward = moveForwardPURP;
             back = moveBackPURP;
             idle = idlePURP;
             attack = attackPURP;
+            backAttack = backAttackPURP;
         }
         animation = idle;
     }
 
 
     // Update is called once per frame
-    void Update()
-    {
-        int index = Mathf.FloorToInt(Time.time * 4) % animation.Length; //4 für Geschwindigkeit
-        spriteRenderer.sprite = animation[index];
+    void Update() {
+        if(!laeuft){
+            if(!angriff){
+                int index = Mathf.FloorToInt(Time.time * 4) % animation.Length; //4 für Geschwindigkeit
+                spriteRenderer.sprite = animation[index];
+            } else {
+                angriff = false;
+                StartCoroutine(animationOneTime());
+                laeuft = true;
+                while(animationOneTime().MoveNext()){}
+                StopCoroutine("animationOneTime");
+                laeuft = false;
+                Debug.Log("CoRoutine gestoppt");
+            }
+        }
+    }
+
+    async public void warten(int dauer) {
+        await Task.Delay(dauer);
     }
 
 
@@ -180,18 +201,22 @@ public class UnitAnimator : NetworkBehaviour
             if(gedreht) rumdrehen();
             animation = backAttack;
         }
-
+        
         //Animation einmal abspielen
-        StartCoroutine(animationOneTime());
+        angriff = true;
     }
 
     //Hilfsfunktion für angreifenN()
     //spielt die Angriffsanimation genau einmal ab und setzt dann wieder idle
     private IEnumerator animationOneTime() {
-        foreach(Sprite i in animation) {
-            spriteRenderer.sprite = i;
-            yield return new WaitForSeconds(0.2f);
+        int laenge = animation.Length;
+        for(int i=0; i<laenge; i++) {
+            Debug.Log(i);
+            spriteRenderer.sprite = animation[i];
+            yield return new WaitForSeconds(0.9f);
         }
+        Debug.Log("animation fertig------------------------------");
         animation = idle;
+        Debug.Log("Ende Coroutine");
     }
 }
