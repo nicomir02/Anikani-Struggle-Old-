@@ -38,29 +38,25 @@ public class UnitAnimator : NetworkBehaviour
     [SerializeField] private Sprite[] healGREEN;
     [SerializeField] private Sprite[] healPURP;
 
-    [SerializeField] private Sprite[] backhealBLUE;
-    [SerializeField] private Sprite[] backhealRED;
-    [SerializeField] private Sprite[] backhealGREEN;
-    [SerializeField] private Sprite[] backhealPURP;
-
     [SerializeField] private Sprite[] healUnit;
     [SerializeField] private Sprite[] attackEnemy;
     
 
     private SpriteRenderer spriteRenderer; 
+    private SpriteRenderer fernRenderer;
     private Sprite[] idle;
     private Sprite[] forward;
     private Sprite[] back;
     private Sprite[] attack;
     private Sprite[] backAttack; 
     private Sprite[] healing; 
-    private Sprite[] backHealing;
     private new Sprite[] animation;
     private bool gedreht = false;
     private bool angriff = false;
     private bool laeuft = false; //läuft die coroutine
     bool fertigGelaufen = false;
     private Sprite[] zielAnimationen = null;
+    public GameObject fernZiel;
 
     // Start is called before the first frame update
     void Start()
@@ -102,16 +98,12 @@ public class UnitAnimator : NetworkBehaviour
         if(healUnit != null) {
             if(spielerFarbe == 1) {        //BLAU
                 healing = healBLUE;
-                backHealing = backhealBLUE;
             } else if(spielerFarbe == 2) { //ROT
                 healing = healRED;
-                backHealing = backhealRED;
             } else if(spielerFarbe == 3) { //GRÜN
                 healing = healGREEN;
-                backHealing = backhealGREEN;
             } else {                       //LILA
                 healing = healPURP;
-                backHealing = backhealPURP;
             }
         }
         animation = idle;
@@ -218,27 +210,35 @@ public class UnitAnimator : NetworkBehaviour
     [ClientRpc]
     public void angreifenN(Vector3Int player, Vector3Int enemy) {
 
-        //richtig drehen
-        if(player.x > enemy.x) {
-            if(gedreht) rumdrehen();
-            animation = attack;
-        }
-        if(player.y > enemy.y) {
-            if(!gedreht) rumdrehen();
-            animation = attack;
-        }
-        if(player.x < enemy.x) {
-            if(!gedreht) rumdrehen();
-            animation = backAttack;
-        }
-        if(player.y < enemy.y) {
-            if(gedreht) rumdrehen();
-            animation = backAttack;
-        }
-        
-
         if(healBLUE != null) {
             zielAnimationen = attackEnemy;
+            if(player.x > enemy.x) {
+                if(gedreht) rumdrehen();
+                animation = attack;
+            }
+            if(player.y > enemy.y) {
+                if(!gedreht) rumdrehen();
+                animation = attack;
+            }
+        } else {        
+
+            //richtig drehen
+            if(player.x > enemy.x) {
+                if(gedreht) rumdrehen();
+                animation = attack;
+            }
+            if(player.y > enemy.y) {
+                if(!gedreht) rumdrehen();
+                animation = attack;
+            }
+            if(player.x < enemy.x) {
+                if(!gedreht) rumdrehen();
+                animation = backAttack;
+            }
+            if(player.y < enemy.y) {
+                if(gedreht) rumdrehen();
+                animation = backAttack;
+            }
         }
 
         //Animation einmal abspielen
@@ -256,14 +256,6 @@ public class UnitAnimator : NetworkBehaviour
         if(player.y > enemy.y) {
             if(!gedreht) rumdrehen();
             animation = healing;
-        }
-        if(player.x < enemy.x) {
-            if(!gedreht) rumdrehen();
-            animation = backHealing;
-        }
-        if(player.y < enemy.y) {
-            if(gedreht) rumdrehen();
-            animation = backHealing;
         }
 
         if(healBLUE != null) {
@@ -283,7 +275,11 @@ public class UnitAnimator : NetworkBehaviour
         }
 
         if(zielAnimation != null) {
-            //hier die animation auf das Ziel
+            fernRenderer = fernZiel.AddComponent<SpriteRenderer>();
+            for(int i=0; i<laenge; i++) {
+            fernRenderer.sprite = zielAnimation[i];
+            yield return new WaitForSeconds(0.04f);
+        }
         }
 
         animation = idle;

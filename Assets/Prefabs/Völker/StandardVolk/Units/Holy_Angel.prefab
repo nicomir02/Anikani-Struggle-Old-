@@ -793,7 +793,34 @@ MonoBehaviour:
   - {fileID: 1395491383, guid: 36671af48d8199146a8078c1c581b7c9, type: 3}
   - {fileID: -710195767, guid: 36671af48d8199146a8078c1c581b7c9, type: 3}
   - {fileID: -702167081, guid: 36671af48d8199146a8078c1c581b7c9, type: 3}
-  animation: []
+  attackBLUE:
+  - {fileID: 1724872943, guid: 4f52926825ecd474096f0f523f7374ae, type: 3}
+  - {fileID: 1228852872, guid: 4f52926825ecd474096f0f523f7374ae, type: 3}
+  - {fileID: -1427915126, guid: 4f52926825ecd474096f0f523f7374ae, type: 3}
+  - {fileID: 1243348359, guid: 4f52926825ecd474096f0f523f7374ae, type: 3}
+  - {fileID: 1256757396, guid: 4f52926825ecd474096f0f523f7374ae, type: 3}
+  - {fileID: -206402254, guid: 4f52926825ecd474096f0f523f7374ae, type: 3}
+  - {fileID: 414865347, guid: 4f52926825ecd474096f0f523f7374ae, type: 3}
+  - {fileID: 1080551616, guid: 4f52926825ecd474096f0f523f7374ae, type: 3}
+  - {fileID: -1959213636, guid: 4f52926825ecd474096f0f523f7374ae, type: 3}
+  attackRED: []
+  attackGREEN: []
+  attackPURP: []
+  backAttackBLUE: []
+  backAttackRED: []
+  backAttackGREEN: []
+  backAttackPURP: []
+  healBLUE:
+  - {fileID: 1578277544, guid: eb9fadd8cc3cd124dbcc0e0a130bd2f4, type: 3}
+  - {fileID: 1578277544, guid: eb9fadd8cc3cd124dbcc0e0a130bd2f4, type: 3}
+  - {fileID: 1578277544, guid: eb9fadd8cc3cd124dbcc0e0a130bd2f4, type: 3}
+  - {fileID: 1578277544, guid: eb9fadd8cc3cd124dbcc0e0a130bd2f4, type: 3}
+  healRED: []
+  healGREEN: []
+  healPURP: []
+  healUnit: []
+  attackEnemy: []
+  fernZiel: {fileID: 6852530814182375312, guid: 12a4c14e672c00b4b840f937d824b890, type: 3}
 --- !u!114 &-4083419351919174216
 MonoBehaviour:
   m_ObjectHideFlags: 0
