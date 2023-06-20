@@ -33,17 +33,34 @@ public class UnitAnimator : NetworkBehaviour
     [SerializeField] private Sprite[] backAttackGREEN;
     [SerializeField] private Sprite[] backAttackPURP;
 
+    [SerializeField] private Sprite[] healBLUE;
+    [SerializeField] private Sprite[] healRED;
+    [SerializeField] private Sprite[] healGREEN;
+    [SerializeField] private Sprite[] healPURP;
+
+    [SerializeField] private Sprite[] backhealBLUE;
+    [SerializeField] private Sprite[] backhealRED;
+    [SerializeField] private Sprite[] backhealGREEN;
+    [SerializeField] private Sprite[] backhealPURP;
+
+    [SerializeField] private Sprite[] healUnit;
+    [SerializeField] private Sprite[] attackEnemy;
+    
+
     private SpriteRenderer spriteRenderer; 
     private Sprite[] idle;
     private Sprite[] forward;
     private Sprite[] back;
     private Sprite[] attack;
-    private Sprite[] backAttack;  
+    private Sprite[] backAttack; 
+    private Sprite[] healing; 
+    private Sprite[] backHealing;
     private new Sprite[] animation;
     private bool gedreht = false;
     private bool angriff = false;
     private bool laeuft = false; //läuft die coroutine
     bool fertigGelaufen = false;
+    private Sprite[] zielAnimationen = null;
 
     // Start is called before the first frame update
     void Start()
@@ -81,6 +98,22 @@ public class UnitAnimator : NetworkBehaviour
             attack = attackPURP;
             backAttack = backAttackPURP;
         }
+
+        if(healUnit != null) {
+            if(spielerFarbe == 1) {        //BLAU
+                healing = healBLUE;
+                backHealing = backhealBLUE;
+            } else if(spielerFarbe == 2) { //ROT
+                healing = healRED;
+                backHealing = backhealRED;
+            } else if(spielerFarbe == 3) { //GRÜN
+                healing = healGREEN;
+                backHealing = backhealGREEN;
+            } else {                       //LILA
+                healing = healPURP;
+                backHealing = backhealPURP;
+            }
+        }
         animation = idle;
     }
 
@@ -93,16 +126,13 @@ public class UnitAnimator : NetworkBehaviour
                 int index = Mathf.FloorToInt(Time.time * 4) % animation.Length; //4 für Geschwindigkeit
                 spriteRenderer.sprite = animation[index];
             } else {
-                StartCoroutine(animationOneTime());
-                Debug.Log("co gestartet------------------------");
+                StartCoroutine(animationOneTime(zielAnimationen));
                 laeuft = true;
             }  
         }
         if(fertigGelaufen) {
-            StopCoroutine("animationOneTime");
             laeuft = false;
-            Debug.Log("CoRoutine gestoppt");
-    }
+        }
     }
     
 
@@ -206,23 +236,59 @@ public class UnitAnimator : NetworkBehaviour
             animation = backAttack;
         }
         
+
+        if(healBLUE != null) {
+            zielAnimationen = attackEnemy;
+        }
+
         //Animation einmal abspielen
+        angriff = true;
+    }
+
+    //enemy ist hier die eigene unit die geheilt wird war zu faul den Namen zu ändern
+    public void heilen(Vector3Int player, Vector3Int enemy){
+
+        //richtig drehen
+        if(player.x > enemy.x) {
+            if(gedreht) rumdrehen();
+            animation = healing;
+        }
+        if(player.y > enemy.y) {
+            if(!gedreht) rumdrehen();
+            animation = healing;
+        }
+        if(player.x < enemy.x) {
+            if(!gedreht) rumdrehen();
+            animation = backHealing;
+        }
+        if(player.y < enemy.y) {
+            if(gedreht) rumdrehen();
+            animation = backHealing;
+        }
+
+        if(healBLUE != null) {
+            zielAnimationen = healUnit;
+        }
+
         angriff = true;
     }
 
     //Hilfsfunktion für angreifenN()
     //spielt die Angriffsanimation genau einmal ab und setzt dann wieder idle
-    private IEnumerator animationOneTime() {
+    private IEnumerator animationOneTime(Sprite[] zielAnimation) {
         int laenge = animation.Length;
         for(int i=0; i<laenge; i++) {
-            Debug.Log(i);
             spriteRenderer.sprite = animation[i];
             yield return new WaitForSeconds(0.04f);
         }
-        Debug.Log("animation fertig------------------------------");
+
+        if(zielAnimation != null) {
+            //hier die animation auf das Ziel
+        }
+
         animation = idle;
+        zielAnimationen = null;
         angriff = false;
         laeuft = false;
-        Debug.Log("Ende Coroutine");
     }
 }
