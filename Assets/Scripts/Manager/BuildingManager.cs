@@ -421,8 +421,11 @@ public class BuildingManager : NetworkBehaviour
                     }
                     Vector3Int buildingvec = buildingvectors[selectedVector];
 
+                    vec.x -= 1;
+                    vec.y -= 1;
+                    vec.z = 1;
+
                     if(b.getName() == "Barracks") {
-                        List<Vector3Int> plsremove = new List<Vector3Int>();
                         foreach(KeyValuePair<Vector3Int, Vector3Int> kvp in buildingvectors) {
                             if(kvp.Value == buildingvec) {
                                 if(GetComponent<UnitGUIPanel>().howLong.ContainsKey(kvp.Key)) {
@@ -439,9 +442,7 @@ public class BuildingManager : NetworkBehaviour
                         }
                     }
 
-                    vec.x -= 1;
-                    vec.y -= 1;
-                    vec.z = 1;
+                    
                     selectedVector.z = 1;
                     
                     List<Vector3Int> removeList = new List<Vector3Int>();
