@@ -14,6 +14,8 @@ public class Building : NetworkBehaviour
     [SerializeField] private string buildingname = "";
     [SerializeField] private bool canMove = false;
 
+    public Vector3Int vec;
+
     public void setTile(Tilemap tilemap, Vector3Int vec, int colorFromID) {
         tilemap.SetTile(vec, buildingTile[colorFromID]);
     }

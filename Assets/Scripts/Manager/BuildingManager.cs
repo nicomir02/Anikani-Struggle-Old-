@@ -26,6 +26,7 @@ public class BuildingManager : NetworkBehaviour
     private PauseMenu pauseMenu;
 
     private Button showArea;
+    private GameObject moveBuildingButtonObject;
 
 
     private bool showAreaBool = false;
@@ -181,16 +182,31 @@ public class BuildingManager : NetworkBehaviour
 
     }
 
+    public void moveBuilding() {
+        if(!isLocalPlayer) return;
+        if(moveBuildingButtonObject.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text == "Move") {
+            moveBuildingButtonObject.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Dont move";
+        }else {
+            moveBuildingButtonObject.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Move";
+        }
+    }
+
     void Update() {
         //Pause deaktivieren
         if(pauseMenu.getPause()) return;
 
         if (Input.GetMouseButtonDown(0) && EventSystem.current.currentSelectedGameObject != null) return;
 
+        if(volk == null) {
+            volk = GetComponent<Player>().eigenesVolk;
+        }
+
         //Initialisieren des ShowArea GameObjects nach Spielstart(nur einmal!)
         if(GameObject.Find("InGame/Canvas/ShowArea") != null && isLobby) {
             volk = player.eigenesVolk;
             GameObject.Find("InGame/Canvas/ShowArea").GetComponent<Button>().onClick.AddListener(OnShowAreaClick);
+            moveBuildingButtonObject = GameObject.Find("InGame/Canvas/WandererMoveMainButton");
+            moveBuildingButtonObject.GetComponent<Button>().onClick.AddListener(moveBuilding);
             isLobby = false;
         }
 
@@ -219,7 +235,7 @@ public class BuildingManager : NetworkBehaviour
 
         	        if(mainBuildingNear) StartCoroutine(kurzRot(vec));
 
-                    if(canBuildMethod(vec) && !mainBuildingNear) {
+                    if(canBuildMethod(vec) && !mainBuildingNear) { 
                         
                         //Added zu der eigenen Area
                         addFelderToTeam(vec, 6, GameObject.Find("GameManager").GetComponent<RoundManager>().id);
@@ -231,18 +247,21 @@ public class BuildingManager : NetworkBehaviour
                         vec.y = vec.y-1;
                         
                         vec.z = 1; //Gebäude auf z=1 Ebene gesetzt
-                        addBuilding(newArea, volk.getHomeBuilding(0), vec);
+
+                        
+                        Building homeBuilding = volk.getHomeBuilding(0);
+                        addBuilding(newArea, homeBuilding, vec);
 
 
-                        if(!volk.getHomeBuilding(0).getCanMove()) {
-
+                        if(!homeBuilding.getCanMove()) {
+                            
                             //Setzen/Speichern der Position des Hauptgebäudes für den Spieler
                             volk.setHomeBuilding(0, GameObject.Find("GameManager").GetComponent<RoundManager>().id-1, tilemap, vec);
                             //Synchronisieren mit Gegnern:
                             tilemapManager.CmdUpdateTilemap(vec, volkManager.getVolkID(volk).Item2, 0, GameObject.Find("GameManager").GetComponent<RoundManager>().id-1);
 
                         }else {
-                            
+                            CMDsetBuildingObject(player.id, volkManager.getVolkID(volk).Item2, 0, vec);
                         }
 
                         //4n1kan1, Nico und Alex dürfen mehr bauen, wenn Cheats aktiviert sind!s
@@ -265,8 +284,7 @@ public class BuildingManager : NetworkBehaviour
             Vector3Int vec = hover.getVectorFromMouse();
             vec.z=0;
 
-            if(hover.insideField(vec) && isMyArea(vec)) {
-                
+            if(hover.insideField(vec)) {
                 //Select Vector
                 selectVector(vec);
             }
@@ -290,14 +308,22 @@ public class BuildingManager : NetworkBehaviour
         }
     }
 
-    [Command(requiresAuthority = false)]
-    public void CMDsetBuildingObject(int buildID, Vector3Int vec, int colorID, int volkID) {
-        
+    [Command(requiresAuthority=false)]
+    public void CMDsetBuildingObject(int playerid, int volkid, int buildingid, Vector3Int vec) {
+        Debug.Log(playerid);
+        Building building = volkManager.getVolk(volkid).getBuilding(buildingid, 0);
+        GameObject gobject = Instantiate(building.gameObject, transform.position, transform.rotation);
+
+        gobject.GetComponent<Transform>().position = unitManager.vec3IntToVec3(vec);
+
+        NetworkServer.Spawn(gobject);
+        setRenderer(gobject, playerid, vec);
     }
 
     [ClientRpc]
-    public void setRenderer(GameObject gameObject, int unitID, Vector3Int vec, int colorID, int volkID) {
-
+    public void setRenderer(GameObject gobject, int playerid, Vector3Int vec) {
+        gobject.GetComponent<SpriteRenderer>().sprite = gobject.GetComponent<Building>().sprite[playerid-1];
+        gobject.GetComponent<Building>().vec = vec;
     }
 
     public bool buildUnitPanelNextRound() {
@@ -332,31 +358,202 @@ public class BuildingManager : NetworkBehaviour
 
     //Vector Selection
     public void selectVector(Vector3Int vec) {
+        if(!isLocalPlayer) return;
+        bool wantToMove = false;
+        if(selectedBuilding != null && moveBuildingButtonObject.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text == "Move" ) {
+            /*selectedVector.z = 1;
+            Vector3Int buildingvec = buildingvectors[selectedVector];
+            foreach(KeyValuePair<Vector3Int, Vector3Int> kvp in buildingvectors) {
+                if(kvp.Value == buildingvec) {
+                    if(unitManager.distance(kvp.Key, vec) <= 5) {
+                        wantToMove = true;
+                    }
+                }
+            }*/
+            wantToMove = true;
+        }
+        
 
-        deselectBuilding();
-        selectBuilding(vec);
+        if(!moveBuildingButtonObject.activeSelf || moveBuildingButtonObject.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text == "Move" || wantToMove) {
 
-        List<Vector3Int> vectors = makeAreaBigger(vec, 1);
+            deselectBuilding();
+            selectBuilding(vec);
 
-        if(isMyArea(new Vector3Int(vec.x, vec.y, 0)) && showAreaBool) {
-            oldSelectedColor = hover.getOldColor();
-            selectedVector = vec;
-            
-            hover.reload();
-            reloadShowArea();
-            
-            tilemap.SetColor(vec, hover.getSelectColor());
+            List<Vector3Int> vectors = makeAreaBigger(vec, 1);
 
-            if(ZaehlerBuildingsBuiltInRound < maxBuildingPerRound && !buildingvectors.ContainsKey(new Vector3Int(vec.x, vec.y, 1)) && canBuildMethod(vec) && GameObject.Find("GameManager").GetComponent<RoundManager>().isYourTurn) {
-                GameObject.Find("InGame/Canvas/BuildOrBuy").SetActive(true);
-                if(gameManager.hasVec(vec)) {
-                    GameObject.Find("InGame/Canvas/BuildOrBuy/Text").GetComponent<TextMeshProUGUI>().text = "Build Building";
-                    GameObject.Find("InGame/Canvas/BuildOrBuy").GetComponent<Button>().onClick.AddListener(onClickBuildField);
+            if(isMyArea(new Vector3Int(vec.x, vec.y, 0)) && showAreaBool) {
+                oldSelectedColor = hover.getOldColor();
+                selectedVector = vec;
+                
+                hover.reload();
+                reloadShowArea();
+                
+                tilemap.SetColor(vec, hover.getSelectColor());
+
+                if(ZaehlerBuildingsBuiltInRound < maxBuildingPerRound && !buildingvectors.ContainsKey(new Vector3Int(vec.x, vec.y, 1)) && canBuildMethod(vec) && GameObject.Find("GameManager").GetComponent<RoundManager>().isYourTurn) {
+                    GameObject.Find("InGame/Canvas/BuildOrBuy").SetActive(true);
+                    if(gameManager.hasVec(vec)) {
+                        GameObject.Find("InGame/Canvas/BuildOrBuy/Text").GetComponent<TextMeshProUGUI>().text = "Build Building";
+                        GameObject.Find("InGame/Canvas/BuildOrBuy").GetComponent<Button>().onClick.AddListener(onClickBuildField);
+                    }
+                }
+            }else if(showAreaBool) {
+                reloadShowArea();
+            }
+
+            moveBuildingButtonObject.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Move";
+        }else {
+            foreach(Building b in FindObjectsOfType<Building>()) {
+                if(b.vec.x == selectedVector.x && b.vec.y == selectedVector.y) {
+                    //Vector3Int startTile, Vector3Int zielTile, Unit unit, List<Vector3Int> liste, bool onBuilding
+                    List<Vector3Int> newAreaBuilding = makeAreaBigger(vec, 1);
+
+
+                    int groesse = 3;
+                    if(b.getName() == "Main Animal") {
+                        groesse = 5;
+                    }
+                    selectedVector.z = 1;
+                    List<Vector3Int> theArea = makeAreaBigger(new Vector3Int(buildingvectors[selectedVector].x+1, buildingvectors[selectedVector].y+1, 0), groesse);
+
+                    foreach(Vector3Int v in newAreaBuilding) {
+                        if(!canBuildMethod(v, false)) return;
+                    }
+                    Vector3Int buildingvec = buildingvectors[selectedVector];
+
+                    if(b.getName() == "Barracks") {
+                        List<Vector3Int> plsremove = new List<Vector3Int>();
+                        foreach(KeyValuePair<Vector3Int, Vector3Int> kvp in buildingvectors) {
+                            if(kvp.Value == buildingvec) {
+                                if(GetComponent<UnitGUIPanel>().howLong.ContainsKey(kvp.Key)) {
+                                    int howlong = GetComponent<UnitGUIPanel>().howLong[kvp.Key];
+                                    Unit trainUnit = GetComponent<UnitGUIPanel>().trainedUnits[kvp.Key];
+
+                                    GetComponent<UnitGUIPanel>().howLong.Remove(kvp.Key);
+                                    GetComponent<UnitGUIPanel>().trainedUnits.Remove(kvp.Key);
+
+                                    GetComponent<UnitGUIPanel>().howLong.Add(vec, howlong);
+                                    GetComponent<UnitGUIPanel>().trainedUnits.Add(vec, trainUnit);
+                                }
+                            }
+                        }
+                    }
+
+                    vec.x -= 1;
+                    vec.y -= 1;
+                    vec.z = 1;
+                    selectedVector.z = 1;
+                    
+                    List<Vector3Int> removeList = new List<Vector3Int>();
+                    
+                    
+
+                    foreach(KeyValuePair<Vector3Int, Vector3Int> kvp in buildingvectors) {
+                        if(kvp.Value == buildingvec) {
+                            removeList.Add(kvp.Key);
+                        }
+                    }
+
+                    tilemapManager.resetFelder(removeList);
+
+                    foreach(Vector3Int v in removeList) {
+                        buildingvectors.Remove(v);
+                    }
+
+
+                    vec.x += 1;
+                    vec.y += 1;
+                    vec.z = 0;
+                    foreach(Vector3Int v in theArea) {
+                        if(buildingvectors.Count > 0) {
+                            bool remove = true;
+                            foreach(KeyValuePair<Vector3Int, Vector3Int> kvp in buildingvectors){
+                                if(unitManager.distance(v, kvp.Key) <= 3) {
+                                    remove = false;
+                                }
+                            }
+                            if(remove) {
+                                gameManager.removeTeamVec(v);
+                            }
+                        }else {
+                            gameManager.removeTeamVec(v);
+                        }
+                    }
+                    
+                    theArea = makeAreaBigger(vec, groesse);
+                    foreach(Vector3Int v in theArea) {
+                        gameManager.addVec(v, player.id);
+                    }
+
+
+                    vec.x -= 1;
+                    vec.y -= 1;
+                    vec.z = 1;
+
+                    buildingsVec.Remove(buildingvec);
+                    buildingsVec.Add(vec, b);
+                    foreach(Vector3Int v in newAreaBuilding) {
+                        buildingvectors.Add(new Vector3Int(v.x, v.y, 1), vec);
+                    }
+                
+                    List<Vector3Int> liste = new List<Vector3Int>();
+                    tilemapManager.deleteFelderUnterBuilding(newAreaBuilding);
+                    liste.Add(selectedVector);
+                    liste.Add(vec);
+
+                    healthManager.moveBuilding(selectedVector, newAreaBuilding);
+
+                    cmdMoveUnit(selectedVector, vec, liste, player.id);
+                    
+                    moveBuildingButtonObject.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Move";
+                    deselectBuilding();
                 }
             }
-        }else if(showAreaBool) {
-            reloadShowArea();
         }
+    }
+
+
+    [Command(requiresAuthority = false)]
+    public void cmdMoveUnit(Vector3Int from, Vector3Int to, List<Vector3Int> shortestPath, int id) {
+        from.z = 2;
+        Building[] unitSprites = FindObjectsOfType<Building>();
+        foreach(Building b in unitSprites) {
+            if(b.vec.x == selectedVector.x && b.vec.y == selectedVector.y) {
+                to.z = 2;
+                b.vec = to;
+                to.z = 0;
+                StartCoroutine(MoveToPosition(b.GetComponent<Transform>(), shortestPath, 0.5f, from, id));
+            }
+        }
+    }
+
+
+
+    public IEnumerator MoveToPosition(Transform transform, List<Vector3Int> positions, float timeToMove, Vector3Int from, int id)
+    {
+        for(int i=-1; i<positions.Count-1; i++) {
+            float elapsedTime = 0f;
+            Vector3 startingPosition;
+            Vector3 position;
+            if(i >= 0) {
+                startingPosition = unitManager.vec3IntToVec3(positions[i]);
+                position = unitManager.vec3IntToVec3(positions[i+1]);
+            }else {
+                startingPosition = unitManager.vec3IntToVec3(from);
+                position = unitManager.vec3IntToVec3(positions[0]);
+            }
+            
+            
+
+            while (elapsedTime < timeToMove)
+            {
+                elapsedTime += Time.deltaTime;
+                float t = Mathf.Clamp01(elapsedTime / timeToMove);
+                transform.position = Vector3.Lerp(startingPosition, position, t);
+                yield return null;
+            }
+        }
+        transform.gameObject.GetComponent<SpriteRenderer>().color = Color.white;
     }
 
 
@@ -411,6 +608,20 @@ public class BuildingManager : NetworkBehaviour
         return true;
     }
 
+    public bool canBuildMethod(Vector3Int vec, bool mustBeOwnArea) {
+        vec.z = 0;
+        List<Vector3Int> list = makeAreaBigger(vec, 1);
+        
+        foreach(Vector3Int v in list) {
+            if(hover.insideField(v)) {
+                if((gameManager.isEnemyArea(v, GameObject.Find("GameManager").GetComponent<RoundManager>().id) && mustBeOwnArea)|| buildingvectors.ContainsKey(new Vector3Int(v.x, v.y, 1)) || mapBehaviour.getBlockDetails(v).Item2.getBuildable() == false) return false;
+            }else {
+                return false;
+            }
+        }
+        return true;
+    }
+
     //Ist auf Vektor Building vom eigenen Spieler
     public bool isOwnBuilding(Vector3Int vec) {
         vec.z = 1;
@@ -447,7 +658,18 @@ public class BuildingManager : NetworkBehaviour
                 vec.z = 1;
                 ressourcenProRundeZaehler.Add(vec, (r, zaehler));
                 //Vector3Int vec, int b, int playerID, int volkID, int lvl
-                tilemapManager.CmdUpdateTilemapBuilding(vec, volkManager.getBuildingID(volk, b), GameObject.Find("GameManager").GetComponent<RoundManager>().id, volkManager.getVolkID(volk).Item2, 0);
+
+                Debug.Log(b.getCanMove());
+
+                if(!b.getCanMove()) {
+                    //Synchronisieren mit Gegnern:
+                    tilemapManager.CmdUpdateTilemapBuilding(vec, volkManager.getBuildingID(volk, b), GameObject.Find("GameManager").GetComponent<RoundManager>().id, volkManager.getVolkID(volk).Item2, 0);
+
+                }else {
+                    CMDsetBuildingObject(player.id, volkManager.getVolkID(volk).Item2, volkManager.getBuildingID(volk, b), vec);
+                }
+
+                
 
                 b.setTile(tilemap, vec, GameObject.Find("GameManager").GetComponent<RoundManager>().id-1); //später ändern auf generisch, durch Methode vielleicht
                 //synchronisieren für alle Spieler
@@ -496,12 +718,16 @@ public class BuildingManager : NetworkBehaviour
     public void selectBuilding(Vector3Int vec) {
         vec.z = 1;
         if(buildingvectors.ContainsKey(vec)) {
+            
             selectedVector = buildingvectors[vec];
             selectedBuilding = buildingsVec[selectedVector];
             selectedVector.z = 1;
-            tilemap.SetTileFlags(selectedVector, TileFlags.None);
-            tilemap.SetColor(selectedVector, hover.getSelectColor());
-            
+            if(!selectedBuilding.getCanMove()) {
+                tilemap.SetTileFlags(selectedVector, TileFlags.None);
+                tilemap.SetColor(selectedVector, hover.getSelectColor());
+            }else {
+                moveBuildingButtonObject.SetActive(true);
+            }
             if(selectedBuilding.getName() == "Barracks") { //Setzt Troops Button
                 GameObject.Find("InGame/Canvas/TroopsButton").SetActive(true);
                 GameObject.Find("InGame/Canvas/TroopsButton").GetComponent<Button>().onClick.AddListener(openUnitPanel);
@@ -534,7 +760,7 @@ public class BuildingManager : NetworkBehaviour
 
         tilemap.SetColor(selectedVector, Color.white);
 
-        
+        moveBuildingButtonObject.SetActive(false);
         
         //Vektor Selektierung
         

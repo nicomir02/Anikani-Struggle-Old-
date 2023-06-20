@@ -8,7 +8,7 @@ using TMPro;
 public class UnitGUIPanel : MonoBehaviour
 {
 
-    private Dictionary<Vector3Int, Unit> trainedUnits = new Dictionary<Vector3Int, Unit>();
+    public Dictionary<Vector3Int, Unit> trainedUnits = new Dictionary<Vector3Int, Unit>();
     public Dictionary<Vector3Int, int> howLong = new Dictionary<Vector3Int, int>();
     
     private Vector3Int selectedVector;

@@ -64,7 +64,7 @@ public class TilemapManager : NetworkBehaviour //Synchronisieren der Tilemap zwi
         }
     }
 
-    [Command]
+    [Command(requiresAuthority = false)]
     public void resetFelder(List<Vector3Int> liste) {
         rpcResetFelder(liste);
     }

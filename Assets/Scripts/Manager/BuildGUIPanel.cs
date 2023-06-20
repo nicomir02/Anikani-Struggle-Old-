@@ -5,8 +5,9 @@ using UnityEngine.UI;
 using UnityEngine.Tilemaps;
 using TMPro;
 using UnityEngine.EventSystems;
+using Mirror;
 
-public class BuildGUIPanel : MonoBehaviour
+public class BuildGUIPanel : NetworkBehaviour
 {
 
     private List<Ressource> ressourcen = new List<Ressource>();
@@ -127,6 +128,7 @@ public class BuildGUIPanel : MonoBehaviour
 
     //Methode Button Click Barracks Bau
     public void buyBarracks() {
+        if(!isLocalPlayer) return;
         Ressource ressource = getRessource("Wood");
 
         if(GetComponent<BuildingManager>().ressourcenZaehlerRechner(ressource, priceBarracks)) {
@@ -135,6 +137,8 @@ public class BuildGUIPanel : MonoBehaviour
             BuildingManager buildingManager = GetComponent<BuildingManager>();
             TilemapManager tilemapManager = GameObject.Find("GameManager").GetComponent<TilemapManager>();
 
+            VolkManager volkManager = GameObject.Find("GameManager").GetComponent<VolkManager>();
+
             List<Vector3Int> vectors = buildingManager.makeAreaBigger(selectedVector, 1);
             
             buildingManager.deleteFelder(selectedVector, 3, null);
@@ -142,7 +146,16 @@ public class BuildGUIPanel : MonoBehaviour
             buildingManager.buildInRoundZaehlerInkrement();
 
             buildingManager.addBuilding(vectors, GetComponent<Player>().eigenesVolk.getBarrackBuilding(0), selectedVector);
-            tilemapManager.CmdUpdateTilemapBuilding(new Vector3Int(selectedVector.x, selectedVector.y, 1), 3, GameObject.Find("GameManager").GetComponent<RoundManager>().id, GameObject.Find("GameManager").GetComponent<VolkManager>().getVolkID(GetComponent<Player>().eigenesVolk).Item2, 0);
+
+            Volk volk = GameObject.Find("GameManager").GetComponent<RoundManager>().eigenesVolk;
+
+            if(!volk.getBarrackBuilding(0).getCanMove()) {
+                //Synchronisieren mit Gegnern:
+                tilemapManager.CmdUpdateTilemapBuilding(selectedVector, 3, GameObject.Find("GameManager").GetComponent<RoundManager>().id, volkManager.getVolkID(volk).Item2, 0);
+
+            }else {
+                GetComponent<BuildingManager>().CMDsetBuildingObject(GetComponent<Player>().id, volkManager.getVolkID(volk).Item2, 2, selectedVector);
+            }
 
             buildingManager.addFelderToTeam(selectedVector, 4, GameObject.Find("GameManager").GetComponent<RoundManager>().id);
 

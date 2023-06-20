@@ -25,7 +25,7 @@ public class HealthManager : NetworkBehaviour
 
     //Move Building
     [Command(requiresAuthority=false)]
-    public void moveBuilding(Vector3Int v, Vector3Int rechner) {
+    public void moveBuilding(Vector3Int v, List<Vector3Int> newVectors) {
         v.z = 1;
         Vector3Int vec = building[v];
         int h = health[vec];
@@ -41,13 +41,9 @@ public class HealthManager : NetworkBehaviour
         foreach(Vector3Int vector in liste) {
             building.Remove(vector);
         }
-
-        foreach(Vector3Int vector in liste) {
-            building.Add(vector-rechner, vec-rechner);
-        }
-
         health.Remove(vec);
-        health.Add(vec-rechner, h);
+
+        addBuilding(newVectors, h, newVectors[4]);
     }
 
     //neues Building wird gesetzt, also add für health

@@ -32,6 +32,20 @@ public class Volk : NetworkBehaviour
          homeBuildings[buildingid].setTile(tilemap, vec, idColor);
       }
 
+      public Building getBuilding(int a, int lvl) {
+         if(a == 0) {
+            return homeBuildings[lvl];
+         }else if(a == 1) {
+            return treeBuildings[lvl];
+         }else if(a == 2) {
+            return barrackBuildings[lvl];
+         }else if(a == 3) {
+            return stoneBuildings[lvl];
+         }
+
+         return null;
+      }
+
 
       public int getBuildings(int a) {
          if(a == 0) {

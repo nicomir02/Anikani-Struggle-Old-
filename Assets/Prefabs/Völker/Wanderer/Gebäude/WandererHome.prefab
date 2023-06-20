@@ -79,6 +79,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: af65f0b2129efce409649e5409bc8018, type: 2}
   health: 175
   buildingname: Main Animal
+  canMove: 1
 --- !u!212 &178737038145524579
 SpriteRenderer:
   m_ObjectHideFlags: 0
