@@ -43,6 +43,7 @@ public class UnitAnimator : NetworkBehaviour
     private bool gedreht = false;
     private bool angriff = false;
     private bool laeuft = false; //läuft die coroutine
+    bool fertigGelaufen = false;
 
     // Start is called before the first frame update
     void Start()
@@ -87,20 +88,23 @@ public class UnitAnimator : NetworkBehaviour
     // Update is called once per frame
     void Update() {
         if(!laeuft){
+            fertigGelaufen = false;
             if(!angriff){
                 int index = Mathf.FloorToInt(Time.time * 4) % animation.Length; //4 für Geschwindigkeit
                 spriteRenderer.sprite = animation[index];
             } else {
-                angriff = false;
                 StartCoroutine(animationOneTime());
+                Debug.Log("co gestartet------------------------");
                 laeuft = true;
-                while(animationOneTime().MoveNext()){}
-                StopCoroutine("animationOneTime");
-                laeuft = false;
-                Debug.Log("CoRoutine gestoppt");
-            }
+            }  
         }
+        if(fertigGelaufen) {
+            StopCoroutine("animationOneTime");
+            laeuft = false;
+            Debug.Log("CoRoutine gestoppt");
     }
+    }
+    
 
     async public void warten(int dauer) {
         await Task.Delay(dauer);
@@ -213,10 +217,12 @@ public class UnitAnimator : NetworkBehaviour
         for(int i=0; i<laenge; i++) {
             Debug.Log(i);
             spriteRenderer.sprite = animation[i];
-            yield return new WaitForSeconds(0.9f);
+            yield return new WaitForSeconds(0.04f);
         }
         Debug.Log("animation fertig------------------------------");
         animation = idle;
+        angriff = false;
+        laeuft = false;
         Debug.Log("Ende Coroutine");
     }
 }
