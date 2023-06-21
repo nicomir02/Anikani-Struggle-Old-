@@ -105,27 +105,6 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Angel_red_heal_0
-      rect:
-        serializedVersion: 2
-        x: 814
-        y: 88
-        width: 4
-        height: 17
-      alignment: 9
-      pivot: {x: 0.5, y: 0.1}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: ff187c4e83e4cb6488782553274f7aa8
-      internalID: -1680969239
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
       name: Angel_red_heal_1
       rect:
         serializedVersion: 2
@@ -134,7 +113,7 @@ TextureImporter:
         width: 54
         height: 47
       alignment: 9
-      pivot: {x: 0.5, y: 0.1}
+      pivot: {x: 0.5000003, y: 0.0642475}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -142,132 +121,6 @@ TextureImporter:
       bones: []
       spriteID: cc522204831983d469f95032ebd4d0b7
       internalID: 1147804708
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Angel_red_heal_2
-      rect:
-        serializedVersion: 2
-        x: 232
-        y: 52
-        width: 16
-        height: 16
-      alignment: 9
-      pivot: {x: 0.5, y: 0.1}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 80297c4cb9c448543a7b09e8c3869112
-      internalID: -348257064
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Angel_red_heal_3
-      rect:
-        serializedVersion: 2
-        x: 331
-        y: 55
-        width: 10
-        height: 10
-      alignment: 9
-      pivot: {x: 0.5, y: 0.1}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 616b458c60327a84dbfb5b865be12451
-      internalID: 1370258420
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Angel_red_heal_4
-      rect:
-        serializedVersion: 2
-        x: 426
-        y: 54
-        width: 12
-        height: 12
-      alignment: 9
-      pivot: {x: 0.5, y: 0.1}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 85b23b343eeafbd4fb945e23e3ff2774
-      internalID: -363767714
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Angel_red_heal_5
-      rect:
-        serializedVersion: 2
-        x: 524
-        y: 56
-        width: 8
-        height: 8
-      alignment: 9
-      pivot: {x: 0.5, y: 0.1}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 6219e9403c93f1f43b25cd009c04face
-      internalID: 930099963
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Angel_red_heal_6
-      rect:
-        serializedVersion: 2
-        x: 620
-        y: 56
-        width: 8
-        height: 13
-      alignment: 9
-      pivot: {x: 0.5, y: 0.1}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 02f4f0a70883cb944924d7ff11791cab
-      internalID: 943129781
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Angel_red_heal_7
-      rect:
-        serializedVersion: 2
-        x: 717
-        y: 62
-        width: 6
-        height: 18
-      alignment: 9
-      pivot: {x: 0.5, y: 0.1}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 4760338a88b75c5489b6b7a34b7a56e1
-      internalID: -564999136
       vertices: []
       indices: 
       edges: []
@@ -300,9 +153,9 @@ TextureImporter:
         x: 213
         y: 22
         width: 54
-        height: 30
+        height: 47
       alignment: 9
-      pivot: {x: 0.5, y: 0.1}
+      pivot: {x: 0.49909633, y: 0.06365853}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -321,9 +174,9 @@ TextureImporter:
         x: 309
         y: 22
         width: 54
-        height: 30
+        height: 45
       alignment: 9
-      pivot: {x: 0.5, y: 0.1}
+      pivot: {x: 0.50000054, y: 0.06626422}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -339,12 +192,12 @@ TextureImporter:
       name: Angel_red_heal_11
       rect:
         serializedVersion: 2
-        x: 405
+        x: 404
         y: 22
         width: 54
-        height: 30
+        height: 45
       alignment: 9
-      pivot: {x: 0.5, y: 0.1}
+      pivot: {x: 0.51793754, y: 0.06771313}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -363,9 +216,9 @@ TextureImporter:
         x: 501
         y: 22
         width: 54
-        height: 30
+        height: 43
       alignment: 9
-      pivot: {x: 0.5, y: 0.1}
+      pivot: {x: 0.5, y: 0.07013973}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -384,9 +237,9 @@ TextureImporter:
         x: 597
         y: 22
         width: 54
-        height: 30
+        height: 47
       alignment: 9
-      pivot: {x: 0.5, y: 0.1}
+      pivot: {x: 0.5, y: 0.063836284}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -405,9 +258,9 @@ TextureImporter:
         x: 693
         y: 22
         width: 54
-        height: 30
+        height: 59
       alignment: 9
-      pivot: {x: 0.5, y: 0.1}
+      pivot: {x: 0.49922916, y: 0.052725807}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -426,9 +279,9 @@ TextureImporter:
         x: 789
         y: 22
         width: 54
-        height: 30
+        height: 83
       alignment: 9
-      pivot: {x: 0.5, y: 0.1}
+      pivot: {x: 0.5, y: 0.036092114}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []

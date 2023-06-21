@@ -105,27 +105,6 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Angel_red_attack_0
-      rect:
-        serializedVersion: 2
-        x: 814
-        y: 88
-        width: 4
-        height: 17
-      alignment: 9
-      pivot: {x: 0.5, y: 0.1}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 398e138d780d57f4cb6cf06c48745113
-      internalID: 831714072
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
       name: Angel_red_attack_1
       rect:
         serializedVersion: 2
@@ -134,7 +113,7 @@ TextureImporter:
         width: 54
         height: 47
       alignment: 9
-      pivot: {x: 0.5, y: 0.1}
+      pivot: {x: 0.5000003, y: 0.06464552}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -142,132 +121,6 @@ TextureImporter:
       bones: []
       spriteID: 38bba8a6dfd313e4185f612cb3be2b32
       internalID: 223510732
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Angel_red_attack_2
-      rect:
-        serializedVersion: 2
-        x: 232
-        y: 52
-        width: 16
-        height: 16
-      alignment: 9
-      pivot: {x: 0.5, y: 0.1}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 9c523a651de61e24e98446800c2aff0a
-      internalID: 353358274
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Angel_red_attack_3
-      rect:
-        serializedVersion: 2
-        x: 331
-        y: 55
-        width: 10
-        height: 10
-      alignment: 9
-      pivot: {x: 0.5, y: 0.1}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 04768944581cea74ca54ac2297eedc7d
-      internalID: 1796340912
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Angel_red_attack_4
-      rect:
-        serializedVersion: 2
-        x: 426
-        y: 54
-        width: 12
-        height: 12
-      alignment: 9
-      pivot: {x: 0.5, y: 0.1}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 105246f72cac4614fafc8ee4b5080bd8
-      internalID: 1454943591
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Angel_red_attack_5
-      rect:
-        serializedVersion: 2
-        x: 524
-        y: 56
-        width: 8
-        height: 8
-      alignment: 9
-      pivot: {x: 0.5, y: 0.1}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: e91b151e1805f1845b02c24323f55263
-      internalID: 604765988
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Angel_red_attack_6
-      rect:
-        serializedVersion: 2
-        x: 620
-        y: 56
-        width: 8
-        height: 13
-      alignment: 9
-      pivot: {x: 0.5, y: 0.1}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 206ddff367805ae4ab64c72c41de1f64
-      internalID: -875411430
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Angel_red_attack_7
-      rect:
-        serializedVersion: 2
-        x: 717
-        y: 62
-        width: 6
-        height: 18
-      alignment: 9
-      pivot: {x: 0.5, y: 0.1}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 472f2af3cb5ca334894baccae28c7d4e
-      internalID: -598616242
       vertices: []
       indices: 
       edges: []
@@ -297,12 +150,12 @@ TextureImporter:
       name: Angel_red_attack_9
       rect:
         serializedVersion: 2
-        x: 213
+        x: 212
         y: 22
-        width: 54
-        height: 30
+        width: 55
+        height: 47
       alignment: 9
-      pivot: {x: 0.5, y: 0.1}
+      pivot: {x: 0.5090765, y: 0.06313787}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -321,9 +174,9 @@ TextureImporter:
         x: 309
         y: 22
         width: 54
-        height: 30
+        height: 45
       alignment: 9
-      pivot: {x: 0.5, y: 0.1}
+      pivot: {x: 0.5006584, y: 0.06684295}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -342,9 +195,9 @@ TextureImporter:
         x: 405
         y: 22
         width: 54
-        height: 30
+        height: 44
       alignment: 9
-      pivot: {x: 0.5, y: 0.1}
+      pivot: {x: 0.50050354, y: 0.06783845}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -363,9 +216,9 @@ TextureImporter:
         x: 501
         y: 22
         width: 54
-        height: 30
+        height: 43
       alignment: 9
-      pivot: {x: 0.5, y: 0.1}
+      pivot: {x: 0.5, y: 0.070048444}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -384,9 +237,9 @@ TextureImporter:
         x: 597
         y: 22
         width: 54
-        height: 30
+        height: 50
       alignment: 9
-      pivot: {x: 0.5, y: 0.1}
+      pivot: {x: 0.49999887, y: 0.059953652}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -405,9 +258,9 @@ TextureImporter:
         x: 693
         y: 22
         width: 54
-        height: 30
+        height: 59
       alignment: 9
-      pivot: {x: 0.5, y: 0.1}
+      pivot: {x: 0.50000113, y: 0.050508533}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -426,9 +279,9 @@ TextureImporter:
         x: 789
         y: 22
         width: 54
-        height: 30
+        height: 85
       alignment: 9
-      pivot: {x: 0.5, y: 0.1}
+      pivot: {x: 0.50049055, y: 0.035248227}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []

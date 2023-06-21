@@ -803,7 +803,16 @@ MonoBehaviour:
   - {fileID: 414865347, guid: 4f52926825ecd474096f0f523f7374ae, type: 3}
   - {fileID: 1080551616, guid: 4f52926825ecd474096f0f523f7374ae, type: 3}
   - {fileID: -1959213636, guid: 4f52926825ecd474096f0f523f7374ae, type: 3}
-  attackRED: []
+  attackRED:
+  - {fileID: 1983236080, guid: 5c03d19f7f7a44e4a8f27a47a0982dcd, type: 3}
+  - {fileID: 223510732, guid: 5c03d19f7f7a44e4a8f27a47a0982dcd, type: 3}
+  - {fileID: 2082675391, guid: 5c03d19f7f7a44e4a8f27a47a0982dcd, type: 3}
+  - {fileID: -826346772, guid: 5c03d19f7f7a44e4a8f27a47a0982dcd, type: 3}
+  - {fileID: 803380782, guid: 5c03d19f7f7a44e4a8f27a47a0982dcd, type: 3}
+  - {fileID: -277681457, guid: 5c03d19f7f7a44e4a8f27a47a0982dcd, type: 3}
+  - {fileID: -1696512393, guid: 5c03d19f7f7a44e4a8f27a47a0982dcd, type: 3}
+  - {fileID: -1418408400, guid: 5c03d19f7f7a44e4a8f27a47a0982dcd, type: 3}
+  - {fileID: 2095297528, guid: 5c03d19f7f7a44e4a8f27a47a0982dcd, type: 3}
   attackGREEN: []
   attackPURP: []
   backAttackBLUE: []
@@ -811,15 +820,47 @@ MonoBehaviour:
   backAttackGREEN: []
   backAttackPURP: []
   healBLUE:
+  - {fileID: 453219556, guid: eb9fadd8cc3cd124dbcc0e0a130bd2f4, type: 3}
   - {fileID: 1578277544, guid: eb9fadd8cc3cd124dbcc0e0a130bd2f4, type: 3}
-  - {fileID: 1578277544, guid: eb9fadd8cc3cd124dbcc0e0a130bd2f4, type: 3}
-  - {fileID: 1578277544, guid: eb9fadd8cc3cd124dbcc0e0a130bd2f4, type: 3}
-  - {fileID: 1578277544, guid: eb9fadd8cc3cd124dbcc0e0a130bd2f4, type: 3}
-  healRED: []
+  - {fileID: -1831207812, guid: eb9fadd8cc3cd124dbcc0e0a130bd2f4, type: 3}
+  - {fileID: -2114972729, guid: eb9fadd8cc3cd124dbcc0e0a130bd2f4, type: 3}
+  - {fileID: 1077338225, guid: eb9fadd8cc3cd124dbcc0e0a130bd2f4, type: 3}
+  - {fileID: -1714992591, guid: eb9fadd8cc3cd124dbcc0e0a130bd2f4, type: 3}
+  - {fileID: 90989346, guid: eb9fadd8cc3cd124dbcc0e0a130bd2f4, type: 3}
+  - {fileID: -1382754306, guid: eb9fadd8cc3cd124dbcc0e0a130bd2f4, type: 3}
+  - {fileID: 445432878, guid: eb9fadd8cc3cd124dbcc0e0a130bd2f4, type: 3}
+  healRED:
+  - {fileID: 562600457, guid: ba4d66737cee0b641b75caab1a91b776, type: 3}
+  - {fileID: 1147804708, guid: ba4d66737cee0b641b75caab1a91b776, type: 3}
+  - {fileID: 831489110, guid: ba4d66737cee0b641b75caab1a91b776, type: 3}
+  - {fileID: -676492907, guid: ba4d66737cee0b641b75caab1a91b776, type: 3}
+  - {fileID: -460261851, guid: ba4d66737cee0b641b75caab1a91b776, type: 3}
+  - {fileID: 955432549, guid: ba4d66737cee0b641b75caab1a91b776, type: 3}
+  - {fileID: 1382725801, guid: ba4d66737cee0b641b75caab1a91b776, type: 3}
+  - {fileID: -79864540, guid: ba4d66737cee0b641b75caab1a91b776, type: 3}
+  - {fileID: 1194891438, guid: ba4d66737cee0b641b75caab1a91b776, type: 3}
   healGREEN: []
   healPURP: []
-  healUnit: []
-  attackEnemy: []
+  healUnit:
+  - {fileID: -851458021, guid: fd42ef80ee927a24da53ae5c72f8c9f5, type: 3}
+  - {fileID: -1504093572, guid: fd42ef80ee927a24da53ae5c72f8c9f5, type: 3}
+  - {fileID: 2110121736, guid: fd42ef80ee927a24da53ae5c72f8c9f5, type: 3}
+  - {fileID: -1027740477, guid: fd42ef80ee927a24da53ae5c72f8c9f5, type: 3}
+  - {fileID: -2063903697, guid: fd42ef80ee927a24da53ae5c72f8c9f5, type: 3}
+  - {fileID: 2086317421, guid: fd42ef80ee927a24da53ae5c72f8c9f5, type: 3}
+  - {fileID: 376236734, guid: fd42ef80ee927a24da53ae5c72f8c9f5, type: 3}
+  - {fileID: 669851009, guid: fd42ef80ee927a24da53ae5c72f8c9f5, type: 3}
+  - {fileID: 295531636, guid: fd42ef80ee927a24da53ae5c72f8c9f5, type: 3}
+  attackEnemy:
+  - {fileID: 459752543, guid: c701a336b62b8f6459ebee752a175124, type: 3}
+  - {fileID: -706721414, guid: c701a336b62b8f6459ebee752a175124, type: 3}
+  - {fileID: -2044684959, guid: c701a336b62b8f6459ebee752a175124, type: 3}
+  - {fileID: 421131986, guid: c701a336b62b8f6459ebee752a175124, type: 3}
+  - {fileID: -368942260, guid: c701a336b62b8f6459ebee752a175124, type: 3}
+  - {fileID: -1168191956, guid: c701a336b62b8f6459ebee752a175124, type: 3}
+  - {fileID: -1417580803, guid: c701a336b62b8f6459ebee752a175124, type: 3}
+  - {fileID: 1860384910, guid: c701a336b62b8f6459ebee752a175124, type: 3}
+  - {fileID: 457197315, guid: c701a336b62b8f6459ebee752a175124, type: 3}
   fernZiel: {fileID: 6852530814182375312, guid: 12a4c14e672c00b4b840f937d824b890, type: 3}
 --- !u!114 &-4083419351919174216
 MonoBehaviour:

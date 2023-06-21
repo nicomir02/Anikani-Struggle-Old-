@@ -257,10 +257,10 @@ TextureImporter:
         serializedVersion: 2
         x: 470
         y: 8
-        width: 5
-        height: 8
+        width: 20
+        height: 20
       alignment: 9
-      pivot: {x: 0.5, y: 0.1}
+      pivot: {x: 0.49999848, y: 0.099177316}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -273,54 +273,12 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: angel_heal_hit_8
-      rect:
-        serializedVersion: 2
-        x: 473
-        y: 17
-        width: 10
-        height: 10
-      alignment: 9
-      pivot: {x: 0.5, y: 0.1}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 014c976d577d9ba4786e0698e901da42
-      internalID: -1442339152
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: angel_heal_hit_9
-      rect:
-        serializedVersion: 2
-        x: 475
-        y: 9
-        width: 12
-        height: 12
-      alignment: 9
-      pivot: {x: 0.5, y: 0.1}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: dfb8268b71e320e4893a9a36c0fa783a
-      internalID: 1408577434
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
       name: angel_heal_hit_10
       rect:
         serializedVersion: 2
-        x: 484
+        x: 532
         y: 7
-        width: 72
+        width: 24
         height: 23
       alignment: 9
       pivot: {x: 0.5, y: 0.1}

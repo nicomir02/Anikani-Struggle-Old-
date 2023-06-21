@@ -105,27 +105,6 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Angel_blue_heal_0
-      rect:
-        serializedVersion: 2
-        x: 814
-        y: 88
-        width: 4
-        height: 17
-      alignment: 9
-      pivot: {x: 0.5, y: 0.1}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 776d809d77e0dbb448a0f03a77057cf4
-      internalID: -1877130273
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
       name: Angel_blue_heal_1
       rect:
         serializedVersion: 2
@@ -134,7 +113,7 @@ TextureImporter:
         width: 54
         height: 47
       alignment: 9
-      pivot: {x: 0.5, y: 0.1}
+      pivot: {x: 0.5000003, y: 0.063679144}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -142,132 +121,6 @@ TextureImporter:
       bones: []
       spriteID: 9b2f881c02405bb4f88a67fee1c48da9
       internalID: 1578277544
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Angel_blue_heal_2
-      rect:
-        serializedVersion: 2
-        x: 232
-        y: 52
-        width: 16
-        height: 16
-      alignment: 9
-      pivot: {x: 0.5, y: 0.1}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: b30a8c8e167bf2c4499f73be4521b0cc
-      internalID: 676421822
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Angel_blue_heal_3
-      rect:
-        serializedVersion: 2
-        x: 331
-        y: 55
-        width: 10
-        height: 10
-      alignment: 9
-      pivot: {x: 0.5, y: 0.1}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 5b7017e56c53d754ea300e6cc78394d3
-      internalID: -1280540131
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Angel_blue_heal_4
-      rect:
-        serializedVersion: 2
-        x: 426
-        y: 54
-        width: 12
-        height: 12
-      alignment: 9
-      pivot: {x: 0.5, y: 0.1}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 8fe249ca0567e34418edd5f36b0af8e6
-      internalID: -204058973
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Angel_blue_heal_5
-      rect:
-        serializedVersion: 2
-        x: 524
-        y: 56
-        width: 8
-        height: 8
-      alignment: 9
-      pivot: {x: 0.5, y: 0.1}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: d49b6b95221568b48ad16cb054ce4380
-      internalID: -485750146
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Angel_blue_heal_6
-      rect:
-        serializedVersion: 2
-        x: 620
-        y: 56
-        width: 8
-        height: 13
-      alignment: 9
-      pivot: {x: 0.5, y: 0.1}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 2ad6a46d94a03ab43a289ce26fa6f933
-      internalID: 1868773010
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Angel_blue_heal_7
-      rect:
-        serializedVersion: 2
-        x: 717
-        y: 62
-        width: 6
-        height: 18
-      alignment: 9
-      pivot: {x: 0.5, y: 0.1}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: fe01632a0d049dc4ba6df989978cc64c
-      internalID: 822087861
       vertices: []
       indices: 
       edges: []
@@ -300,9 +153,9 @@ TextureImporter:
         x: 213
         y: 22
         width: 54
-        height: 30
+        height: 46
       alignment: 9
-      pivot: {x: 0.5, y: 0.1}
+      pivot: {x: 0.50057983, y: 0.067345284}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -321,9 +174,9 @@ TextureImporter:
         x: 309
         y: 22
         width: 54
-        height: 30
+        height: 44
       alignment: 9
-      pivot: {x: 0.5, y: 0.1}
+      pivot: {x: 0.49914268, y: 0.06788401}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -339,12 +192,12 @@ TextureImporter:
       name: Angel_blue_heal_11
       rect:
         serializedVersion: 2
-        x: 405
+        x: 404
         y: 22
         width: 54
-        height: 30
+        height: 44
       alignment: 9
-      pivot: {x: 0.5, y: 0.1}
+      pivot: {x: 0.5177364, y: 0.06843684}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -363,9 +216,9 @@ TextureImporter:
         x: 501
         y: 22
         width: 54
-        height: 30
+        height: 43
       alignment: 9
-      pivot: {x: 0.5, y: 0.1}
+      pivot: {x: 0.50000113, y: 0.07130796}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -384,9 +237,9 @@ TextureImporter:
         x: 597
         y: 22
         width: 54
-        height: 30
+        height: 47
       alignment: 9
-      pivot: {x: 0.5, y: 0.1}
+      pivot: {x: 0.50039786, y: 0.06341322}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -405,9 +258,9 @@ TextureImporter:
         x: 693
         y: 22
         width: 54
-        height: 30
+        height: 58
       alignment: 9
-      pivot: {x: 0.5, y: 0.1}
+      pivot: {x: 0.50165814, y: 0.0536917}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -426,9 +279,9 @@ TextureImporter:
         x: 789
         y: 22
         width: 54
-        height: 30
+        height: 85
       alignment: 9
-      pivot: {x: 0.5, y: 0.1}
+      pivot: {x: 0.49943712, y: 0.034548208}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
