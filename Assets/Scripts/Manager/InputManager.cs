@@ -9,6 +9,8 @@ public class InputManager : MonoBehaviour
 {
     //Variable ob Gebäude angezeigt werden:
     private bool showBuildings = true;
+    private bool showUnits = true;
+    private bool showHealthbar = true;
 
     private MapBehaviour mapBehaviour;
     private HealthManager healthManager;
@@ -16,6 +18,7 @@ public class InputManager : MonoBehaviour
     [SerializeField] private Tilemap tilemap;
 
     [SerializeField] private Color durchsichtig;
+    [SerializeField] private Color unsichtbar;
 
     [SerializeField] private GameObject tabPanel;
     [SerializeField] private TextMeshProUGUI playernameText;
@@ -31,6 +34,14 @@ public class InputManager : MonoBehaviour
     {
         if(Input.GetButtonDown("Toggle invisible Buildings")) {
             onShowBuildings();
+        }
+
+        if(Input.GetButtonDown("Toggle invisible Units")) {
+            onShowUnits();
+        }
+
+        if(Input.GetButtonDown("Toggle healthbar")) {
+            onShowHealthbar();
         }
 
         if(Input.GetButtonDown("Show List")) {
@@ -79,5 +90,44 @@ public class InputManager : MonoBehaviour
             }
             showBuildings = true;
         }
+    }
+
+    void onShowUnits() {
+        foreach(UnitSprite us in FindObjectsOfType<UnitSprite>()) {
+            if(showUnits) {
+                //Unit
+                us.GetComponent<SpriteRenderer>().color = durchsichtig;
+
+                Vector3 v = us.GetComponent<Transform>().GetChild(0).position;
+                v.z = -100f;
+                us.GetComponent<Transform>().GetChild(0).position = v;
+            }else {
+                //Unit
+                us.GetComponent<SpriteRenderer>().color = Color.white;
+                
+                //Healthbar
+                if(showHealthbar) {
+                    Vector3 v = us.GetComponent<Transform>().GetChild(0).position;
+                    v.z = 0f;
+                    us.GetComponent<Transform>().GetChild(0).position = v;
+                }
+            }
+        }
+        showUnits = !showUnits;
+    }
+
+    void onShowHealthbar() {
+        foreach(UnitSprite us in FindObjectsOfType<UnitSprite>()) {
+            if(showHealthbar) {
+                Vector3 v = us.GetComponent<Transform>().GetChild(0).position;
+                v.z = -100f;
+                us.GetComponent<Transform>().GetChild(0).position = v;
+            }else {
+                Vector3 v = us.GetComponent<Transform>().GetChild(0).position;
+                v.z = 0f;
+                us.GetComponent<Transform>().GetChild(0).position = v;
+            }
+        }
+        showHealthbar = !showHealthbar;
     }
 }

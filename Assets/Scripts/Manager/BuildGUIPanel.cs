@@ -151,7 +151,7 @@ public class BuildGUIPanel : NetworkBehaviour
 
             if(!volk.getBarrackBuilding(0).getCanMove()) {
                 //Synchronisieren mit Gegnern:
-                tilemapManager.CmdUpdateTilemapBuilding(selectedVector, 3, GameObject.Find("GameManager").GetComponent<RoundManager>().id, volkManager.getVolkID(volk).Item2, 0);
+                tilemapManager.CmdUpdateTilemapBuilding(new Vector3Int(selectedVector.x, selectedVector.y, 1), 3, GameObject.Find("GameManager").GetComponent<RoundManager>().id, volkManager.getVolkID(volk).Item2, 0);
 
             }else {
                 GetComponent<BuildingManager>().CMDsetBuildingObject(GetComponent<Player>().id, volkManager.getVolkID(volk).Item2, 2, selectedVector);

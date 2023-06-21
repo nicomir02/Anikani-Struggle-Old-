@@ -414,6 +414,9 @@ public class BuildingManager : NetworkBehaviour
                         groesse = 5;
                     }
                     selectedVector.z = 1;
+
+                    //Vector3Int middlePoint = buildingvectors[selectedVector];
+
                     List<Vector3Int> theArea = makeAreaBigger(new Vector3Int(buildingvectors[selectedVector].x+1, buildingvectors[selectedVector].y+1, 0), groesse);
 
                     foreach(Vector3Int v in newAreaBuilding) {
