@@ -228,7 +228,7 @@ public class UnitAnimator : NetworkBehaviour
         }
 
         enemy.z = 3;
-        fernZiel.transform.position = enemy;
+        if(fernZiel != null) fernZiel.transform.position = enemy;
         Debug.Log(enemy);
 
         //Animation einmal abspielen
@@ -267,15 +267,15 @@ public class UnitAnimator : NetworkBehaviour
             yield return new WaitForSeconds(0.04f);
         }
 
-        if(zielAnimation != null) {
+        if(zielAnimation != null && fernZiel != null) {
             Debug.Log(fernZiel);
             Debug.Log(fernZielPosition);
             spawnZiel();
             fernRenderer = fernZiel.GetComponent<SpriteRenderer>();
             
             for(int i=0; i<laenge; i++) {
-            fernRenderer.sprite = zielAnimation[i];
-            yield return new WaitForSeconds(0.04f);
+                fernRenderer.sprite = zielAnimation[i];
+                yield return new WaitForSeconds(0.04f);
             }
             destroyZiel();
         }
