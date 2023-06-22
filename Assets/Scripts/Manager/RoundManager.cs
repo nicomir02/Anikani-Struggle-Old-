@@ -28,6 +28,10 @@ public class RoundManager : NetworkBehaviour
     [SerializeField] private TextMeshProUGUI roundButtonText;    //Knopf zeigt an ob man gerade dran ist oder man warten muss
     [SerializeField] private TextMeshProUGUI roundText;  //Text oben in der Leiste, welcher die Rundenanzahl angibt
     [SerializeField] private GameObject nextrounderr;
+
+    [SerializeField] private BuildingManager buildingManager;
+    [SerializeField] private UnitManager unitManager;
+
     public bool isYourTurn = false;     //sagt ob dieser Spieler gerade am Turn ist
 
     [SerializeField] private TextMeshProUGUI spielername; //Text oben in Leiste für den Spielernamen
@@ -96,28 +100,23 @@ public class RoundManager : NetworkBehaviour
 
         Player[] players = FindObjectsOfType<Player>();
 
-        foreach(Player p in players) {
-            if(p.id == id) {
-                BuildingManager buildingManager = p.gameObject.GetComponent<BuildingManager>();
-                if(round == 0 && buildingManager.getZahlBuildInRound() == 0) return;
-            }
-        }
+        
+        if(round == 0 && buildingManager.getZahlBuildInRound() == 0) return;
         
         if(isYourTurn) { // nur wenn du dran bist
             bool canNextRound = false;
             if(!nextrounderr.activeSelf) {
                 bool unitsRound = false;
-                foreach(UnitManager um in FindObjectsOfType<UnitManager>()) {
-                    if(um.canNextRound() && um.isLocalPlayer) unitsRound = true;
-                }
+
+                if(unitManager.canNextRound()) unitsRound = true;
+                
 
                 bool buildsRound = true;
 
                 bool unitTrainer = false;
-                foreach(BuildingManager bm in FindObjectsOfType<BuildingManager>()) {
-                    //if(bm.ZaehlerBuildingsBuiltInRound < bm.maxBuildingPerRound && bm.isLocalPlayer) buildsRound = false; Immer nach Buildings zu checken ist glaub ich unnötig
-                    if(bm.buildUnitPanelNextRound() && bm.isLocalPlayer) unitTrainer = true;
-                }
+
+                if(buildingManager.buildUnitPanelNextRound()) unitTrainer = true;
+                
 
                 canNextRound = unitsRound && buildsRound && unitTrainer;
             }else {

@@ -9,20 +9,21 @@ using System.Linq;
 
 public class UnitManager : NetworkBehaviour
 {
-    private Volk volk;
-    private Player player;
-    private TilemapHover hover;
-    private Tilemap tilemap;
-    private TilemapManager tilemapManager;
-    private VolkManager volkManager;
-    private MapBehaviour mapBehaviour;
-    private BuildingManager buildingManager;
+    public Volk volk;
+    [SerializeField] private TilemapHover hover;
+    [SerializeField] private Tilemap tilemap;
+    [SerializeField] private TilemapManager tilemapManager;
+    [SerializeField] private VolkManager volkManager;
+    [SerializeField] private MapBehaviour mapBehaviour;
+    [SerializeField] private BuildingManager buildingManager;
+    
+    [SerializeField] private GameObject infobox;
 
-    private GameManager gameManager;
+    [SerializeField] private GameManager gameManager;
 
-    private HealthManager healthManager;
+    [SerializeField] private HealthManager healthManager;
 
-    private RoundManager roundManager;
+    [SerializeField] private RoundManager roundManager;
 
     //private int buildInRound = 0;
     //bewegungsreichweite fehlt/angriffsbegrenzung fehlt/begrenzte blöcke fehlen
@@ -30,8 +31,6 @@ public class UnitManager : NetworkBehaviour
 
     //Bewegungsreichweite
     Dictionary<Vector3Int, int> reichweite = new Dictionary<Vector3Int, int>();
-
-    private GameObject infobox;
 
     private Unit selectedUnit;
     private Vector3Int selectedVector;
@@ -44,16 +43,7 @@ public class UnitManager : NetworkBehaviour
     
     
     void Start() {
-        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
-        hover = GameObject.Find("GameManager").GetComponent<TilemapHover>();
-        tilemap = GameObject.Find("Tilemap").GetComponent<Tilemap>();
-        player = GetComponent<Player>();
-        volk = player.eigenesVolk;
-        tilemapManager = GameObject.Find("GameManager").GetComponent<TilemapManager>();
-        volkManager = GameObject.Find("GameManager").GetComponent<VolkManager>();
-        roundManager = GameObject.Find("GameManager").GetComponent<RoundManager>();
-        mapBehaviour = GameObject.Find("GameManager").GetComponent<MapBehaviour>();
-        healthManager = GameObject.Find("GameManager").GetComponent<HealthManager>();
+        volk = roundManager.eigenesVolk;
         buildingManager = GetComponent<BuildingManager>();
     }
 
@@ -103,11 +93,15 @@ public class UnitManager : NetworkBehaviour
         if(GameObject.Find("GameManager").GetComponent<PauseMenu>().getPause()) return;
 
         if(GameObject.Find("InGame/Canvas/ShowArea") != null && isLobby) {
-            volk = player.eigenesVolk;
+            volk = roundManager.eigenesVolk;
             isLobby = false;
         }
 
-        if(Input.GetMouseButtonDown(0) && isLocalPlayer) {
+        if(volk == null && GameObject.Find("InGame/Canvas/ShowArea") != null) {
+            volk = roundManager.eigenesVolk;
+        }
+
+        if(Input.GetMouseButtonDown(0)) {
             Vector3Int vec = hover.getVectorFromMouse();
             vec.z = 2;
             if(hover.insideField(vec)){
@@ -211,6 +205,7 @@ public class UnitManager : NetworkBehaviour
             int curReichweite = reichweite[selectedVector];
 
             if (hover.insideField(vec) && distance(selectedVector, vec) <= curReichweite) {
+                ClearWeite();
                 List<Vector3Int> tempweite = pathfinding.shortestPath();
 
                 if (weite != null && tempweite != null && weite == tempweite) return;
@@ -239,28 +234,20 @@ public class UnitManager : NetworkBehaviour
                         tilemap.SetColor(new Vector3Int(v.x, v.y, 0), hover.getSelectColor());
                     }
                 }
-
-            } else if (weite != null && weite.Count > 0) {
+            }else {
                 ClearWeite();
             }
-
-        } else if (weite != null && weite.Count > 0) {
-            ClearWeite();
         }
     }
 
     void ClearWeite() {
-        hover.reload();
-        
-        if (buildingManager.getShowArea()) {
-            buildingManager.reloadShowArea();
-        }else {
-            for (int x=0; x<mapBehaviour.mapWidth(); x++) {
-                for (int y=0; y<mapBehaviour.mapHeight(); y++) {
-                    tilemap.SetColor(new Vector3Int(x, y, 0), Color.white);
-                }
+        for (int x=0; x<mapBehaviour.mapWidth(); x++) {
+            for (int y=0; y<mapBehaviour.mapHeight(); y++) {
+                tilemap.SetColor(new Vector3Int(x, y, 0), Color.white);
             }
         }
+        if (buildingManager.getShowArea()) buildingManager.reloadShowArea();
+
         
         weite.Clear();
         
@@ -275,7 +262,7 @@ public class UnitManager : NetworkBehaviour
         
         selectedVector = vec;
 
-        player.infobox.SetActive(false);
+        infobox.SetActive(false);
     }
 
     public void selectUnit(Vector3Int vec){
@@ -293,7 +280,7 @@ public class UnitManager : NetworkBehaviour
 
     public bool findUnit(Vector3Int vec) {
         foreach(UnitSprite us in FindObjectsOfType<UnitSprite>()) {
-            if(us.vec.x == vec.x && us.vec.y == vec.y && us.id == player.id) {
+            if(us.vec.x == vec.x && us.vec.y == vec.y && us.id == roundManager.id) {
                 if(!spawnedUnits.ContainsKey(new Vector3Int(vec.x, vec.y, 2))) {
                     if(healthManager.getLeben(new Vector3Int(vec.x, vec.y, 2)) < 0) {
                         cmddeleteUnit(us.vec);
@@ -308,7 +295,7 @@ public class UnitManager : NetworkBehaviour
     }
 
     public void activatePanel(Vector3Int vec) {
-        player.infobox.SetActive(true);
+        infobox.SetActive(true);
 
         //NOTIZÄNDERUNG Leben zu Health und Angriffswert zu Attackpower und verfügbare Bewegung zu Available Movement damit es auf englishc ist
         //Variante für einheiten welche heilen können(z.B. Engel) und sonstige im else
@@ -368,7 +355,7 @@ public class UnitManager : NetworkBehaviour
 
             
 
-            cmdMoveUnit(selectedVector, vec, liste, player.id);
+            cmdMoveUnit(selectedVector, vec, liste, roundManager.id);
         }
     }
 
@@ -453,7 +440,7 @@ public class UnitManager : NetworkBehaviour
 
     public void spawnUnit(Unit unit, Vector3Int vec, int colorID){
         vec.z = 2;
-        if(!spawnedUnits.ContainsKey(vec) && isLocalPlayer) {
+        if(!spawnedUnits.ContainsKey(vec)) {
 
             spawnedUnits.Add(vec, unit);
             healthManager.addUnit(vec, unit.getLeben());
@@ -499,7 +486,7 @@ public class UnitManager : NetworkBehaviour
         gameObject.GetComponent<UnitSprite>().vec = vec;
         gameObject.GetComponent<UnitAnimator>().chooseColor(colorID+1);
 
-        if(GetComponent<Player>().id == colorID+1) {
+        if(roundManager.id == colorID+1) {
             gameObject.transform.GetChild(0).GetComponent<HealthBar>().changeReichweite(0);
         }
         

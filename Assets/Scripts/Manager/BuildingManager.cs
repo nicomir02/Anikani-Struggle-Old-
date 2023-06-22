@@ -11,22 +11,24 @@ using UnityEngine.EventSystems;
 public class BuildingManager : NetworkBehaviour
 {
     //Deklarieren von benötigten Klassen
-    [SerializeField] private Volk volk; //Eigenes Volk
-    private Player player; //Spielerscript
-    private TilemapHover hover; //abfragung, wo mauszeiger ist
-    private Tilemap tilemap; //Tilemap abfragen
-    private TilemapManager tilemapManager; //änderungen auf tilemap
-    private VolkManager volkManager; //volk id herausfinden
-    private MapBehaviour mapBehaviour; //Block details herausfinden, biome etc.
-    private HealthManager healthManager; //healthmanager für gebäudeleben 
+    public Volk volk; //Eigenes Volk
+    [SerializeField] private TilemapHover hover; //abfragung, wo mauszeiger ist
+    [SerializeField] private Tilemap tilemap; //Tilemap abfragen
+    [SerializeField] private TilemapManager tilemapManager; //änderungen auf tilemap
+    [SerializeField] private VolkManager volkManager; //volk id herausfinden
+    [SerializeField] private MapBehaviour mapBehaviour; //Block details herausfinden, biome etc.
+    [SerializeField] private HealthManager healthManager; //healthmanager für gebäudeleben 
+    [SerializeField] private RoundManager roundManager;
 
-    private GameManager gameManager;
-    private UnitManager unitManager;    //für testzwecke der ersten einheit
+    [SerializeField] private GameManager gameManager;
+    [SerializeField] private UnitManager unitManager;    //für testzwecke der ersten einheit
 
-    private PauseMenu pauseMenu;
+    [SerializeField] private PauseMenu pauseMenu;
 
-    private Button showArea;
-    private GameObject moveBuildingButtonObject;
+    [SerializeField] private Button showArea;
+    [SerializeField] private GameObject moveBuildingButtonObject;
+
+    [SerializeField] private GameObject infoboxBuilding;
 
 
     private bool showAreaBool = false;
@@ -55,11 +57,16 @@ public class BuildingManager : NetworkBehaviour
     //Button ressourcenButton;
     
     //ausgewählter/angeklickter Vektor
-    Vector3Int selectedVector;
+    public Vector3Int selectedVector;
     //ausgewähltes/angeklicktes Gebäude
     Building selectedBuilding;
     //Farbe
     Color oldSelectedColor;
+
+
+    void Start() {
+        unitManager = GetComponent<UnitManager>();//für testzwecke der ersten einheit
+    }
 
     public bool nearBuilding(Vector3Int vec, int naehe) {
         foreach(KeyValuePair<Vector3Int, Vector3Int> kvp in buildingvectors) {
@@ -139,7 +146,9 @@ public class BuildingManager : NetworkBehaviour
         buildingvectors = new Dictionary<Vector3Int, Vector3Int>();
 
         unitManager.disqualify();
-        player.spielerDisqualifizieren(GameObject.Find("GameManager").GetComponent<RoundManager>().id);
+        foreach(Player p in FindObjectsOfType<Player>()) {
+            p.spielerDisqualifizieren(GameObject.Find("GameManager").GetComponent<RoundManager>().id);
+        }
     }
 
     //Getter Methode für ZaehlerBuildingsBuiltInRound
@@ -152,18 +161,7 @@ public class BuildingManager : NetworkBehaviour
         ZaehlerBuildingsBuiltInRound++;
     }
 
-    void Start() {
-        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
-        hover = GameObject.Find("GameManager").GetComponent<TilemapHover>();
-        tilemap = GameObject.Find("Tilemap").GetComponent<Tilemap>();
-        player = GetComponent<Player>();
-        tilemapManager = GameObject.Find("GameManager").GetComponent<TilemapManager>();
-        volkManager = GameObject.Find("GameManager").GetComponent<VolkManager>();
-        mapBehaviour = GameObject.Find("GameManager").GetComponent<MapBehaviour>();
-        healthManager = GameObject.Find("GameManager").GetComponent<HealthManager>();
-        pauseMenu = GameObject.Find("GameManager").GetComponent<PauseMenu>();
-        unitManager = GetComponent<UnitManager>();//für testzwecke der ersten einheit
-    }
+    
 
     private IEnumerator kurzRot(Vector3Int v) {
         v.z = 0;
@@ -183,7 +181,6 @@ public class BuildingManager : NetworkBehaviour
     }
 
     public void moveBuilding() {
-        if(!isLocalPlayer) return;
         if(moveBuildingButtonObject.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text == "Move") {
             moveBuildingButtonObject.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Dont move";
         }else {
@@ -197,17 +194,17 @@ public class BuildingManager : NetworkBehaviour
 
         if (Input.GetMouseButtonDown(0) && EventSystem.current.currentSelectedGameObject != null) return;
 
-        if(volk == null) {
-            volk = GetComponent<Player>().eigenesVolk;
-        }
-
         //Initialisieren des ShowArea GameObjects nach Spielstart(nur einmal!)
         if(GameObject.Find("InGame/Canvas/ShowArea") != null && isLobby) {
-            volk = player.eigenesVolk;
+            volk = roundManager.eigenesVolk;
             GameObject.Find("InGame/Canvas/ShowArea").GetComponent<Button>().onClick.AddListener(OnShowAreaClick);
             moveBuildingButtonObject = GameObject.Find("InGame/Canvas/WandererMoveMainButton");
             moveBuildingButtonObject.GetComponent<Button>().onClick.AddListener(moveBuilding);
             isLobby = false;
+        }
+
+        if(volk == null && GameObject.Find("InGame/Canvas/ShowArea") != null) {
+            volk = roundManager.eigenesVolk;
         }
 
         //Hauptgebäude aufgebaut nach Spielstart(nur einmal)
@@ -261,11 +258,11 @@ public class BuildingManager : NetworkBehaviour
                             tilemapManager.CmdUpdateTilemap(vec, volkManager.getVolkID(volk).Item2, 0, GameObject.Find("GameManager").GetComponent<RoundManager>().id-1);
 
                         }else {
-                            CMDsetBuildingObject(player.id, volkManager.getVolkID(volk).Item2, 0, vec);
+                            CMDsetBuildingObject(roundManager.id, volkManager.getVolkID(volk).Item2, 0, vec);
                         }
 
                         //4n1kan1, Nico und Alex dürfen mehr bauen, wenn Cheats aktiviert sind!s
-                        if((player.name == "Nico" || player.name == "Alex" || player.name == "4n1kan1") && gameManager.getCheatsOn()) maxBuildingPerRound = 1000;
+                        if((roundManager.playername == "Nico" || roundManager.playername == "Alex" || roundManager.playername == "4n1kan1") && gameManager.getCheatsOn()) maxBuildingPerRound = 1000;
                         //Zaehler geht hoch
                         ZaehlerBuildingsBuiltInRound = maxBuildingPerRound;
 
@@ -300,20 +297,7 @@ public class BuildingManager : NetworkBehaviour
         }
 
         //Troop Recruitment Menu öffnen (erste Barracke ausgewählt) mit Taste T default
-        if(Input.GetButtonDown("Troop Recruitment")){
-            foreach(KeyValuePair<Vector3Int,Building> kvp in buildingsVec){
-                if(kvp.Value.getName() == "Barracks"){
-                    //selectedVector = kvp.Key;
-                    Debug.Log(kvp.Key);
-                    
-                    mapBehaviour.cameraChange(kvp.Key.x,kvp.Key.y);
-                    selectBuilding(kvp.Key);
-                    Debug.Log(selectedVector);
-                    openUnitPanel();
- 
-                }
-            }
-        }
+        
     }
 
     [Command(requiresAuthority=false)]
@@ -366,7 +350,6 @@ public class BuildingManager : NetworkBehaviour
 
     //Vector Selection
     public void selectVector(Vector3Int vec) {
-        if(!isLocalPlayer) return;
         bool wantToMove = false;
         if(selectedBuilding != null && moveBuildingButtonObject.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text == "Move" ) {
             /*selectedVector.z = 1;
@@ -494,7 +477,7 @@ public class BuildingManager : NetworkBehaviour
                     
                     theArea = makeAreaBigger(vec, groesse);
                     foreach(Vector3Int v in theArea) {
-                        gameManager.addVec(v, player.id);
+                        gameManager.addVec(v, roundManager.id);
                     }
 
 
@@ -515,7 +498,7 @@ public class BuildingManager : NetworkBehaviour
 
                     healthManager.moveBuilding(selectedVector, newAreaBuilding);
 
-                    cmdMoveUnit(selectedVector, vec, liste, player.id);
+                    cmdMoveUnit(selectedVector, vec, liste, roundManager.id);
                     
                     moveBuildingButtonObject.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Move";
                     deselectBuilding();
@@ -678,7 +661,7 @@ public class BuildingManager : NetworkBehaviour
                     tilemapManager.CmdUpdateTilemapBuilding(vec, volkManager.getBuildingID(volk, b), GameObject.Find("GameManager").GetComponent<RoundManager>().id, volkManager.getVolkID(volk).Item2, 0);
 
                 }else {
-                    CMDsetBuildingObject(player.id, volkManager.getVolkID(volk).Item2, volkManager.getBuildingID(volk, b), vec);
+                    CMDsetBuildingObject(roundManager.id, volkManager.getVolkID(volk).Item2, volkManager.getBuildingID(volk, b), vec);
                 }
 
                 
@@ -762,7 +745,7 @@ public class BuildingManager : NetworkBehaviour
 
 //Infoxbox Gameobjekt aktiviert
     public void activatePanel(Vector3Int vec) {
-        player.infoboxBuilding.SetActive(true);
+        infoboxBuilding.SetActive(true);
         //NOTIZÄNDERUNG Leben zu Health damit es auf englisch ist
         GameObject.Find("InGame/Canvas/InfoboxBuilding/Infotext").
         GetComponent<TextMeshProUGUI>().text = 
@@ -789,7 +772,7 @@ public class BuildingManager : NetworkBehaviour
 
         selectedVector = new Vector3Int(mapBehaviour.mapWidth()+2,mapBehaviour.mapHeight()+2,-1); //selected Vektor außerhalb der Map gesetzt, da nicht auf null setzbar
         selectedBuilding = null;
-        player.infoboxBuilding.SetActive(false);
+        infoboxBuilding.SetActive(false);
 
         if(showAreaBool) reloadShowArea();
     }

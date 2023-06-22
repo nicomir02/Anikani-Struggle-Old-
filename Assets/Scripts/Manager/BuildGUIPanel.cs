@@ -46,7 +46,7 @@ public class BuildGUIPanel : NetworkBehaviour
                 ressourcen.Add(r);
                 GameObject.Find("InGame/Canvas/BuildingPanel/"+r.ressName).SetActive(true);
 
-                Building building = GetComponent<Player>().eigenesVolk.getRessourceBuilding(r, 0);
+                Building building = GetComponent<BuildingManager>().volk.getRessourceBuilding(r, 0);
 
                 AnimatedTile animatedtile = (AnimatedTile) building.getTile(GameObject.Find("GameManager").GetComponent<RoundManager>().id-1);
                 sprite = animatedtile.m_AnimatedSprites[0];
@@ -56,7 +56,7 @@ public class BuildGUIPanel : NetworkBehaviour
                 if(!priceRessource.ContainsKey(r)) {
                     priceRessource.Add(r, (r, 0));
                 }else {
-                    for(int i=0; i<GetComponent<Player>().eigenesVolk.getBuildings(1); i++) {
+                    for(int i=0; i<GetComponent<BuildingManager>().volk.getBuildings(1); i++) {
                         howMany += GetComponent<BuildingManager>().howManyBuildings(building);
                     }
                     priceRessource[r] = (r, 1*howMany);
@@ -71,12 +71,12 @@ public class BuildGUIPanel : NetworkBehaviour
         }
 
         howMany = 0;
-
-        for(int i=0; i<GetComponent<Player>().eigenesVolk.getBuildings(2); i++) {
-            howMany += GetComponent<BuildingManager>().howManyBuildings(GetComponent<Player>().eigenesVolk.getBarrackBuilding(i));
+        for(int i=0; i<GetComponent<BuildingManager>().volk.getBuildings(2); i++) {
+            howMany += GetComponent<BuildingManager>().howManyBuildings(GetComponent<BuildingManager>().volk.getBarrackBuilding(i));
         }
+    
 
-        AnimatedTile animated = (AnimatedTile) GetComponent<Player>().eigenesVolk.getBarrackBuilding(0).getTile(GameObject.Find("GameManager").GetComponent<RoundManager>().id-1);
+        AnimatedTile animated = (AnimatedTile) GetComponent<BuildingManager>().volk.getBarrackBuilding(0).getTile(GameObject.Find("GameManager").GetComponent<RoundManager>().id-1);
         sprite = animated.m_AnimatedSprites[0];
 
         priceBarracks = howMany*2;
@@ -145,7 +145,7 @@ public class BuildGUIPanel : NetworkBehaviour
 
             buildingManager.buildInRoundZaehlerInkrement();
 
-            buildingManager.addBuilding(vectors, GetComponent<Player>().eigenesVolk.getBarrackBuilding(0), selectedVector);
+            buildingManager.addBuilding(vectors, GetComponent<BuildingManager>().volk.getBarrackBuilding(0), selectedVector);
 
             Volk volk = GameObject.Find("GameManager").GetComponent<RoundManager>().eigenesVolk;
 
@@ -154,7 +154,7 @@ public class BuildGUIPanel : NetworkBehaviour
                 tilemapManager.CmdUpdateTilemapBuilding(new Vector3Int(selectedVector.x, selectedVector.y, 1), 3, GameObject.Find("GameManager").GetComponent<RoundManager>().id, volkManager.getVolkID(volk).Item2, 0);
 
             }else {
-                GetComponent<BuildingManager>().CMDsetBuildingObject(GetComponent<Player>().id, volkManager.getVolkID(volk).Item2, 2, selectedVector);
+                GetComponent<BuildingManager>().CMDsetBuildingObject(GameObject.Find("GameManager").GetComponent<RoundManager>().id, volkManager.getVolkID(volk).Item2, 2, selectedVector);
             }
 
             buildingManager.addFelderToTeam(selectedVector, 4, GameObject.Find("GameManager").GetComponent<RoundManager>().id);

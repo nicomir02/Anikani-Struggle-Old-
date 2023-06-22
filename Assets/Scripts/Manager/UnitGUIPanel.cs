@@ -10,19 +10,25 @@ public class UnitGUIPanel : MonoBehaviour
 
     public Dictionary<Vector3Int, Unit> trainedUnits = new Dictionary<Vector3Int, Unit>();
     public Dictionary<Vector3Int, int> howLong = new Dictionary<Vector3Int, int>();
+
+    [SerializeField] public GameObject panel;
+
+    [SerializeField] private RoundManager roundManager;
+    [SerializeField] private MapBehaviour mapBehaviour;
     
     private Vector3Int selectedVector;
     
     private bool generated = false;
 
     public void generateGUI(Vector3Int vec) {
+
         generated = true;
 
         selectedVector = vec;
 
         
 
-        GameObject.Find("InGame/Canvas/UnitPanel").SetActive(true);
+        panel.SetActive(true);
         GameObject.Find("GameManager").GetComponent<PauseMenu>().togglePauseOn();
         GameObject.Find("GameManager").GetComponent<PauseMenu>().setCanPause(false);
 
@@ -30,15 +36,15 @@ public class UnitGUIPanel : MonoBehaviour
 
         //Melee Unit
         GameObject.Find("InGame/Canvas/UnitPanel/MeleeUnit").SetActive(true);
-        Unit unit = GetComponent<Player>().eigenesVolk.getUnit(0);
+        Unit unit = roundManager.eigenesVolk.getUnit(0);
 
-        Sprite sprite = unit.getSprite(GameObject.Find("GameManager").GetComponent<RoundManager>().id);
+        Sprite sprite = unit.getSprite(roundManager.id);
         
         GameObject.Find("InGame/Canvas/UnitPanel/MeleeUnit/Button").GetComponent<Button>().onClick.AddListener(ButtonBuyMelee);
         GameObject.Find("InGame/Canvas/UnitPanel/MeleeUnit/Text").GetComponent<TextMeshProUGUI>().text = unit.getName() + "\n\n Price: "+ getPricing(unit)  + " Wood";
         GameObject.Find("InGame/Canvas/UnitPanel/MeleeUnit/Background/Image").GetComponent<Image>().sprite = sprite;
 
-        unit = GetComponent<Player>().eigenesVolk.getUnit(1);
+        unit = roundManager.eigenesVolk.getUnit(1);
         sprite = unit.getSprite(GameObject.Find("GameManager").GetComponent<RoundManager>().id);
 
         GameObject.Find("InGame/Canvas/UnitPanel/SpecialUnit/Button").GetComponent<Button>().onClick.AddListener(ButtonBuySpecial);
@@ -92,7 +98,6 @@ public class UnitGUIPanel : MonoBehaviour
     //Soll wenn Rundenanzahl für trainierte Units bei null ist Unit spawnen lassen
     public void auffuellen() {
         UnitManager unitManager = GetComponent<UnitManager>();
-        Player player = GetComponent<Player>();
 
         List<Vector3Int> removeTemp = new List<Vector3Int>();
 
@@ -120,7 +125,7 @@ public class UnitGUIPanel : MonoBehaviour
 
         Ressource ress = getRessource("Wood");
         
-        Unit a = GetComponent<Player>().eigenesVolk.getUnit(0);
+        Unit a = roundManager.eigenesVolk.getUnit(0);
 
         if(buildingManager.ressourcenZaehlerRechner(ress, getPricing(a))) {
             
@@ -140,7 +145,7 @@ public class UnitGUIPanel : MonoBehaviour
 
         Ressource ress = getRessource("Stone");
         
-        Unit a = GetComponent<Player>().eigenesVolk.getUnit(1);
+        Unit a = roundManager.eigenesVolk.getUnit(1);
         int m = getHowManyTroops(a);
 
         if(m > 17) m = 17;
@@ -156,19 +161,39 @@ public class UnitGUIPanel : MonoBehaviour
 
     //Methode um GUI wieder auszumachen
     public void GUIoff() {
-        generated = false;
-        GameObject.Find("GameManager").GetComponent<PauseMenu>().setCanPause(true);
-        GameObject.Find("GameManager").GetComponent<PauseMenu>().togglePauseOff();
-
         GameObject.Find("InGame/Canvas/UnitPanel/CurTrainedUnit").SetActive(false);
-
-
         GameObject.Find("InGame/Canvas/UnitPanel").SetActive(false);
+
+        
     }
 
     void Update() {
+
+        if(!panel.activeSelf && generated) {
+            generated = false;
+            GameObject.Find("GameManager").GetComponent<PauseMenu>().setCanPause(true);
+            GameObject.Find("GameManager").GetComponent<PauseMenu>().togglePauseOff();
+        }
+        
+        if(Input.GetButtonDown("Troop Recruitment")){
+            if(panel.activeSelf) {
+                GUIoff();
+            }else {
+                foreach(KeyValuePair<Vector3Int,Building> kvp in GetComponent<BuildingManager>().buildingsVec){
+                    if(kvp.Value.getName() == "Barracks"){
+                        mapBehaviour.cameraChange(kvp.Key.x,kvp.Key.y);
+                        GetComponent<BuildingManager>().selectBuilding(kvp.Key);
+                        generateGUI(kvp.Key);
+                        break;
+                    }
+                }
+            }
+        }
+
         if(!generated) return;
-        if(Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.T)) GUIoff();
+        if(Input.GetKeyDown(KeyCode.Escape))  GUIoff();
+
+        
 
         if(Input.GetKeyDown(KeyCode.LeftArrow)) {
             Vector3Int last = new Vector3Int(-1,-1,-1);

@@ -90,9 +90,9 @@ public class Player : NetworkBehaviour
     //Aufrufen von auffüllen Methoden von verschiedenen Klassen
     //Beispielsweise neue Ressourcen, verfügbare Schritte pro Einheit...
     public void auffuellen() {
-        GetComponent<BuildingManager>().auffuellen();
-        GetComponent<UnitManager>().auffuellen();
-        GetComponent<UnitGUIPanel>().auffuellen();
+        GameObject.Find("PlayerManager").GetComponent<BuildingManager>().auffuellen();
+        GameObject.Find("PlayerManager").GetComponent<UnitManager>().auffuellen();
+        GameObject.Find("PlayerManager").GetComponent<UnitGUIPanel>().auffuellen();
     }
     
 }
