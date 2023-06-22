@@ -779,6 +779,7 @@ public class BuildingManager : NetworkBehaviour
 
 //einfügen in das Dictionary für gebaute Gebäude, einfügen in den HealthManager, alle Vektoren des Gebäudes gespeichert(da oft größer als 1 Tile)
     public void addBuilding(List<Vector3Int> vecs, Building b, Vector3Int vec) {
+        GetComponent<AudioSource>().Play();
         vec.z = 1;
         tilemapManager.deleteFelderUnterBuilding(vecs);
         if(buildingsVec.ContainsKey(vec)) {

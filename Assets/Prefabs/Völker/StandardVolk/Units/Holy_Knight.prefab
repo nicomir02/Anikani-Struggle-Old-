@@ -165,7 +165,8 @@ GameObject:
   - component: {fileID: 1036148565679713021}
   - component: {fileID: 1063914310650402722}
   - component: {fileID: 5325680962914264126}
-  - component: {fileID: -7325377220305824720}
+  - component: {fileID: 9190001914051446498}
+  - component: {fileID: 8504130579381959036}
   m_Layer: 0
   m_Name: Holy_Knight
   m_TagString: Untagged
@@ -498,7 +499,22 @@ MonoBehaviour:
   rotationSensitivity: 0.01
   scaleSensitivity: 0.01
   timelineOffset: 0
---- !u!82 &-7325377220305824720
+--- !u!114 &9190001914051446498
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3651839826317333919}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 437345f6922057449aa9d9dbb7e62cf4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  schritte: {fileID: 8300000, guid: 7c626b32ff20dbe4ebf05607e547b0d8, type: 3}
+  kampf1: {fileID: 8300000, guid: 7a04899bfc16d3f4abf13340065b3cb7, type: 3}
+  audioSource: {fileID: 8504130579381959036}
+--- !u!82 &8504130579381959036
 AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -509,7 +525,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0

@@ -204,7 +204,7 @@ public class UnitManager : NetworkBehaviour
 
             int curReichweite = reichweite[selectedVector];
 
-            if (hover.insideField(vec) && distance(selectedVector, vec) <= curReichweite) {
+            if (hover.insideField(vec) && distance(selectedVector, vec) <= curReichweite && selectedVector != vec) {
                 ClearWeite();
                 List<Vector3Int> tempweite = pathfinding.shortestPath();
 
@@ -237,6 +237,8 @@ public class UnitManager : NetworkBehaviour
             }else {
                 ClearWeite();
             }
+        }else {
+            ClearWeite();
         }
     }
 
@@ -401,6 +403,7 @@ public class UnitManager : NetworkBehaviour
 
     public IEnumerator MoveToPosition(Transform transform, List<Vector3Int> positions, float timeToMove, Vector3Int from, int id)
     {
+        transform.GetComponent<AudioUnit>().startAudio(0);
         for(int i=-1; i<positions.Count-1; i++) {
             float elapsedTime = 0f;
             Vector3 startingPosition;
@@ -425,6 +428,7 @@ public class UnitManager : NetworkBehaviour
                 yield return null;
             }
         }
+        transform.GetComponent<AudioUnit>().startAudio(-1);
         transform.gameObject.GetComponent<UnitAnimator>().changeDirection(positions[positions.Count-1], positions[positions.Count-1], id);
         transform.gameObject.GetComponent<SpriteRenderer>().color = Color.white;
     }
@@ -520,6 +524,7 @@ public class UnitManager : NetworkBehaviour
         }
         
 
+
         if(spawnedUnits.ContainsKey(v) || !canAttack(unit, selectedVector, vec)) return;
 
         angriffAusfuehren(selectedVector, vec);
@@ -527,7 +532,10 @@ public class UnitManager : NetworkBehaviour
         reichweite[selectedVector] = 0;
 
         foreach(UnitSprite us in FindObjectsOfType<UnitSprite>()) {
-                if(us.vec.x == selectedVector.x && us.vec.y == selectedVector.y) us.gameObject.transform.GetChild(0).GetComponent<HealthBar>().changeReichweite(0);
+                if(us.vec.x == selectedVector.x && us.vec.y == selectedVector.y) {
+                    us.gameObject.transform.GetChild(0).GetComponent<HealthBar>().changeReichweite(0);
+                    us.GetComponent<AudioUnit>().startAudio(1);
+                }
             }
 
         if(healthManager.isUnit(new Vector3Int(vec.x, vec.y, 2))) {

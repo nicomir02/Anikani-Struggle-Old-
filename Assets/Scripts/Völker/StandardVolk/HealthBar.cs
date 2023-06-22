@@ -51,9 +51,8 @@ public class HealthBar : MonoBehaviour
         }
 
         UnitSprite us = gameObject.transform.parent.GetComponent<UnitSprite>();
-        foreach(UnitManager um in FindObjectsOfType<UnitManager>()) {
-            if(um.GetComponent<Player>().id == us.id) um.syncStillExists(us.vec);
-        }
+
+        if(GameObject.Find("GameManager").GetComponent<RoundManager>().id == us.id) GameObject.Find("PlayerManager").GetComponent<UnitManager>().syncStillExists(us.vec);
 
         slowChangeBar.SetWidth(targetWidth);
     }
