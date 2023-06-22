@@ -6,7 +6,7 @@ using Mirror;
 
 public class TilemapHover : MonoBehaviour
 {
-    private Tilemap tilemap;
+    [SerializeField] private Tilemap tilemap;
     
     private Vector3Int oldVec;
     private Color oldColor;
@@ -21,7 +21,6 @@ public class TilemapHover : MonoBehaviour
     void Start()
     {
         mapSettings = GameObject.Find("GameManager").GetComponent<MapBehaviour>();
-        tilemap = GameObject.Find("Tilemap").GetComponent<Tilemap>();
         //buildingManager = NetworkClient.localPlayer.gameObject;
     }
 

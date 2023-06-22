@@ -1262,7 +1262,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 54.25
+  m_fontSize: 53.5
   m_fontSizeBase: 20
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -5034,7 +5034,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 53.35
+  m_fontSize: 52.6
   m_fontSizeBase: 20
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -6360,7 +6360,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 42.6
+  m_fontSize: 41.85
   m_fontSizeBase: 14
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -27118,6 +27118,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f37a66c29b7feb4a951bcb38082f210, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tilemap: {fileID: 106385659}
   select: {r: 0.5, g: 0.5, b: 0.5, a: 1}
 --- !u!114 &1223650272
 MonoBehaviour:
@@ -42670,7 +42671,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 39.55
+  m_fontSize: 39
   m_fontSizeBase: 14
   m_fontWeight: 400
   m_enableAutoSizing: 1
