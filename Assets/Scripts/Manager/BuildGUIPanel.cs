@@ -128,7 +128,7 @@ public class BuildGUIPanel : NetworkBehaviour
 
     //Methode Button Click Barracks Bau
     public void buyBarracks() {
-        if(!isLocalPlayer) return;
+        //if(!isLocalPlayer) return;
         Ressource ressource = getRessource("Wood");
 
         if(GetComponent<BuildingManager>().ressourcenZaehlerRechner(ressource, priceBarracks)) {

@@ -303,9 +303,13 @@ public class BuildingManager : NetworkBehaviour
         if(Input.GetButtonDown("Troop Recruitment")){
             foreach(KeyValuePair<Vector3Int,Building> kvp in buildingsVec){
                 if(kvp.Value.getName() == "Barracks"){
-                    selectedVector = kvp.Key;
+                    //selectedVector = kvp.Key;
+                    Debug.Log(kvp.Key);
+                    
                     mapBehaviour.cameraChange(kvp.Key.x,kvp.Key.y);
-                    GetComponent<UnitGUIPanel>().generateGUI(buildingvectors[kvp.Key]);
+                    selectBuilding(kvp.Key);
+                    Debug.Log(selectedVector);
+                    openUnitPanel();
  
                 }
             }
@@ -760,7 +764,10 @@ public class BuildingManager : NetworkBehaviour
     public void activatePanel(Vector3Int vec) {
         player.infoboxBuilding.SetActive(true);
         //NOTIZÄNDERUNG Leben zu Health damit es auf englisch ist
-        GameObject.Find("InGame/Canvas/InfoboxBuilding/Infotext").GetComponent<TextMeshProUGUI>().text = "<b><u>Infobox</u></b> \n Name: "+buildingsVec[vec].getName()+"\n Health: " +healthManager.getBuildingLeben(vec);
+        GameObject.Find("InGame/Canvas/InfoboxBuilding/Infotext").
+        GetComponent<TextMeshProUGUI>().text = 
+        "<b><u>Infobox</u></b> \n Name: " + buildingsVec[vec].getName() +
+        "\n Health: " +healthManager.getBuildingLeben(vec);
     }
 
 //Rückgängig machen von selectBuilding Methode/ Rücksetzen der verschiedenen Sachen

@@ -311,8 +311,8 @@ public class UnitManager : NetworkBehaviour
         player.infobox.SetActive(true);
 
         //NOTIZÄNDERUNG Leben zu Health und Angriffswert zu Attackpower und verfügbare Bewegung zu Available Movement damit es auf englishc ist
-        //Variante für engel( da auch heilung) und sonstige
-        if(spawnedUnits[vec].getName() == "Angel"){
+        //Variante für einheiten welche heilen können(z.B. Engel) und sonstige im else
+        if(spawnedUnits[vec].getHeilung() != 0){
             GameObject.Find("InGame/Canvas/Infobox/Infotext").GetComponent<TextMeshProUGUI>().text = "<b><u>Infobox</u></b> \n Name: "+spawnedUnits[vec].getName()+"\n Health: "+ healthManager.getLeben(vec) +" \n Attackpower: "+ spawnedUnits[vec].getAngriffswert() + "\n Healing Amount: " + spawnedUnits[vec].getHeilung() + "\n Available Movement: " +reichweite[vec];
         } else {
             GameObject.Find("InGame/Canvas/Infobox/Infotext").GetComponent<TextMeshProUGUI>().text = "<b><u>Infobox</u></b> \n Name: "+spawnedUnits[vec].getName()+"\n Health: "+ healthManager.getLeben(vec) +" \n Attackpower: "+ spawnedUnits[vec].getAngriffswert() +" \n Available Movement: " +reichweite[vec];
