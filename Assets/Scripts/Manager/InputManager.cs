@@ -14,6 +14,7 @@ public class InputManager : MonoBehaviour
 
     private MapBehaviour mapBehaviour;
     private HealthManager healthManager;
+    //private BuildingManager buildingManager;
 
     [SerializeField] private Tilemap tilemap;
 
@@ -27,6 +28,8 @@ public class InputManager : MonoBehaviour
     void Start() {
         mapBehaviour = GetComponent<MapBehaviour>();
         healthManager = GetComponent<HealthManager>();
+        //buildingManager = GetComponent<BuildingManager>();
+
     }
 
 

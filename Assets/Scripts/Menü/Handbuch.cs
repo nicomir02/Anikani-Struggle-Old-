@@ -181,7 +181,8 @@ public class Handbuch : MonoBehaviour
     }
 
     void Update(){
-        if(Input.GetKeyDown(KeyCode.H)){
+        //old: if(Input.GetKeyDown(KeyCode.H)){
+        if(Input.GetButtonDown("Toggle HelpMenu")){
             if(fullpanel.activeSelf){
                 onClose();
             } else {

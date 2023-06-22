@@ -82,6 +82,11 @@ public class RoundManager : NetworkBehaviour
             nextrounderr.SetActive(false);
         } 
 
+        //falls space-Taste(default) gedrückt wird soll auch Runde beendet werden
+        if(Input.GetButtonDown("Toggle RoundEnd")){
+            OnClick();
+        }
+
         
     }
 

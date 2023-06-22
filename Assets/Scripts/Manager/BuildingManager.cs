@@ -291,18 +291,22 @@ public class BuildingManager : NetworkBehaviour
         }
 
         //ShowArea auch durch tätigen der Keyboard Taste m auswählbar
-        if (Input.GetKeyDown(KeyCode.M)){
+        
+        /*if (Input.GetKeyDown(KeyCode.M)){
+            OnShowAreaClick();
+        }*/
+        if(Input.GetButtonDown("Toggle ShowArea")){
             OnShowAreaClick();
         }
 
-        //Troop Recruitment Menu öffnen (erste Barracke ausgewählt)
-        if(Input.GetKeyDown(KeyCode.T)){
+        //Troop Recruitment Menu öffnen (erste Barracke ausgewählt) mit Taste T default
+        if(Input.GetButtonDown("Troop Recruitment")){
             foreach(KeyValuePair<Vector3Int,Building> kvp in buildingsVec){
                 if(kvp.Value.getName() == "Barracks"){
                     selectedVector = kvp.Key;
                     mapBehaviour.cameraChange(kvp.Key.x,kvp.Key.y);
-                    openUnitPanel();
-
+                    GetComponent<UnitGUIPanel>().generateGUI(buildingvectors[kvp.Key]);
+ 
                 }
             }
         }
