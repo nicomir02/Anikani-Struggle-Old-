@@ -2,8 +2,10 @@ using Mirror;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+
+
 public class HostConnect : MonoBehaviour{
- 
+    
     NetworkManagerAnikani manager;
     public TMP_InputField ip_InputField;
     public GameObject HostConnect_go;
@@ -26,5 +28,5 @@ public class HostConnect : MonoBehaviour{
         manager.StartClient();
         HostConnect_go.SetActive(false);
     }
-
+    
 }
