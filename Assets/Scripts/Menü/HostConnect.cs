@@ -13,8 +13,12 @@ public class HostConnect : MonoBehaviour{
     [SerializeField] private GameObject NetworkCanvas;
 
     [SerializeField] TMP_InputField playername;
+    [SerializeField] private Button Host;
+    [SerializeField] private Button Connect;
 
     void Awake (){
+        Host.onClick.AddListener(HostFunction);
+        Connect.onClick.AddListener(ConnectFunction);
         manager = GetComponent<NetworkManagerAnikani>();
     }
     public void HostFunction(){

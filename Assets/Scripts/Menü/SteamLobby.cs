@@ -24,7 +24,15 @@ public class SteamLobby : MonoBehaviour
     //public Text LobbyNameText;
 
     void Start() {
-        if(!SteamManager.Initialized) {return;}
+        Debug.Log("Start");
+        if(!SteamManager.Initialized) {
+            Debug.Log("Starte mit dem anderen Network Manager");
+            return;
+        }
+
+        HostButton.GetComponent<Button>().onClick.AddListener(HostLobby);
+
+        Debug.Log("Steam initialized");
 
         manager = GetComponent<NetworkManagerAnikani>();
 
@@ -34,6 +42,7 @@ public class SteamLobby : MonoBehaviour
     }
 
     public void HostLobby() {
+        Debug.Log("lobby creation");
         SteamMatchmaking.CreateLobby(ELobbyType.k_ELobbyTypeFriendsOnly, 4);
     }
 
