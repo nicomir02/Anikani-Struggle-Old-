@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Mirror;
 
-public class AudioUnit : MonoBehaviour
+public class AudioUnit : NetworkBehaviour
 {
     [SerializeField] private AudioClip schritte;
     [SerializeField] private AudioClip kampf1;
@@ -10,7 +11,13 @@ public class AudioUnit : MonoBehaviour
 
     [SerializeField] private AudioSource audioSource;
 
+    [Command(requiresAuthority=false)]
     public void startAudio(int clip) {
+        startRPCAudio(clip);
+    }
+
+    [ClientRpc]
+    public void startRPCAudio(int clip) {
         audioSource.Stop();
         if(clip == 0 && schritte != null) { //Schritte Sound
             audioSource.clip = schritte;
