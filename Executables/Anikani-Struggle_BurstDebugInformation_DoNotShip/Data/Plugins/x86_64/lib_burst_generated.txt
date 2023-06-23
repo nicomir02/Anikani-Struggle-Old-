@@ -148,6 +148,7 @@ Library: lib_burst_generated
 --root-assembly=C:\Users\2002n\Anikani-Struggle\Temp\StagingArea\Data\Managed\UnityEngine.SpatialTracking.dll
 --root-assembly=C:\Users\2002n\Anikani-Struggle\Temp\StagingArea\Data\Managed\Unity.VisualScripting.Flow.dll
 --root-assembly=C:\Users\2002n\Anikani-Struggle\Temp\StagingArea\Data\Managed\Unity.Mathematics.dll
+--root-assembly=C:\Users\2002n\Anikani-Struggle\Temp\StagingArea\Data\Managed\Assembly-CSharp.dll
 --root-assembly=C:\Users\2002n\Anikani-Struggle\Temp\StagingArea\Data\Managed\SimpleWebTransport.dll
 --root-assembly=C:\Users\2002n\Anikani-Struggle\Temp\StagingArea\Data\Managed\Mirror.Examples.dll
 --root-assembly=C:\Users\2002n\Anikani-Struggle\Temp\StagingArea\Data\Managed\Unity.VisualScripting.State.dll
@@ -159,7 +160,6 @@ Library: lib_burst_generated
 --root-assembly=C:\Users\2002n\Anikani-Struggle\Temp\StagingArea\Data\Managed\Unity.2D.Animation.Runtime.dll
 --root-assembly=C:\Users\2002n\Anikani-Struggle\Temp\StagingArea\Data\Managed\Unity.TextMeshPro.dll
 --root-assembly=C:\Users\2002n\Anikani-Struggle\Temp\StagingArea\Data\Managed\Unity.Timeline.dll
---root-assembly=C:\Users\2002n\Anikani-Struggle\Temp\StagingArea\Data\Managed\Assembly-CSharp.dll
 --root-assembly=C:\Users\2002n\Anikani-Struggle\Temp\StagingArea\Data\Managed\Mirror.Transports.dll
 --root-assembly=C:\Users\2002n\Anikani-Struggle\Temp\StagingArea\Data\Managed\Telepathy.dll
 --root-assembly=C:\Users\2002n\Anikani-Struggle\Temp\StagingArea\Data\Managed\Unity.2D.SpriteShape.Runtime.dll
@@ -327,6 +327,7 @@ Library: lib_burst_generated
 --root-assembly=C:\Users\2002n\Anikani-Struggle\Temp\StagingArea\Data\Managed\UnityEngine.SpatialTracking.dll
 --root-assembly=C:\Users\2002n\Anikani-Struggle\Temp\StagingArea\Data\Managed\Unity.VisualScripting.Flow.dll
 --root-assembly=C:\Users\2002n\Anikani-Struggle\Temp\StagingArea\Data\Managed\Unity.Mathematics.dll
+--root-assembly=C:\Users\2002n\Anikani-Struggle\Temp\StagingArea\Data\Managed\Assembly-CSharp.dll
 --root-assembly=C:\Users\2002n\Anikani-Struggle\Temp\StagingArea\Data\Managed\SimpleWebTransport.dll
 --root-assembly=C:\Users\2002n\Anikani-Struggle\Temp\StagingArea\Data\Managed\Mirror.Examples.dll
 --root-assembly=C:\Users\2002n\Anikani-Struggle\Temp\StagingArea\Data\Managed\Unity.VisualScripting.State.dll
@@ -338,7 +339,6 @@ Library: lib_burst_generated
 --root-assembly=C:\Users\2002n\Anikani-Struggle\Temp\StagingArea\Data\Managed\Unity.2D.Animation.Runtime.dll
 --root-assembly=C:\Users\2002n\Anikani-Struggle\Temp\StagingArea\Data\Managed\Unity.TextMeshPro.dll
 --root-assembly=C:\Users\2002n\Anikani-Struggle\Temp\StagingArea\Data\Managed\Unity.Timeline.dll
---root-assembly=C:\Users\2002n\Anikani-Struggle\Temp\StagingArea\Data\Managed\Assembly-CSharp.dll
 --root-assembly=C:\Users\2002n\Anikani-Struggle\Temp\StagingArea\Data\Managed\Mirror.Transports.dll
 --root-assembly=C:\Users\2002n\Anikani-Struggle\Temp\StagingArea\Data\Managed\Telepathy.dll
 --root-assembly=C:\Users\2002n\Anikani-Struggle\Temp\StagingArea\Data\Managed\Unity.2D.SpriteShape.Runtime.dll

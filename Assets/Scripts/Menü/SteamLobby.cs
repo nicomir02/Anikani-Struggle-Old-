@@ -16,6 +16,8 @@ public class SteamLobby : MonoBehaviour
     protected Callback<GameLobbyJoinRequested_t> JoinRequest;
     protected Callback<LobbyEnter_t> LobbyEntered;
 
+    [SerializeField] private GameObject networkCanvas;
+
     public ulong CurrentLobbyID;
     private const string HostAddressKey = "HostAddress";
     private NetworkManagerAnikani manager;
@@ -35,6 +37,8 @@ public class SteamLobby : MonoBehaviour
         Debug.Log("Steam initialized");
 
         manager = GetComponent<NetworkManagerAnikani>();
+
+        GetComponent<PlayerInfo>().playername = SteamFriends.GetPersonaName().ToString();
 
         LobbyCreated = Callback<LobbyCreated_t>.Create(OnLobbyCreated);
         JoinRequest = Callback<GameLobbyJoinRequested_t>.Create(OnJoinRequest);
@@ -63,6 +67,7 @@ public class SteamLobby : MonoBehaviour
     }
 
     private void OnLobbyEntered(LobbyEnter_t callback) {
+        networkCanvas.SetActive(false);
         HostButton.SetActive(false);
         CurrentLobbyID = callback.m_ulSteamIDLobby;
         
