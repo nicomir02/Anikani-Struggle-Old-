@@ -9750,6 +9750,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ip_InputField: {fileID: 1833252121}
   HostConnect_go: {fileID: 1234286007}
+  NetworkCanvas: {fileID: 1829248838}
   playername: {fileID: 758021930}
 --- !u!114 &402433581
 MonoBehaviour:
@@ -9776,7 +9777,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b0fecffa3f624585964b0d0eb21b18e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  port: 80
+  port: 12975
   DualMode: 1
   NoDelay: 1
   Interval: 10

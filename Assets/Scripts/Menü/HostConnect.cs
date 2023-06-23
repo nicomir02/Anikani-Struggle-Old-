@@ -10,6 +10,8 @@ public class HostConnect : MonoBehaviour{
     public TMP_InputField ip_InputField;
     public GameObject HostConnect_go;
 
+    [SerializeField] private GameObject NetworkCanvas;
+
     [SerializeField] TMP_InputField playername;
 
     void Awake (){
@@ -20,6 +22,7 @@ public class HostConnect : MonoBehaviour{
         GetComponent<PlayerInfo>().playername = playername.text;
         manager.StartHost();
         HostConnect_go.SetActive(false);
+        NetworkCanvas.SetActive(false);
     }
 
     public void ConnectFunction(){
@@ -27,6 +30,7 @@ public class HostConnect : MonoBehaviour{
         manager.networkAddress = ip_InputField.text;
         manager.StartClient();
         HostConnect_go.SetActive(false);
+        NetworkCanvas.SetActive(false);
     }
     
 }
