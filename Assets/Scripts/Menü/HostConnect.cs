@@ -80,7 +80,7 @@ public class HostConnect : MonoBehaviour{
 
     private void OnLobbyEntered(LobbyEnter_t callback) {
         Debug.Log("test");
-        if(networkCanvas != null) networkCanvas.SetActive(false);
+        networkCanvas.SetActive(false);
         if(HostButton != null) HostButton.SetActive(false);
         CurrentLobbyID = callback.m_ulSteamIDLobby;
         
@@ -90,7 +90,7 @@ public class HostConnect : MonoBehaviour{
         if(NetworkServer.active) {return;} 
 
         manager.networkAddress = SteamMatchmaking.GetLobbyData(new CSteamID(callback.m_ulSteamIDLobby), HostAddressKey);
-
+        
         manager.StartClient();
     }
 
