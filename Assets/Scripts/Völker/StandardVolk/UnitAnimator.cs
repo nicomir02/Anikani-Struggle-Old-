@@ -56,8 +56,9 @@ public class UnitAnimator : NetworkBehaviour
     private bool laeuft = false; //läuft die coroutine
     bool fertigGelaufen = false;
     private Sprite[] zielAnimationen = null;
-    public GameObject fernZiel;
+    private GameObject fernZiel;
     private Vector3Int fernZielPosition;
+    private bool fern;
 
     // Start is called before the first frame update
     void Start()
@@ -70,6 +71,14 @@ public class UnitAnimator : NetworkBehaviour
 
     //Versuch den Bug mit unterschiedlichen Spielerfarben zu lösen bei den Clients
     public void chooseColor(int spielerFarbe) {
+        if(healUnit.Length>0) {
+            fern = true;
+        } else {
+            fern = false;
+        }
+        Debug.Log(fern);
+
+
         if(spielerFarbe == 1) {        //BLAU
             forward = moveForwardBLUE;
             back = moveBackBLUE;
@@ -96,7 +105,7 @@ public class UnitAnimator : NetworkBehaviour
             backAttack = backAttackPURP;
         }
 
-        if(healUnit != null) {
+        if(fern) {
             if(spielerFarbe == 1) {        //BLAU
                 healing = healBLUE;
             } else if(spielerFarbe == 2) { //ROT
@@ -115,16 +124,20 @@ public class UnitAnimator : NetworkBehaviour
     void Update() {
         if(!laeuft){
             fertigGelaufen = false;
-            if(!angriff){
-                int index = Mathf.FloorToInt(Time.time * 4) % animation.Length; //4 für Geschwindigkeit
+            if(!angriff){ //wenn angriff false -> laufanimation
+                int index = Mathf.FloorToInt(Time.time * 4) % animation.Length;
                 spriteRenderer.sprite = animation[index];
-            } else {
-                StartCoroutine(animationOneTime(zielAnimationen));
+            } else { //sonst angriff
+                if(fern) {
+                    StartCoroutine(animationOneTimeFernkampf(zielAnimationen));
+                } else {
+                    StartCoroutine(animationOneTimeNahkampf());
+                }    
                 laeuft = true;
             }  
         }
         if(fertigGelaufen) {
-            StopCoroutine("animationOneTime");
+            StopAllCoroutines();
             laeuft = false;
         }
     }
@@ -196,7 +209,7 @@ public class UnitAnimator : NetworkBehaviour
     [ClientRpc]
     public void angreifenN(Vector3Int player, Vector3Int enemy) {
 
-        if(healBLUE != null) {
+        if(fern) {
             zielAnimationen = attackEnemy;
             if(player.x > enemy.x) {
                 if(gedreht) rumdrehen();
@@ -206,6 +219,8 @@ public class UnitAnimator : NetworkBehaviour
                 if(!gedreht) rumdrehen();
                 animation = attack;
             }
+            enemy.z = 3;
+            fernZiel.transform.position = enemy;
         } else {        
 
             //richtig drehen
@@ -227,10 +242,6 @@ public class UnitAnimator : NetworkBehaviour
             }
         }
 
-        enemy.z = 3;
-        if(fernZiel != null) fernZiel.transform.position = enemy;
-        Debug.Log(enemy);
-
         //Animation einmal abspielen
         angriff = true;
     }
@@ -248,10 +259,8 @@ public class UnitAnimator : NetworkBehaviour
             animation = healing;
         }
 
-        if(healBLUE != null) {
-            zielAnimationen = healUnit;
-        }
-
+        zielAnimationen = healUnit;
+        
         enemy.z = 3;
         fernZiel.transform.position = enemy;
 
@@ -260,30 +269,45 @@ public class UnitAnimator : NetworkBehaviour
 
     //Hilfsfunktion für angreifenN()
     //spielt die Angriffsanimation genau einmal ab und setzt dann wieder idle
-    private IEnumerator animationOneTime(Sprite[] zielAnimation) {
+    private IEnumerator animationOneTimeFernkampf(Sprite[] zielAnimation) {
         int laenge = animation.Length;
         for(int i=0; i<laenge; i++) {
             spriteRenderer.sprite = animation[i];
             yield return new WaitForSeconds(0.04f);
         }
 
-        if(zielAnimation != null && fernZiel != null) {
+        if(zielAnimation != null) {
             Debug.Log(fernZiel);
-            Debug.Log(fernZielPosition);
             spawnZiel();
             fernRenderer = fernZiel.GetComponent<SpriteRenderer>();
             
             for(int i=0; i<laenge; i++) {
-                fernRenderer.sprite = zielAnimation[i];
-                yield return new WaitForSeconds(0.04f);
+            fernRenderer.sprite = zielAnimation[i];
+            yield return new WaitForSeconds(0.04f);
             }
             destroyZiel();
         }
 
         animation = idle;
+        spriteRenderer.sprite = animation[0];
         zielAnimationen = null;
         angriff = false;
-        laeuft = false;
+        fertigGelaufen = false;
+    }
+
+    
+    //angriff nahkampf
+    private IEnumerator animationOneTimeNahkampf() {
+        int laenge = animation.Length;
+        for(int i=0; i<laenge; i++) {
+            spriteRenderer.sprite = animation[i];
+            yield return new WaitForSeconds(0.04f);
+        }
+
+        animation = idle;
+        spriteRenderer.sprite = animation[0];
+        angriff = false;
+        fertigGelaufen = false;
     }
 
     [Command(requiresAuthority = false)]
