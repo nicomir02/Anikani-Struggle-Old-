@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using Steamworks;
-
+using kcp2k;
 
 public class HostConnect : MonoBehaviour{
     
@@ -72,7 +72,9 @@ public class HostConnect : MonoBehaviour{
 
     private void OnJoinRequest(GameLobbyJoinRequested_t callback) {
         if(steamtransport != null) manager.transport = steamtransport;
+        Destroy(hosttransport);
         SteamMatchmaking.JoinLobby(callback.m_steamIDLobby);
+        Debug.Log(manager.transport);
         Debug.Log("Request To Join Lobby");
     }
 

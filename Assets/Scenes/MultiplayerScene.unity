@@ -9712,7 +9712,7 @@ MonoBehaviour:
   sendRate: 60
   offlineScene: 
   onlineScene: 
-  transport: {fileID: 402433582}
+  transport: {fileID: 402433583}
   networkAddress: localhost
   maxConnections: 100
   authenticator: {fileID: 0}
@@ -9758,7 +9758,6 @@ MonoBehaviour:
   CurrentLobbyID: 0
   HostButton: {fileID: 984923805}
   steamtransport: {fileID: 402433583}
-  namensfeld: {fileID: 758021930}
 --- !u!114 &402433581
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9779,7 +9778,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 402433575}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6b0fecffa3f624585964b0d0eb21b18e, type: 3}
   m_Name: 
