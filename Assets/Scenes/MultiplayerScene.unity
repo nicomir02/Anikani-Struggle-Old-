@@ -9671,7 +9671,6 @@ GameObject:
   - component: {fileID: 402433582}
   - component: {fileID: 402433580}
   - component: {fileID: 402433583}
-  - component: {fileID: 402433584}
   m_Layer: 0
   m_Name: NetworkManager
   m_TagString: Untagged
@@ -9751,11 +9750,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ip_InputField: {fileID: 1833252121}
   HostConnect_go: {fileID: 1234286007}
-  transport: {fileID: 402433582}
-  NetworkCanvas: {fileID: 1829248838}
+  hosttransport: {fileID: 0}
+  networkCanvas: {fileID: 0}
   playername: {fileID: 758021930}
   Host: {fileID: 1234286009}
   Connect: {fileID: 1928855574}
+  CurrentLobbyID: 0
+  HostButton: {fileID: 984923805}
+  steamtransport: {fileID: 402433583}
+  namensfeld: {fileID: 758021930}
 --- !u!114 &402433581
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9816,23 +9819,6 @@ MonoBehaviour:
   AllowSteamRelay: 1
   UseNextGenSteamNetworking: 1
   SteamUserID: 0
---- !u!114 &402433584
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 402433575}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d4c49fbede1238347b8b4eeb147fec3a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  networkCanvas: {fileID: 1829248838}
-  CurrentLobbyID: 0
-  HostButton: {fileID: 984923805}
-  transport: {fileID: 402433583}
-  namensfeld: {fileID: 758021930}
 --- !u!1 &418410177
 GameObject:
   m_ObjectHideFlags: 0

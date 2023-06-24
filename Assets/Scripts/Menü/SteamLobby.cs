@@ -72,6 +72,7 @@ public class SteamLobby : MonoBehaviour
     }
 
     private void OnJoinRequest(GameLobbyJoinRequested_t callback) {
+        if(transport != null) manager.transport = transport;
         SteamMatchmaking.JoinLobby(callback.m_steamIDLobby);
         Debug.Log("Request To Join Lobby");
     }
