@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-
+using TMPro;
 
 using Mirror;
 using Steamworks;
@@ -22,30 +23,40 @@ public class SteamLobby : MonoBehaviour
     private const string HostAddressKey = "HostAddress";
     private NetworkManagerAnikani manager;
 
-    public GameObject HostButton;
+    [SerializeField] private GameObject HostButton;
+
+    [SerializeField] private Transport transport;
+
+    [SerializeField] private TMP_InputField namensfeld;
+
     //public Text LobbyNameText;
 
     void Start() {
         Debug.Log("Start");
+        
         if(!SteamManager.Initialized) {
-            Debug.Log("Starte mit dem anderen Network Manager");
+            Debug.Log("Steam ist nicht initialisiert");
             return;
+        }else {
+            
+            HostButton.GetComponent<Button>().onClick.AddListener(HostLobby);
+
+            Debug.Log("Steam initialized");
+
+            manager = GetComponent<NetworkManagerAnikani>();
+
+            GetComponent<PlayerInfo>().playername = SteamFriends.GetPersonaName().ToString();
+            namensfeld.text = GetComponent<PlayerInfo>().playername;
+            namensfeld.readOnly = true;
+
+            LobbyCreated = Callback<LobbyCreated_t>.Create(OnLobbyCreated);
+            JoinRequest = Callback<GameLobbyJoinRequested_t>.Create(OnJoinRequest);
+            LobbyEntered = Callback<LobbyEnter_t>.Create(OnLobbyEntered);
         }
-
-        HostButton.GetComponent<Button>().onClick.AddListener(HostLobby);
-
-        Debug.Log("Steam initialized");
-
-        manager = GetComponent<NetworkManagerAnikani>();
-
-        GetComponent<PlayerInfo>().playername = SteamFriends.GetPersonaName().ToString();
-
-        LobbyCreated = Callback<LobbyCreated_t>.Create(OnLobbyCreated);
-        JoinRequest = Callback<GameLobbyJoinRequested_t>.Create(OnJoinRequest);
-        LobbyEntered = Callback<LobbyEnter_t>.Create(OnLobbyEntered);
     }
 
     public void HostLobby() {
+        manager.transport = transport;
         Debug.Log("lobby creation");
         SteamMatchmaking.CreateLobby(ELobbyType.k_ELobbyTypeFriendsOnly, 4);
     }
@@ -62,13 +73,15 @@ public class SteamLobby : MonoBehaviour
     }
 
     private void OnJoinRequest(GameLobbyJoinRequested_t callback) {
+        manager.transport = transport;
         SteamMatchmaking.JoinLobby(callback.m_steamIDLobby);
         Debug.Log("Request To Join Lobby");
     }
 
     private void OnLobbyEntered(LobbyEnter_t callback) {
-        networkCanvas.SetActive(false);
-        HostButton.SetActive(false);
+        Debug.Log("test");
+        if(networkCanvas != null) networkCanvas.SetActive(false);
+        if(HostButton != null) HostButton.SetActive(false);
         CurrentLobbyID = callback.m_ulSteamIDLobby;
         
         //LobbyNameText.gameObject.SetActive(true);

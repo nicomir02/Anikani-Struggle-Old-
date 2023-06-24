@@ -5,6 +5,7 @@ using TMPro;
 using UnityEngine.UI;
 using Mirror;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 
 public class LobbyManager : NetworkBehaviour
 {
@@ -172,8 +173,6 @@ public class LobbyManager : NetworkBehaviour
         }else if (NetworkClient.isConnected) {
             networkManager.StopClient();
         }
-        
-            
     }
 
 

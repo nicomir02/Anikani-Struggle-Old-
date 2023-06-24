@@ -11,4 +11,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/MultiplayerScene.unity
     guid: 68cd55f78009e6046af2091a763a0daa
+  - enabled: 1
+    path: Assets/Scenes/NewSceneSelection/SteamLobby.unity
+    guid: 8a680faa45ce59f449eb939e4fd13996
+  - enabled: 1
+    path: Assets/Scenes/Testszenen/Test.unity
+    guid: 28985cbaf1e4fc348b9d7c205a51ff63
   m_configObjects: {}

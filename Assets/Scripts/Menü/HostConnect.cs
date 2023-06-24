@@ -2,6 +2,7 @@ using Mirror;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using Steamworks;
 
 
 public class HostConnect : MonoBehaviour{
@@ -9,6 +10,8 @@ public class HostConnect : MonoBehaviour{
     NetworkManagerAnikani manager;
     public TMP_InputField ip_InputField;
     public GameObject HostConnect_go;
+
+    [SerializeField] private Transport transport;
 
     [SerializeField] private GameObject NetworkCanvas;
 
@@ -20,9 +23,11 @@ public class HostConnect : MonoBehaviour{
         Host.onClick.AddListener(HostFunction);
         Connect.onClick.AddListener(ConnectFunction);
         manager = GetComponent<NetworkManagerAnikani>();
+        
     }
     public void HostFunction(){
         manager.playername = playername.text;
+        manager.transport = transport;
         GetComponent<PlayerInfo>().playername = playername.text;
         manager.StartHost();
         HostConnect_go.SetActive(false);
@@ -30,6 +35,7 @@ public class HostConnect : MonoBehaviour{
     }
 
     public void ConnectFunction(){
+        manager.transport = transport;
         GetComponent<PlayerInfo>().playername = playername.text;
         manager.networkAddress = ip_InputField.text;
         manager.StartClient();

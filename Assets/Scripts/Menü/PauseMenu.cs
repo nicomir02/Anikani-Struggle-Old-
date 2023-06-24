@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Mirror;
 using System.Threading;
+using UnityEngine.SceneManagement;
 
 public class PauseMenu : MonoBehaviour
 {
@@ -66,7 +67,7 @@ public class PauseMenu : MonoBehaviour
     }
 
     public void buttonBackToMainMenu() {
-        NetworkClient.localPlayer.GetComponent<BuildingManager>().disqualifyPlayer();
+        GameObject.Find("PlayerManager").GetComponent<BuildingManager>().disqualifyPlayer();
         //NetworkClient.localPlayer.GetComponent<UnitManager>().deleteAllUnits();
         StartCoroutine(disconnectDelay());
 
@@ -76,15 +77,13 @@ public class PauseMenu : MonoBehaviour
 //benötigter delay, damit alles fertig geladen ist
     IEnumerator disconnectDelay()
     {
-        yield return new WaitForSeconds(0.001f);
+        yield return new WaitForSeconds(0.01f);
 
         if (NetworkServer.active && NetworkClient.isConnected) {
             networkManager.StopHost();
         }else if (NetworkClient.isConnected) {
             networkManager.StopClient();
         }
-        
-            
     }
 
 //Setter für isPaused Variable

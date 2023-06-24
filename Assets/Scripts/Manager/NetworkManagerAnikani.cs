@@ -3,12 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
 using UnityEngine.SceneManagement;
+using Steamworks;
+using Mirror.FizzySteam;
 
 public class NetworkManagerAnikani : NetworkManager
 {   
-    //Benötigt um Spieler hinzufügen zu können
-    [SerializeField] Transform start;
-    
     public string playername;
 
     //Stop Server Methode
@@ -31,15 +30,25 @@ public class NetworkManagerAnikani : NetworkManager
         base.OnStartClient();
     }
 
-    public override void OnStopClient() {
+    public override void OnStopClient()
+    {
+        base.OnStopClient();
         SceneManager.LoadScene("Menü");
-
         Destroy(gameObject);
+        NetworkClient.Disconnect();
+    }
+
+    public override void OnStopHost()
+    {
+        base.OnStopHost();
+        SceneManager.LoadScene("Menü");
+        Destroy(gameObject);
+        NetworkClient.Disconnect();
     }
 
     //Auf Server Spieler hinzufügen
     public override void OnServerAddPlayer(NetworkConnectionToClient conn) {
-        GameObject player = Instantiate(playerPrefab, start.position, start.rotation);
+        GameObject player = Instantiate(playerPrefab, transform.position, transform.rotation);
         player.GetComponent<Player>().name = playername;
         player.name = playername;
         NetworkServer.AddPlayerForConnection(conn, player);

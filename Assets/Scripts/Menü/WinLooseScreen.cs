@@ -61,7 +61,5 @@ public class WinLooseScreen : NetworkBehaviour
         }else if (NetworkClient.isConnected) {
             networkManager.StopClient();
         }
-        
-            
     }
 }
