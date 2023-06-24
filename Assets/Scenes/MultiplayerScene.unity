@@ -3095,7 +3095,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 50.85
+  m_fontSize: 54.85
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -9712,7 +9712,7 @@ MonoBehaviour:
   sendRate: 60
   offlineScene: 
   onlineScene: 
-  transport: {fileID: 402433583}
+  transport: {fileID: 402433582}
   networkAddress: localhost
   maxConnections: 100
   authenticator: {fileID: 0}
@@ -45463,7 +45463,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1897877122}
   m_HandleRect: {fileID: 1897877121}
   m_Direction: 2
-  m_Value: 0
+  m_Value: 1
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:

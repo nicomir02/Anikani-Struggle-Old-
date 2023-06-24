@@ -4,6 +4,7 @@ using UnityEngine.UI;
 using TMPro;
 using Steamworks;
 using kcp2k;
+using System.Collections;
 
 public class HostConnect : MonoBehaviour{
     
@@ -38,7 +39,7 @@ public class HostConnect : MonoBehaviour{
             return;
         }else {
             manager = GetComponent<NetworkManagerAnikani>();
-            if(steamtransport != null) manager.transport = steamtransport;
+            //if(steamtransport != null) manager.transport = steamtransport;
 
             HostButton.GetComponent<Button>().onClick.AddListener(HostLobby);
 
@@ -52,6 +53,10 @@ public class HostConnect : MonoBehaviour{
             JoinRequest = Callback<GameLobbyJoinRequested_t>.Create(OnJoinRequest);
             LobbyEntered = Callback<LobbyEnter_t>.Create(OnLobbyEntered);
         }
+
+        Host.onClick.AddListener(HostFunction);
+        Connect.onClick.AddListener(ConnectFunction);
+        manager = GetComponent<NetworkManagerAnikani>();
     }
 
     public void HostLobby() {
@@ -80,7 +85,7 @@ public class HostConnect : MonoBehaviour{
 
     private void OnLobbyEntered(LobbyEnter_t callback) {
         Debug.Log("test");
-        networkCanvas.SetActive(false);
+        if(networkCanvas != null) networkCanvas.SetActive(false);
         if(HostButton != null) HostButton.SetActive(false);
         CurrentLobbyID = callback.m_ulSteamIDLobby;
         
@@ -94,15 +99,10 @@ public class HostConnect : MonoBehaviour{
         manager.StartClient();
     }
 
-    void Awake (){
-        Host.onClick.AddListener(HostFunction);
-        Connect.onClick.AddListener(ConnectFunction);
-        manager = GetComponent<NetworkManagerAnikani>();
-    }
-
     public void HostFunction(){
         manager.playername = playername.text;
         manager.transport = hosttransport;
+        Destroy(steamtransport);
         GetComponent<PlayerInfo>().playername = playername.text;
         manager.StartHost();
         HostConnect_go.SetActive(false);
@@ -110,12 +110,28 @@ public class HostConnect : MonoBehaviour{
     }
 
     public void ConnectFunction(){
+        Debug.Log("test");
+
+        if(manager.transport != null && manager.transport != hosttransport) {
+            Destroy(manager.transport);
+            Debug.Log(manager.transport);
+        }
         manager.transport = hosttransport;
+        Debug.Log(ip_InputField.text);
+        
+        
         GetComponent<PlayerInfo>().playername = playername.text;
         manager.networkAddress = ip_InputField.text;
         manager.StartClient();
         HostConnect_go.SetActive(false);
         networkCanvas.SetActive(false);
+
+        //StartCoroutine(waitAndConnect());
+
     }
     
+    /*public IEnumerator waitAndConnect() {
+        yield return new WaitForSecondsRealtime(0.01f);
+        
+    }*/
 }

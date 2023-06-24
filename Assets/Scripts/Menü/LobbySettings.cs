@@ -77,4 +77,26 @@ public class LobbySettings : NetworkBehaviour
     void onSettings() {
         settingsPanel.SetActive(true);
     }
+
+    void getCurValues() {
+        //x
+        int option = 0;
+        foreach(TMP_Dropdown.OptionData optiondata in xValue.options) {
+            if(int.Parse(optiondata.text) == mapBehaviour.width) {
+                break;
+            }
+            option++;
+        }
+        xValue.value = option;
+
+        //y
+        option = 0;
+        foreach(TMP_Dropdown.OptionData optiondata in xValue.options) {
+            if(int.Parse(optiondata.text) == mapBehaviour.width) {
+                break;
+            }
+            option++;
+        }
+        yValue.value = option;
+    }
 }
