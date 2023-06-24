@@ -71,7 +71,7 @@ public class HostConnect : MonoBehaviour{
         isSteam = !isSteam;
         if(isSteam) {
             toggleSteamText.text = "Steam is active";
-            manager.transport = hosttransport;
+            manager.transport = steamtransport;
 
             ip_InputField.gameObject.SetActive(false);
             HostConnect_go.gameObject.SetActive(false);
@@ -80,7 +80,7 @@ public class HostConnect : MonoBehaviour{
             HostButton.SetActive(true);
         }else {
             toggleSteamText.text = "Steam not active";
-            manager.transport = steamtransport;
+            manager.transport = hosttransport;
 
             ip_InputField.gameObject.SetActive(true);
             HostConnect_go.gameObject.SetActive(true);
@@ -108,8 +108,6 @@ public class HostConnect : MonoBehaviour{
     }
 
     private void OnJoinRequest(GameLobbyJoinRequested_t callback) {
-        if(steamtransport != null) manager.transport = steamtransport;
-        Destroy(hosttransport);
         SteamMatchmaking.JoinLobby(callback.m_steamIDLobby);
         Debug.Log(manager.transport);
         Debug.Log("Request To Join Lobby");
@@ -133,8 +131,6 @@ public class HostConnect : MonoBehaviour{
 
     public void HostFunction(){
         manager.playername = playername.text;
-        manager.transport = hosttransport;
-        Destroy(steamtransport);
         GetComponent<PlayerInfo>().playername = playername.text;
         manager.StartHost();
         HostConnect_go.SetActive(false);
@@ -143,12 +139,6 @@ public class HostConnect : MonoBehaviour{
 
     public void ConnectFunction(){
         Debug.Log("test");
-
-        if(manager.transport != null && manager.transport != hosttransport) {
-            Destroy(manager.transport);
-            Debug.Log(manager.transport);
-        }
-        manager.transport = hosttransport;
         Debug.Log(ip_InputField.text);
         
         
