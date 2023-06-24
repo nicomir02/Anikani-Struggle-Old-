@@ -38,12 +38,12 @@ public class SteamLobby : MonoBehaviour
             Debug.Log("Steam ist nicht initialisiert");
             return;
         }else {
-            
+            manager = GetComponent<NetworkManagerAnikani>();
+            if(transport != null) manager.transport = transport;
+
             HostButton.GetComponent<Button>().onClick.AddListener(HostLobby);
 
             Debug.Log("Steam initialized");
-
-            manager = GetComponent<NetworkManagerAnikani>();
 
             GetComponent<PlayerInfo>().playername = SteamFriends.GetPersonaName().ToString();
             namensfeld.text = GetComponent<PlayerInfo>().playername;
@@ -56,7 +56,6 @@ public class SteamLobby : MonoBehaviour
     }
 
     public void HostLobby() {
-        manager.transport = transport;
         Debug.Log("lobby creation");
         SteamMatchmaking.CreateLobby(ELobbyType.k_ELobbyTypeFriendsOnly, 4);
     }
@@ -64,7 +63,7 @@ public class SteamLobby : MonoBehaviour
     private void OnLobbyCreated(LobbyCreated_t callback) {
         if(callback.m_eResult != EResult.k_EResultOK) {return;}
         Debug.Log("Lobby created");
-        manager.StartHost();
+        GetComponent<NetworkManagerAnikani>().StartHost();
 
         SteamMatchmaking.SetLobbyData(new CSteamID(callback.m_ulSteamIDLobby), HostAddressKey, SteamUser.GetSteamID().ToString());
 
@@ -73,7 +72,6 @@ public class SteamLobby : MonoBehaviour
     }
 
     private void OnJoinRequest(GameLobbyJoinRequested_t callback) {
-        manager.transport = transport;
         SteamMatchmaking.JoinLobby(callback.m_steamIDLobby);
         Debug.Log("Request To Join Lobby");
     }
