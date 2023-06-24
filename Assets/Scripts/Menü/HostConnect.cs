@@ -31,11 +31,17 @@ public class HostConnect : MonoBehaviour{
 
     [SerializeField] private Transport steamtransport;
 
+    [SerializeField] private Button toggleSteam;
+    [SerializeField] private TextMeshProUGUI toggleSteamText;
+    private bool isSteam = false;
+
     void Start() {
         Debug.Log("Start");
         
         if(!SteamManager.Initialized) {
             Debug.Log("Steam ist nicht initialisiert");
+            toggleSteam.gameObject.SetActive(false);
+            HostButton.gameObject.SetActive(false);
             return;
         }else {
             manager = GetComponent<NetworkManagerAnikani>();
@@ -52,11 +58,37 @@ public class HostConnect : MonoBehaviour{
             LobbyCreated = Callback<LobbyCreated_t>.Create(OnLobbyCreated);
             JoinRequest = Callback<GameLobbyJoinRequested_t>.Create(OnJoinRequest);
             LobbyEntered = Callback<LobbyEnter_t>.Create(OnLobbyEntered);
+            toggleSteam.onClick.AddListener(onSteamToggle);
+            onSteamToggle();
         }
 
         Host.onClick.AddListener(HostFunction);
         Connect.onClick.AddListener(ConnectFunction);
         manager = GetComponent<NetworkManagerAnikani>();
+    }
+
+    public void onSteamToggle() {
+        isSteam = !isSteam;
+        if(isSteam) {
+            toggleSteamText.text = "Steam is active";
+            manager.transport = hosttransport;
+
+            ip_InputField.gameObject.SetActive(false);
+            HostConnect_go.gameObject.SetActive(false);
+            Connect.gameObject.SetActive(false);
+
+            HostButton.SetActive(true);
+        }else {
+            toggleSteamText.text = "Steam not active";
+            manager.transport = steamtransport;
+
+            ip_InputField.gameObject.SetActive(true);
+            HostConnect_go.gameObject.SetActive(true);
+            Connect.gameObject.SetActive(true);
+
+            HostButton.SetActive(false);
+        }
+        
     }
 
     public void HostLobby() {
