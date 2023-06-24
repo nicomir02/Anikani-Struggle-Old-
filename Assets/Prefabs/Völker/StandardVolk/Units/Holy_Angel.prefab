@@ -863,7 +863,6 @@ MonoBehaviour:
   - {fileID: -1417580803, guid: c701a336b62b8f6459ebee752a175124, type: 3}
   - {fileID: 1860384910, guid: c701a336b62b8f6459ebee752a175124, type: 3}
   - {fileID: 457197315, guid: c701a336b62b8f6459ebee752a175124, type: 3}
-  fernZiel: {fileID: 1216110027038511336, guid: 4f067a949cecec141b7aa9ed26bba22c, type: 3}
 --- !u!114 &-4083419351919174216
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -925,7 +924,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 437345f6922057449aa9d9dbb7e62cf4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0
   schritte: {fileID: 8300000, guid: 8257c38578f5da648aea3b7660721316, type: 3}
+  kampf1: {fileID: 8300000, guid: 1b0bc0db6d2c2e546a0658f86eff15d4, type: 3}
   audioSource: {fileID: 5449640872657218163}
 --- !u!82 &5449640872657218163
 AudioSource:

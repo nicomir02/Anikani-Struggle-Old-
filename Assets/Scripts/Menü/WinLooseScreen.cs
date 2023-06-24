@@ -23,6 +23,7 @@ public class WinLooseScreen : NetworkBehaviour
         winLooseCanvas.SetActive(true);
         winLooseCanvasBackground.color = Color.red;
         winLooseCanvasText.text = "You loose";
+        transform.GetComponent<AudioUnit>().startAudio(1); //1 ist loose
         mainMenu.onClick.AddListener(goMainMenu);
         spectateButton.onClick.AddListener(spectate);
     }
@@ -42,6 +43,7 @@ public class WinLooseScreen : NetworkBehaviour
         winLooseCanvas.SetActive(true);
         winLooseCanvasBackground.color = Color.green;
         winLooseCanvasText.text = "You win";
+        transform.GetComponent<AudioUnit>().startAudio(0); // 0 ist win
         mainMenu.onClick.AddListener(goMainMenu);
         spectateButton.onClick.AddListener(spectate);
     }
