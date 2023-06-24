@@ -46,6 +46,11 @@ public class NetworkManagerAnikani : NetworkManager
         NetworkClient.Disconnect();
     }
 
+    public void changeTransport(Transport t) {
+        transport = t;
+        Transport.active = t;
+    }
+
     //Auf Server Spieler hinzufügen
     public override void OnServerAddPlayer(NetworkConnectionToClient conn) {
         GameObject player = Instantiate(playerPrefab, transform.position, transform.rotation);

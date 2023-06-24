@@ -37,16 +37,15 @@ public class HostConnect : MonoBehaviour{
 
     void Start() {
         Debug.Log("Start");
-        
+        manager = GetComponent<NetworkManagerAnikani>();
         if(!SteamManager.Initialized) {
             Debug.Log("Steam ist nicht initialisiert");
             toggleSteam.gameObject.SetActive(false);
             HostButton.gameObject.SetActive(false);
             return;
         }else {
-            manager = GetComponent<NetworkManagerAnikani>();
             //if(steamtransport != null) manager.transport = steamtransport;
-
+            
             HostButton.GetComponent<Button>().onClick.AddListener(HostLobby);
 
             Debug.Log("Steam initialized");
@@ -60,18 +59,18 @@ public class HostConnect : MonoBehaviour{
             LobbyEntered = Callback<LobbyEnter_t>.Create(OnLobbyEntered);
             toggleSteam.onClick.AddListener(onSteamToggle);
             onSteamToggle();
+            onSteamToggle();
         }
 
         Host.onClick.AddListener(HostFunction);
         Connect.onClick.AddListener(ConnectFunction);
-        manager = GetComponent<NetworkManagerAnikani>();
     }
 
     public void onSteamToggle() {
         isSteam = !isSteam;
         if(isSteam) {
             toggleSteamText.text = "Steam is active";
-            manager.transport = steamtransport;
+            manager.changeTransport(steamtransport);
 
             ip_InputField.gameObject.SetActive(false);
             HostConnect_go.gameObject.SetActive(false);
@@ -80,15 +79,18 @@ public class HostConnect : MonoBehaviour{
             HostButton.SetActive(true);
         }else {
             toggleSteamText.text = "Steam not active";
-            manager.transport = hosttransport;
-
-            ip_InputField.gameObject.SetActive(true);
-            HostConnect_go.gameObject.SetActive(true);
-            Connect.gameObject.SetActive(true);
-
-            HostButton.SetActive(false);
+            deactivateSteam();
         }
-        
+    }
+
+    public void deactivateSteam() {
+        manager.changeTransport(hosttransport);
+
+        ip_InputField.gameObject.SetActive(true);
+        HostConnect_go.gameObject.SetActive(true);
+        Connect.gameObject.SetActive(true);
+
+        HostButton.SetActive(false);
     }
 
     public void HostLobby() {
