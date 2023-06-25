@@ -167,7 +167,7 @@ GameObject:
   - component: {fileID: 5325680962914264126}
   - component: {fileID: 3192946156482361520}
   m_Layer: 0
-  m_Name: Holy_Knight
+  m_Name: Wanderer_Nomad
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

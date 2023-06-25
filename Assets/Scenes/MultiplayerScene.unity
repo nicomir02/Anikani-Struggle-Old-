@@ -440,10 +440,11 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: The Wanderers have never really settled down anywhere and can pack up and
-    move their MainBuilding and Barracks to other places on the map, where they can
-    find better ressources or escape to from enemy pursuit. Furthermore Troop recruitment
-    is sped up in any Barrack that is placed in the vicinity of the MainBuilding.
+  m_text: The Ancient Wanderers have never really settled down anywhere and can pack
+    up and move their MainBuilding and Barracks to other places on the map, where
+    they can find better ressources or escape to from enemy pursuit. Furthermore
+    Troop recruitment is sped up in any Barrack that is placed in the vicinity of
+    the MainBuilding.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1262,7 +1263,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 65.45
+  m_fontSize: 41.25
   m_fontSizeBase: 20
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -2483,11 +2484,12 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_text: The Angel - The long and almost fanatic belief in the conept of Light managed
-    to slowly transform several of the Holy Tribe into Angels. These Angels were
-    unlike the warrior angels by the former God of Light, as their own attackpower
-    is quite minimal, however due to their belief they can now heal friendly units
-    every turn. Their long range attack can also be quite useful in certain situations,
-    but primarily they fly around and help out their own troops during wartime.
+    to slowly transform several of the Order of Seraphs Tribe into Angels. These
+    Angels were unlike the warrior angels by the former God of Light, as their own
+    attackpower is quite minimal, however due to their belief they can now heal friendly
+    units every turn. Their long range attack can also be quite useful in certain
+    situations, but primarily they fly around and help out their own troops during
+    wartime.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -5034,7 +5036,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 61.05
+  m_fontSize: 47.95
   m_fontSizeBase: 20
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -6506,7 +6508,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 53.9
+  m_fontSize: 29.7
   m_fontSizeBase: 14
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -7193,10 +7195,10 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_text: The Stone Cutter - This is another Ressource gathering Building of the
-    Holy Tribe and can mine stone from rock formations in the world. Any stone under
-    the position this building is built at, will be mined continuously every round
-    form that point on, so find denser rock formations to build these Stone Cutters
-    at for the best effect.
+    Order of Seraphs and can mine stone from rock formations in the world. Any stone
+    under the position this building is built at, will be mined continuously every
+    round form that point on, so find denser rock formations to build these Stone
+    Cutters at for the best effect.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -7719,10 +7721,11 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: The ? - This is another Ressource gathering Building of the Wanderer Tribe
-    and can mine stone from rock formations in the world. Any stone under the position
-    this building is built at, will be mined continuously every round form that point
-    on, so find denser rock formations to build these ? at for the best effect.
+  m_text: The ? - This is another Ressource gathering Building of the Ancient Wanderers
+    Tribe and can mine stone from rock formations in the world. Any stone under the
+    position this building is built at, will be mined continuously every round form
+    that point on, so find denser rock formations to build these ? at for the best
+    effect.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -8879,21 +8882,25 @@ MonoBehaviour:
     Buildings progressively get more expensive.
 
     You can only build new Buildings
-    inside your own claimed Area.
+    inside your own claimed Area. The bigger the area, the more you can see as your
+    are uncovers the fog of war covering the map.
 
-    Building new Buildings as well as using Area-Expansions,
-    you can claim more area for yourself.
+    Moving your units also uncovers
+    parts of the map and removes the fog of war in the areas the units move in.
 
-    Troops take time to be recruited in
-    Barracks and also cost ressources in the first place.
+    Building
+    new Buildings as well as using Area-Expansions, you can claim more area for yourself.
 
-    Troops only have a
-    limited set of steps they can take each round and an attack on an opponent instantly
-    disallows  all further available actions for that unit.
+    Troops
+    take time to be recruited in Barracks and also cost ressources in the first place.
 
-    Different tribes
-    have different strengths and weaknesses, as well as differences in the abilities
-    of their troops among other things.'
+    Troops
+    only have a limited set of steps they can take each round and an attack on an
+    opponent instantly disallows  all further available actions for that unit.
+
+    Different
+    tribes have different strengths and weaknesses, as well as differences in the
+    abilities of their troops among other things.'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -11824,11 +11831,11 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'The ? - This is the MainBuilding of the Wanderer Tribe and has always
-    been able to move around quickly to find better ressources or stretegic positions
-    to fight enemies from. Being on the move has always been the strength of the
-    Wanderer Tribe, but be careful where you try to settle down, even if it is only
-    temporary, as Ressources do need time to be transported to this building. '
+  m_text: 'The ? - This is the MainBuilding of the Ancient Wanderers Tribe and has
+    always been able to move around quickly to find better ressources or stretegic
+    positions to fight enemies from. Being on the move has always been the strength
+    of the Ancient Wanderers, but be careful where you try to settle down, even if
+    it is only temporary, as Ressources do need time to be transported to this building. '
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -16128,6 +16135,8 @@ MonoBehaviour:
     Expand your Territory and move your army towards
     your enemies.
 
+    Uncover the fog of war hiding the map!
+
 '
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -17828,7 +17837,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 55.35
+  m_fontSize: 48.05
   m_fontSizeBase: 20
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -18193,11 +18202,11 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: The Shepherd - This Closequarters Combat Unit is devoted to wandering the
+  m_text: The Nomad - This Closequarters Combat Unit is devoted to wandering the
     lands and gaining strength and power from observing nature and new sights. Usually
-    the Shepherd uses his trusty staff to deal devastating damage to opponents, but
+    the Nomad uses his trusty staff to deal devastating damage to opponents, but
     in return his own defense and health are quite low. Thanks to his decades of
-    wandering around, the Shepherd can move very far each turn.
+    wandering around, the Nomad can move very far each turn.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -20798,9 +20807,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Holy
+  m_text: 'The Order of Seraphs
 
-    Wanderer'
+    The Ancient Wanderers'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -29641,7 +29650,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 43.05
+  m_fontSize: 44.4
   m_fontSizeBase: 20
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -33099,13 +33108,13 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: The ....... - This Building is there to recruit new troops in the Wanderer
-    Tribe and ?, ? and ? can be recrutied here. ? can be recruited in ? rounds for
-    ? ?, while ? need ? rounds and ? ? to recruit successfully.Finally ? needs ?
-    rounds and ? ? to recruit. Find yourself a nearby position to your MainBuilding
-    to build these ?, as then the necessary time needed for recruitment is sped up.
-    A great feature of this building is that it can be moved anytime out of stretegic
-    considerations.
+  m_text: The ....... - This Building is there to recruit new troops in the Ancient
+    Wanderer Tribe and ?, ? and ? can be recrutied here. ? can be recruited in ?
+    rounds for ? ?, while ? need ? rounds and ? ? to recruit successfully.Finally
+    ? needs ? rounds and ? ? to recruit. Find yourself a nearby position to your
+    MainBuilding to build these ?, as then the necessary time needed for recruitment
+    is sped up. A great feature of this building is that it can be moved anytime
+    out of stretegic considerations.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -34523,12 +34532,12 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: The Barracks - This Building is there to recruit new troops in the Holy
-    Tribe and Knights, Angels (and Archers) can be recrutied here. Knights can be
-    recruited in 3 rounds for 3 wood, while Angels need 4 rounds and 4 wood to recruit
-    successfully. Find yourself good positions to place these Barracks to move your
-    newly recruited Units around more quickly and defend your territory better, along
-    with being able to launch quick attacks on your enemies.
+  m_text: The Barracks - This Building is there to recruit new troops in the Order
+    of Seraphs and Knights, Angels (and Archers) can be recrutied here. Knights can
+    be recruited in 3 rounds for 3 wood, while Angels need 4 rounds and 4 wood to
+    recruit successfully. Find yourself good positions to place these Barracks to
+    move your newly recruited Units around more quickly and defend your territory
+    better, along with being able to launch quick attacks on your enemies.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -40420,10 +40429,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'The Castle - This is the MainBuilding of the Holy Tribe and has always
-    stood steadfast and ready for any attack by enemy troops. A knight is already
-    there to protect the castle even before Barracks have been built to recruit further
-    troops. '
+  m_text: 'The Castle - This is the MainBuilding of the Order of Seraphs and has
+    always stood steadfast and ready for any attack by enemy troops. A knight is
+    already there to protect the castle even before Barracks have been built to recruit
+    further troops. '
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -43538,7 +43547,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 48
+  m_fontSize: 29.9
   m_fontSizeBase: 14
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -43894,14 +43903,15 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: The Holy Tribe have been ardent believers in the concept of light long
-    before the gods had abandoned the world of Anikani and continue doing so today.
-    Their entire culture is based on the various beliefs of goodness and sharing,
-    however due to the constant struggle of this world, very few outsiders are treated
-    just as well by the Holy Tribe. Should one however manage to win their trust,
-    you can be assured that they will gladly give their life to save you. The belief
-    in the Light has become so strong that some tribesmen even manage to become Angel
-    incarnations that bring healing and light anywhere they go.
+  m_text: The Order of Seraphs Tribe have been ardent believers in the concept of
+    light long before the gods had abandoned the world of Anikani and continue doing
+    so today. Their entire culture is based on the various beliefs of goodness and
+    sharing, however due to the constant struggle of this world, very few outsiders
+    are treated just as well by the Order of Seraphs. Should one however manage to
+    win their trust, you can be assured that they will gladly give their life to
+    save you. The belief in the Light has become so strong that some tribesmen even
+    manage to become Angel incarnations that bring healing and light anywhere they
+    go.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -44112,7 +44122,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Shepherd
+  m_text: Nomad
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -49118,15 +49128,15 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: The Wanderer Tribe has never managed to settle down in any place on the
-    world of Anikani for too long, as various factors have always managed to make
-    them continue moving. From Ressoruce scarcity, natural disasters and the constant
-    wars between the various tribes, the Wanderers had to keep moving on. Over time
-    they have however managed to make this necessity of movement into their very
-    own strength and power and gained various abilities related to movement. Nowadays
-    the Wanderers are not even looking for a place to settle down anymore as wanderlust
-    has settled into them and they can not relax unless they continue moving on and
-    wandering these treacherous lands.
+  m_text: The Ancient Wanderers Tribe has never managed to settle down in any place
+    on the world of Anikani for too long, as various factors have always managed
+    to make them continue moving. From Ressoruce scarcity, natural disasters and
+    the constant wars between the various tribes, the Ancient Wanderers had to keep
+    moving on. Over time they have however managed to make this necessity of movement
+    into their very own strength and power and gained various abilities related to
+    movement. Nowadays the Ancient Wanderers are not even looking for a place to
+    settle down anymore as wanderlust has settled into them and they can not relax
+    unless they continue moving on and wandering these treacherous lands.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
