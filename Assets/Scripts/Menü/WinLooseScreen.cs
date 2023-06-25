@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
 using Mirror;
+using System.Threading.Tasks;
 
 public class WinLooseScreen : NetworkBehaviour
 {
@@ -20,12 +21,14 @@ public class WinLooseScreen : NetworkBehaviour
 
 
     public void setLooseScreen() {
+        warten();
         winLooseCanvas.SetActive(true);
         winLooseCanvasBackground.color = Color.red;
         winLooseCanvasText.text = "You loose";
-        transform.GetComponent<AudioUnit>().startAudio(1); //1 ist loose
         mainMenu.onClick.AddListener(goMainMenu);
         spectateButton.onClick.AddListener(spectate);
+        transform.GetComponent<winLoseAudio>().startAudio(1); //1 ist loose
+
     }
 
     public void spectate() {
@@ -40,12 +43,17 @@ public class WinLooseScreen : NetworkBehaviour
     }
 
     public void setWinScreen() {
+        warten();
         winLooseCanvas.SetActive(true);
         winLooseCanvasBackground.color = Color.green;
         winLooseCanvasText.text = "You win";
-        transform.GetComponent<AudioUnit>().startAudio(0); // 0 ist win
         mainMenu.onClick.AddListener(goMainMenu);
         spectateButton.onClick.AddListener(spectate);
+        transform.GetComponent<winLoseAudio>().startAudio(0); // 0 ist win
+    }
+
+    async void warten() {
+        await Task.Delay(2000);
     }
 
     public void goMainMenu() {

@@ -56,8 +56,8 @@ public class UnitAnimator : NetworkBehaviour
     private bool laeuft = false; //läuft die coroutine
     bool fertigGelaufen = false;
     private Sprite[] zielAnimationen = null;
-    private GameObject fernZiel;
-    private Vector3Int fernZielPosition;
+    /*private GameObject fernZiel;
+    private Vector3Int fernZielPosition;*/
     private bool fern;
 
     // Start is called before the first frame update
@@ -141,12 +141,6 @@ public class UnitAnimator : NetworkBehaviour
             laeuft = false;
         }
     }
-    
-
-    async public void warten(int dauer) {
-        await Task.Delay(dauer);
-    }
-
 
     //Für UnitGUIPanel um richtiges Sprite auszuwählen
     public Sprite getSprite(int spielerFarbe, int auswahl) {
@@ -219,8 +213,8 @@ public class UnitAnimator : NetworkBehaviour
                 if(!gedreht) rumdrehen();
                 animation = attack;
             }
-            enemy.z = 3;
-            if(fernZiel != null) fernZiel.transform.position = enemy;
+            //enemy.z = 3;
+            //if(fernZiel != null) fernZiel.transform.position = enemy;
         } else {        
 
             //richtig drehen
@@ -261,8 +255,8 @@ public class UnitAnimator : NetworkBehaviour
 
         zielAnimationen = healUnit;
         
-        enemy.z = 3;
-        fernZiel.transform.position = enemy;
+        //enemy.z = 3;
+        //fernZiel.transform.position = enemy;
 
         angriff = true;
     }
@@ -276,7 +270,7 @@ public class UnitAnimator : NetworkBehaviour
             yield return new WaitForSeconds(0.04f);
         }
 
-        if(zielAnimation != null) {
+        /*if(zielAnimation != null) {
             Debug.Log(fernZiel);
             spawnZiel();
             if(fernZiel != null) {
@@ -288,13 +282,13 @@ public class UnitAnimator : NetworkBehaviour
                 }
             }
             destroyZiel();
-        }
+        }*/
 
         animation = idle;
-        spriteRenderer.sprite = animation[0];
+        //spriteRenderer.sprite = animation[0];
         zielAnimationen = null;
         angriff = false;
-        fertigGelaufen = false;
+        fertigGelaufen = true;
     }
 
     
@@ -307,12 +301,12 @@ public class UnitAnimator : NetworkBehaviour
         }
 
         animation = idle;
-        spriteRenderer.sprite = animation[0];
+        //spriteRenderer.sprite = animation[0];
         angriff = false;
-        fertigGelaufen = false;
+        fertigGelaufen = true;
     }
 
-    [Command(requiresAuthority = false)]
+    /*[Command(requiresAuthority = false)]
     public void spawnZiel() {
         GameObject spriteObject = Instantiate(fernZiel, transform.position, transform.rotation);
         NetworkServer.Spawn(spriteObject);
@@ -320,7 +314,7 @@ public class UnitAnimator : NetworkBehaviour
     [Command(requiresAuthority = false)]
     public void destroyZiel() {
         NetworkServer.Destroy(GameObject.Find("Cylinder(Clone)"));
-    }
+    }*/
 
 
 

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
 
-public class AudioUnitWL : NetworkBehaviour
+public class winLoseAudio : NetworkBehaviour
 {
     [SerializeField] private AudioClip win;
     [SerializeField] private AudioClip lose;

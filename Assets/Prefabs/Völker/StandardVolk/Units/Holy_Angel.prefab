@@ -927,8 +927,8 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0
-  schritte: {fileID: 8300000, guid: 8257c38578f5da648aea3b7660721316, type: 3}
-  kampf1: {fileID: 8300000, guid: 1b0bc0db6d2c2e546a0658f86eff15d4, type: 3}
+  schritte: {fileID: 8300000, guid: 61d1a86160893594a92a369045ab36d8, type: 3}
+  kampf1: {fileID: 8300000, guid: 2e60cb5a2cc26cb4eba7731fd679cc98, type: 3}
   audioSource: {fileID: 5449640872657218163}
 --- !u!82 &5449640872657218163
 AudioSource:
