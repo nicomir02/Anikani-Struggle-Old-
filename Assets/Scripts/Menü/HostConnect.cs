@@ -115,7 +115,7 @@ public class HostConnect : MonoBehaviour{
 
     private void OnJoinRequest(GameLobbyJoinRequested_t callback) {
         SteamMatchmaking.JoinLobby(callback.m_steamIDLobby);
-        Debug.Log(manager.transport);
+        manager.changeTransport(steamtransport);
         Debug.Log("Request To Join Lobby");
     }
 
