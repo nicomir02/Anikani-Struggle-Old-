@@ -38,10 +38,15 @@ public class HostConnect : MonoBehaviour{
     void Start() {
         Debug.Log("Start");
         manager = GetComponent<NetworkManagerAnikani>();
+
+        Host.onClick.AddListener(HostFunction);
+        Connect.onClick.AddListener(ConnectFunction);
+
         if(!SteamManager.Initialized) {
             Debug.Log("Steam ist nicht initialisiert");
             toggleSteam.gameObject.SetActive(false);
             HostButton.gameObject.SetActive(false);
+            deactivateSteam();
             return;
         }else {
             //if(steamtransport != null) manager.transport = steamtransport;
@@ -62,8 +67,7 @@ public class HostConnect : MonoBehaviour{
             onSteamToggle();
         }
 
-        Host.onClick.AddListener(HostFunction);
-        Connect.onClick.AddListener(ConnectFunction);
+        
     }
 
     public void onSteamToggle() {

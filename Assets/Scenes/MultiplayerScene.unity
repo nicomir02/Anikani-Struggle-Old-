@@ -9858,7 +9858,7 @@ MonoBehaviour:
   sendRate: 60
   offlineScene: 
   onlineScene: 
-  transport: {fileID: 402433583}
+  transport: {fileID: 402433582}
   networkAddress: localhost
   maxConnections: 100
   authenticator: {fileID: 0}
@@ -48133,6 +48133,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef4bffeda13d7a748973ff9204401c07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  otherTransport: {fileID: 402433582}
 --- !u!1 &2097380905
 GameObject:
   m_ObjectHideFlags: 0

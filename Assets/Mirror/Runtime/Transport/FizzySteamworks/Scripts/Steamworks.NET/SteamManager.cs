@@ -13,6 +13,7 @@ using UnityEngine;
 #if !DISABLESTEAMWORKS
 using System.Collections;
 using Steamworks;
+using Mirror;
 #endif
 
 //
@@ -25,6 +26,8 @@ public class SteamManager : MonoBehaviour {
 	protected static bool s_EverInitialized = false;
 
 	protected static SteamManager s_instance;
+	[SerializeField] private Transport otherTransport;
+
 	protected static SteamManager Instance {
 		get {
 			if (s_instance == null) {
@@ -117,6 +120,7 @@ public class SteamManager : MonoBehaviour {
 		// https://partner.steamgames.com/doc/sdk/api#initialization_and_shutdown
 		m_bInitialized = SteamAPI.Init();
 		if (!m_bInitialized) {
+			GameObject.Find("NetworkManager").GetComponent<NetworkManagerAnikani>().changeTransport(otherTransport);
 			Debug.LogError("[Steamworks.NET] SteamAPI_Init() failed. Refer to Valve's documentation or the comment above this line for more information.", this);
 
 			return;
