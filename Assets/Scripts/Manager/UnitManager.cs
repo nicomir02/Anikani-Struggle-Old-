@@ -26,6 +26,8 @@ public class UnitManager : NetworkBehaviour
 
     [SerializeField] private RoundManager roundManager;
 
+    [SerializeField] private InputManager inputManager;
+
     //private int buildInRound = 0;
     //bewegungsreichweite fehlt/angriffsbegrenzung fehlt/begrenzte blöcke fehlen
     public Dictionary<Vector3Int, Unit> spawnedUnits = new Dictionary<Vector3Int, Unit>();
@@ -353,12 +355,16 @@ public class UnitManager : NetworkBehaviour
                 if(us.vec.x == selectedVector.x && us.vec.y == selectedVector.y) us.gameObject.transform.GetChild(0).GetComponent<HealthBar>().changeReichweite(r-liste.Count);
             }
             
+            gameManager.moveUnit(selectedVector, vec, unit.getMaxBloeckeProRunde());
+
             healthManager.moveUnit(selectedVector, vec);
             syncMovedUnits(selectedVector);
 
             
 
             cmdMoveUnit(selectedVector, vec, liste, roundManager.id);
+
+            
         }
     }
 
@@ -393,6 +399,8 @@ public class UnitManager : NetworkBehaviour
     //Change in UnitSprite bei jedem Client
     [ClientRpc]
     public void changeVecInUnitSprite(Vector3Int from, Vector3Int to) {
+        
+        inputManager.fogOfWarShowHealthbar();
 
         from.z = 2;
         to.z = 2;
@@ -481,6 +489,7 @@ public class UnitManager : NetworkBehaviour
 
     [ClientRpc]
     public void setRenderer(GameObject gameObject, int unitID, Vector3Int vec, int colorID, int volkID) {
+        inputManager.fogOfWarShowHealthbar();
 
         gameObject.GetComponent<UnitSprite>().id = colorID+1;
 

@@ -80,7 +80,7 @@ public class BuildGUIPanel : NetworkBehaviour
         sprite = animated.m_AnimatedSprites[0];
 
         priceBarracks = howMany*2;
-        GameObject.Find("InGame/Canvas/BuildingPanel/Barracks/Text").GetComponent<TextMeshProUGUI>().text = "Barracks\n\nPrice: " + priceBarracks + " Wood";
+        GameObject.Find("InGame/Canvas/BuildingPanel/Barracks/Text").GetComponent<TextMeshProUGUI>().text = "Barracks\n\nPrice: " + priceBarracks + " Stone";
 
         GameObject.Find("InGame/Canvas/BuildingPanel/Barracks").SetActive(true);
         GameObject.Find("InGame/Canvas/BuildingPanel/Barracks/Background/Image").GetComponent<Image>().sprite = sprite;
@@ -129,7 +129,7 @@ public class BuildGUIPanel : NetworkBehaviour
     //Methode Button Click Barracks Bau
     public void buyBarracks() {
         //if(!isLocalPlayer) return;
-        Ressource ressource = getRessource("Wood");
+        Ressource ressource = getRessource("Stone");
 
         if(GetComponent<BuildingManager>().ressourcenZaehlerRechner(ressource, priceBarracks)) {
             

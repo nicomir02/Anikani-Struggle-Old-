@@ -1262,7 +1262,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 33.4
+  m_fontSize: 65.45
   m_fontSizeBase: 20
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -2599,7 +2599,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.41900003, y: 0.5836797}
   m_AnchorMax: {x: 0.8515284, y: 0.952}
-  m_AnchoredPosition: {x: -1.1604004, y: 2.1522064}
+  m_AnchoredPosition: {x: -1.1604004, y: 2.1522217}
   m_SizeDelta: {x: 6.1685, y: -1.6036987}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &77898321
@@ -4697,7 +4697,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.031493247, y: 0.075}
   m_AnchorMax: {x: 0.980178, y: 0.885612}
-  m_AnchoredPosition: {x: -19.286499, y: -2.6977844}
+  m_AnchoredPosition: {x: -19.286499, y: -2.697815}
   m_SizeDelta: {x: -8.513184, y: -11.359131}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &168026140
@@ -5034,7 +5034,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 32.8
+  m_fontSize: 61.05
   m_fontSizeBase: 20
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -6506,7 +6506,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 21.85
+  m_fontSize: 53.9
   m_fontSizeBase: 14
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -9283,7 +9283,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 46.3
+  m_fontSize: 54.1
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -15157,7 +15157,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 35.8
+  m_fontSize: 42.8
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -16263,7 +16263,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Holy
+  m_text: Order of Seraphs
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -17056,7 +17056,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 38.4
+  m_fontSize: 46.2
   m_fontSizeBase: 21.77
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -17828,7 +17828,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 29.75
+  m_fontSize: 55.35
   m_fontSizeBase: 20
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -22195,6 +22195,7 @@ MonoBehaviour:
   gameManager: {fileID: 1223650274}
   healthManager: {fileID: 1223650275}
   roundManager: {fileID: 1223650278}
+  inputManager: {fileID: 1223650279}
 --- !u!114 &979763614
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -22916,7 +22917,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 70.95
+  m_fontSize: 69.55
   m_fontSizeBase: 24.89
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -24126,7 +24127,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 41.75
+  m_fontSize: 48.75
   m_fontSizeBase: 17
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -27722,11 +27723,19 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0.1
+  fogOfWar: {fileID: 11400000, guid: a81c8e1d0cc7f7c45954b1fc881660e1, type: 2}
   spielFarben:
   - {r: 0.16078432, g: 0.6, b: 0.90588236, a: 1}
   - {r: 1, g: 0.32941177, b: 0.32941177, a: 1}
   - {r: 0.14509805, g: 0.7019608, b: 0.63529414, a: 1}
   - {r: 0.6313726, g: 0.36078432, b: 1, a: 1}
+  mapBehaviour: {fileID: 1223650269}
+  tilemap: {fileID: 106385659}
+  unitManager: {fileID: 979763613}
+  buildingManager: {fileID: 979763615}
+  roundManager: {fileID: 1223650278}
+  unsichtbar: {r: 1, g: 1, b: 1, a: 0}
+  aufgedecktDurchBuildings: []
   minAbstandMainBuilding: 10
 --- !u!114 &1223650275
 MonoBehaviour:
@@ -27825,6 +27834,7 @@ MonoBehaviour:
   nextrounderr: {fileID: 1526027022}
   buildingManager: {fileID: 979763615}
   unitManager: {fileID: 979763613}
+  inputManager: {fileID: 1223650279}
   isYourTurn: 0
   spielername: {fileID: 379888614}
   playername: Player
@@ -27846,6 +27856,7 @@ MonoBehaviour:
   unsichtbar: {r: 0, g: 0, b: 0, a: 0}
   tabPanel: {fileID: 571701680}
   playernameText: {fileID: 475469425}
+  gameManager: {fileID: 1223650274}
 --- !u!114 &1223650280
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -29357,7 +29368,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 66.7
+  m_fontSize: 72
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -29630,7 +29641,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 22.8
+  m_fontSize: 43.05
   m_fontSizeBase: 20
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -33863,7 +33874,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Wanderers
+  m_text: The Ancient Wanderers
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -41992,7 +42003,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 41.75
+  m_fontSize: 48.75
   m_fontSizeBase: 21.77
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -42746,7 +42757,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.41900003, y: 0.5836797}
   m_AnchorMax: {x: 0.8515284, y: 0.952}
-  m_AnchoredPosition: {x: -1.0610962, y: 2.201004}
+  m_AnchoredPosition: {x: -1.0610962, y: 2.2009888}
   m_SizeDelta: {x: 5.9697, y: -1.2799988}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1840972824
@@ -43527,7 +43538,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 24
+  m_fontSize: 48
   m_fontSizeBase: 14
   m_fontWeight: 400
   m_enableAutoSizing: 1

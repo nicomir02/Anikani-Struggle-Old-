@@ -2,11 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
+using UnityEngine.Tilemaps;
 
 public class GameManager : NetworkBehaviour
 {
     //Variable zum Prüfen ob Cheats angeschaltet wurden für Spezielle noch zu implementierende Spielsituationen
     private bool cheatsOn = false;
+
+    [SerializeField] private TileBase fogOfWar;
 
     //Liste der Vektoren/Tiles die den einzelnen Spielern gehören(Spielerfelder)
     public readonly SyncDictionary<Vector3Int, int> teamVecs = new SyncDictionary<Vector3Int, int>();
@@ -14,7 +17,17 @@ public class GameManager : NetworkBehaviour
 //Auflisten bei Unity bei den GameObjects ders Szene für verschiedene Teamfarben
     [SerializeField] public List<Color> spielFarben = new List<Color>();
 
+    [SerializeField] private MapBehaviour mapBehaviour;
+    [SerializeField] private Tilemap tilemap;
+    [SerializeField] private UnitManager unitManager;
+    [SerializeField] private BuildingManager buildingManager;
+    [SerializeField] private RoundManager roundManager;
+    [SerializeField] private Color unsichtbar;
+    public List<Vector3Int> aufgedecktDurchBuildings = new List<Vector3Int>();
+    public Dictionary<Vector3Int, List<Vector3Int>> aufgedecktDurchUnits = new Dictionary<Vector3Int, List<Vector3Int>>();
+
     public readonly SyncDictionary<int, string> playernames = new SyncDictionary<int, string>();
+
 
 
     //Liste hier, da bei Player Probleme mit Sync gab
@@ -91,6 +104,12 @@ public class GameManager : NetworkBehaviour
         foreach(BuildingManager bm in FindObjectsOfType<BuildingManager>()) {
             bm.CMDallReloadArea();
         }
+        if(roundManager.round > 0) reloadFogOfWar();
+    }
+
+    [ClientRpc]
+    public void reloadFogOfWar() {
+        onChangeFogOfWar();
     }
 
     //Gehört der Vektor schon zu einem Team Prüfung
@@ -118,6 +137,83 @@ public class GameManager : NetworkBehaviour
         vec.z = 0;
         if(teamVecs.ContainsKey(vec)) if(teamVecs[vec] != ownTeamID) return true;
         return false;
+    }
+
+    public void onFogOfWar() {
+        int maxX = mapBehaviour.mapWidth()+4;
+        int maxY = mapBehaviour.mapHeight()+4;
+        for(int x=-4;x<maxX;x++) {
+            for(int y=-4;y<maxY;y++) {
+                Vector3Int newV = new Vector3Int(x-2,y-2,4);
+                Vector3Int vector = new Vector3Int(x,y,4);
+                tilemap.SetTile(newV, fogOfWar);
+                tilemap.SetTileFlags(new Vector3Int(x, y, 1), TileFlags.None);
+                tilemap.SetColor(new Vector3Int(x, y, 1), unsichtbar);
+            }
+        }
+        onChangeFogOfWar();
+    }
+
+    public void onChangeFogOfWar() {
+        Vector3Int vec = new Vector3Int(-2, -2, 0);
+        foreach(KeyValuePair<Vector3Int, int> kvp in teamVecs) {
+            if(kvp.Value == roundManager.id) {
+                Vector3Int v = kvp.Key;
+                for(int x=-2;x<4;x++) {
+                    for(int y=-2;y<4;y++) {
+                        v = new Vector3Int(x,y,4);
+                        Vector3Int tile = kvp.Key+v+vec;
+                        tile.z = 4;
+                        tilemap.SetTile(tile, null);
+                        aufgedecktDurchBuildings.Add(tile);
+                        v = kvp.Key+v;
+                        v.z = 1;
+                        tilemap.SetColor(v, Color.white);
+                       
+                    }
+                }
+            }
+        }
+    }
+
+    public void moveUnit(Vector3Int old, Vector3Int newVec, int maxReichweite) {
+        Debug.Log("aufruf fog of war");
+        Vector3Int vec = old;
+
+        if(aufgedecktDurchUnits.ContainsKey(old)) aufgedecktDurchUnits.Remove(old);
+
+        for(int x=-maxReichweite-2;x<maxReichweite+4;x++) {
+            for(int y=-maxReichweite-2;y<maxReichweite+4;y++) {
+                vec = new Vector3Int(x, y, 4);
+                Vector3Int vecundold = vec+old;
+                vecundold.z = 4;
+                bool aufgedeckt = false;
+                foreach(KeyValuePair<Vector3Int, List<Vector3Int>> kvp in aufgedecktDurchUnits) {
+                    if(kvp.Value.Contains(vecundold)) aufgedeckt = true;
+                }
+                if(!aufgedecktDurchBuildings.Contains(vecundold) && !aufgedeckt) {
+                    tilemap.SetTile(vecundold, fogOfWar);
+                    vecundold.z = 1;
+                    tilemap.SetColor(vecundold, unsichtbar);
+                }
+            }
+        }
+        List<Vector3Int> newVectors = new List<Vector3Int>();
+        for(int x=-maxReichweite;x<maxReichweite+2;x++) {
+            for(int y=-maxReichweite;y<maxReichweite+2;y++) {
+                vec = new Vector3Int(x, y, 4);
+                vec = vec+newVec;
+                vec.z = 1;
+                tilemap.SetColor(vec, Color.white);
+
+                vec.y-=2;
+                vec.x-=2;
+                vec.z = 4;
+                tilemap.SetTile(vec, null);
+                newVectors.Add(vec);
+            }
+        }
+        aufgedecktDurchUnits.Add(newVec, newVectors);
     }
 
     //Gibt dir die Farbe vom Team:

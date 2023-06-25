@@ -23,6 +23,8 @@ public class InputManager : MonoBehaviour
 
     [SerializeField] private GameObject tabPanel;
     [SerializeField] private TextMeshProUGUI playernameText;
+
+    [SerializeField] private GameManager gameManager;
     
 
     void Start() {
@@ -109,28 +111,40 @@ public class InputManager : MonoBehaviour
                 us.GetComponent<SpriteRenderer>().color = Color.white;
                 
                 //Healthbar
-                if(showHealthbar) {
-                    Vector3 v = us.GetComponent<Transform>().GetChild(0).position;
-                    v.z = 0f;
-                    us.GetComponent<Transform>().GetChild(0).position = v;
-                }
+                
             }
+        }
+        if(showHealthbar && !showUnits) {
+            fogOfWarShowHealthbar();
         }
         showUnits = !showUnits;
     }
 
     void onShowHealthbar() {
-        foreach(UnitSprite us in FindObjectsOfType<UnitSprite>()) {
-            if(showHealthbar) {
-                Vector3 v = us.GetComponent<Transform>().GetChild(0).position;
-                v.z = -100f;
-                us.GetComponent<Transform>().GetChild(0).position = v;
-            }else {
-                Vector3 v = us.GetComponent<Transform>().GetChild(0).position;
-                v.z = 0f;
-                us.GetComponent<Transform>().GetChild(0).position = v;
+        showHealthbar = !showHealthbar;
+        fogOfWarShowHealthbar();
+    }
+
+    public void fogOfWarShowHealthbar() {
+        Vector3Int vec = new Vector3Int(-1,-1,-1);
+        if(showHealthbar) {
+            foreach(UnitSprite us in FindObjectsOfType<UnitSprite>()) {
+                vec = us.vec;
+                vec.z = 4;
+                bool aufgedeckt = false;
+                foreach(KeyValuePair<Vector3Int, List<Vector3Int>> kvp in gameManager.aufgedecktDurchUnits) {
+                    if(kvp.Value.Contains(vec)) aufgedeckt = true;
+                }
+                if(gameManager.aufgedecktDurchBuildings.Contains(vec + new Vector3Int(2, 2, 0)) || aufgedeckt) {
+                    Vector3 v = us.GetComponent<Transform>().GetChild(0).position;
+                    v.z = 0f;
+                    us.GetComponent<Transform>().GetChild(0).position = v;
+                }else {
+                    Vector3 v = us.GetComponent<Transform>().GetChild(0).position;
+                    v.z = -100f;
+                    us.GetComponent<Transform>().GetChild(0).position = v;
+                }
             }
         }
-        showHealthbar = !showHealthbar;
     }
 }

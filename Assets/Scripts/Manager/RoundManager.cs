@@ -31,6 +31,7 @@ public class RoundManager : NetworkBehaviour
 
     [SerializeField] private BuildingManager buildingManager;
     [SerializeField] private UnitManager unitManager;
+    [SerializeField] private InputManager inputManager;
 
     public bool isYourTurn = false;     //sagt ob dieser Spieler gerade am Turn ist
 
@@ -174,6 +175,7 @@ public class RoundManager : NetworkBehaviour
     //Rundenveränderung auf dem Server
     [Command(requiresAuthority = false)]
     public void onRoundChange() {
+        
         currentTurn += 1;
         int turn = -1;
         if(currentTurn > reihenfolge.Count-1) { //Sollte es größer sein, ist erster Spieler wieder dran
@@ -195,6 +197,7 @@ public class RoundManager : NetworkBehaviour
     //Rundenveränderung auf dem Client
     [ClientRpc]
     public void RpconRoundChange(int a) {
+        GameManager gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         string tryname = "";
         foreach(Player p in FindObjectsOfType<Player>()) {
             if(p.id == a) {
@@ -209,6 +212,10 @@ public class RoundManager : NetworkBehaviour
         
         curTurnText.text = "Spieler: " + a; //später in Namen umwandeln
         roundText.text = "Turn " + round;
+        if(round == 1) {
+            gameManager.onFogOfWar();
+            inputManager.fogOfWarShowHealthbar();
+        } 
 
         if(tryname != "") turnName(tryname, a);
     }
