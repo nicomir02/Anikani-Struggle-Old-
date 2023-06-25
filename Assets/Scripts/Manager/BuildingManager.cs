@@ -729,6 +729,8 @@ public class BuildingManager : NetworkBehaviour
             }
             
             activatePanel(selectedVector);
+        }else if(healthManager.isBuilding(vec) && gameManager.isAufgedeckt(vec)) {
+            activateEnemyPanel(vec);
         }
     }
 
@@ -751,6 +753,14 @@ public class BuildingManager : NetworkBehaviour
         GetComponent<TextMeshProUGUI>().text = 
         "<b><u>Infobox</u></b> \n Name: " + buildingsVec[vec].getName() +
         "\n Health: " +healthManager.getBuildingLeben(vec);
+    }
+
+    public void activateEnemyPanel(Vector3Int vec) {
+        infoboxBuilding.SetActive(true);
+        //NOTIZÄNDERUNG Leben zu Health damit es auf englisch ist
+        GameObject.Find("InGame/Canvas/InfoboxBuilding/Infotext").
+        GetComponent<TextMeshProUGUI>().text = 
+        "Health: " +healthManager.getBuildingLeben(vec);
     }
 
 //Rückgängig machen von selectBuilding Methode/ Rücksetzen der verschiedenen Sachen
@@ -821,7 +831,7 @@ public class BuildingManager : NetworkBehaviour
 
                 vec.z = 1;
 
-                tilemap.SetColor(vec, Color.white);
+                if(gameManager.isAufgedeckt(vec)) tilemap.SetColor(vec, Color.white);
             }
             showAreaBool = false;//Gebiet wird nicht mehr angezeigt
         }
@@ -862,11 +872,15 @@ public class BuildingManager : NetworkBehaviour
             tilemap.SetTileFlags(vec, TileFlags.None);
             tilemap.SetColor(vec, gameManager.getColorByID(kvp.Value));
 
-            vec.z = 1;
+            if(gameManager.isAufgedeckt(vec)) {
+                vec.z = 1;
 
-            tilemap.SetTileFlags(vec, TileFlags.None);
-            tilemap.SetColor(vec, gameManager.getColorByID(kvp.Value));
+                tilemap.SetTileFlags(vec, TileFlags.None);
+                tilemap.SetColor(vec, gameManager.getColorByID(kvp.Value));
+            }
         }
+
+        
     }
 
 //Bei Rundenstart zählt diese Methode neue Ressourcen dazu in das entsprechende Dictionary

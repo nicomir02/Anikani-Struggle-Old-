@@ -240,8 +240,6 @@ public class UnitManager : NetworkBehaviour
             }else {
                 ClearWeite();
             }
-        }else {
-            ClearWeite();
         }
     }
 
@@ -268,6 +266,7 @@ public class UnitManager : NetworkBehaviour
         selectedVector = vec;
 
         infobox.SetActive(false);
+        ClearWeite();
     }
 
     public void selectUnit(Vector3Int vec){
@@ -598,12 +597,14 @@ public class UnitManager : NetworkBehaviour
             }
         }
         reichweite = temp;
+        GetComponent<UnitGUIPanel>().auffuellen();
     }
 
     [Command(requiresAuthority = false)]
     public void syncStillExists(Vector3Int vec) {
         if(healthManager.getLeben(vec) <= 0) {
             healthManager.removeUnit(vec);
+            
             syncMovedUnitsClient(vec);
             cmddeleteUnit(vec);
         }

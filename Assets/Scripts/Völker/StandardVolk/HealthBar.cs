@@ -24,7 +24,8 @@ public class HealthBar : MonoBehaviour
 
     public void Change(int amount) {
         Value = Mathf.Clamp(Value+amount, 0, MaxValue); 
-    
+        Debug.Log(Value);
+        if(Value <= 0) gameObject.transform.parent.GetComponent<AudioUnit>().startAudio(2);
         if(adjustBarWidthCoroutine != null) {
             StopCoroutine(adjustBarWidthCoroutine);
         }
@@ -50,9 +51,10 @@ public class HealthBar : MonoBehaviour
             yield return null; //new WaitForSecondsRealtime(0.1f);
         }
 
-        UnitSprite us = gameObject.transform.parent.GetComponent<UnitSprite>();
-
-        if(GameObject.Find("GameManager").GetComponent<RoundManager>().id == us.id) GameObject.Find("PlayerManager").GetComponent<UnitManager>().syncStillExists(us.vec);
+        //UnitSprite us = gameObject.transform.parent.GetComponent<UnitSprite>();
+        if(Value <= 0) gameObject.transform.parent.GetComponent<SpriteRenderer>().color = GameObject.Find("GameManager").GetComponent<InputManager>().unsichtbar;
+        //if(GameObject.Find("GameManager").GetComponent<RoundManager>().id == us.id) GameObject.Find("PlayerManager").GetComponent<UnitManager>().syncStillExists(us.vec);
+        
 
         slowChangeBar.SetWidth(targetWidth);
     }

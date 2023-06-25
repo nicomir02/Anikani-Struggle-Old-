@@ -92,7 +92,6 @@ public class Player : NetworkBehaviour
     public void auffuellen() {
         GameObject.Find("PlayerManager").GetComponent<BuildingManager>().auffuellen();
         GameObject.Find("PlayerManager").GetComponent<UnitManager>().auffuellen();
-        GameObject.Find("PlayerManager").GetComponent<UnitGUIPanel>().auffuellen();
     }
     
 }

@@ -166,8 +166,9 @@ GameObject:
   - component: {fileID: 1063914310650402722}
   - component: {fileID: 5325680962914264126}
   - component: {fileID: 3192946156482361520}
+  - component: {fileID: -7489871859651661128}
   m_Layer: 0
-  m_Name: Wanderer_Nomad
+  m_Name: Wanderer Nomad
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -221,7 +222,7 @@ MonoBehaviour:
   syncDirection: 1
   syncMode: 0
   syncInterval: 0
-  unitname: Knight
+  unitname: Wanderer Nomad
   leben: 100
   angriffswert: 50
   maxBloeckeProRunde: 4
@@ -299,7 +300,7 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0
   idleBLUE:
-  - {fileID: -1891242798, guid: dff9779ec820273468d0f847ad7f37a5, type: 3}
+  - {fileID: 1378144655, guid: 65e2bfa8f4cba954593727994b29cbec, type: 3}
   idleRED:
   - {fileID: -2099223465, guid: c31330a66fafaa8499c87fb80748f2fc, type: 3}
   idleGREEN:
@@ -307,60 +308,43 @@ MonoBehaviour:
   idlePURP:
   - {fileID: -244319216, guid: d0dcbd29711985843aaea160c291e6b9, type: 3}
   moveForwardBLUE:
-  - {fileID: -105248864, guid: dff9779ec820273468d0f847ad7f37a5, type: 3}
-  - {fileID: -1957171214, guid: dff9779ec820273468d0f847ad7f37a5, type: 3}
-  - {fileID: -1891242798, guid: dff9779ec820273468d0f847ad7f37a5, type: 3}
-  - {fileID: 1162813207, guid: dff9779ec820273468d0f847ad7f37a5, type: 3}
+  - {fileID: 1378144655, guid: 65e2bfa8f4cba954593727994b29cbec, type: 3}
   moveBackBLUE:
-  - {fileID: 1551110138, guid: a70d8f358bfd0154f9c14d48fba7e7a9, type: 3}
-  - {fileID: -293762553, guid: a70d8f358bfd0154f9c14d48fba7e7a9, type: 3}
-  - {fileID: 1284026605, guid: a70d8f358bfd0154f9c14d48fba7e7a9, type: 3}
-  - {fileID: 1074840867, guid: a70d8f358bfd0154f9c14d48fba7e7a9, type: 3}
+  - {fileID: 1378144655, guid: 65e2bfa8f4cba954593727994b29cbec, type: 3}
   moveForwardRED:
-  - {fileID: -1295607767, guid: c31330a66fafaa8499c87fb80748f2fc, type: 3}
-  - {fileID: -212935621, guid: c31330a66fafaa8499c87fb80748f2fc, type: 3}
-  - {fileID: -2099223465, guid: c31330a66fafaa8499c87fb80748f2fc, type: 3}
-  - {fileID: -1664186070, guid: c31330a66fafaa8499c87fb80748f2fc, type: 3}
+  - {fileID: 1338857298, guid: 1e2abd11a7c71c8499e6bb155add2877, type: 3}
   moveBackRED:
-  - {fileID: -1376851967, guid: 1997aa012f0443348b25fa0d018304d3, type: 3}
-  - {fileID: -1442628757, guid: 1997aa012f0443348b25fa0d018304d3, type: 3}
-  - {fileID: 1248768405, guid: 1997aa012f0443348b25fa0d018304d3, type: 3}
-  - {fileID: 570830951, guid: 1997aa012f0443348b25fa0d018304d3, type: 3}
+  - {fileID: 1338857298, guid: 1e2abd11a7c71c8499e6bb155add2877, type: 3}
   moveForwardGREEN:
-  - {fileID: -1537685426, guid: f330017a3aa9568479415aab6aeee306, type: 3}
-  - {fileID: 1791707959, guid: f330017a3aa9568479415aab6aeee306, type: 3}
-  - {fileID: -106159594, guid: f330017a3aa9568479415aab6aeee306, type: 3}
-  - {fileID: -773373748, guid: f330017a3aa9568479415aab6aeee306, type: 3}
+  - {fileID: 1664966964, guid: 0bd10d4239889ad42a81f5d90700aaea, type: 3}
   moveBackGREEN:
-  - {fileID: 1100652569, guid: f2f89e97e8475fe4e999628a34facfc1, type: 3}
-  - {fileID: 1542383798, guid: f2f89e97e8475fe4e999628a34facfc1, type: 3}
-  - {fileID: 989970512, guid: f2f89e97e8475fe4e999628a34facfc1, type: 3}
-  - {fileID: 286996089, guid: f2f89e97e8475fe4e999628a34facfc1, type: 3}
+  - {fileID: 1664966964, guid: 0bd10d4239889ad42a81f5d90700aaea, type: 3}
   moveForwardPURP:
-  - {fileID: 1058417788, guid: d0dcbd29711985843aaea160c291e6b9, type: 3}
-  - {fileID: 321962793, guid: d0dcbd29711985843aaea160c291e6b9, type: 3}
-  - {fileID: -244319216, guid: d0dcbd29711985843aaea160c291e6b9, type: 3}
-  - {fileID: 2069466600, guid: d0dcbd29711985843aaea160c291e6b9, type: 3}
+  - {fileID: -2133772999, guid: d8596232cec04ff44b07b7fede40ccfa, type: 3}
   moveBackPURP:
-  - {fileID: 238905243, guid: 0dcdd88f7c07bb242844d90e819818d2, type: 3}
-  - {fileID: 2086357919, guid: 0dcdd88f7c07bb242844d90e819818d2, type: 3}
-  - {fileID: 494701649, guid: 0dcdd88f7c07bb242844d90e819818d2, type: 3}
-  - {fileID: -188086, guid: 0dcdd88f7c07bb242844d90e819818d2, type: 3}
-  attackBLUE: []
-  attackRED: []
-  attackGREEN: []
-  attackPURP: []
-  backAttackBLUE: []
-  backAttackRED: []
-  backAttackGREEN: []
-  backAttackPURP: []
+  - {fileID: -2133772999, guid: d8596232cec04ff44b07b7fede40ccfa, type: 3}
+  attackBLUE:
+  - {fileID: 1378144655, guid: 65e2bfa8f4cba954593727994b29cbec, type: 3}
+  attackRED:
+  - {fileID: 1338857298, guid: 1e2abd11a7c71c8499e6bb155add2877, type: 3}
+  attackGREEN:
+  - {fileID: 1664966964, guid: 0bd10d4239889ad42a81f5d90700aaea, type: 3}
+  attackPURP:
+  - {fileID: -2133772999, guid: d8596232cec04ff44b07b7fede40ccfa, type: 3}
+  backAttackBLUE:
+  - {fileID: 1378144655, guid: 65e2bfa8f4cba954593727994b29cbec, type: 3}
+  backAttackRED:
+  - {fileID: 1338857298, guid: 1e2abd11a7c71c8499e6bb155add2877, type: 3}
+  backAttackGREEN:
+  - {fileID: 1664966964, guid: 0bd10d4239889ad42a81f5d90700aaea, type: 3}
+  backAttackPURP:
+  - {fileID: -2133772999, guid: d8596232cec04ff44b07b7fede40ccfa, type: 3}
   healBLUE: []
   healRED: []
   healGREEN: []
   healPURP: []
   healUnit: []
   attackEnemy: []
-  fernZiel: {fileID: 0}
 --- !u!114 &1063914310650402722
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -422,7 +406,108 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 437345f6922057449aa9d9dbb7e62cf4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0
   schritte: {fileID: -2507366936113662546, guid: fdf529c5b87617d45ad9cab846dff956, type: 3}
+  kampf1: {fileID: 0}
+  audioSource: {fileID: -7489871859651661128}
+--- !u!82 &-7489871859651661128
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3651839826317333919}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &5302724499133193458
 GameObject:
   m_ObjectHideFlags: 0

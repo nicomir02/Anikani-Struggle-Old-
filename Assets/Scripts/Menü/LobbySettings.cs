@@ -68,6 +68,7 @@ public class LobbySettings : NetworkBehaviour
     public void RPCchangeMapSize(int x, int y) {
         if(x > 0) mapBehaviour.width = x;
         if(y > 0) mapBehaviour.height = y;
+        //getCurValues();
     }
 
     void onClose() {
@@ -75,6 +76,7 @@ public class LobbySettings : NetworkBehaviour
     }
 
     void onSettings() {
+        getCurValues();
         settingsPanel.SetActive(true);
     }
 
@@ -91,8 +93,8 @@ public class LobbySettings : NetworkBehaviour
 
         //y
         option = 0;
-        foreach(TMP_Dropdown.OptionData optiondata in xValue.options) {
-            if(int.Parse(optiondata.text) == mapBehaviour.width) {
+        foreach(TMP_Dropdown.OptionData optiondata in yValue.options) {
+            if(int.Parse(optiondata.text) == mapBehaviour.height) {
                 break;
             }
             option++;

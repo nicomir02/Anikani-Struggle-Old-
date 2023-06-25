@@ -23,11 +23,14 @@ public class GameManager : NetworkBehaviour
     [SerializeField] private BuildingManager buildingManager;
     [SerializeField] private RoundManager roundManager;
     [SerializeField] private Color unsichtbar;
+    [SerializeField] private HealthManager healthManager;
+
     public List<Vector3Int> aufgedecktDurchBuildings = new List<Vector3Int>();
     public Dictionary<Vector3Int, List<Vector3Int>> aufgedecktDurchUnits = new Dictionary<Vector3Int, List<Vector3Int>>();
 
     public readonly SyncDictionary<int, string> playernames = new SyncDictionary<int, string>();
 
+    private bool generated = false;
 
 
     //Liste hier, da bei Player Probleme mit Sync gab
@@ -140,18 +143,21 @@ public class GameManager : NetworkBehaviour
     }
 
     public void onFogOfWar() {
-        int maxX = mapBehaviour.mapWidth()+4;
-        int maxY = mapBehaviour.mapHeight()+4;
-        for(int x=-4;x<maxX;x++) {
-            for(int y=-4;y<maxY;y++) {
-                Vector3Int newV = new Vector3Int(x-2,y-2,4);
-                Vector3Int vector = new Vector3Int(x,y,4);
-                tilemap.SetTile(newV, fogOfWar);
-                tilemap.SetTileFlags(new Vector3Int(x, y, 1), TileFlags.None);
-                tilemap.SetColor(new Vector3Int(x, y, 1), unsichtbar);
+        if(!generated) {
+            int maxX = mapBehaviour.mapWidth()+6;
+            int maxY = mapBehaviour.mapHeight()+6;
+            for(int x=-6;x<maxX;x++) {
+                for(int y=-6;y<maxY;y++) {
+                    Vector3Int newV = new Vector3Int(x-2,y-2,4);
+                    Vector3Int vector = new Vector3Int(x,y,4);
+                    tilemap.SetTile(newV, fogOfWar);
+                    tilemap.SetTileFlags(new Vector3Int(x, y, 1), TileFlags.None);
+                    tilemap.SetColor(new Vector3Int(x, y, 1), unsichtbar);
+                }
             }
+            onChangeFogOfWar();
+            generated = true;
         }
-        onChangeFogOfWar();
     }
 
     public void onChangeFogOfWar() {
@@ -176,8 +182,35 @@ public class GameManager : NetworkBehaviour
         }
     }
 
+    public void fogOfWarEnemyAddBuilding(Vector3Int vec) {
+        Vector3Int vector = vec;
+        vec.y-=2;
+        vec.x-=2;
+        vec.z = 4;
+
+        bool aufgedeckt = false;
+        foreach(KeyValuePair<Vector3Int, List<Vector3Int>> kvp in aufgedecktDurchUnits) {
+            if(kvp.Value.Contains(vec)) aufgedeckt = true;
+        }
+
+        if(!aufgedecktDurchUnits.ContainsKey(vec) || !aufgedeckt) {
+            tilemap.SetTileFlags(vector, TileFlags.None);
+            tilemap.SetColor(vector, unsichtbar);
+        }
+    }
+
+    public bool isAufgedeckt(Vector3Int vec) {
+        vec.z = 4;
+        bool aufgedeckt = false;
+        foreach(KeyValuePair<Vector3Int, List<Vector3Int>> kvp in aufgedecktDurchUnits) {
+            if(kvp.Value.Contains(vec)) aufgedeckt = true;
+        }
+
+
+        return aufgedeckt || aufgedecktDurchBuildings.Contains(vec);
+    }
+
     public void moveUnit(Vector3Int old, Vector3Int newVec, int maxReichweite) {
-        Debug.Log("aufruf fog of war");
         Vector3Int vec = old;
 
         if(aufgedecktDurchUnits.ContainsKey(old)) aufgedecktDurchUnits.Remove(old);
@@ -201,10 +234,16 @@ public class GameManager : NetworkBehaviour
         List<Vector3Int> newVectors = new List<Vector3Int>();
         for(int x=-maxReichweite;x<maxReichweite+2;x++) {
             for(int y=-maxReichweite;y<maxReichweite+2;y++) {
+                for(int x2=-2;x2<1;x2++) {
+                    for(int y2=-2;y2<1;y2++) {
+                        vec = new Vector3Int(x, y, 4) + new Vector3Int(x2,y2,0);
+                        vec = vec+newVec;
+                        vec.z = 1;
+                        tilemap.SetColor(vec, Color.white);
+                    }
+                }
                 vec = new Vector3Int(x, y, 4);
                 vec = vec+newVec;
-                vec.z = 1;
-                tilemap.SetColor(vec, Color.white);
 
                 vec.y-=2;
                 vec.x-=2;

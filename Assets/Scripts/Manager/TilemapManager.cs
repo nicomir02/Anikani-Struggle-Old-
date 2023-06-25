@@ -14,6 +14,8 @@ public class TilemapManager : NetworkBehaviour //Synchronisieren der Tilemap zwi
 
     [SerializeField] private TileBase unterflaeche;
 
+    [SerializeField] private GameManager gameManager;
+
     //Änderungen auf jeden Client für Homebuilding
     [ClientRpc]
     private void RpcUpdateTilemap(Vector3Int vec, int volkID, int buildID, int colorID) {
@@ -40,7 +42,7 @@ public class TilemapManager : NetworkBehaviour //Synchronisieren der Tilemap zwi
     private void RpcUpdateTilemapBuilding(Vector3Int vec, int b, int playerID, int volkID, int lvl) {
         Building building = volkManager.getBuildingByID(volkManager.getVolk(volkID), b, lvl);
         building.setTile(tilemap, vec, playerID-1);
-        
+        gameManager.fogOfWarEnemyAddBuilding(vec);
     }
 
     //Damit unter den Gebäuden keine Bäume mehr stehen

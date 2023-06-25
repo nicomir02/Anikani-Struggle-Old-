@@ -66,7 +66,7 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0
   units:
-  - {fileID: 648433178809981454, guid: 10c7f0d5cc0f34c40a48fcff585a5dcc, type: 3}
+  - {fileID: 648433178809981454, guid: 41fb2a3733c8c0e4089c3ee0124fe486, type: 3}
   - {fileID: -4510146823345106924, guid: d2d5cbb270df5fe4c9eb06ca6fa4b90a, type: 3}
   homeBuildings:
   - {fileID: 8281415641029694239, guid: 44cb3a3842cdb724587970255a5e4d0c, type: 3}

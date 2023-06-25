@@ -19,7 +19,7 @@ public class InputManager : MonoBehaviour
     [SerializeField] private Tilemap tilemap;
 
     [SerializeField] private Color durchsichtig;
-    [SerializeField] private Color unsichtbar;
+    [SerializeField] public Color unsichtbar;
 
     [SerializeField] private GameObject tabPanel;
     [SerializeField] private TextMeshProUGUI playernameText;
@@ -135,7 +135,7 @@ public class InputManager : MonoBehaviour
                 foreach(KeyValuePair<Vector3Int, List<Vector3Int>> kvp in gameManager.aufgedecktDurchUnits) {
                     if(kvp.Value.Contains(vec)) aufgedeckt = true;
                 }
-                if(gameManager.aufgedecktDurchBuildings.Contains(vec + new Vector3Int(2, 2, 0)) || aufgedeckt) {
+                if(gameManager.aufgedecktDurchBuildings.Contains(vec + new Vector3Int(0, 0, 0)) || aufgedeckt) {
                     Vector3 v = us.GetComponent<Transform>().GetChild(0).position;
                     v.z = 0f;
                     us.GetComponent<Transform>().GetChild(0).position = v;
