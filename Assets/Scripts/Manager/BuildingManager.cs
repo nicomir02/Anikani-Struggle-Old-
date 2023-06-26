@@ -872,12 +872,12 @@ public class BuildingManager : NetworkBehaviour
             tilemap.SetTileFlags(vec, TileFlags.None);
             tilemap.SetColor(vec, gameManager.getColorByID(kvp.Value));
 
-            if(gameManager.isAufgedeckt(vec)) {
+            //if(gameManager.isAufgedeckt(vec)) {
                 vec.z = 1;
 
                 tilemap.SetTileFlags(vec, TileFlags.None);
                 tilemap.SetColor(vec, gameManager.getColorByID(kvp.Value));
-            }
+            //}
         }
 
         

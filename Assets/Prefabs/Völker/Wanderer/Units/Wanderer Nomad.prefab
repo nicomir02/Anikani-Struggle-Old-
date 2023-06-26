@@ -302,11 +302,11 @@ MonoBehaviour:
   idleBLUE:
   - {fileID: 1378144655, guid: 65e2bfa8f4cba954593727994b29cbec, type: 3}
   idleRED:
-  - {fileID: -2099223465, guid: c31330a66fafaa8499c87fb80748f2fc, type: 3}
+  - {fileID: 1338857298, guid: 1e2abd11a7c71c8499e6bb155add2877, type: 3}
   idleGREEN:
-  - {fileID: -106159594, guid: f330017a3aa9568479415aab6aeee306, type: 3}
+  - {fileID: 1664966964, guid: 0bd10d4239889ad42a81f5d90700aaea, type: 3}
   idlePURP:
-  - {fileID: -244319216, guid: d0dcbd29711985843aaea160c291e6b9, type: 3}
+  - {fileID: -2133772999, guid: d8596232cec04ff44b07b7fede40ccfa, type: 3}
   moveForwardBLUE:
   - {fileID: 1378144655, guid: 65e2bfa8f4cba954593727994b29cbec, type: 3}
   moveBackBLUE:
@@ -411,6 +411,7 @@ MonoBehaviour:
   syncInterval: 0
   schritte: {fileID: -2507366936113662546, guid: fdf529c5b87617d45ad9cab846dff956, type: 3}
   kampf1: {fileID: 0}
+  tod: {fileID: 0}
   audioSource: {fileID: -7489871859651661128}
 --- !u!82 &-7489871859651661128
 AudioSource:
