@@ -508,6 +508,14 @@ public class UnitManager : NetworkBehaviour
 
     }
 
+    [Command(requiresAuthority=false)]
+    public void healAusfuehren(Vector3Int from, Vector3Int to) {
+        Debug.Log(from +" "+ to);
+        foreach(UnitSprite us in FindObjectsOfType<UnitSprite>()) {
+            if(us.vec.x==from.x && us.vec.y==from.y) us.GetComponent<UnitAnimator>().heilen(from, to);
+        }
+    }
+
     public void angriff(Unit unit, Vector3Int vec){
         Vector3Int v = new Vector3Int(vec.x, vec.y, 2);
         if(spawnedUnits.ContainsKey(v) && vec != selectedVector) {
@@ -524,6 +532,8 @@ public class UnitManager : NetworkBehaviour
                 if(us.vec.x == selectedVector.x && us.vec.y == selectedVector.y) us.gameObject.transform.GetChild(0).GetComponent<HealthBar>().changeReichweite(0);
             }
             
+            healAusfuehren(selectedVector, vec);
+
             healthManager.angriff(v, -heal); //da heilung ein negativer angriff in Höhe von heal ist
             reichweite[selectedVector] = 0;
 
