@@ -105,27 +105,6 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Angel_green_attack_0
-      rect:
-        serializedVersion: 2
-        x: 814
-        y: 88
-        width: 4
-        height: 17
-      alignment: 9
-      pivot: {x: 0.5, y: 0.1}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: da94a5cc66c7d30448f357d5211a7d36
-      internalID: 1463895209
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
       name: Angel_green_attack_1
       rect:
         serializedVersion: 2
@@ -134,7 +113,7 @@ TextureImporter:
         width: 54
         height: 47
       alignment: 9
-      pivot: {x: 0.5, y: 0.1}
+      pivot: {x: 0.49903616, y: 0.06457986}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -142,132 +121,6 @@ TextureImporter:
       bones: []
       spriteID: 8e214e2a2adcfc94e9f8c414b9acb756
       internalID: 1733186391
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Angel_green_attack_2
-      rect:
-        serializedVersion: 2
-        x: 232
-        y: 52
-        width: 16
-        height: 16
-      alignment: 9
-      pivot: {x: 0.5, y: 0.1}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 6d8ff50dbf3aeba4994bed2681793197
-      internalID: -636617088
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Angel_green_attack_3
-      rect:
-        serializedVersion: 2
-        x: 331
-        y: 55
-        width: 10
-        height: 10
-      alignment: 9
-      pivot: {x: 0.5, y: 0.1}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 69d55672d509ff9459624c333c529506
-      internalID: 2146239881
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Angel_green_attack_4
-      rect:
-        serializedVersion: 2
-        x: 426
-        y: 54
-        width: 12
-        height: 12
-      alignment: 9
-      pivot: {x: 0.5, y: 0.1}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: fb1ff9280abeb4945a8fa63f796cf554
-      internalID: -474535235
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Angel_green_attack_5
-      rect:
-        serializedVersion: 2
-        x: 524
-        y: 56
-        width: 8
-        height: 8
-      alignment: 9
-      pivot: {x: 0.5, y: 0.1}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 1b5c9adf4b2d9ae4ba169c78c97fc6d7
-      internalID: 606156826
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Angel_green_attack_6
-      rect:
-        serializedVersion: 2
-        x: 620
-        y: 56
-        width: 8
-        height: 13
-      alignment: 9
-      pivot: {x: 0.5, y: 0.1}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 405e3954d2c64a940aac9be2e9c25595
-      internalID: -1854217409
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Angel_green_attack_7
-      rect:
-        serializedVersion: 2
-        x: 717
-        y: 62
-        width: 6
-        height: 18
-      alignment: 9
-      pivot: {x: 0.5, y: 0.1}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 0f4b4315767df774da3003325f3177ce
-      internalID: -909181573
       vertices: []
       indices: 
       edges: []
@@ -300,9 +153,9 @@ TextureImporter:
         x: 213
         y: 22
         width: 54
-        height: 30
+        height: 49
       alignment: 9
-      pivot: {x: 0.5, y: 0.1}
+      pivot: {x: 0.5, y: 0.06196497}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -321,9 +174,9 @@ TextureImporter:
         x: 309
         y: 22
         width: 54
-        height: 30
+        height: 43
       alignment: 9
-      pivot: {x: 0.5, y: 0.1}
+      pivot: {x: 0.5005052, y: 0.06954579}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -342,9 +195,9 @@ TextureImporter:
         x: 405
         y: 22
         width: 54
-        height: 30
+        height: 44
       alignment: 9
-      pivot: {x: 0.5, y: 0.1}
+      pivot: {x: 0.5009811, y: 0.067497164}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -363,9 +216,9 @@ TextureImporter:
         x: 501
         y: 22
         width: 54
-        height: 30
+        height: 42
       alignment: 9
-      pivot: {x: 0.5, y: 0.1}
+      pivot: {x: 0.49944955, y: 0.071107365}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -384,9 +237,9 @@ TextureImporter:
         x: 597
         y: 22
         width: 54
-        height: 30
+        height: 48
       alignment: 9
-      pivot: {x: 0.5, y: 0.1}
+      pivot: {x: 0.4991602, y: 0.06259537}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -405,9 +258,9 @@ TextureImporter:
         x: 693
         y: 22
         width: 54
-        height: 30
+        height: 60
       alignment: 9
-      pivot: {x: 0.5, y: 0.1}
+      pivot: {x: 0.49926305, y: 0.049607024}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -426,9 +279,9 @@ TextureImporter:
         x: 789
         y: 22
         width: 54
-        height: 30
+        height: 84
       alignment: 9
-      pivot: {x: 0.5, y: 0.1}
+      pivot: {x: 0.49901554, y: 0.034809317}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
